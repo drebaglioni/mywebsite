@@ -1,26 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
+import Homepage from "./pages/home"
+import About from "./pages/about"
+import Contact from "./pages/contact"
+import {Switch, BrowserRouter, Route} from 'react-router-dom';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Giorgio is a homosexual
-        </p>
-        <p>Giorgio is really a homo</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <BrowserRouter>
+                <Switch>
+                    <Route exact path="/"
+                        component={Homepage}/>
+
+                    <Route exact path="/about"
+                        component={About}/>
+
+                    <Route exact path="/contact"
+                        component={Contact}/>
+
+                </Switch>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;
