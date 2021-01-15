@@ -20,14 +20,14 @@
 }
 
 #fourthDiv{
-    background-color: #FF996D;
+    background-color: #a1451e;
     text-align: right;
 }
 
 .mainTitle{
  margin-top: 40%;
 
-font-family: Akzidenz-Grotesk BQ;
+font-family: Montserrat;
 font-style: normal;
 font-weight: bold;
 font-size: 80px;
@@ -44,7 +44,7 @@ color: #000000;
 .navHome{
 margin-top: 5%;
 
-    font-family: Akzidenz-Grotesk BQ;
+    font-family: Montserrat;
 font-style: normal;
 font-weight: bold;
 font-size: 90px;
