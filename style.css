@@ -1,5 +1,5 @@
 /* =========================================
-   1. GLOBAL RESET & CONCRETE FILM TEXTURE
+   1. GLOBAL RESET & SOFT CONCRETE FILM TEXTURE
    ========================================= */
 * {
     margin: 0;
@@ -10,8 +10,8 @@
 html, body {
     height: 100%;
     width: 100%;
-    /* CHANGED: From Parchment (#E8E5D8) to Light Cement Grey */
-    background-color: #D6D6D6; 
+    /* CONCRETE BASE: A neutral, industrial grey */
+    background-color: #D1D1D1; 
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #1A1A1A; 
     overflow-x: hidden;
@@ -21,7 +21,7 @@ html, body {
     cursor: crosshair !important;
 }
 
-/* --- LAYER 1: FILM GRAIN (The Silver Halide Fix) --- */
+/* --- LAYER 1: SOFT ANALOG GRAIN --- */
 body::before {
     content: "";
     position: fixed;
@@ -29,20 +29,23 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    /* Overlay blends the grain into the grey like texture */
-    mix-blend-mode: overlay;
-    opacity: 0.8; /* Increased visibility for that 'gritty' feel */
+    /* Soft-light blends it gently, avoiding harsh contrast */
+    mix-blend-mode: soft-light;
+    opacity: 0.5; 
     z-index: 999;
     pointer-events: none;
     
-    /* THE FIX: baseFrequency='1.5' makes the grain microscopic */
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    /* THE REFINEMENT: 
+       1. baseFrequency='0.8' = Larger, softer grains (not tiny pixels)
+       2. feGaussianBlur = Physically blurs the edges so it looks like film chemistry
+    */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeGaussianBlur stdDeviation='0.6' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
     
-    /* THE ANALOG FIX: grayscale(1) removes the 'digital' RGB color noise */
-    filter: contrast(150%) brightness(100%) grayscale(100%);
+    /* Filter: High contrast + Grayscale to force the 'Silver' look */
+    filter: contrast(140%) brightness(100%) grayscale(100%);
 }
 
-/* --- LAYER 2: CEMENT WEAR (The 'Worn' Look) --- */
+/* --- LAYER 2: CONCRETE TEXTURE (The Wall) --- */
 body::after {
     content: "";
     position: fixed;
@@ -51,12 +54,12 @@ body::after {
     width: 100%;
     height: 100%;
     mix-blend-mode: multiply;
-    opacity: 0.1; /* Subtle darkening */
+    opacity: 0.15; /* Subtle darkening */
     z-index: 998;
     pointer-events: none;
-    /* Adds a vignette + subtle noise to look like uneven concrete drying */
-    background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(0,0,0,0.4) 100%),
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='rough'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23rough)' opacity='0.3'/%3E%3C/svg%3E");
+    /* Vignette + A second layer of 'cloudy' noise to mimic uneven cement */
+    background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(0,0,0,0.5) 100%),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='rough'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23rough)' opacity='0.4'/%3E%3C/svg%3E");
 }
 /* --- SELECTION COLORS --- */
 ::selection { background: #FF4F00; color: #F0EEE9; }
