@@ -174,14 +174,26 @@ h1 a { font-size: inherit; }
     }
     .nav-item:hover { color: #FF4F00; transform: translateX(30px); }
 
+    /* ... inside @media screen and (min-width: 768px) ... */
+
     .contact-section {
         grid-column: 5 / 13; grid-row: 1; align-self: end; 
         padding-bottom: 4rem; padding-right: 25vw; text-align: right;
         z-index: 100; 
         pointer-events: auto; 
     }
+    
     .contact-section a { 
         color: #1A1A1A; font-size: 1.2rem;
         pointer-events: auto; 
+        display: inline-block; /* Required for movement */
+        transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
+
+    /* THE NEW INTERACTION */
+    .contact-section a:hover {
+        color: #FF4F00; /* Turns Orange */
+        transform: translateX(10px); /* Slides Right */
+    }
+}
 }
