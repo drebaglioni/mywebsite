@@ -31,7 +31,7 @@ body::before {
     height: 100%;
     /* Soft-light blends it gently, avoiding harsh contrast */
     mix-blend-mode: soft-light;
-    opacity: 0.5; 
+    opacity: 0.2; 
     z-index: 999;
     pointer-events: none;
     
