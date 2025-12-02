@@ -1,5 +1,5 @@
 /* =========================================
-   1. GLOBAL RESET & MUSEUM ARCHIVAL TEXTURE
+   1. GLOBAL RESET & CONCRETE FILM TEXTURE
    ========================================= */
 * {
     margin: 0;
@@ -10,29 +10,54 @@
 html, body {
     height: 100%;
     width: 100%;
-    background-color: #E8E5D8; /* Aged Parchment */
+    /* CHANGED: From Parchment (#E8E5D8) to Light Cement Grey */
+    background-color: #D6D6D6; 
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #1A1A1A; 
     overflow-x: hidden;
     position: relative;
-
+    
     /* CURSOR: The Architect's Crosshair */
     cursor: crosshair !important;
 }
 
-/* --- TEXTURE LAYERS --- */
+/* --- LAYER 1: FILM GRAIN (The Silver Halide Fix) --- */
 body::before {
-    content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    mix-blend-mode: soft-light; opacity: 0.6; z-index: 999; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='1'/%3E%3C/svg%3E");
-    filter: contrast(120%) brightness(90%) blur(0.5px);
-}
-body::after {
-    content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    mix-blend-mode: multiply; opacity: 0.15; z-index: 998; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='dirt'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23dirt)' opacity='1'/%3E%3C/svg%3E");
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Overlay blends the grain into the grey like texture */
+    mix-blend-mode: overlay;
+    opacity: 0.8; /* Increased visibility for that 'gritty' feel */
+    z-index: 999;
+    pointer-events: none;
+    
+    /* THE FIX: baseFrequency='1.5' makes the grain microscopic */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    
+    /* THE ANALOG FIX: grayscale(1) removes the 'digital' RGB color noise */
+    filter: contrast(150%) brightness(100%) grayscale(100%);
 }
 
+/* --- LAYER 2: CEMENT WEAR (The 'Worn' Look) --- */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    mix-blend-mode: multiply;
+    opacity: 0.1; /* Subtle darkening */
+    z-index: 998;
+    pointer-events: none;
+    /* Adds a vignette + subtle noise to look like uneven concrete drying */
+    background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(0,0,0,0.4) 100%),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='rough'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23rough)' opacity='0.3'/%3E%3C/svg%3E");
+}
 /* --- SELECTION COLORS --- */
 ::selection { background: #FF4F00; color: #F0EEE9; }
 ::-moz-selection { background: #FF4F00; color: #F0EEE9; }
