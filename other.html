@@ -7,19 +7,45 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* 1. Switch Orange Shape to Charcoal */
+        /* 1. SHAPES: Dark & Moody */
         .orange-circle {
-            background-color: #222222 !important; /* Dark Charcoal */
+            background-color: #222222 !important; /* Charcoal */
+            opacity: 0.8; /* Dark enough to support white text */
         }
-        
-        /* 2. Switch Orange Text Highlights to Charcoal */
-        .stat-highlight-charcoal {
-            color: #222222 !important;
+        .blue-block {
+            background-color: #0047AB !important; /* Cobalt */
+            opacity: 0.8;
         }
 
-        /* 3. Keep Blue as is, but ensure overlap looks deep */
-        .blue-block {
-            background-color: #0047AB !important;
+        /* 2. LABELS: Black Ink (Readable on Grey Wall) */
+        .stat-label {
+            font-size: 1rem; 
+            letter-spacing: 0.2em; 
+            margin-bottom: 0.5rem; 
+            font-weight: 700;
+            color: #1A1A1A !important; /* Black, not Cream */
+        }
+
+        /* 3. NUMBERS: White with Charcoal Outline (Readable Everywhere) */
+        .stat-number {
+            font-size: 6rem; 
+            line-height: 0.9;
+            font-weight: 900;
+            color: #F0EEE9; /* Paper White Fill */
+            /* The Outline ensures readability on light backgrounds */
+            -webkit-text-stroke: 2px #1A1A1A; 
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.1); /* Subtle depth */
+        }
+        
+        /* 4. DOWNLOAD LINK: High Contrast */
+        .download-link {
+            font-size: 2rem; 
+            border-bottom: 3px solid #1A1A1A; 
+            color: #1A1A1A !important;
+        }
+        .download-link:hover {
+            color: #FF4F00 !important;
+            border-color: #FF4F00;
         }
     </style>
 </head>
@@ -48,27 +74,27 @@
             <ul style="list-style: none; display: flex; flex-direction: column; gap: 3rem;">
                 
                 <li>
-                    <h2 style="font-size: 1rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; opacity: 0.6; color: #F0EEE9;">CHESS (BULLET)</h2>
-                    <span class="nav-item stat-highlight-charcoal" style="font-size: 6rem; line-height: 0.9;">1400</span>
+                    <h2 class="stat-label">CHESS (BULLET)</h2>
+                    <span class="nav-item stat-number">1400</span>
                 </li>
 
                 <li>
-                    <h2 style="font-size: 1rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; opacity: 0.6; color: #F0EEE9;">CHESS (BLITZ)</h2>
-                    <span class="nav-item" style="font-size: 6rem; color: #0047AB; line-height: 0.9;">1500</span>
+                    <h2 class="stat-label">CHESS (BLITZ)</h2>
+                    <span class="nav-item stat-number">1500</span>
                 </li>
 
                 <li>
-                    <h2 style="font-size: 1rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; opacity: 0.6; color: #F0EEE9;">CHESS (RAPID)</h2>
-                    <span class="nav-item stat-highlight-charcoal" style="font-size: 6rem; line-height: 0.9;">1700</span>
+                    <h2 class="stat-label">CHESS (RAPID)</h2>
+                    <span class="nav-item stat-number">1700</span>
                 </li>
 
                 <li>
-                    <h2 style="font-size: 1rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; opacity: 0.6; color: #F0EEE9;">KOREAN LANG</h2>
-                    <span class="nav-item" style="font-size: 6rem; color: #0047AB; line-height: 0.9;">A2</span>
+                    <h2 class="stat-label">KOREAN LANG</h2>
+                    <span class="nav-item stat-number">A2</span>
                 </li>
 
                 <li style="margin-top: 2rem;">
-                    <a href="resume.pdf" class="nav-item" style="font-size: 2rem; border-bottom: 2px solid #F0EEE9;">
+                    <a href="resume.pdf" class="nav-item download-link">
                         DOWNLOAD RESUME PDF ↓
                     </a>
                 </li>
