@@ -105,37 +105,52 @@ h1 a { font-size: inherit; }
 }
 
 /* =========================================
-   5. DESKTOP LAYOUT
+   5. DESKTOP LAYOUT (The Machine)
    ========================================= */
 @media screen and (min-width: 768px) {
+
     .bauhaus-grid {
         display: grid;
         grid-template-columns: repeat(12, 1fr);
         grid-template-rows: 100vh;
-        padding: 0; align-items: center;
+        padding: 0;
+        align-items: center;
     }
 
+    /* GEOMETRY */
     .guide-line { left: 30%; width: 6px; }
 
     .orange-circle {
-        top: 50%; left: 30%; transform: translate(-50%, -50%);
-        width: 450px; height: 450px; right: auto; z-index: 0;
+        top: 50%; left: 30%;
+        width: 450px; height: 450px;
+        right: auto; z-index: 0;
         mix-blend-mode: multiply;
+        
+        /* ENTRY ANIMATION */
         animation: constructCircle 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        
+        /* THE FIX: Remove transition so mouse movement is instant */
+        transition: none; 
     }
 
     .blue-block {
-        top: 15vh; bottom: 15vh; left: 35%; width: 40vw; height: auto;
+        top: 15vh; bottom: 15vh;
+        left: 35%; width: 40vw; height: auto;
         right: auto; box-shadow: none; z-index: 0;
         mix-blend-mode: multiply;
+        
+        /* ENTRY ANIMATION */
         animation: constructBlock 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         animation-delay: 0.1s;
-        /* TRANSITION REMOVED so it doesn't fight the Javascript mouse movement */
+        
+        /* THE FIX: Remove transition */
+        transition: none; 
     }
 
+    /* CONTENT */
     .identity {
         grid-column: 1 / 5; grid-row: 1;
-        padding-right: 6rem; padding-left: 0; text-align: right;
+        padding-right: 8rem; padding-left: 0; text-align: right;
     }
     h1 { font-size: 5.5rem; margin-top: 0; padding-left: 0; }
     h1 a { font-size: 6rem; line-height: 0.5; display: block; margin-right: -10px; }
