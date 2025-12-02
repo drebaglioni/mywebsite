@@ -27,7 +27,7 @@
         <nav class="primary-nav">
             <a href="about.html" class="nav-item">About Me</a>
             <a href="projects.html" class="nav-item">Projects</a>
-            <a href="other.html" class="nav-item">Other</a>
+            <a href="other.html" class="nav-item">Other ↗</a>
         </nav>
 
         <footer class="contact-section">
@@ -41,27 +41,66 @@
     </main>
 
     <script>
+        // Configuration
+        // '0.05' = Heavy/Slow. '0.1' = Medium. '0.2' = Light/Fast.
+        const frictionBlue = 0.05; 
+        const frictionOrange = 0.08;
+
+        // Mouse Position (Target)
+        let targetX = 0;
+        let targetY = 0;
+
+        // Shape Position (Current)
+        let currentX_Blue = 0;
+        let currentY_Blue = 0;
+        let currentX_Orange = 0;
+        let currentY_Orange = 0;
+
+        // 1. Listen for Mouse (Update Target)
         document.addEventListener('mousemove', (e) => {
-            // Only run on desktop
             if (window.innerWidth > 768) {
-                // Calculate position (-1 to +1)
-                const x = (e.clientX / window.innerWidth - 0.5) * 2;
-                const y = (e.clientY / window.innerHeight - 0.5) * 2;
-
-                const blue = document.querySelector('.blue-block');
-                const orange = document.querySelector('.orange-circle');
-
-                // Move Blue Block (Background)
-                if(blue) {
-                    blue.style.transform = `translate(${x * -30}px, ${y * -30}px)`;
-                }
-                
-                // Move Orange Circle (Foreground)
-                if(orange) {
-                    orange.style.transform = `translate(${x * 60}px, ${y * 60}px)`;
-                }
+                // Calculate from center (-1 to +1)
+                targetX = (e.clientX / window.innerWidth - 0.5) * 2;
+                targetY = (e.clientY / window.innerHeight - 0.5) * 2;
             }
         });
+
+        // 2. The Animation Loop (Update Current Position)
+        function animate() {
+            // BLUE BLOCK PHYSICS (Background)
+            // Move 'Current' 5% of the way towards 'Target' every frame
+            const blueX = targetX * -30; // Max movement range in px
+            const blueY = targetY * -30;
+            
+            currentX_Blue += (blueX - currentX_Blue) * frictionBlue;
+            currentY_Blue += (blueY - currentY_Blue) * frictionBlue;
+
+            // ORANGE CIRCLE PHYSICS (Foreground)
+            const orangeX = targetX * 60; // Max movement range in px
+            const orangeY = targetY * 60;
+
+            currentX_Orange += (orangeX - currentX_Orange) * frictionOrange;
+            currentY_Orange += (orangeY - currentY_Orange) * frictionOrange;
+
+            // 3. Apply the Transforms
+            const blue = document.querySelector('.blue-block');
+            const orange = document.querySelector('.orange-circle');
+
+            if (blue) {
+                blue.style.transform = `translate(${currentX_Blue}px, ${currentY_Blue}px)`;
+            }
+
+            if (orange) {
+                // Must preserve the centering translate(-50%, -50%)!
+                orange.style.transform = `translate(-50%, -50%) translate(${currentX_Orange}px, ${currentY_Orange}px)`;
+            }
+
+            // Keep the loop running
+            requestAnimationFrame(animate);
+        }
+
+        // Start the Engine
+        animate();
     </script>
 </body>
 </html>
