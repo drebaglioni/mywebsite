@@ -18,7 +18,38 @@ html, body {
     position: relative;
     cursor: crosshair !important;
 }
+/* 1. ADD THE ANIMATION DEFINITION */
+@keyframes filmScratch {
+    0%, 100% { background-position: 0 0; }
+    10% { background-position: -5% -10%; }
+    20% { background-position: -15% 5%; }
+    30% { background-position: 7% -25%; }
+    40% { background-position: 20% 25%; }
+    50% { background-position: -25% 10%; }
+    60% { background-position: 15% 5%; }
+    70% { background-position: 0% 15%; }
+    80% { background-position: 25% 35%; }
+    90% { background-position: -10% 10%; }
+}
 
+/* 2. UPDATE THE GRAIN LAYER */
+body::before {
+    content: "";
+    position: fixed;
+    top: -50%; left: -50%; /* Make it bigger so we can move it around */
+    width: 200%; height: 200%;
+    
+    mix-blend-mode: overlay;
+    opacity: 0.4; 
+    z-index: 1; 
+    pointer-events: none;
+    
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    filter: contrast(150%) grayscale(100%);
+    
+    /* THE MAGIC: Steps(10) creates that jerky 12fps cinema look */
+    animation: filmScratch 2s steps(10) infinite;
+}
 /* --- THE GRAIN LAYER (Background) --- */
 /* FIX: z-index 1 puts it BEHIND the text but in front of the color blocks */
 body::before {
