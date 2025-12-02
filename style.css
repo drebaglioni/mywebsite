@@ -1,5 +1,5 @@
 /* =========================================
-   1. GLOBAL RESET & HEAVY CARDSTOCK TEXTURE
+   1. GLOBAL RESET & FINE ART GRAIN
    ========================================= */
 * {
     margin: 0;
@@ -10,8 +10,8 @@
 html, body {
     height: 100%;
     width: 100%;
-    /* BASE COLOR: Aged, slightly yellowed paper */
-    background-color: #D9D7D0; 
+    /* BASE: Uniform, warm paper grey. No gradient. */
+    background-color: #E0DED5; 
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #1A1A1A; 
     overflow-x: hidden;
@@ -21,7 +21,7 @@ html, body {
     cursor: crosshair !important;
 }
 
-/* --- LAYER 1: SHARP PAPER FIBERS (The Base) --- */
+/* --- THE GRAIN LAYER (High-Frequency) --- */
 body::before {
     content: "";
     position: fixed;
@@ -29,64 +29,43 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
+    
+    /* Soft-light ensures it doesn't muddy the bold colors */
     mix-blend-mode: soft-light;
     
-    /* AGGRESSIVE UPDATE: Increased opacity for heavy texture */
-    opacity: 0.6; 
+    /* OPACITY: Very low. It should be felt, not seen. */
+    opacity: 0.14; 
     
-    z-index: 999;
+    z-index: 9999;
     pointer-events: none;
     
-    /* AGGRESSIVE UPDATE: 
-       - Reduced stdDeviation (0.8 -> 0.4) to sharpen the fibers.
-       - Increased contrast to make them pop. 
-    */
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeGaussianBlur stdDeviation='0.4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-    filter: contrast(170%) brightness(100%) grayscale(100%);
+    /* THE FIX: baseFrequency='1.7' creates microscopic, sharp grain. 
+       No blur. No giant pixels. */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    
+    /* Grayscale ensures it looks like texture, not digital noise */
+    filter: contrast(120%) grayscale(100%);
 }
 
-/* --- LAYER 2: GRIT & SPECKS (The Age) --- */
-body::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    mix-blend-mode: multiply;
-    
-    /* AGGRESSIVE UPDATE: Increased opacity significantly */
-    opacity: 0.4; 
-    
-    z-index: 998;
-    pointer-events: none;
-    
-    /* UPDATED FILTER: Higher frequency noise to create 'specks' instead of clouds */
-    background: radial-gradient(circle at 50% 50%, transparent 55%, rgba(0,0,0,0.6) 100%),
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grit'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grit)' opacity='0.3'/%3E%3C/svg%3E");
-}
 /* --- SELECTION COLORS --- */
 ::selection { background: #FF4F00; color: #F0EEE9; }
 ::-moz-selection { background: #FF4F00; color: #F0EEE9; }
 ::-webkit-scrollbar { width: 0px; background: transparent; }
 
 /* =========================================
-   2. ANIMATIONS (The "Assembly")
+   2. ANIMATIONS (The Assembly)
    ========================================= */
 
-/* Text slides up */
 @keyframes constructText {
     0% { transform: translateY(50px); opacity: 0; }
     100% { transform: translateY(0); opacity: 1; }
 }
 
-/* Blue Block slides in */
 @keyframes constructBlock {
     0% { transform: translateX(100px); opacity: 0; }
     100% { transform: translateX(0); opacity: 1; }
 }
 
-/* Orange Circle pops in */
 @keyframes constructCircle {
     0% { transform: translate(-50%, -50%) scale(0); }
     100% { transform: translate(-50%, -50%) scale(1); }
@@ -96,75 +75,87 @@ body::after {
    3. TYPOGRAPHY
    ========================================= */
 h1 {
-    font-weight: 900; line-height: 0.85; letter-spacing: -0.04em;
-    text-transform: uppercase; position: relative; z-index: 20;
-    /* Apply Animation */
+    font-weight: 900;
+    /* Adjusted for breathing room */
+    line-height: 0.95; 
+    letter-spacing: -0.02em; 
+    text-transform: uppercase;
+    position: relative;
+    z-index: 20;
     animation: constructText 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 a {
-    text-decoration: none; color: #1A1A1A; font-weight: 800;
-    text-transform: uppercase; transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    display: inline-block; position: relative; z-index: 20;
+    text-decoration: none;
+    color: #1A1A1A;
+    font-weight: 800;
+    text-transform: uppercase;
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: inline-block;
+    position: relative;
+    z-index: 20;
     cursor: crosshair !important;
 }
 
-/* Nav Items: Staggered entrance */
 .nav-item {
-    opacity: 0; /* Start hidden */
+    opacity: 0; 
     animation: constructText 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-    animation-delay: 0.2s; /* Wait for Title */
-}
-
-a:hover {
-    color: #FF4F00; 
-    transform: skewX(-10deg) translateX(10px); 
+    animation-delay: 0.2s; 
 }
 
 /* =========================================
    4. MOBILE LAYOUT (Phones)
    ========================================= */
 .bauhaus-grid {
-    min-height: 100vh; padding: 2rem;
-    display: flex; flex-direction: column; justify-content: space-between;
-    position: relative; overflow: hidden;
+    min-height: 100vh;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Typography Mobile */
 h1 { font-size: 3.5rem; margin-top: 4rem; padding-left: 2rem; }
 .nav-item { font-size: 2.5rem; line-height: 1.2; }
-
-/* FIX: Mobile Arrow shouldn't be massive */
 h1 a { font-size: inherit; } 
 
-/* The Line */
 .guide-line {
-    position: absolute; left: 1.5rem; top: 0; bottom: 0;
-    width: 4px; background-color: #1A1A1A; z-index: 5;
+    position: absolute;
+    left: 1.5rem;
+    top: 0; bottom: 0;
+    width: 4px;
+    background-color: #1A1A1A;
+    z-index: 5;
 }
 
-/* Spacing */
 .primary-nav { padding-left: 2rem; display: flex; flex-direction: column; gap: 1rem; }
 .contact-section { padding-left: 2rem; padding-bottom: 2rem; z-index: 10; }
 .contact-section ul { display: flex; gap: 1rem; list-style: none; }
-.contact-section h2, .contact-section a { color: #F0EEE9; font-size: 1rem; }
+.contact-section a { color: #F0EEE9; font-size: 1rem; }
 
-/* Shapes Mobile */
+/* Mobile Shapes */
 .orange-circle {
-    position: absolute; top: 5%; right: -15%;
+    position: absolute;
+    top: 5%; right: -15%;
     width: 200px; height: 200px;
-    background-color: #FF4F00; border-radius: 50%;
-    mix-blend-mode: multiply; z-index: 2;
+    background-color: #FF4F00;
+    border-radius: 50%;
+    mix-blend-mode: multiply;
+    z-index: 2;
 }
 
 .blue-block {
-    position: absolute; bottom: 0; right: 0;
+    position: absolute;
+    bottom: 0; right: 0;
     width: 90%; height: 25vh; 
-    background-color: #0047AB; mix-blend-mode: multiply; z-index: 1;
+    background-color: #0047AB;
+    mix-blend-mode: multiply;
+    z-index: 1;
 }
 
 /* =========================================
-   5. DESKTOP LAYOUT (Asymmetric Machine)
+   5. DESKTOP LAYOUT (The Machine)
    ========================================= */
 @media screen and (min-width: 768px) {
 
@@ -172,67 +163,80 @@ h1 a { font-size: inherit; }
         display: grid;
         grid-template-columns: repeat(12, 1fr);
         grid-template-rows: 100vh;
-        padding: 0; align-items: center;
+        padding: 0;
+        align-items: center;
     }
 
-    /* --- ANIMATED GEOMETRY --- */
-
+    /* GEOMETRY */
     .guide-line { left: 30%; width: 6px; }
 
     .orange-circle {
         top: 50%; left: 30%;
-        transform: translate(-50%, -50%); /* Start Position */
+        transform: translate(-50%, -50%);
         width: 450px; height: 450px;
-        right: auto; z-index: 1; mix-blend-mode: multiply;
-        /* Animation: Pop In */
+        right: auto; z-index: 1;
+        mix-blend-mode: multiply;
         animation: constructCircle 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
     }
 
     .blue-block {
-        top: 15vh; bottom: 15vh; left: 35%;
-        width: 40vw; height: auto; right: auto;
-        box-shadow: none; z-index: 2; mix-blend-mode: multiply;
-        /* Animation: Slide In */
+        top: 15vh; bottom: 15vh;
+        left: 35%; 
+        width: 40vw; height: auto;
+        right: auto;
+        box-shadow: none; 
+        z-index: 2;
+        mix-blend-mode: multiply;
         animation: constructBlock 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         animation-delay: 0.1s;
-        transition: transform 0.5s ease; /* For Hover Reaction */
+        transition: transform 0.5s ease;
     }
-
-    /* INTERACTION: When you hover the Nav, the block shifts */
+    
     .primary-nav:hover ~ .blue-block {
-        transform: translateX(-20px); /* The machine reacts! */
+        transform: translateX(-20px); 
     }
 
-    /* --- CONTENT --- */
-
+    /* CONTENT */
     .identity {
-        grid-column: 1 / 5; grid-row: 1;
-        padding-right: 6rem; padding-left: 0; text-align: right;
+        grid-column: 1 / 5; 
+        grid-row: 1;
+        /* Padding increased to 8rem to give the Name space from the line */
+        padding-right: 8rem; 
+        padding-left: 0; 
+        text-align: right;
     }
     h1 { font-size: 5.5rem; margin-top: 0; padding-left: 0; }
-
-    /* Fix for the Arrow on Desktop (Keep it big, but safe) */
     h1 a { font-size: 6rem; line-height: 0.5; display: block; margin-right: -10px; }
 
     .primary-nav {
-        grid-column: 5 / 13; grid-row: 1; padding-left: 4rem; z-index: 30;
+        grid-column: 5 / 13; 
+        grid-row: 1;
+        padding-left: 4rem;
+        z-index: 30;
     }
+    
     .nav-item {
-        font-weight: 400; font-size: 5.5rem;
-        letter-spacing: -0.06em; color: #F0EEE9;
+        font-weight: 400; 
+        font-size: 5.5rem;
+        letter-spacing: -0.06em;
+        color: #F0EEE9; 
     }
-    .nav-item:hover { color: #FF4F00; }
+    
+    /* Corrected to ensure hover is Orange, not Black */
+    .nav-item:hover {
+        color: #FF4F00; 
+        transform: translateX(30px);
+    }
 
     .contact-section {
-        /* CHANGED: Moved from 9/13 to 5/13 to give it more room */
+        /* Aligning Footer to the Right Edge of the Content Block */
         grid-column: 5 / 13; 
         grid-row: 1;
         align-self: end; 
         padding-bottom: 4rem;
-        /* CHANGED: Aligns with the content block above it */
-        padding-right: 25vw; /* This mechanically locks it to the blue block's edge */
+        padding-right: 25vw; /* Mechanical alignment */
         text-align: right;
         z-index: 30;
     }
-    .contact-section h2, .contact-section a { color: #1A1A1A; font-size: 1.2rem; }
+    .contact-section a { color: #1A1A1A; font-size: 1.2rem; }
 }
