@@ -33,6 +33,24 @@
         </footer>
 
     </main>
+<script>
+        document.addEventListener('mousemove', (e) => {
+            // Get mouse position
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
 
+            // Select the shapes
+            const blue = document.querySelector('.blue-block');
+            const orange = document.querySelector('.orange-circle');
+
+            // Apply slight movement (Parallax)
+            // The blue block moves slower (appears heavier/further away)
+            if(blue) blue.style.transform = `translate(${x * -20}px, ${y * -20}px)`;
+            
+            // The orange circle moves faster (appears lighter/closer)
+            if(orange) orange.style.transform = `translate(-50%, -50%) translate(${x * 40}px, ${y * 40}px)`;
+        });
+    </script>
+</body>
 </body>
 </html>
