@@ -1,28 +1,48 @@
 /* =========================================
-   1. GLOBAL RESET & FINE ART GRAIN
+   1. GLOBAL RESET & "SALT AND PEPPER" GRAIN
    ========================================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
     height: 100%; width: 100%;
-    background-color: #D4D4D4; /* Industrial Grey */
+    /* BASE: The Grey Cardstock */
+    background-color: #D4D4D4; 
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #1A1A1A; 
     overflow-x: hidden; position: relative;
     cursor: crosshair !important;
 }
 
-/* --- STATIC GRAIN --- */
+/* --- THE GRAIN LAYER --- */
 body::before {
     content: ""; position: fixed; 
     top: 0; left: 0; width: 100%; height: 100%;
-    mix-blend-mode: overlay; opacity: 0.3; 
-    z-index: 1; /* BEHIND TEXT */
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-    filter: contrast(150%) grayscale(100%);
+    
+    /* Overlay mode makes the white specks pop and black specks dig in */
+    mix-blend-mode: overlay; 
+    
+    /* OPACITY: 15% is usually the sweet spot for High-Contrast grain */
+    opacity: 0.15; 
+    
+    /* LAYER ORDER: Sits on top of shapes, but behind text */
+    z-index: 1; 
+    
+    /* INTERACTION SAFEGUARD: Mouse clicks pass through this layer */
+    pointer-events: none; 
+    
+    /* TEXTURE GENERATOR:
+       baseFrequency='0.7' -> Creates distinct 'sand' grains (not blocks, not dust)
+    */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    
+    /* THE MAGIC: 
+       Contrast(300%) forces grey pixels to become distinct Black/White specks.
+       Grayscale(100%) ensures no color noise.
+    */
+    filter: contrast(300%) grayscale(100%);
 }
 
+/* --- SELECTION COLORS --- */
 ::selection { background: #FF4F00; color: #F0EEE9; }
 ::-moz-selection { background: #FF4F00; color: #F0EEE9; }
 ::-webkit-scrollbar { width: 0px; background: transparent; }
@@ -44,14 +64,16 @@ body::before {
    ========================================= */
 h1 {
     font-weight: 900; line-height: 0.95; letter-spacing: -0.02em; 
-    text-transform: uppercase; position: relative; z-index: 20; 
+    text-transform: uppercase; position: relative; 
+    z-index: 20; /* TEXT ON TOP (Crisp) */
     animation: constructText 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
 a {
     text-decoration: none; color: #1A1A1A; font-weight: 800;
     text-transform: uppercase; transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    display: inline-block; position: relative; z-index: 20; 
+    display: inline-block; position: relative; 
+    z-index: 20; /* LINKS ON TOP (Clickable) */
     cursor: crosshair !important;
 }
 
@@ -84,28 +106,24 @@ h1 a { font-size: inherit; }
 .contact-section ul { display: flex; gap: 1rem; list-style: none; }
 .contact-section a { color: #F0EEE9; font-size: 1rem; }
 
-/* THE FIX FOR MOBILE: 
-   Apply mix-blend-mode to the WRAPPER, not the shape.
-*/
+/* WRAPPER BLENDING (Mobile) */
 .shape-entry-orange, .shape-entry-blue { 
     position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
     pointer-events: none;
-    mix-blend-mode: multiply; /* MOVED HERE */
+    mix-blend-mode: multiply; 
 }
 
 .orange-circle {
     position: absolute; top: 5%; right: -15%;
     width: 200px; height: 200px; background-color: #FF4F00;
     border-radius: 50%; 
-    z-index: 0;
-    /* Removed mix-blend-mode from here */
+    z-index: 0; /* SHAPES BELOW GRAIN */
 }
 
 .blue-block {
     position: absolute; bottom: 0; right: 0;
     width: 90%; height: 25vh; background-color: #0047AB;
-    z-index: 0;
-    /* Removed mix-blend-mode from here */
+    z-index: 0; /* SHAPES BELOW GRAIN */
 }
 
 /* =========================================
@@ -127,7 +145,7 @@ h1 a { font-size: inherit; }
         width: 0; height: 0; 
         z-index: 0;
         animation: constructEntry 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-        mix-blend-mode: multiply; /* ENSURES INTERSECTION */
+        mix-blend-mode: multiply; 
     }
     
     .shape-entry-blue {
@@ -135,7 +153,7 @@ h1 a { font-size: inherit; }
         z-index: 0;
         animation: constructEntry 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         animation-delay: 0.1s;
-        mix-blend-mode: multiply; /* ENSURES INTERSECTION */
+        mix-blend-mode: multiply; 
     }
 
     /* SHAPES (Position + Physics) */
@@ -145,7 +163,6 @@ h1 a { font-size: inherit; }
         width: 450px; height: 450px;
         background-color: #FF4F00; border-radius: 50%;
         transition: none; 
-        /* Removed blend mode */
     }
 
     .blue-block {
@@ -154,7 +171,6 @@ h1 a { font-size: inherit; }
         width: 40vw; height: auto;
         background-color: #0047AB; 
         transition: none; 
-        /* Removed blend mode */
     }
 
     .identity {
@@ -174,26 +190,20 @@ h1 a { font-size: inherit; }
     }
     .nav-item:hover { color: #FF4F00; transform: translateX(30px); }
 
-    /* ... inside @media screen and (min-width: 768px) ... */
-
     .contact-section {
         grid-column: 5 / 13; grid-row: 1; align-self: end; 
         padding-bottom: 4rem; padding-right: 25vw; text-align: right;
         z-index: 100; 
         pointer-events: auto; 
     }
-    
     .contact-section a { 
         color: #1A1A1A; font-size: 1.2rem;
-        pointer-events: auto; 
-        display: inline-block; /* Required for movement */
+        pointer-events: auto;
+        display: inline-block;
         transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-
-    /* THE NEW INTERACTION */
     .contact-section a:hover {
-        color: #FF4F00; /* Turns Orange */
-        transform: translateX(10px); /* Slides Right */
+        color: #FF4F00;
+        transform: translateX(10px);
     }
-}
 }
