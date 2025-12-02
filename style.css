@@ -34,7 +34,7 @@ body::before {
     mix-blend-mode: overlay;
     
     /* OPACITY: Increased to 0.4. You will see this. */
-    opacity: 0.4; 
+    opacity: 0.3; 
     
     z-index: 9999;
     pointer-events: none;
