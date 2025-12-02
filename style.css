@@ -175,7 +175,7 @@ h1 a { font-size: inherit; }
 
     .identity {
         grid-column: 1 / 5; grid-row: 1;
-        padding-right: 8rem; padding-left: 0; text-align: right;
+        padding-right: 6rem; padding-left: 0; text-align: right;
     }
     h1 { font-size: 5.5rem; margin-top: 0; padding-left: 0; }
 
@@ -189,7 +189,7 @@ h1 a { font-size: inherit; }
         font-weight: 400; font-size: 5.5rem;
         letter-spacing: -0.06em; color: #F0EEE9;
     }
-    .nav-item:hover { color: #1A1A1A; }
+    .nav-item:hover { color: #FF4F00; }
 
     .contact-section {
         /* CHANGED: Moved from 9/13 to 5/13 to give it more room */
