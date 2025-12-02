@@ -1,5 +1,5 @@
 /* =========================================
-   1. GLOBAL RESET & FADED POSTER TEXTURE
+   1. GLOBAL RESET & HEAVY CARDSTOCK TEXTURE
    ========================================= */
 * {
     margin: 0;
@@ -10,7 +10,7 @@
 html, body {
     height: 100%;
     width: 100%;
-    /* CHANGED: A slightly warmer, aged paper grey */
+    /* BASE COLOR: Aged, slightly yellowed paper */
     background-color: #D9D7D0; 
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #1A1A1A; 
@@ -21,7 +21,7 @@ html, body {
     cursor: crosshair !important;
 }
 
-/* --- LAYER 1: SOFT PAPER GRAIN (The Detail) --- */
+/* --- LAYER 1: SHARP PAPER FIBERS (The Base) --- */
 body::before {
     content: "";
     position: fixed;
@@ -31,20 +31,21 @@ body::before {
     height: 100%;
     mix-blend-mode: soft-light;
     
-    /* CHANGED: Increased opacity from 0.2 to 0.35 for visibility */
-    opacity: 0.35; 
+    /* AGGRESSIVE UPDATE: Increased opacity for heavy texture */
+    opacity: 0.6; 
     
     z-index: 999;
     pointer-events: none;
     
-    /* CHANGED: Increased blur (0.6 -> 0.8) for softer, fibrous look */
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeGaussianBlur stdDeviation='0.8' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-    
-    /* High contrast grayscale forces the texture to pop */
-    filter: contrast(140%) brightness(100%) grayscale(100%);
+    /* AGGRESSIVE UPDATE: 
+       - Reduced stdDeviation (0.8 -> 0.4) to sharpen the fibers.
+       - Increased contrast to make them pop. 
+    */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeGaussianBlur stdDeviation='0.4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    filter: contrast(170%) brightness(100%) grayscale(100%);
 }
 
-/* --- LAYER 2: VIGNETTE FADE (The Age) --- */
+/* --- LAYER 2: GRIT & SPECKS (The Age) --- */
 body::after {
     content: "";
     position: fixed;
@@ -54,14 +55,15 @@ body::after {
     height: 100%;
     mix-blend-mode: multiply;
     
-    /* CHANGED: Increased opacity from 0.1 to 0.15 for a deeper fade effect */
-    opacity: 0.15; 
+    /* AGGRESSIVE UPDATE: Increased opacity significantly */
+    opacity: 0.4; 
     
     z-index: 998;
     pointer-events: none;
-    /* Stronger vignette in corners + subtle background unevenness */
+    
+    /* UPDATED FILTER: Higher frequency noise to create 'specks' instead of clouds */
     background: radial-gradient(circle at 50% 50%, transparent 55%, rgba(0,0,0,0.6) 100%),
-                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='rough'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23rough)' opacity='0.4'/%3E%3C/svg%3E");
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grit'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grit)' opacity='0.3'/%3E%3C/svg%3E");
 }
 /* --- SELECTION COLORS --- */
 ::selection { background: #FF4F00; color: #F0EEE9; }
