@@ -11,8 +11,14 @@
     <main class="bauhaus-grid">
 
         <div class="guide-line"></div>
-        <div class="orange-circle"></div>
-        <div class="blue-block"></div>
+        
+        <div class="shape-entry-orange">
+            <div class="orange-circle"></div>
+        </div>
+
+        <div class="shape-entry-blue">
+            <div class="blue-block"></div>
+        </div>
 
         <header class="identity">
             <h1>Andrea<br>Baglioni</h1>
@@ -21,7 +27,7 @@
         <nav class="primary-nav">
             <a href="about.html" class="nav-item">About Me</a>
             <a href="projects.html" class="nav-item">Projects</a>
-            <a href="other.html" class="nav-item">Other</a>
+            <a href="other.html" class="nav-item">Other ↗</a>
         </nav>
 
         <footer class="contact-section">
@@ -34,33 +40,28 @@
 
     </main>
 
-   <script>
+    <script>
         document.addEventListener('mousemove', (e) => {
-            // We removed the width check so it runs everywhere for testing
-            
-            // Calculate mouse position relative to center of screen
-            // Range: -1 (left/top) to +1 (right/bottom)
-            const x = (e.clientX / window.innerWidth - 0.5) * 2;
-            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+            // Only run on desktop
+            if (window.innerWidth > 768) {
+                // Calculate position (-1 to +1)
+                const x = (e.clientX / window.innerWidth - 0.5) * 2;
+                const y = (e.clientY / window.innerHeight - 0.5) * 2;
 
-            const blue = document.querySelector('.blue-block');
-            const orange = document.querySelector('.orange-circle');
+                const blue = document.querySelector('.blue-block');
+                const orange = document.querySelector('.orange-circle');
 
-            // Apply movement
-            // Blue moves OPPOSITE to mouse (multiply by negative)
-            if(blue) {
-                // We add the 'translate' but keep the 'left: 35%' from CSS
-                blue.style.transform = `translate(${x * -40}px, ${y * -40}px)`;
-            }
-            
-            // Orange moves WITH mouse (multiply by positive)
-            if(orange) {
-                // We MUST include the centering translate(-50%, -50%) first!
-                orange.style.transform = `translate(-50%, -50%) translate(${x * 80}px, ${y * 80}px) scale(1)`;
+                // Move Blue Block (Background)
+                if(blue) {
+                    blue.style.transform = `translate(${x * -30}px, ${y * -30}px)`;
+                }
+                
+                // Move Orange Circle (Foreground)
+                if(orange) {
+                    orange.style.transform = `translate(${x * 60}px, ${y * 60}px)`;
+                }
             }
         });
     </script>
-</body>
-</html>
 </body>
 </html>
