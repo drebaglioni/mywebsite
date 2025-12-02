@@ -9,10 +9,16 @@
 <body>
 
     <main class="bauhaus-grid">
-        
+
         <div class="guide-line"></div>
-        <div class="orange-circle"></div>
-        <div class="blue-block"></div>
+        
+        <div class="shape-entry-orange">
+            <div class="orange-circle"></div>
+        </div>
+
+        <div class="shape-entry-blue">
+            <div class="blue-block"></div>
+        </div>
 
         <header class="identity" style="z-index: 50;">
             <h1>
@@ -25,8 +31,18 @@
             <ul style="list-style: none; display: flex; flex-direction: column; gap: 3rem;">
                 
                 <li>
-                    <h2 style="font-size: 1rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; opacity: 0.6; color: #F0EEE9;">CHESS RATING (ELO)</h2>
-                    <span class="nav-item" style="font-size: 6rem; color: #FF4F00; line-height: 0.9;">1200</span>
+                    <h2 style="font-size: 1rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; opacity: 0.6; color: #F0EEE9;">CHESS (BULLET)</h2>
+                    <span class="nav-item" style="font-size: 6rem; color: #FF4F00; line-height: 0.9;">1400</span>
+                </li>
+
+                <li>
+                    <h2 style="font-size: 1rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; opacity: 0.6; color: #F0EEE9;">CHESS (BLITZ)</h2>
+                    <span class="nav-item" style="font-size: 6rem; color: #0047AB; line-height: 0.9;">1500</span>
+                </li>
+
+                <li>
+                    <h2 style="font-size: 1rem; letter-spacing: 0.2em; margin-bottom: 0.5rem; opacity: 0.6; color: #F0EEE9;">CHESS (RAPID)</h2>
+                    <span class="nav-item" style="font-size: 6rem; color: #FF4F00; line-height: 0.9;">1700</span>
                 </li>
 
                 <li>
@@ -46,5 +62,38 @@
 
     </main>
 
+    <script>
+        const frictionBlue = 0.05; 
+        const frictionOrange = 0.08;
+        let targetX = 0; let targetY = 0;
+        let currentX_Blue = 0; let currentY_Blue = 0;
+        let currentX_Orange = 0; let currentY_Orange = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 768) {
+                targetX = (e.clientX / window.innerWidth - 0.5) * 2;
+                targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+            }
+        });
+
+        function animate() {
+            const blueX = targetX * -30; const blueY = targetY * -30;
+            currentX_Blue += (blueX - currentX_Blue) * frictionBlue;
+            currentY_Blue += (blueY - currentY_Blue) * frictionBlue;
+
+            const orangeX = targetX * 60; const orangeY = targetY * 60;
+            currentX_Orange += (orangeX - currentX_Orange) * frictionOrange;
+            currentY_Orange += (orangeY - currentY_Orange) * frictionOrange;
+
+            const blue = document.querySelector('.blue-block');
+            const orange = document.querySelector('.orange-circle');
+
+            if (blue) blue.style.transform = `translate(${currentX_Blue}px, ${currentY_Blue}px)`;
+            if (orange) orange.style.transform = `translate(-50%, -50%) translate(${currentX_Orange}px, ${currentY_Orange}px)`;
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
 </html>
