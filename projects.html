@@ -3,33 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects</title>
+    <title>Selected Works</title>
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .orange-circle { background-color: #222222 !important; opacity: 0.8; }
+        .blue-block { background-color: #0047AB !important; opacity: 0.8; }
+        
+        /* PROJECT LINKS: Bold & Interactive */
+        .project-link {
+            font-size: 4rem; /* Massive */
+            font-weight: 900;
+            color: #1A1A1A; /* Readable Black */
+            line-height: 1.1;
+            border-bottom: 4px solid transparent; /* Invisible underline for spacing */
+            transition: all 0.2s ease;
+        }
+
+        .project-link:hover {
+            color: #0047AB; /* Blue Hover */
+            border-bottom: 4px solid #0047AB; /* Heavy underline on hover */
+            transform: translateX(20px);
+        }
+
+        .project-meta {
+            font-size: 1rem; 
+            letter-spacing: 0.2em; 
+            font-weight: 700;
+            color: #555;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
     <main class="bauhaus-grid">
 
         <div class="guide-line"></div>
-        <div class="orange-circle"></div>
-        <div class="blue-block"></div>
+        
+        <div class="shape-entry-orange">
+            <div class="orange-circle"></div>
+        </div>
+
+        <div class="shape-entry-blue">
+            <div class="blue-block"></div>
+        </div>
 
         <header class="identity" style="z-index: 50;">
-            <a href="index.html" style="font-size: 6rem; line-height: 1; margin-left: -0.5rem;">
-                ←
-            </a>
+            <h1>
+                <a href="index.html" style="font-size: 6rem; line-height: 1; margin-left: -0.5rem;">←</a>
+            </h1>
         </header>
 
-        <nav class="primary-nav" style="justify-content: center;">
-            <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem;">
-                <li><a href="www.vault.drebaglioni.com" class="nav-item">01. THE VAULT</a></li>
-                <li><a href="#" class="nav-item">02. COLOR / FUNCTION</a></li>
-                <li><a href="#" class="nav-item">03. TYPE / TENSION</a></li>
-                <li><a href="#" class="nav-item" style="opacity: 0.3;">04. COMING SOON</a></li>
+        <section class="primary-nav" style="display: block; padding-top: 2rem;">
+            
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 4rem;">
+                
+                <li>
+                    <span class="project-meta">01. WEB APP</span>
+                    <a href="https://vault.drebaglioni.com" target="_blank" class="nav-item project-link">
+                        THE VAULT ↗
+                    </a>
+                </li>
+
+                <li>
+                    <span class="project-meta">02. BRANDING</span>
+                    <a href="#" class="nav-item project-link">
+                        NIKE CONCEPT
+                    </a>
+                </li>
+
+                <li>
+                    <span class="project-meta">03. ARCHITECTURE</span>
+                    <a href="#" class="nav-item project-link">
+                        BRUTALIST ARCH
+                    </a>
+                </li>
+
             </ul>
-        </nav>
+
+        </section>
 
     </main>
 
+    <script>
+        const frictionBlue = 0.05; 
+        const frictionOrange = 0.08;
+        let targetX = 0; let targetY = 0;
+        let currentX_Blue = 0; let currentY_Blue = 0;
+        let currentX_Orange = 0; let currentY_Orange = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 768) {
+                targetX = (e.clientX / window.innerWidth - 0.5) * 2;
+                targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+            }
+        });
+
+        function animate() {
+            const blueX = targetX * -30; const blueY = targetY * -30;
+            currentX_Blue += (blueX - currentX_Blue) * frictionBlue;
+            currentY_Blue += (blueY - currentY_Blue) * frictionBlue;
+
+            const orangeX = targetX * 60; const orangeY = targetY * 60;
+            currentX_Orange += (orangeX - currentX_Orange) * frictionOrange;
+            currentY_Orange += (orangeY - currentY_Orange) * frictionOrange;
+
+            const blue = document.querySelector('.blue-block');
+            const orange = document.querySelector('.orange-circle');
+
+            if (blue) blue.style.transform = `translate(${currentX_Blue}px, ${currentY_Blue}px)`;
+            if (orange) orange.style.transform = `translate(-50%, -50%) translate(${currentX_Orange}px, ${currentY_Orange}px)`;
+
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
 </html>
