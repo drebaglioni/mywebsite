@@ -3,45 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About</title>
+    <title>About Me</title>
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* SCROLL LAYOUT */
+        .bauhaus-grid {
+            display: block; 
+            height: auto; 
+            overflow-y: auto; 
+            padding-bottom: 10vh;
+        }
+
+        /* SECTION CONTAINERS */
+        .story-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh; 
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        /* TEXT STYLING */
+        .story-text {
+            max-width: 600px;
+            margin-top: 3rem;
+            z-index: 20;
+        }
+        .story-label {
+            font-size: 1rem; letter-spacing: 0.2em; font-weight: 700;
+            margin-bottom: 1rem; display: block;
+        }
+        .story-p {
+            font-size: 1.8rem; line-height: 1.3; font-weight: 400;
+        }
+
+        /* --- SCULPTURE 1: THE GLOBE --- */
+        .globe-wrapper {
+            position: relative;
+            width: 300px; height: 300px;
+        }
+        
+        .globe-circle {
+            width: 100%; height: 100%;
+            background-color: #FF4F00; 
+            border-radius: 50%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px);
+            background-size: 50px 50px; 
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.2);
+            mix-blend-mode: multiply;
+        }
+
+        .loc-dot {
+            position: absolute;
+            width: 12px; height: 12px;
+            background-color: #F0EEE9; 
+            border: 2px solid #1A1A1A;
+            z-index: 10;
+        }
+        .loc-sf { top: 40%; left: 20%; }      
+        .loc-princeton { top: 42%; left: 28%; } 
+        .loc-wales { top: 35%; left: 48%; }   
+        .loc-italy { top: 45%; left: 52%; }   
+        .loc-korea { top: 48%; left: 80%; }   
+
+        .globe-path {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; opacity: 0.6;
+        }
+
+        /* --- SCULPTURE 2: THE EXACT PAWN (SVG) --- */
+        .pawn-wrapper {
+            position: relative;
+            /* Dimensions scaled to match the reference image proportions */
+            width: 240px; 
+            height: 360px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        
+        /* The SVG fills the wrapper and takes the orange color */
+        .pawn-svg {
+            width: 100%;
+            height: 100%;
+            fill: #FF4F00; /* International Orange */
+        }
+
+
+        /* DESKTOP LAYOUT */
+        @media screen and (min-width: 768px) {
+            .story-section {
+                flex-direction: row; 
+                justify-content: space-between;
+                padding: 0 10vw;
+            }
+            .story-text { margin-top: 0; width: 45%; }
+            .globe-wrapper { width: 400px; height: 400px; }
+            .pawn-wrapper { width: 300px; height: 450px; }
+            
+            .story-section:nth-child(even) { flex-direction: row-reverse; }
+        }
+    </style>
 </head>
 <body>
 
     <main class="bauhaus-grid">
 
-        <div class="guide-line"></div>
-        <div class="orange-circle"></div>
-        <div class="blue-block"></div>
-
-        <header class="identity" style="z-index: 50;">
-            <a href="index.html" style="font-size: 6rem; line-height: 1; margin-left: -0.5rem;">
-                ←
-            </a>
+        <header class="identity" style="position: fixed; top: 2rem; left: 2rem; z-index: 100;">
+            <h1>
+                <a href="index.html" style="font-size: 4rem; line-height: 1;">←</a>
+            </h1>
         </header>
 
-        <section class="primary-nav" style="display: block; padding-top: 2rem;">
 
-            <h2 style="font-size: 1.5rem; color: #F0EEE9; margin-bottom: 2rem; letter-spacing: 0.1em;">
-                BUONGIORNO
-            </h2>
+        <section class="story-section">
+            <div class="globe-wrapper">
+                <div class="globe-circle"></div>
+                <div class="loc-dot loc-sf" title="Bay Area"></div>
+                <div class="loc-dot loc-princeton" title="Princeton"></div>
+                <div class="loc-dot loc-wales" title="Wales"></div>
+                <div class="loc-dot loc-italy" title="Italy"></div>
+                <div class="loc-dot loc-korea" title="Korea"></div>
+                <svg class="globe-path">
+                    <path d="M 60,120 Q 144,80 240,144" stroke="#F0EEE9" stroke-width="2" fill="none" stroke-dasharray="5,5" />
+                </svg>
+            </div>
+            <div class="story-text">
+                <span class="story-label">ORIGIN & PATH</span>
+                <p class="story-p">
+                    From the cliffs of <strong>Wales</strong> to the streets of <strong>Seoul</strong>.
+                    <br><br>
+                    My worldview was constructed in <strong>Italy</strong>, refined at <strong>Princeton</strong>, and is currently being engineered in the <strong>Bay Area</strong>.
+                </p>
+            </div>
+        </section>
 
-            <p style="font-size: 1.8rem; line-height: 1.4; color: #F0EEE9; max-width: 800px; font-weight: 400;">
-                ITALIA. CYMRU. USA. 한국
-                <br><br>
-                BACKGROUND IN FINTECH, CRYPTO, DESIGN.
-                VERY CURIOUS. WISH I WROTE MORE. 
-            </p>
 
-            <br><br>
+        <section class="story-section">
+            
+            <div class="pawn-wrapper">
+                <svg class="pawn-svg" viewBox="0 0 240 360" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="120" cy="60" r="55" />
+                    
+                    <polygon points="70,115 170,115 160,135 80,135" />
+                    
+                    <path d="M 80,135 Q 60,220 40,260 L 200,260 Q 180,220 160,135 Z" />
+                    
+                    <rect x="40" y="260" width="160" height="35" />
+                    
+                    <rect x="35" y="305" width="170" height="40" />
+                </svg>
+            </div>
 
-            <a href="resume.pdf" style="font-size: 1.5rem; border-bottom: 2px solid #F0EEE9; display: inline; color: #F0EEE9;">
-                RESUME PDF ↗
-            </a>
-
+            <div class="story-text">
+                <span class="story-label">STRATEGY</span>
+                <p class="story-p">
+                    <strong>1700 Rapid Elo.</strong>
+                    <br><br>
+                    I approach design like a chess engine: pattern recognition, positional understanding, and knowing when to sacrifice material for a better position.
+                </p>
+            </div>
         </section>
 
     </main>
 
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 768) {
+                const x = (e.clientX / window.innerWidth - 0.5) * 20;
+                const y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+                const globe = document.querySelector('.globe-wrapper');
+                const pawn = document.querySelector('.pawn-wrapper');
+
+                if (globe) globe.style.transform = `translate(${x}px, ${y}px)`;
+                if (pawn) pawn.style.transform = `translate(${x * -1}px, ${y * -1}px)`;
+            }
+        });
+    </script>
 </body>
 </html>
