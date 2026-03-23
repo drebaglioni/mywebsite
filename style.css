@@ -512,6 +512,7 @@ body.library-page a {
     gap: 1.25rem;
     background: #ffffff;
     overflow-y: auto;
+    contain: layout paint;
 }
 
 .library-home-link {
@@ -643,6 +644,7 @@ body.library-page a {
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
+    contain: layout paint;
 }
 
 .library-main-header {
@@ -675,6 +677,7 @@ body.library-page a {
     gap: 2px;
     padding-bottom: 0;
     position: relative;
+    contain: layout paint;
 }
 
 .book-shelf:hover .spine-item {
@@ -701,6 +704,7 @@ body.library-page a {
     padding: 0;
     cursor: pointer;
     position: relative;
+    will-change: transform;
     box-shadow: inset -3px 0 10px rgba(0, 0, 0, 0.06), -1px 0 3px rgba(0, 0, 0, 0.14);
     transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, opacity 0.2s ease;
 }
@@ -819,6 +823,7 @@ body.library-page a {
     padding: 2.5rem 1.5rem;
     background: #ffffff;
     overflow-y: auto;
+    contain: layout paint;
 }
 
 .library-detail h3 {

@@ -48,6 +48,7 @@
         const frictionBlue = 0.06;
         const frictionCircleOne = 0.09;
         const frictionCircleTwo = 0.07;
+        const mediaReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
         let targetX = 0;
         let targetY = 0;
@@ -59,14 +60,33 @@
         let currentX_CircleTwo = 0;
         let currentY_CircleTwo = 0;
 
-        document.addEventListener('mousemove', (e) => {
-            if (window.innerWidth > 768) {
-                targetX = (e.clientX / window.innerWidth - 0.5) * 2;
-                targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+        const blue = document.querySelector('.s2');
+        const circleOne = document.querySelector('.s1');
+        const circleTwo = document.querySelector('.s3');
+
+        let animationFrameId = null;
+        let motionEnabled = false;
+
+        function setTransforms() {
+            if (blue) {
+                blue.style.transform = `translate(${currentX_Blue}px, ${currentY_Blue}px)`;
             }
-        });
+
+            if (circleOne) {
+                circleOne.style.transform = `translate(${currentX_CircleOne}px, ${currentY_CircleOne}px)`;
+            }
+
+            if (circleTwo) {
+                circleTwo.style.transform = `translate(${currentX_CircleTwo}px, ${currentY_CircleTwo}px)`;
+            }
+        }
 
         function animate() {
+            if (!motionEnabled) {
+                animationFrameId = null;
+                return;
+            }
+
             const blueX = targetX * -25;
             const blueY = targetY * -30;
             currentX_Blue += (blueX - currentX_Blue) * frictionBlue;
@@ -82,26 +102,41 @@
             currentX_CircleTwo += (circleTwoX - currentX_CircleTwo) * frictionCircleTwo;
             currentY_CircleTwo += (circleTwoY - currentY_CircleTwo) * frictionCircleTwo;
 
-            const blue = document.querySelector('.s2');
-            const circleOne = document.querySelector('.s1');
-            const circleTwo = document.querySelector('.s3');
-
-            if (blue) {
-                blue.style.transform = `translate(${currentX_Blue}px, ${currentY_Blue}px)`;
-            }
-
-            if (circleOne) {
-                circleOne.style.transform = `translate(${currentX_CircleOne}px, ${currentY_CircleOne}px)`;
-            }
-
-            if (circleTwo) {
-                circleTwo.style.transform = `translate(${currentX_CircleTwo}px, ${currentY_CircleTwo}px)`;
-            }
-
-            requestAnimationFrame(animate);
+            setTransforms();
+            animationFrameId = requestAnimationFrame(animate);
         }
 
-        animate();
+        function updateMotionState() {
+            motionEnabled = window.innerWidth > 768 && !mediaReducedMotion.matches && !document.hidden;
+
+            if (!motionEnabled) {
+                targetX = 0;
+                targetY = 0;
+            }
+
+            if (motionEnabled && animationFrameId === null) {
+                animationFrameId = requestAnimationFrame(animate);
+            }
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            if (!motionEnabled) {
+                return;
+            }
+            targetX = (e.clientX / window.innerWidth - 0.5) * 2;
+            targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+        }, { passive: true });
+
+        document.addEventListener('visibilitychange', updateMotionState);
+        window.addEventListener('resize', updateMotionState, { passive: true });
+        if (typeof mediaReducedMotion.addEventListener === 'function') {
+            mediaReducedMotion.addEventListener('change', updateMotionState);
+        } else if (typeof mediaReducedMotion.addListener === 'function') {
+            mediaReducedMotion.addListener(updateMotionState);
+        }
+
+        setTransforms();
+        updateMotionState();
     </script>
 </body>
 </html>

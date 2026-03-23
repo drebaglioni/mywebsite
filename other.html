@@ -88,9 +88,16 @@
     </main>
 
     <script>
+        const SPINE_WIDTHS = ['40px', '54px', '72px', '88px'];
+        const SPINE_HEIGHTS = ['220px', '260px', '290px', '320px'];
+        const SPINE_COLORS = ['#f45624', '#5a5e43', '#151515', '#e8deca', '#ffffff'];
+
         const state = {
             items: [],
+            itemById: new Map(),
             selectedId: null,
+            filterOptions: null,
+            renderScheduled: false,
             filters: {
                 subjects: new Set(),
                 years: new Set(),
@@ -138,6 +145,29 @@
             return values[hashCode(input) % values.length];
         }
 
+        function prepareItem(rawItem) {
+            const author = normalizeText(rawItem.author) || 'Unknown';
+            const subjects = Array.isArray(rawItem.subjects) ? rawItem.subjects : [];
+            const primarySubject = subjects.length > 0 ? subjects[0] : rawItem.format;
+            const spineColor = pickFrom(rawItem.id + '-c', SPINE_COLORS);
+
+            return {
+                ...rawItem,
+                _author: author,
+                _primarySubject: primarySubject,
+                _searchBlob: [rawItem.title, author, normalizeText(rawItem.notes)]
+                    .filter(Boolean)
+                    .join(' ')
+                    .toLowerCase(),
+                _ui: {
+                    width: pickFrom(rawItem.id + '-w', SPINE_WIDTHS),
+                    height: pickFrom(rawItem.id + '-h', SPINE_HEIGHTS),
+                    color: spineColor,
+                    dark: spineColor === '#151515'
+                }
+            };
+        }
+
         function collectFilterOptions(items) {
             const subjects = new Set();
             const years = new Set();
@@ -145,7 +175,7 @@
             const statuses = new Set();
 
             items.forEach((item) => {
-                (item.subjects || []).forEach((subject) => subjects.add(subject));
+                item.subjects.forEach((subject) => subjects.add(subject));
                 years.add(String(item.year));
                 formats.add(item.format);
                 statuses.add(item.status);
@@ -159,28 +189,28 @@
             };
         }
 
-        function renderFilterButtons(container, values, filterKey, formatLabel) {
+        function buildFilterButtons(container, values, filterKey, formatLabel) {
             container.innerHTML = '';
+            const fragment = document.createDocumentFragment();
+
             values.forEach((value) => {
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.className = 'filter-item';
-                const selected = state.filters[filterKey].has(value);
-                if (selected) {
-                    button.classList.add('active');
-                }
-
+                button.dataset.value = value;
+                button.dataset.filterKey = filterKey;
                 const label = formatLabel ? formatLabel(value) : value;
                 button.innerHTML = '<span class="filter-box" aria-hidden="true"></span>' + label;
-                button.addEventListener('click', () => {
-                    if (state.filters[filterKey].has(value)) {
-                        state.filters[filterKey].delete(value);
-                    } else {
-                        state.filters[filterKey].add(value);
-                    }
-                    render();
-                });
-                container.appendChild(button);
+                fragment.appendChild(button);
+            });
+
+            container.appendChild(fragment);
+        }
+
+        function updateFilterButtonState(container, filterKey) {
+            container.querySelectorAll('.filter-item').forEach((button) => {
+                const value = button.dataset.value;
+                button.classList.toggle('active', state.filters[filterKey].has(value));
             });
         }
 
@@ -189,7 +219,7 @@
 
             const filtered = items.filter((item) => {
                 const subjectMatch = state.filters.subjects.size === 0 ||
-                    (item.subjects || []).some((subject) => state.filters.subjects.has(subject));
+                    item.subjects.some((subject) => state.filters.subjects.has(subject));
 
                 const yearMatch = state.filters.years.size === 0 ||
                     state.filters.years.has(String(item.year));
@@ -200,11 +230,7 @@
                 const statusMatch = state.filters.statuses.size === 0 ||
                     state.filters.statuses.has(item.status);
 
-                const searchValue = [item.title, item.author, item.notes]
-                    .filter(Boolean)
-                    .join(' ')
-                    .toLowerCase();
-                const searchMatch = query.length === 0 || searchValue.includes(query);
+                const searchMatch = query.length === 0 || item._searchBlob.includes(query);
 
                 return subjectMatch && yearMatch && formatMatch && statusMatch && searchMatch;
             });
@@ -239,74 +265,64 @@
 
         function renderShelf(items) {
             refs.shelf.innerHTML = '';
-            refs.empty.hidden = items.length !== 0;
-            refs.count.textContent = items.length + (items.length === 1 ? ' item' : ' items');
+            const fragment = document.createDocumentFragment();
 
             items.forEach((item) => {
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.className = 'spine-item';
+                button.dataset.id = item.id;
+                button.dataset.format = item.format;
+                button.style.setProperty('--spine-width', item._ui.width);
+                button.style.setProperty('--spine-height', item._ui.height);
+                button.style.setProperty('--spine-color', item._ui.color);
+
+                if (item._ui.dark) {
+                    button.classList.add('dark');
+                }
                 if (state.selectedId === item.id) {
                     button.classList.add('selected');
                 }
 
-                button.dataset.format = item.format;
-                button.style.setProperty('--spine-width', pickFrom(item.id + '-w', ['40px', '54px', '72px', '88px']));
-                button.style.setProperty('--spine-height', pickFrom(item.id + '-h', ['220px', '260px', '290px', '320px']));
-                button.style.setProperty('--spine-color', pickFrom(item.id + '-c', ['#f45624', '#5a5e43', '#151515', '#e8deca', '#ffffff']));
-
-                if (button.style.getPropertyValue('--spine-color') === '#151515') {
-                    button.classList.add('dark');
-                }
-
-                const author = normalizeText(item.author) || 'Unknown';
-                const subjectLabel = item.subjects && item.subjects.length > 0 ? item.subjects[0] : item.format;
-
                 button.innerHTML = [
-                    '<span class="spine-top">' + author + '</span>',
+                    '<span class="spine-top">' + item._author + '</span>',
                     '<span class="spine-title">' + item.title + '</span>',
-                    '<span class="spine-bottom">' + String(item.year) + '<em>' + capitalize(subjectLabel) + '</em></span>',
+                    '<span class="spine-bottom">' + String(item.year) + '<em>' + capitalize(item._primarySubject) + '</em></span>',
                     '<span class="hover-card">' +
                         '<strong>' + item.title + '</strong>' +
-                        '<small>' + author + ' · ' + String(item.year) + '</small>' +
+                        '<small>' + item._author + ' · ' + String(item.year) + '</small>' +
                         '<small>' + capitalize(item.format) + ' · ' + capitalize(item.status) + '</small>' +
                     '</span>'
                 ].join('');
 
-                button.addEventListener('click', () => {
-                    state.selectedId = state.selectedId === item.id ? null : item.id;
-                    render();
-                });
-
-                refs.shelf.appendChild(button);
+                fragment.appendChild(button);
             });
+
+            refs.shelf.appendChild(fragment);
         }
 
-        function renderDetail(items) {
+        function renderDetail() {
             if (!state.selectedId) {
                 refs.detail.textContent = 'Select a book or article to see details.';
                 return;
             }
 
-            const selected = items.find((item) => item.id === state.selectedId) ||
-                state.items.find((item) => item.id === state.selectedId);
-
+            const selected = state.itemById.get(state.selectedId);
             if (!selected) {
                 refs.detail.textContent = 'Select a book or article to see details.';
                 return;
             }
 
-            const subjects = selected.subjects && selected.subjects.length > 0
+            const subjects = selected.subjects.length > 0
                 ? selected.subjects.map(capitalize).join(', ')
                 : 'None';
             const rating = selected.rating == null ? 'Unrated' : String(selected.rating) + '/5';
             const finished = selected.finished || 'Not set';
-            const author = normalizeText(selected.author) || 'Unknown';
             const notes = normalizeText(selected.notes) || 'No notes yet.';
 
             let html = '';
             html += '<h4>' + selected.title + '</h4>';
-            html += '<p><strong>Author:</strong> ' + author + '</p>';
+            html += '<p><strong>Author:</strong> ' + selected._author + '</p>';
             html += '<p><strong>Format:</strong> ' + capitalize(selected.format) + '</p>';
             html += '<p><strong>Status:</strong> ' + capitalize(selected.status) + '</p>';
             html += '<p><strong>Year:</strong> ' + String(selected.year) + '</p>';
@@ -322,30 +338,66 @@
             refs.detail.innerHTML = html;
         }
 
-        function render() {
-            const options = collectFilterOptions(state.items);
-            renderFilterButtons(refs.subjectFilters, options.subjects, 'subjects', capitalize);
-            renderFilterButtons(refs.yearFilters, options.years, 'years');
-            renderFilterButtons(refs.formatFilters, options.formats, 'formats', capitalize);
-            renderFilterButtons(refs.statusFilters, options.statuses, 'statuses', capitalize);
-
-            refs.searchInput.value = state.filters.search;
-            refs.sortSelect.value = state.filters.sort;
-
+        function renderNow() {
             const filtered = applyFilters(state.items);
+            refs.empty.hidden = filtered.length !== 0;
+            refs.count.textContent = filtered.length + (filtered.length === 1 ? ' item' : ' items');
+
+            updateFilterButtonState(refs.subjectFilters, 'subjects');
+            updateFilterButtonState(refs.yearFilters, 'years');
+            updateFilterButtonState(refs.formatFilters, 'formats');
+            updateFilterButtonState(refs.statusFilters, 'statuses');
+
+            if (state.selectedId && !filtered.some((item) => item.id === state.selectedId)) {
+                state.selectedId = null;
+            }
+
             renderShelf(filtered);
-            renderDetail(filtered);
+            renderDetail();
+        }
+
+        function scheduleRender() {
+            if (state.renderScheduled) {
+                return;
+            }
+            state.renderScheduled = true;
+            requestAnimationFrame(() => {
+                state.renderScheduled = false;
+                renderNow();
+            });
+        }
+
+        function debounce(fn, delay) {
+            let timerId = null;
+            return function debounced(...args) {
+                if (timerId !== null) {
+                    clearTimeout(timerId);
+                }
+                timerId = setTimeout(() => {
+                    timerId = null;
+                    fn(...args);
+                }, delay);
+            };
         }
 
         async function loadLibrary() {
             try {
-                const response = await fetch('data/library.json', { cache: 'no-store' });
+                const response = await fetch('data/library.json');
                 if (!response.ok) {
                     throw new Error('Failed to load data/library.json (' + response.status + ')');
                 }
                 const data = await response.json();
-                state.items = Array.isArray(data) ? data : [];
-                render();
+                const rawItems = Array.isArray(data) ? data : [];
+                state.items = rawItems.map(prepareItem);
+                state.itemById = new Map(state.items.map((item) => [item.id, item]));
+                state.filterOptions = collectFilterOptions(state.items);
+
+                buildFilterButtons(refs.subjectFilters, state.filterOptions.subjects, 'subjects', capitalize);
+                buildFilterButtons(refs.yearFilters, state.filterOptions.years, 'years');
+                buildFilterButtons(refs.formatFilters, state.filterOptions.formats, 'formats', capitalize);
+                buildFilterButtons(refs.statusFilters, state.filterOptions.statuses, 'statuses', capitalize);
+
+                scheduleRender();
             } catch (error) {
                 refs.shelf.innerHTML = '';
                 refs.empty.hidden = false;
@@ -354,20 +406,57 @@
             }
         }
 
+        function onFilterClick(event) {
+            const button = event.target.closest('.filter-item');
+            if (!button) {
+                return;
+            }
+            const filterKey = button.dataset.filterKey;
+            const value = button.dataset.value;
+            if (!filterKey || !value) {
+                return;
+            }
+            if (state.filters[filterKey].has(value)) {
+                state.filters[filterKey].delete(value);
+            } else {
+                state.filters[filterKey].add(value);
+            }
+            scheduleRender();
+        }
+
+        refs.subjectFilters.addEventListener('click', onFilterClick);
+        refs.yearFilters.addEventListener('click', onFilterClick);
+        refs.formatFilters.addEventListener('click', onFilterClick);
+        refs.statusFilters.addEventListener('click', onFilterClick);
+
+        refs.shelf.addEventListener('click', (event) => {
+            const spine = event.target.closest('.spine-item');
+            if (!spine) {
+                return;
+            }
+            const itemId = spine.dataset.id;
+            state.selectedId = state.selectedId === itemId ? null : itemId;
+            scheduleRender();
+        });
+
+        const updateSearch = debounce((value) => {
+            state.filters.search = value;
+            scheduleRender();
+        }, 120);
+
         refs.searchInput.addEventListener('input', (event) => {
-            state.filters.search = event.target.value;
-            render();
+            updateSearch(event.target.value.toLowerCase());
         });
 
         refs.sortSelect.addEventListener('change', (event) => {
             state.filters.sort = event.target.value;
-            render();
+            scheduleRender();
         });
 
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape' && state.selectedId) {
                 state.selectedId = null;
-                render();
+                scheduleRender();
             }
         });
 
@@ -380,7 +469,7 @@
             const clickedDetail = event.target.closest('.library-detail');
             if (!clickedSpine && !clickedDetail) {
                 state.selectedId = null;
-                render();
+                scheduleRender();
             }
         });
 
