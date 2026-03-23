@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 700" role="img" aria-label="Chess rook illustration">
+  <rect x="150" y="150" width="200" height="450" fill="#6ab2ec"/>
+  <rect x="150" y="120" width="245" height="360" fill="#ff8a66" transform="rotate(-5 272.5 300)"/>
+  <rect x="80" y="430" width="210" height="210" fill="#f8ea09" transform="rotate(25 185 535)"/>
+
+  <path d="M120,600 L380,600 L350,450 L350,200 L400,150 L360,100 L320,150 L280,100 L240,150 L200,100 L160,150 L120,100 L100,150 L150,200 L150,450 Z"
+        fill="none"
+        stroke="#080808"
+        stroke-width="6"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+</svg>

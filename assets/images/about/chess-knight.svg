@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 700" role="img" aria-label="Chess knight illustration">
+  <rect x="90" y="145" width="320" height="300" fill="#6ab2ec" transform="rotate(8 250 295)"/>
+  <rect x="270" y="490" width="200" height="110" fill="#ff8a66" transform="rotate(-20 370 545)"/>
+  <path d="M150,250 C100,150 150,50 250,100 C300,120 350,200 350,300 C350,400 300,450 350,550 L100,550 Z" fill="#f8ea09"/>
+
+  <path d="M250,100 Q150,50 150,200 Q100,250 100,350 L200,350 Q220,250 300,200 Q350,150 350,250 Q350,350 250,450 L350,600 L100,600 L150,450 Z"
+        fill="none"
+        stroke="#080808"
+        stroke-width="6"
+        stroke-linecap="round"
+        stroke-linejoin="round"/>
+</svg>

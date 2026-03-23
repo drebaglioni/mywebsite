@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 700" role="img" aria-label="Chess king illustration">
+  <rect x="145" y="295" width="210" height="255" fill="#ff8a66"/>
+  <circle cx="250" cy="200" r="82" fill="#f8ea09"/>
+
+  <g fill="none" stroke="#080808" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter">
+    <polyline points="150,150 170,50 250,100 330,50 350,150"/>
+    <line x1="170" y1="50" x2="170" y2="30"/>
+    <line x1="250" y1="100" x2="250" y2="80"/>
+    <line x1="330" y1="50" x2="330" y2="30"/>
+    <circle cx="170" cy="20" r="5" fill="#080808"/>
+    <circle cx="250" cy="70" r="5" fill="#080808"/>
+    <circle cx="330" cy="20" r="5" fill="#080808"/>
+    <rect x="180" y="150" width="140" height="120"/>
+    <circle cx="210" cy="190" r="15"/>
+    <line x1="195" y1="175" x2="225" y2="205"/>
+    <line x1="225" y1="175" x2="195" y2="205"/>
+    <circle cx="290" cy="190" r="15"/>
+    <line x1="275" y1="175" x2="305" y2="205"/>
+    <line x1="305" y1="175" x2="275" y2="205"/>
+    <rect x="200" y="230" width="100" height="20"/>
+    <path d="M220,270 L280,270 L300,450 L350,450 L380,600 L120,600 L150,450 L200,450 Z"/>
+  </g>
+</svg>

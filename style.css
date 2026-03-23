@@ -418,15 +418,40 @@ body.homepage .system-specs {
     body.homepage .nav-overlay {
         padding: 0 24px;
         height: 70px;
+        justify-content: flex-start;
     }
 
     body.homepage .nav-links {
-        display: none;
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: calc(10px + env(safe-area-inset-bottom));
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid var(--home-blue);
+        border-radius: 14px;
+        padding: 8px;
+        background: rgba(242, 240, 230, 0.88);
+        backdrop-filter: blur(6px);
+        z-index: 140;
+    }
+
+    body.homepage .nav-links a {
+        flex: 1;
+        text-align: center;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        border: 1px solid rgba(0, 51, 204, 0.35);
+        border-radius: 8px;
+        padding: 8px 4px;
+        background: rgba(255, 255, 255, 0.38);
     }
 
     body.homepage .type-anchor {
         left: 24px;
-        bottom: 24px;
+        bottom: calc(94px + env(safe-area-inset-bottom));
     }
 
     body.homepage .display-text {
@@ -453,7 +478,7 @@ body.homepage .system-specs {
 
     body.homepage .system-specs {
         right: 24px;
-        bottom: 24px;
+        bottom: calc(94px + env(safe-area-inset-bottom));
         font-size: 9px;
     }
 
