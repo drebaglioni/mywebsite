@@ -6,100 +6,101 @@
     <title>Andrea Baglioni</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="homepage">
+    <nav class="nav-overlay">
+        <div class="logo-minimal">HOME</div>
+        <div class="nav-links">
+            <a href="about.html">01 About</a>
+            <a href="projects.html">02 Projects</a>
+            <a href="other.html">03 Other</a>
+        </div>
+    </nav>
 
-    <main class="bauhaus-grid">
-
-        <div class="guide-line"></div>
-        
-        <div class="shape-entry-orange">
-            <div class="orange-circle"></div>
+    <main class="hero-canvas">
+        <div class="geo-layer">
+            <div class="shape shape-circle s1"></div>
+            <div class="shape s2"></div>
+            <div class="shape shape-circle s3"></div>
         </div>
 
-        <div class="shape-entry-blue">
-            <div class="blue-block"></div>
+        <aside class="info-tab">
+            <div class="meta-header">Profile // 01</div>
+            <div class="meta-body">
+                Designer and builder focused on digital products, brand systems, and interactive web experiences. I combine visual structure with practical execution to ship clear, useful work.
+            </div>
+            <div class="meta-footer">
+                Currently available for selected collaborations.
+            </div>
+        </aside>
+
+        <div class="type-anchor">
+            <div class="display-text">ANDREA</div>
+            <div class="display-text alt">BAGLIONI</div>
         </div>
 
-        <header class="identity">
-            <h1>Andrea<br>Baglioni</h1>
-        </header>
-
-        <nav class="primary-nav">
-            <a href="about.html" class="nav-item">About Me</a>
-            <a href="projects.html" class="nav-item">Projects</a>
-            <a href="other.html" class="nav-item">Other</a>
-        </nav>
-
-        <footer class="contact-section">
-            <ul>
-                <li><a href="https://linkedin.com">LinkedIn ↗</a></li>
-                <li><a href="#">Twitter ↗</a></li>
-                <li><a href="mailto:your@email.com">Email ↗</a></li>
-            </ul>
-        </footer>
-
+        <div class="system-specs">
+            BERKELEY, CA<br>
+            PORTFOLIO // 2026
+        </div>
     </main>
 
     <script>
-        // Configuration
-        // '0.05' = Heavy/Slow. '0.1' = Medium. '0.2' = Light/Fast.
-        const frictionBlue = 0.05; 
-        const frictionOrange = 0.08;
+        const frictionBlue = 0.06;
+        const frictionCircleOne = 0.09;
+        const frictionCircleTwo = 0.07;
 
-        // Mouse Position (Target)
         let targetX = 0;
         let targetY = 0;
 
-        // Shape Position (Current)
         let currentX_Blue = 0;
         let currentY_Blue = 0;
-        let currentX_Orange = 0;
-        let currentY_Orange = 0;
+        let currentX_CircleOne = 0;
+        let currentY_CircleOne = 0;
+        let currentX_CircleTwo = 0;
+        let currentY_CircleTwo = 0;
 
-        // 1. Listen for Mouse (Update Target)
         document.addEventListener('mousemove', (e) => {
             if (window.innerWidth > 768) {
-                // Calculate from center (-1 to +1)
                 targetX = (e.clientX / window.innerWidth - 0.5) * 2;
                 targetY = (e.clientY / window.innerHeight - 0.5) * 2;
             }
         });
 
-        // 2. The Animation Loop (Update Current Position)
         function animate() {
-            // BLUE BLOCK PHYSICS (Background)
-            // Move 'Current' 5% of the way towards 'Target' every frame
-            const blueX = targetX * -30; // Max movement range in px
+            const blueX = targetX * -25;
             const blueY = targetY * -30;
-            
             currentX_Blue += (blueX - currentX_Blue) * frictionBlue;
             currentY_Blue += (blueY - currentY_Blue) * frictionBlue;
 
-            // ORANGE CIRCLE PHYSICS (Foreground)
-            const orangeX = targetX * 60; // Max movement range in px
-            const orangeY = targetY * 60;
+            const circleOneX = targetX * 50;
+            const circleOneY = targetY * 45;
+            currentX_CircleOne += (circleOneX - currentX_CircleOne) * frictionCircleOne;
+            currentY_CircleOne += (circleOneY - currentY_CircleOne) * frictionCircleOne;
 
-            currentX_Orange += (orangeX - currentX_Orange) * frictionOrange;
-            currentY_Orange += (orangeY - currentY_Orange) * frictionOrange;
+            const circleTwoX = targetX * 35;
+            const circleTwoY = targetY * 55;
+            currentX_CircleTwo += (circleTwoX - currentX_CircleTwo) * frictionCircleTwo;
+            currentY_CircleTwo += (circleTwoY - currentY_CircleTwo) * frictionCircleTwo;
 
-            // 3. Apply the Transforms
-            const blue = document.querySelector('.blue-block');
-            const orange = document.querySelector('.orange-circle');
+            const blue = document.querySelector('.s2');
+            const circleOne = document.querySelector('.s1');
+            const circleTwo = document.querySelector('.s3');
 
             if (blue) {
                 blue.style.transform = `translate(${currentX_Blue}px, ${currentY_Blue}px)`;
             }
 
-            if (orange) {
-                // Must preserve the centering translate(-50%, -50%)!
-                orange.style.transform = `translate(-50%, -50%) translate(${currentX_Orange}px, ${currentY_Orange}px)`;
+            if (circleOne) {
+                circleOne.style.transform = `translate(${currentX_CircleOne}px, ${currentY_CircleOne}px)`;
             }
 
-            // Keep the loop running
+            if (circleTwo) {
+                circleTwo.style.transform = `translate(${currentX_CircleTwo}px, ${currentY_CircleTwo}px)`;
+            }
+
             requestAnimationFrame(animate);
         }
 
-        // Start the Engine
         animate();
     </script>
 </body>

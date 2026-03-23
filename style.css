@@ -207,3 +207,273 @@ h1 a { font-size: inherit; }
         transform: translateX(10px);
     }
 }
+
+/* =========================================
+   6. HOMEPAGE REDESIGN
+   ========================================= */
+body.homepage {
+    --home-bg: #F2F0E6;
+    --home-blue: #0033CC;
+    --home-orange: #FF4F00;
+    --home-yellow: #FFE600;
+    --home-grid-line: rgba(0, 51, 204, 0.1);
+
+    background-color: var(--home-bg);
+    color: var(--home-blue);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    background-image:
+        linear-gradient(var(--home-grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--home-grid-line) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: center center;
+    cursor: default !important;
+}
+
+body.homepage::before {
+    display: none;
+}
+
+body.homepage a {
+    color: var(--home-blue);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: opacity 0.2s ease;
+    cursor: pointer !important;
+}
+
+body.homepage a:hover {
+    opacity: 0.65;
+    transform: none;
+}
+
+body.homepage .nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    z-index: 100;
+}
+
+body.homepage .logo-minimal {
+    font-size: 1.05rem;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+}
+
+body.homepage .nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+body.homepage .nav-links a {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.11em;
+}
+
+body.homepage .hero-canvas {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+body.homepage .geo-layer {
+    position: absolute;
+    inset: 0;
+    mix-blend-mode: multiply;
+}
+
+body.homepage .shape {
+    position: absolute;
+    will-change: transform;
+}
+
+body.homepage .shape-circle {
+    border-radius: 50%;
+}
+
+body.homepage .s1 {
+    width: 68vw;
+    height: 68vw;
+    background-color: var(--home-orange);
+    top: -21vw;
+    right: -9vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.homepage .s1::after {
+    content: "";
+    width: 15%;
+    height: 15%;
+    background: var(--home-bg);
+    border-radius: 50%;
+}
+
+body.homepage .s2 {
+    width: 29vw;
+    height: 86vh;
+    background-color: var(--home-blue);
+    border-radius: 40vw;
+    top: 8vh;
+    left: 31vw;
+    transform: rotate(-24deg);
+}
+
+body.homepage .s3 {
+    width: 50vw;
+    height: 50vw;
+    background-color: var(--home-orange);
+    bottom: -16vw;
+    left: -6vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.homepage .s3::after {
+    content: "";
+    width: 10%;
+    height: 10%;
+    background: var(--home-bg);
+    border-radius: 50%;
+}
+
+body.homepage .info-tab {
+    position: absolute;
+    top: 118px;
+    right: 40px;
+    width: 300px;
+    border-left: 1px solid var(--home-blue);
+    padding-left: 20px;
+    z-index: 20;
+}
+
+body.homepage .meta-header {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    letter-spacing: 0.1em;
+}
+
+body.homepage .meta-body {
+    font-size: 13px;
+    line-height: 1.55;
+    margin-bottom: 18px;
+    text-transform: none;
+}
+
+body.homepage .meta-footer {
+    font-size: 10px;
+    color: var(--home-orange);
+    border: 1px solid var(--home-orange);
+    padding: 10px;
+    text-transform: none;
+}
+
+body.homepage .type-anchor {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    z-index: 30;
+}
+
+body.homepage .display-text {
+    font-size: clamp(5rem, 14vw, 11rem);
+    font-weight: 900;
+    line-height: 0.79;
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
+    color: var(--home-yellow);
+    animation: none;
+}
+
+body.homepage .display-text.alt {
+    margin-left: 20px;
+}
+
+body.homepage .system-specs {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    text-align: right;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.6;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    z-index: 30;
+}
+
+@media (max-width: 768px) {
+    body.homepage .nav-overlay {
+        padding: 0 24px;
+        height: 70px;
+    }
+
+    body.homepage .nav-links {
+        display: none;
+    }
+
+    body.homepage .type-anchor {
+        left: 24px;
+        bottom: 24px;
+    }
+
+    body.homepage .display-text {
+        font-size: 18vw;
+    }
+
+    body.homepage .display-text.alt {
+        margin-left: 8px;
+    }
+
+    body.homepage .info-tab {
+        top: 84px;
+        right: 24px;
+        left: 24px;
+        width: auto;
+        padding-left: 14px;
+        background: rgba(242, 240, 230, 0.78);
+        backdrop-filter: blur(2px);
+    }
+
+    body.homepage .meta-body {
+        font-size: 12px;
+    }
+
+    body.homepage .system-specs {
+        right: 24px;
+        bottom: 24px;
+        font-size: 9px;
+    }
+
+    body.homepage .s1 {
+        width: 94vw;
+        height: 94vw;
+        right: -32vw;
+        top: -31vw;
+    }
+
+    body.homepage .s2 {
+        width: 38vw;
+        left: 46vw;
+        height: 62vh;
+    }
+
+    body.homepage .s3 {
+        width: 74vw;
+        height: 74vw;
+        bottom: -30vw;
+        left: -24vw;
+    }
+}
