@@ -3,140 +3,388 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Other Stats</title>
+    <title>Library Index</title>
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* 1. SHAPES: Dark & Moody */
-        .orange-circle {
-            background-color: #222222 !important; /* Charcoal */
-            opacity: 0.8; /* Dark enough to support white text */
-        }
-        .blue-block {
-            background-color: #0047AB !important; /* Cobalt */
-            opacity: 0.8;
-        }
-
-        /* 2. LABELS: Black Ink (Readable on Grey Wall) */
-        .stat-label {
-            font-size: 1rem; 
-            letter-spacing: 0.2em; 
-            margin-bottom: 0.5rem; 
-            font-weight: 700;
-            color: #1A1A1A !important; /* Black, not Cream */
-        }
-
-        /* 3. NUMBERS: White with Charcoal Outline (Readable Everywhere) */
-        .stat-number {
-            font-size: 6rem; 
-            line-height: 0.9;
-            font-weight: 900;
-            color: #F0EEE9; /* Paper White Fill */
-            /* The Outline ensures readability on light backgrounds */
-            -webkit-text-stroke: 2px #1A1A1A; 
-            text-shadow: 4px 4px 0px rgba(0,0,0,0.1); /* Subtle depth */
-        }
-        
-        /* 4. DOWNLOAD LINK: High Contrast */
-        .download-link {
-            font-size: 2rem; 
-            border-bottom: 3px solid #1A1A1A; 
-            color: #1A1A1A !important;
-        }
-        .download-link:hover {
-            color: #FF4F00 !important;
-            border-color: #FF4F00;
-        }
-    </style>
 </head>
-<body>
+<body class="library-page">
+    <main class="library-layout">
+        <aside class="library-sidebar">
+            <a class="library-home-link" href="index.html">HOME</a>
 
-    <main class="bauhaus-grid">
+            <header class="library-header">
+                <h1>Library<br>Index</h1>
+                <span class="library-volume">Vol. 01</span>
+            </header>
 
-        <div class="guide-line"></div>
-        
-        <div class="shape-entry-orange">
-            <div class="orange-circle"></div>
-        </div>
+            <section class="filter-group" aria-label="Search">
+                <label class="filter-title" for="library-search">
+                    <span>Search</span>
+                    <span>[TXT]</span>
+                </label>
+                <input id="library-search" class="search-input" type="search" placeholder="Title, author, notes..." autocomplete="off">
+            </section>
 
-        <div class="shape-entry-blue">
-            <div class="blue-block"></div>
-        </div>
+            <section class="filter-group" aria-label="Subject filter">
+                <div class="filter-title">
+                    <span>Subject</span>
+                    <span>[SBJ]</span>
+                </div>
+                <div class="filter-list" id="subject-filters"></div>
+            </section>
 
-        <header class="identity" style="z-index: 50;">
-            <h1>
-                <a href="index.html" style="font-size: 6rem; line-height: 1; margin-left: -0.5rem;">←</a>
-            </h1>
-        </header>
+            <section class="filter-group" aria-label="Year filter">
+                <div class="filter-title">
+                    <span>Year</span>
+                    <span>[YR]</span>
+                </div>
+                <div class="filter-list" id="year-filters"></div>
+            </section>
 
-        <section class="primary-nav" style="display: block; padding-top: 2rem;">
-            
-            <ul style="list-style: none; display: flex; flex-direction: column; gap: 3rem;">
-                
-                <li>
-                    <h2 class="stat-label">CHESS (BULLET)</h2>
-                    <span class="nav-item stat-number">1400</span>
-                </li>
+            <section class="filter-group" aria-label="Format filter">
+                <div class="filter-title">
+                    <span>Format</span>
+                    <span>[FMT]</span>
+                </div>
+                <div class="filter-list" id="format-filters"></div>
+            </section>
 
-                <li>
-                    <h2 class="stat-label">CHESS (BLITZ)</h2>
-                    <span class="nav-item stat-number">1500</span>
-                </li>
+            <section class="filter-group" aria-label="Status filter">
+                <div class="filter-title">
+                    <span>Status</span>
+                    <span>[STS]</span>
+                </div>
+                <div class="filter-list" id="status-filters"></div>
+            </section>
 
-                <li>
-                    <h2 class="stat-label">CHESS (RAPID)</h2>
-                    <span class="nav-item stat-number">1700</span>
-                </li>
+            <section class="filter-group" aria-label="Sort options">
+                <div class="filter-title">
+                    <span>Sort</span>
+                    <span>[ORD]</span>
+                </div>
+                <select id="sort-select" class="sort-select">
+                    <option value="recent">Recently finished</option>
+                    <option value="rating">Rating high-low</option>
+                    <option value="title">Title A-Z</option>
+                </select>
+            </section>
 
-                <li>
-                    <h2 class="stat-label">KOREAN LANG</h2>
-                    <span class="nav-item stat-number">A2</span>
-                </li>
+            <p class="library-sync-note">Data source: <code>data/library.json</code> (synced from Obsidian export)</p>
+        </aside>
 
-                <li style="margin-top: 2rem;">
-                    <a href="resume.pdf" class="nav-item download-link">
-                        DOWNLOAD RESUME PDF ↓
-                    </a>
-                </li>
+        <section class="library-main">
+            <div class="library-main-header">
+                <h2>Reading Shelf</h2>
+                <span id="result-count">0 items</span>
+            </div>
 
-            </ul>
-
+            <div class="book-shelf" id="book-shelf" aria-live="polite"></div>
+            <div class="library-empty" id="empty-state" hidden>No entries match your current filters.</div>
         </section>
 
+        <aside class="library-detail" id="library-detail" aria-live="polite">
+            <h3>Entry Detail</h3>
+            <div id="detail-content" class="detail-content">Select a book or article to see details.</div>
+        </aside>
     </main>
 
     <script>
-        const frictionBlue = 0.05; 
-        const frictionOrange = 0.08;
-        let targetX = 0; let targetY = 0;
-        let currentX_Blue = 0; let currentY_Blue = 0;
-        let currentX_Orange = 0; let currentY_Orange = 0;
+        const state = {
+            items: [],
+            selectedId: null,
+            filters: {
+                subjects: new Set(),
+                years: new Set(),
+                formats: new Set(),
+                statuses: new Set(),
+                search: '',
+                sort: 'recent'
+            }
+        };
 
-        document.addEventListener('mousemove', (e) => {
-            if (window.innerWidth > 768) {
-                targetX = (e.clientX / window.innerWidth - 0.5) * 2;
-                targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+        const refs = {
+            subjectFilters: document.getElementById('subject-filters'),
+            yearFilters: document.getElementById('year-filters'),
+            formatFilters: document.getElementById('format-filters'),
+            statusFilters: document.getElementById('status-filters'),
+            sortSelect: document.getElementById('sort-select'),
+            searchInput: document.getElementById('library-search'),
+            shelf: document.getElementById('book-shelf'),
+            count: document.getElementById('result-count'),
+            empty: document.getElementById('empty-state'),
+            detail: document.getElementById('detail-content')
+        };
+
+        function normalizeText(value) {
+            return (value || '').toString().trim();
+        }
+
+        function capitalize(value) {
+            return value
+                .split('-')
+                .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+                .join(' ');
+        }
+
+        function hashCode(input) {
+            let hash = 0;
+            for (let i = 0; i < input.length; i += 1) {
+                hash = ((hash << 5) - hash) + input.charCodeAt(i);
+                hash |= 0;
+            }
+            return Math.abs(hash);
+        }
+
+        function pickFrom(input, values) {
+            return values[hashCode(input) % values.length];
+        }
+
+        function collectFilterOptions(items) {
+            const subjects = new Set();
+            const years = new Set();
+            const formats = new Set();
+            const statuses = new Set();
+
+            items.forEach((item) => {
+                (item.subjects || []).forEach((subject) => subjects.add(subject));
+                years.add(String(item.year));
+                formats.add(item.format);
+                statuses.add(item.status);
+            });
+
+            return {
+                subjects: Array.from(subjects).sort((a, b) => a.localeCompare(b)),
+                years: Array.from(years).sort((a, b) => Number(b) - Number(a)),
+                formats: Array.from(formats).sort((a, b) => a.localeCompare(b)),
+                statuses: Array.from(statuses).sort((a, b) => a.localeCompare(b))
+            };
+        }
+
+        function renderFilterButtons(container, values, filterKey, formatLabel) {
+            container.innerHTML = '';
+            values.forEach((value) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'filter-item';
+                const selected = state.filters[filterKey].has(value);
+                if (selected) {
+                    button.classList.add('active');
+                }
+
+                const label = formatLabel ? formatLabel(value) : value;
+                button.innerHTML = '<span class="filter-box" aria-hidden="true"></span>' + label;
+                button.addEventListener('click', () => {
+                    if (state.filters[filterKey].has(value)) {
+                        state.filters[filterKey].delete(value);
+                    } else {
+                        state.filters[filterKey].add(value);
+                    }
+                    render();
+                });
+                container.appendChild(button);
+            });
+        }
+
+        function applyFilters(items) {
+            const query = state.filters.search.toLowerCase();
+
+            const filtered = items.filter((item) => {
+                const subjectMatch = state.filters.subjects.size === 0 ||
+                    (item.subjects || []).some((subject) => state.filters.subjects.has(subject));
+
+                const yearMatch = state.filters.years.size === 0 ||
+                    state.filters.years.has(String(item.year));
+
+                const formatMatch = state.filters.formats.size === 0 ||
+                    state.filters.formats.has(item.format);
+
+                const statusMatch = state.filters.statuses.size === 0 ||
+                    state.filters.statuses.has(item.status);
+
+                const searchValue = [item.title, item.author, item.notes]
+                    .filter(Boolean)
+                    .join(' ')
+                    .toLowerCase();
+                const searchMatch = query.length === 0 || searchValue.includes(query);
+
+                return subjectMatch && yearMatch && formatMatch && statusMatch && searchMatch;
+            });
+
+            if (state.filters.sort === 'rating') {
+                filtered.sort((a, b) => {
+                    const ra = a.rating == null ? -1 : a.rating;
+                    const rb = b.rating == null ? -1 : b.rating;
+                    if (rb !== ra) {
+                        return rb - ra;
+                    }
+                    return a.title.localeCompare(b.title);
+                });
+            } else if (state.filters.sort === 'title') {
+                filtered.sort((a, b) => a.title.localeCompare(b.title));
+            } else {
+                filtered.sort((a, b) => {
+                    const da = a.finished || '';
+                    const db = b.finished || '';
+                    if (da !== db) {
+                        return db.localeCompare(da);
+                    }
+                    if (b.year !== a.year) {
+                        return b.year - a.year;
+                    }
+                    return a.title.localeCompare(b.title);
+                });
+            }
+
+            return filtered;
+        }
+
+        function renderShelf(items) {
+            refs.shelf.innerHTML = '';
+            refs.empty.hidden = items.length !== 0;
+            refs.count.textContent = items.length + (items.length === 1 ? ' item' : ' items');
+
+            items.forEach((item) => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'spine-item';
+                if (state.selectedId === item.id) {
+                    button.classList.add('selected');
+                }
+
+                button.dataset.format = item.format;
+                button.style.setProperty('--spine-width', pickFrom(item.id + '-w', ['40px', '54px', '72px', '88px']));
+                button.style.setProperty('--spine-height', pickFrom(item.id + '-h', ['220px', '260px', '290px', '320px']));
+                button.style.setProperty('--spine-color', pickFrom(item.id + '-c', ['#f45624', '#5a5e43', '#151515', '#e8deca', '#ffffff']));
+
+                if (button.style.getPropertyValue('--spine-color') === '#151515') {
+                    button.classList.add('dark');
+                }
+
+                const author = normalizeText(item.author) || 'Unknown';
+                const subjectLabel = item.subjects && item.subjects.length > 0 ? item.subjects[0] : item.format;
+
+                button.innerHTML = [
+                    '<span class="spine-top">' + author + '</span>',
+                    '<span class="spine-title">' + item.title + '</span>',
+                    '<span class="spine-bottom">' + String(item.year) + '<em>' + capitalize(subjectLabel) + '</em></span>',
+                    '<span class="hover-card">' +
+                        '<strong>' + item.title + '</strong>' +
+                        '<small>' + author + ' · ' + String(item.year) + '</small>' +
+                        '<small>' + capitalize(item.format) + ' · ' + capitalize(item.status) + '</small>' +
+                    '</span>'
+                ].join('');
+
+                button.addEventListener('click', () => {
+                    state.selectedId = state.selectedId === item.id ? null : item.id;
+                    render();
+                });
+
+                refs.shelf.appendChild(button);
+            });
+        }
+
+        function renderDetail(items) {
+            if (!state.selectedId) {
+                refs.detail.textContent = 'Select a book or article to see details.';
+                return;
+            }
+
+            const selected = items.find((item) => item.id === state.selectedId) ||
+                state.items.find((item) => item.id === state.selectedId);
+
+            if (!selected) {
+                refs.detail.textContent = 'Select a book or article to see details.';
+                return;
+            }
+
+            const subjects = selected.subjects && selected.subjects.length > 0
+                ? selected.subjects.map(capitalize).join(', ')
+                : 'None';
+            const rating = selected.rating == null ? 'Unrated' : String(selected.rating) + '/5';
+            const finished = selected.finished || 'Not set';
+            const author = normalizeText(selected.author) || 'Unknown';
+            const notes = normalizeText(selected.notes) || 'No notes yet.';
+
+            let html = '';
+            html += '<h4>' + selected.title + '</h4>';
+            html += '<p><strong>Author:</strong> ' + author + '</p>';
+            html += '<p><strong>Format:</strong> ' + capitalize(selected.format) + '</p>';
+            html += '<p><strong>Status:</strong> ' + capitalize(selected.status) + '</p>';
+            html += '<p><strong>Year:</strong> ' + String(selected.year) + '</p>';
+            html += '<p><strong>Finished:</strong> ' + finished + '</p>';
+            html += '<p><strong>Rating:</strong> ' + rating + '</p>';
+            html += '<p><strong>Subjects:</strong> ' + subjects + '</p>';
+            html += '<p><strong>Notes:</strong> ' + notes + '</p>';
+
+            if (selected.url) {
+                html += '<a class="detail-link" href="' + selected.url + '" target="_blank" rel="noreferrer">Open Source ↗</a>';
+            }
+
+            refs.detail.innerHTML = html;
+        }
+
+        function render() {
+            const options = collectFilterOptions(state.items);
+            renderFilterButtons(refs.subjectFilters, options.subjects, 'subjects', capitalize);
+            renderFilterButtons(refs.yearFilters, options.years, 'years');
+            renderFilterButtons(refs.formatFilters, options.formats, 'formats', capitalize);
+            renderFilterButtons(refs.statusFilters, options.statuses, 'statuses', capitalize);
+
+            refs.searchInput.value = state.filters.search;
+            refs.sortSelect.value = state.filters.sort;
+
+            const filtered = applyFilters(state.items);
+            renderShelf(filtered);
+            renderDetail(filtered);
+        }
+
+        async function loadLibrary() {
+            try {
+                const response = await fetch('data/library.json', { cache: 'no-store' });
+                if (!response.ok) {
+                    throw new Error('Failed to load data/library.json (' + response.status + ')');
+                }
+                const data = await response.json();
+                state.items = Array.isArray(data) ? data : [];
+                render();
+            } catch (error) {
+                refs.shelf.innerHTML = '';
+                refs.empty.hidden = false;
+                refs.empty.textContent = 'Could not load library data: ' + error.message;
+                refs.detail.textContent = 'Fix data/library.json or sync from Obsidian and reload.';
+            }
+        }
+
+        refs.searchInput.addEventListener('input', (event) => {
+            state.filters.search = event.target.value;
+            render();
+        });
+
+        refs.sortSelect.addEventListener('change', (event) => {
+            state.filters.sort = event.target.value;
+            render();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && state.selectedId) {
+                state.selectedId = null;
+                render();
             }
         });
 
-        function animate() {
-            const blueX = targetX * -30; const blueY = targetY * -30;
-            currentX_Blue += (blueX - currentX_Blue) * frictionBlue;
-            currentY_Blue += (blueY - currentY_Blue) * frictionBlue;
+        document.addEventListener('click', (event) => {
+            if (!state.selectedId) {
+                return;
+            }
 
-            const orangeX = targetX * 60; const orangeY = targetY * 60;
-            currentX_Orange += (orangeX - currentX_Orange) * frictionOrange;
-            currentY_Orange += (orangeY - currentY_Orange) * frictionOrange;
+            const clickedSpine = event.target.closest('.spine-item');
+            const clickedDetail = event.target.closest('.library-detail');
+            if (!clickedSpine && !clickedDetail) {
+                state.selectedId = null;
+                render();
+            }
+        });
 
-            const blue = document.querySelector('.blue-block');
-            const orange = document.querySelector('.orange-circle');
-
-            if (blue) blue.style.transform = `translate(${currentX_Blue}px, ${currentY_Blue}px)`;
-            if (orange) orange.style.transform = `translate(-50%, -50%) translate(${currentX_Orange}px, ${currentY_Orange}px)`;
-
-            requestAnimationFrame(animate);
-        }
-        animate();
+        loadLibrary();
     </script>
 </body>
 </html>

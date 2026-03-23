@@ -1,0 +1,52 @@
+[
+  {
+    "id": "being-john-rawls-2026",
+    "title": "Being John Rawls",
+    "author": "Scott Alexander",
+    "format": "article",
+    "subjects": [
+      "philosophy",
+      "ethics"
+    ],
+    "year": 2026,
+    "status": "completed",
+    "finished": "2026-03-23",
+    "rating": null,
+    "url": "https://www.astralcodexten.com/p/being-john-rawls",
+    "notes": "Rawlsian life-swap parable"
+  },
+  {
+    "id": "if-anyone-builds-it-everyone-dies-2025",
+    "title": "If Anyone Builds It, Everyone Dies",
+    "author": "Eliezer Yudkowsky, Nate Soares",
+    "format": "book",
+    "subjects": [
+      "ai",
+      "alignment",
+      "risk"
+    ],
+    "year": 2025,
+    "status": "completed",
+    "finished": "2026-03-22",
+    "rating": null,
+    "url": "https://ifanyonebuildsit.com",
+    "notes": "Superhuman AI warning"
+  },
+  {
+    "id": "the-alignment-problem-2020",
+    "title": "The Alignment Problem",
+    "author": "Brian Christian",
+    "format": "book",
+    "subjects": [
+      "ai",
+      "alignment",
+      "ethics"
+    ],
+    "year": 2020,
+    "status": "completed",
+    "finished": "2026-03-21",
+    "rating": null,
+    "url": "https://www.brianchristian.org/the-alignment-problem",
+    "notes": "Imitation vs IRL framing"
+  }
+]
