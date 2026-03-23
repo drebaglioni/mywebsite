@@ -1,5 +1,22 @@
 [
   {
+    "id": "world-models-computing-the-uncomputable-2026",
+    "title": "World Models: Computing the Uncomputable",
+    "author": "Packy McCormick, Pim De Witte",
+    "format": "article",
+    "subjects": [
+      "ai",
+      "world-models",
+      "agents"
+    ],
+    "year": 2026,
+    "status": "completed",
+    "finished": "2026-03-23",
+    "rating": null,
+    "url": "https://www.notboring.co/p/world-models",
+    "notes": "Guide to action-conditioned embodied models"
+  },
+  {
     "id": "being-john-rawls-2026",
     "title": "Being John Rawls",
     "author": "Scott Alexander",
