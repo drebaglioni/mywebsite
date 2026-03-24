@@ -25,8 +25,9 @@
         }
 
         body.about-vector {
-            --key-size: clamp(0.62rem, 0.7vw, 0.74rem);
-            --value-size: clamp(0.9rem, 1.08vw, 1.12rem);
+            --meta-size: clamp(0.9rem, 1.04vw, 1.08rem);
+            --key-size: var(--meta-size);
+            --value-size: var(--meta-size);
             --row-height: clamp(2.3rem, 5.2vh, 2.86rem);
             --row-gap: clamp(0.7rem, 1.04vw, 0.92rem);
             --key-col-width: clamp(102px, 9.8vw, 138px);
@@ -60,7 +61,7 @@
             grid-template-columns: 47% 53%;
             align-items: center;
             gap: clamp(1.04rem, 1.8vw, 1.86rem);
-            padding: 4.95rem clamp(1.04rem, 2.35vw, 2.45rem) 1.1rem;
+            padding: clamp(3.2rem, 6.4vh, 3.8rem) clamp(1.04rem, 2.35vw, 2.45rem);
         }
 
         .about-index {
@@ -69,7 +70,7 @@
             flex-direction: column;
             justify-content: center;
             gap: 0;
-            padding: clamp(0.55rem, 1vw, 1rem) 0 clamp(0.35rem, 0.7vw, 0.62rem);
+            padding: clamp(0.48rem, 0.78vw, 0.72rem) 0;
         }
 
         .about-line {
@@ -121,7 +122,7 @@
 
         .about-field {
             position: relative;
-            height: min(740px, calc(100vh - 8.1rem));
+            height: min(720px, calc(100vh - 8.8rem));
             overflow: hidden;
             isolation: isolate;
         }
@@ -160,8 +161,9 @@
         @media screen and (max-width: 899px) {
             body.about-vector {
                 overflow: auto;
-                --key-size: 0.58rem;
-                --value-size: 0.78rem;
+                --meta-size: 0.78rem;
+                --key-size: var(--meta-size);
+                --value-size: var(--meta-size);
                 --row-height: 2.02rem;
                 --row-gap: 0.5rem;
                 --key-col-width: 84px;
