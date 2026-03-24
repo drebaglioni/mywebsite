@@ -7,194 +7,154 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
-        .about-grid {
-            display: block;
+        .about-compact {
             min-height: 100vh;
-            overflow-y: auto;
+            padding: 5.8rem 1rem 1.2rem;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
             overflow-x: hidden;
-            padding: 8rem 0 5rem 0;
+            overflow-y: auto;
         }
 
-        .story-section {
-            display: flex;
-            flex-direction: column;
+        .about-cards {
+            width: min(1080px, 96vw);
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.95rem;
+        }
+
+        .about-card {
+            display: grid;
+            grid-template-columns: minmax(110px, 33vw) 1fr;
             align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            min-height: 72vh;
-            padding: 2rem 1.25rem;
-            position: relative;
-            width: 100%;
+            gap: 0.85rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(26, 26, 26, 0.18);
         }
 
-        .story-text {
-            width: 100%;
-            max-width: 520px;
-            text-align: center;
-            z-index: 20;
-        }
-
-        .story-label {
-            font-size: 0.78rem;
-            letter-spacing: 0.16em;
-            font-weight: 800;
-            margin-bottom: 0.85rem;
-            display: inline-block;
-            text-transform: uppercase;
-        }
-
-        .story-p {
-            font-size: clamp(1.06rem, 2.7vw, 1.35rem);
-            line-height: 1.45;
-            font-weight: 500;
-            max-width: 36ch;
-            margin: 0 auto;
-        }
-
-        .chess-media {
-            position: relative;
-            width: min(540px, 92vw);
-            min-height: clamp(280px, 54vw, 440px);
+        .card-media {
             display: flex;
             align-items: center;
             justify-content: center;
-            will-change: transform;
-            z-index: 5;
+            min-height: 120px;
         }
 
-        .chess-image {
-            width: min(500px, 94%);
-            max-height: 84vh;
+        .card-image {
+            width: min(220px, 100%);
+            max-height: 150px;
             object-fit: contain;
-            filter: drop-shadow(12px 16px 0 rgba(0, 0, 0, 0.14));
+            filter: drop-shadow(6px 8px 0 rgba(0, 0, 0, 0.12));
         }
 
-        .chess-image.alt {
+        .card-image.flip {
             transform: scaleX(-1);
         }
 
+        .card-label {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin-bottom: 0.45rem;
+        }
+
+        .card-copy {
+            font-size: clamp(0.92rem, 1.8vw, 1.05rem);
+            line-height: 1.36;
+            max-width: 34ch;
+        }
+
         @media screen and (min-width: 900px) {
-            .about-grid {
-                padding-top: 6rem;
-                padding-bottom: 3rem;
-            }
-
-            .story-section {
-                flex-direction: row;
-                justify-content: space-between;
+            .about-compact {
+                height: 100vh;
+                overflow: hidden;
                 align-items: center;
-                gap: 1rem;
-                min-height: 92vh;
-                padding: 2rem 9vw;
+                padding: 5.6rem 2rem 1.1rem;
             }
 
-            .story-section:nth-child(even) {
-                flex-direction: row-reverse;
+            .about-cards {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-auto-rows: minmax(0, 1fr);
+                gap: clamp(0.85rem, 1.25vw, 1.15rem);
+                height: min(760px, calc(100vh - 7rem));
             }
 
-            .chess-media {
-                width: 54%;
-                min-height: clamp(420px, 55vh, 620px);
-                justify-content: flex-start;
+            .about-card {
+                grid-template-columns: 46% 1fr;
+                min-height: 0;
+                padding: clamp(0.65rem, 1vw, 0.95rem);
             }
 
-            .story-section:nth-child(even) .chess-media {
-                justify-content: flex-end;
+            .card-media {
+                min-height: 0;
+                height: 100%;
             }
 
-            .story-text {
-                width: 38%;
-                max-width: 450px;
-                text-align: left;
+            .card-image {
+                width: min(250px, 100%);
+                max-height: clamp(120px, 20vh, 205px);
             }
 
-            .story-p {
-                margin: 0;
-                max-width: 33ch;
+            .card-copy {
+                font-size: clamp(0.9rem, 1.15vw, 1.02rem);
+                line-height: 1.33;
+                max-width: 30ch;
             }
         }
     </style>
 </head>
 <body>
-
-    <main class="about-grid">
-
-        <header class="identity" style="position: fixed; top: 1.5rem; left: 1.25rem; z-index: 120;">
+    <main class="about-compact">
+        <header class="identity" style="position: fixed; top: 1.35rem; left: 1.2rem; z-index: 120;">
             <h1>
-                <a href="index.html" style="font-size: 3.4rem; line-height: 1;">←</a>
+                <a href="index.html" style="font-size: 3.1rem; line-height: 1;">←</a>
             </h1>
         </header>
 
-        <section class="story-section">
-            <div class="chess-media">
-                <img class="chess-image" src="assets/images/about/chess-king.svg" alt="Abstract king chess illustration with geometric colors">
-            </div>
-            <div class="story-text">
-                <span class="story-label">ORIGIN</span>
-                <p class="story-p">
-                    I am from Artegna, a small town in the Italian Alps, where discipline, community, and consistency shaped how I think and work.
-                </p>
-            </div>
-        </section>
+        <section class="about-cards">
+            <article class="about-card">
+                <div class="card-media">
+                    <img class="card-image" src="assets/images/about/chess-king.svg" alt="Abstract king chess illustration with geometric colors">
+                </div>
+                <div class="card-text">
+                    <span class="card-label">Origin</span>
+                    <p class="card-copy">I am from Artegna, a small town in the Italian Alps, where discipline, community, and consistency shaped how I work.</p>
+                </div>
+            </article>
 
-        <section class="story-section">
-            <div class="chess-media">
-                <img class="chess-image" src="assets/images/about/chess-knight.svg" alt="Abstract knight chess illustration with geometric colors">
-            </div>
-            <div class="story-text">
-                <span class="story-label">PRACTICE</span>
-                <p class="story-p">
-                    Chess trains me to evaluate tradeoffs quickly and make clear decisions under pressure.
-                </p>
-            </div>
-        </section>
+            <article class="about-card">
+                <div class="card-media">
+                    <img class="card-image" src="assets/images/about/chess-knight.svg" alt="Abstract knight chess illustration with geometric colors">
+                </div>
+                <div class="card-text">
+                    <span class="card-label">Practice</span>
+                    <p class="card-copy">Chess trains me to evaluate tradeoffs quickly and make clear decisions under pressure.</p>
+                </div>
+            </article>
 
-        <section class="story-section">
-            <div class="chess-media">
-                <img class="chess-image" src="assets/images/about/chess-rook.svg" alt="Abstract rook chess illustration with geometric colors">
-            </div>
-            <div class="story-text">
-                <span class="story-label">LEARNING</span>
-                <p class="story-p">
-                    I am learning Korean while exploring frontier technology through practical product and systems experiments.
-                </p>
-            </div>
-        </section>
+            <article class="about-card">
+                <div class="card-media">
+                    <img class="card-image" src="assets/images/about/chess-rook.svg" alt="Abstract rook chess illustration with geometric colors">
+                </div>
+                <div class="card-text">
+                    <span class="card-label">Learning</span>
+                    <p class="card-copy">I am learning Korean while exploring frontier technology through practical product and systems experiments.</p>
+                </div>
+            </article>
 
-        <section class="story-section">
-            <div class="chess-media">
-                <img class="chess-image alt" src="assets/images/about/chess-knight.svg" alt="Abstract knight chess illustration with geometric colors">
-            </div>
-            <div class="story-text">
-                <span class="story-label">PASSION</span>
-                <p class="story-p">
-                    Inter Milan has been a constant connection to home and a reminder of long-term commitment.
-                </p>
-            </div>
+            <article class="about-card">
+                <div class="card-media">
+                    <img class="card-image flip" src="assets/images/about/chess-knight.svg" alt="Abstract knight chess illustration with geometric colors">
+                </div>
+                <div class="card-text">
+                    <span class="card-label">Passion</span>
+                    <p class="card-copy">Inter Milan has been a constant connection to home and a reminder of long-term commitment.</p>
+                </div>
+            </article>
         </section>
-
     </main>
-
-    <script>
-        const sections = document.querySelectorAll('.story-section');
-
-        document.addEventListener('mousemove', (e) => {
-            if (window.innerWidth <= 900) {
-                return;
-            }
-
-            const x = (e.clientX / window.innerWidth - 0.5) * 16;
-            const y = (e.clientY / window.innerHeight - 0.5) * 16;
-
-            sections.forEach((section, index) => {
-                const media = section.querySelector('.chess-media');
-                if (!media) {
-                    return;
-                }
-                const direction = index % 2 === 0 ? 1 : -1;
-                media.style.transform = `translate(${x * direction}px, ${y * direction}px)`;
-            });
-        }, { passive: true });
-    </script>
 </body>
 </html>
