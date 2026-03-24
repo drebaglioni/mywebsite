@@ -53,6 +53,35 @@
             opacity: 0.6;
         }
 
+        .about-social {
+            position: fixed;
+            left: 1.05rem;
+            bottom: 1.05rem;
+            z-index: 210;
+            display: flex;
+            flex-direction: column;
+            gap: 0.28rem;
+        }
+
+        .about-social a {
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: clamp(0.58rem, 0.64vw, 0.68rem);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(13, 13, 13, 0.74);
+            text-decoration: none;
+            line-height: 1.1;
+            transition: color 160ms ease, opacity 160ms ease, transform 160ms ease;
+        }
+
+        .about-social a:hover,
+        .about-social a:focus-visible {
+            color: #1E32D6;
+            opacity: 0.95;
+            transform: translateX(1px);
+        }
+
         .about-shell {
             width: min(1480px, 100%);
             height: 100vh;
@@ -178,6 +207,16 @@
                 padding: 4.8rem 1rem 1.3rem;
             }
 
+            .about-social {
+                left: 1rem;
+                bottom: 0.9rem;
+                gap: 0.24rem;
+            }
+
+            .about-social a {
+                font-size: 0.55rem;
+            }
+
             .about-index {
                 order: 1;
                 padding-bottom: 0.1rem;
@@ -207,10 +246,25 @@
             .shape.s4 { width: 37%; height: 18%; }
             .shape.s5 { width: 21%; height: 46%; }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            .about-social a {
+                transition: color 120ms linear, opacity 120ms linear;
+            }
+
+            .about-social a:hover,
+            .about-social a:focus-visible {
+                transform: none;
+            }
+        }
     </style>
 </head>
 <body class="about-vector">
     <a class="about-back-link" href="index.html" aria-label="Back to home">←</a>
+    <nav class="about-social" aria-label="Social links">
+        <a href="https://x.com/drebaglioni" target="_blank" rel="noopener noreferrer">X.COM/DREBAGLIONI</a>
+        <a href="https://www.linkedin.com/in/andrea-baglioni-3b5a2735/" target="_blank" rel="noopener noreferrer">LINKEDIN</a>
+    </nav>
     <main class="about-shell">
         <section class="about-index" aria-label="About index">
             <div class="about-line">
