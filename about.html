@@ -41,9 +41,7 @@
             flex-direction: column;
             justify-content: center;
             gap: 0.44rem;
-            border: 1px solid rgba(13, 13, 13, 0.2);
-            background: rgba(255, 255, 255, 0.48);
-            padding: clamp(0.95rem, 1.35vw, 1.45rem);
+            padding: clamp(0.55rem, 1vw, 1rem) 0;
         }
 
         .about-line {
@@ -51,8 +49,7 @@
             grid-template-columns: clamp(90px, 8.7vw, 120px) 1fr;
             gap: 0.62rem;
             align-items: baseline;
-            padding-bottom: clamp(0.24rem, 0.52vw, 0.38rem);
-            border-bottom: 1px solid rgba(13, 13, 13, 0.18);
+            padding-bottom: clamp(0.24rem, 0.42vw, 0.34rem);
         }
 
         .about-key {
@@ -74,20 +71,27 @@
             line-height: 1.2;
         }
 
+        .about-art {
+            align-self: stretch;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
         .about-formula {
-            margin-top: 0.28rem;
+            margin-top: 0.42rem;
             font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
-            font-size: clamp(0.56rem, 0.66vw, 0.68rem);
+            font-size: clamp(0.5rem, 0.58vw, 0.62rem);
             letter-spacing: 0.09em;
             text-transform: uppercase;
-            color: rgba(13, 13, 13, 0.56);
+            color: rgba(13, 13, 13, 0.22);
+            text-align: right;
+            user-select: none;
         }
 
         .about-field {
             position: relative;
             height: min(780px, calc(100vh - 7rem));
-            border: 1px solid rgba(13, 13, 13, 0.14);
-            background: linear-gradient(140deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.1) 100%);
             overflow: hidden;
             isolation: isolate;
         }
@@ -143,6 +147,10 @@
                 gap: 0.48rem;
             }
 
+            .about-art {
+                order: 2;
+            }
+
             .about-line {
                 grid-template-columns: 90px 1fr;
                 gap: 0.46rem;
@@ -158,11 +166,11 @@
             }
 
             .about-formula {
-                font-size: 0.56rem;
+                font-size: 0.52rem;
+                margin-top: 0.24rem;
             }
 
             .about-field {
-                order: 2;
                 height: 54vh;
                 min-height: 320px;
             }
@@ -190,35 +198,25 @@
                 <span class="about-value">ARTEGNA / MERTHYR TYDFIL / SAN FRANCISCO</span>
             </div>
             <div class="about-line">
-                <span class="about-key">DISCIPLINE</span>
-                <span class="about-value">CHESS / SYSTEMS / DECISION-MAKING</span>
-            </div>
-            <div class="about-line">
                 <span class="about-key">LEARNING</span>
                 <span class="about-value">KOREAN / CHESS / FRONTIER TECH</span>
-            </div>
-            <div class="about-line">
-                <span class="about-key">AESTHETIC</span>
-                <span class="about-value">DESIGN / ART / TYPOGRAPHY</span>
-            </div>
-            <div class="about-line">
-                <span class="about-key">PHILOSOPHY</span>
-                <span class="about-value">FORM / LOGIC / MEANING</span>
             </div>
             <div class="about-line">
                 <span class="about-key">FOOTBALL</span>
                 <span class="about-value">INTER MILAN</span>
             </div>
-            <div class="about-formula">F(x,y)=(-y,x)+0.35(sin(2y),cos(2x))</div>
         </section>
 
-        <section class="about-field" aria-hidden="true">
-            <div class="shape shape-circle s1" data-x="-0.55" data-y="-0.22" data-offset="5"></div>
-            <div class="shape shape-capsule s2" data-x="0.18" data-y="-0.05" data-offset="-4"></div>
-            <div class="shape shape-circle s3" data-x="-0.12" data-y="0.56" data-offset="8"></div>
-            <div class="shape shape-rect s4" data-x="0.52" data-y="0.54" data-offset="-6"></div>
-            <div class="shape shape-rect s5" data-x="0.36" data-y="-0.52" data-offset="12"></div>
-            <div class="shape shape-thin s6" data-x="-0.73" data-y="0.38" data-offset="-9"></div>
+        <section class="about-art" aria-label="Vector-field composition">
+            <div class="about-field" aria-hidden="true">
+                <div class="shape shape-circle s1" data-x="-0.55" data-y="-0.22" data-offset="5"></div>
+                <div class="shape shape-capsule s2" data-x="0.18" data-y="-0.05" data-offset="-4"></div>
+                <div class="shape shape-circle s3" data-x="-0.12" data-y="0.56" data-offset="8"></div>
+                <div class="shape shape-rect s4" data-x="0.52" data-y="0.54" data-offset="-6"></div>
+                <div class="shape shape-rect s5" data-x="0.36" data-y="-0.52" data-offset="12"></div>
+                <div class="shape shape-thin s6" data-x="-0.73" data-y="0.38" data-offset="-9"></div>
+            </div>
+            <div class="about-formula">F(x,y)=(-y,x)+0.35(sin(2y),cos(2x))</div>
         </section>
     </main>
 
