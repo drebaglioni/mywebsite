@@ -24,15 +24,35 @@
             cursor: pointer !important;
         }
 
+        .about-back-link {
+            position: fixed;
+            top: 1.2rem;
+            left: 1.05rem;
+            z-index: 220;
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: clamp(1.06rem, 1.3vw, 1.32rem);
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            line-height: 1;
+            text-decoration: none;
+            color: #0d0d0d;
+            transition: opacity 180ms ease;
+        }
+
+        .about-back-link:hover {
+            opacity: 0.6;
+        }
+
         .about-shell {
-            width: min(1500px, 100%);
+            width: min(1480px, 100%);
             height: 100vh;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 46% 54%;
+            grid-template-columns: 47% 53%;
             align-items: center;
-            gap: clamp(0.9rem, 1.5vw, 1.5rem);
-            padding: 5.1rem clamp(1rem, 2.1vw, 2rem) 1.1rem;
+            gap: clamp(1rem, 1.8vw, 1.8rem);
+            padding: 5rem clamp(1rem, 2.3vw, 2.3rem) 1.1rem;
         }
 
         .about-index {
@@ -40,35 +60,36 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 0.44rem;
-            padding: clamp(0.55rem, 1vw, 1rem) 0;
+            gap: 0;
+            padding: clamp(0.55rem, 1vw, 1rem) 0 clamp(0.35rem, 0.7vw, 0.62rem);
         }
 
         .about-line {
             display: grid;
-            grid-template-columns: clamp(90px, 8.7vw, 120px) 1fr;
-            gap: 0.62rem;
-            align-items: baseline;
-            padding-bottom: clamp(0.24rem, 0.42vw, 0.34rem);
+            grid-template-columns: clamp(98px, 9.8vw, 132px) 1fr;
+            gap: clamp(0.58rem, 1vw, 0.84rem);
+            align-items: end;
+            min-height: clamp(2.15rem, 5.2vh, 2.78rem);
         }
 
         .about-key {
             font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
             font-weight: 700;
-            font-size: clamp(0.62rem, 0.78vw, 0.78rem);
-            letter-spacing: 0.16em;
+            font-size: clamp(0.62rem, 0.74vw, 0.76rem);
+            letter-spacing: 0.17em;
             text-transform: uppercase;
-            color: #0033CC;
+            color: #1E32D6;
             white-space: nowrap;
+            line-height: 1;
         }
 
         .about-value {
             font-family: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-weight: 700;
-            font-size: clamp(0.76rem, 0.95vw, 0.99rem);
-            letter-spacing: 0.06em;
+            font-size: clamp(0.84rem, 1.03vw, 1.04rem);
+            letter-spacing: 0.055em;
             text-transform: uppercase;
-            line-height: 1.2;
+            line-height: 1.1;
         }
 
         .about-art {
@@ -79,19 +100,20 @@
         }
 
         .about-formula {
-            margin-top: 0.42rem;
+            margin-top: 0.36rem;
             font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
-            font-size: clamp(0.5rem, 0.58vw, 0.62rem);
-            letter-spacing: 0.09em;
+            font-size: clamp(0.46rem, 0.56vw, 0.56rem);
+            letter-spacing: 0.07em;
             text-transform: uppercase;
-            color: rgba(13, 13, 13, 0.22);
+            color: rgba(13, 13, 13, 0.14);
             text-align: right;
+            padding-right: 0.15rem;
             user-select: none;
         }
 
         .about-field {
             position: relative;
-            height: min(780px, calc(100vh - 7rem));
+            height: min(760px, calc(100vh - 8rem));
             overflow: hidden;
             isolation: isolate;
         }
@@ -99,10 +121,10 @@
         .shape {
             position: absolute;
             mix-blend-mode: multiply;
-            opacity: 0.96;
+            opacity: 0.95;
             transform-origin: center center;
             will-change: transform;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.11);
         }
 
         .shape-circle {
@@ -121,12 +143,11 @@
             border-radius: 4px;
         }
 
-        .shape.s1 { width: 44%; aspect-ratio: 1 / 1; background: #FF3D00; }
-        .shape.s2 { width: 18%; height: 66%; background: #0037FF; }
-        .shape.s3 { width: 36%; aspect-ratio: 1 / 1; background: #FFE600; }
-        .shape.s4 { width: 24%; height: 30%; background: #0F0F12; }
-        .shape.s5 { width: 30%; height: 20%; background: #00D5FF; }
-        .shape.s6 { width: 16%; height: 42%; background: #FF1D8E; }
+        .shape.s1 { width: 41%; aspect-ratio: 1 / 1; background: #FF3D00; }
+        .shape.s2 { width: 16%; height: 63%; background: #0037FF; }
+        .shape.s3 { width: 33%; aspect-ratio: 1 / 1; background: #FFE600; }
+        .shape.s4 { width: 27%; height: 19%; background: #00D5FF; }
+        .shape.s5 { width: 17%; height: 43%; background: #FF1D8E; }
 
         @media screen and (max-width: 899px) {
             body.about-vector {
@@ -138,13 +159,13 @@
                 min-height: 100vh;
                 grid-template-columns: 1fr;
                 align-items: start;
-                gap: 0.9rem;
-                padding: 5rem 1rem 1.2rem;
+                gap: 0.96rem;
+                padding: 4.8rem 1rem 1.3rem;
             }
 
             .about-index {
                 order: 1;
-                gap: 0.48rem;
+                padding-bottom: 0.1rem;
             }
 
             .about-art {
@@ -152,46 +173,41 @@
             }
 
             .about-line {
-                grid-template-columns: 90px 1fr;
-                gap: 0.46rem;
+                grid-template-columns: 84px 1fr;
+                min-height: 1.98rem;
+                gap: 0.48rem;
             }
 
             .about-key {
-                font-size: 0.62rem;
+                font-size: 0.58rem;
             }
 
             .about-value {
-                font-size: 0.77rem;
-                line-height: 1.23;
+                font-size: 0.76rem;
+                line-height: 1.2;
             }
 
             .about-formula {
-                font-size: 0.52rem;
-                margin-top: 0.24rem;
+                font-size: 0.48rem;
+                margin-top: 0.22rem;
             }
 
             .about-field {
-                height: 54vh;
-                min-height: 320px;
+                height: 50vh;
+                min-height: 300px;
             }
 
-            .shape.s1 { width: 54%; }
-            .shape.s2 { width: 22%; height: 68%; }
-            .shape.s3 { width: 45%; }
-            .shape.s4 { width: 32%; height: 30%; }
-            .shape.s5 { width: 40%; height: 20%; }
-            .shape.s6 { width: 20%; height: 42%; }
+            .shape.s1 { width: 51%; }
+            .shape.s2 { width: 20%; height: 66%; }
+            .shape.s3 { width: 40%; }
+            .shape.s4 { width: 37%; height: 18%; }
+            .shape.s5 { width: 21%; height: 46%; }
         }
     </style>
 </head>
 <body class="about-vector">
+    <a class="about-back-link" href="index.html" aria-label="Back to home">←</a>
     <main class="about-shell">
-        <header class="identity" style="position: fixed; top: 1.18rem; left: 1.08rem; z-index: 150;">
-            <h1>
-                <a href="index.html" style="font-size: 2.85rem; line-height: 1;">←</a>
-            </h1>
-        </header>
-
         <section class="about-index" aria-label="About index">
             <div class="about-line">
                 <span class="about-key">HOME</span>
@@ -209,20 +225,23 @@
 
         <section class="about-art" aria-label="Vector-field composition">
             <div class="about-field" aria-hidden="true">
-                <div class="shape shape-circle s1" data-x="-0.55" data-y="-0.22" data-offset="5"></div>
-                <div class="shape shape-capsule s2" data-x="0.18" data-y="-0.05" data-offset="-4"></div>
-                <div class="shape shape-circle s3" data-x="-0.12" data-y="0.56" data-offset="8"></div>
-                <div class="shape shape-rect s4" data-x="0.52" data-y="0.54" data-offset="-6"></div>
-                <div class="shape shape-rect s5" data-x="0.36" data-y="-0.52" data-offset="12"></div>
-                <div class="shape shape-thin s6" data-x="-0.73" data-y="0.38" data-offset="-9"></div>
+                <div class="shape shape-circle s1" data-x="-0.34" data-y="-0.18" data-offset="7" data-a="8.8" data-b="5.8" data-w="0.10" data-p="0.3"></div>
+                <div class="shape shape-capsule s2" data-x="0.39" data-y="-0.12" data-offset="-5" data-a="6.1" data-b="8.4" data-w="0.16" data-p="1.5"></div>
+                <div class="shape shape-circle s3" data-x="-0.03" data-y="0.48" data-offset="11" data-a="5.5" data-b="4.8" data-w="0.22" data-p="2.8"></div>
+                <div class="shape shape-rect s4" data-x="0.42" data-y="0.52" data-offset="-2" data-a="6.7" data-b="4.5" data-w="0.13" data-p="0.9"></div>
+                <div class="shape shape-thin s5" data-x="-0.58" data-y="0.36" data-offset="5" data-a="7.4" data-b="9.3" data-w="0.08" data-p="2.1"></div>
             </div>
-            <div class="about-formula">F(x,y)=(-y,x)+0.35(sin(2y),cos(2x))</div>
+            <div class="about-formula">r_i(t)=r_0+[a cos(omega t + phi), b sin(omega t + phi)]</div>
         </section>
     </main>
 
     <script>
         const field = document.querySelector('.about-field');
-        const shapes = field ? field.querySelectorAll('.shape') : [];
+        const shapes = field ? Array.from(field.querySelectorAll('.shape')) : [];
+        const desktopMotionQuery = window.matchMedia('(min-width: 900px)');
+        const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let animationFrame = null;
+        let orbitEnabled = false;
 
         function vector(x, y) {
             return {
@@ -250,12 +269,86 @@
 
                 shape.style.left = left + '%';
                 shape.style.top = top + '%';
-                shape.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(${scale})`;
+                shape.dataset.baseAngle = angle.toFixed(4);
+                shape.dataset.baseScale = scale.toFixed(4);
             });
         }
 
-        window.addEventListener('resize', positionShapes, { passive: true });
+        function renderOrbit(timestamp) {
+            if (!field || shapes.length === 0) {
+                return;
+            }
+
+            const time = timestamp / 1000;
+
+            shapes.forEach((shape) => {
+                const angle = Number(shape.dataset.baseAngle || 0);
+                const scale = Number(shape.dataset.baseScale || 1);
+                const a = Number(shape.dataset.a || 0);
+                const b = Number(shape.dataset.b || 0);
+                const omega = Number(shape.dataset.w || 0.1);
+                const phase = Number(shape.dataset.p || 0);
+                const xShift = orbitEnabled ? a * Math.cos((omega * time) + phase) : 0;
+                const yShift = orbitEnabled ? b * Math.sin((omega * time) + phase) : 0;
+
+                shape.style.transform = `translate(-50%, -50%) translate(${xShift.toFixed(2)}px, ${yShift.toFixed(2)}px) rotate(${angle}deg) scale(${scale})`;
+            });
+
+            if (orbitEnabled) {
+                animationFrame = window.requestAnimationFrame(renderOrbit);
+            } else {
+                animationFrame = null;
+            }
+        }
+
+        function shouldOrbit() {
+            return desktopMotionQuery.matches && !reducedMotionQuery.matches && !document.hidden;
+        }
+
+        function updateOrbitState() {
+            const nextState = shouldOrbit();
+
+            if (orbitEnabled === nextState) {
+                if (!nextState) {
+                    renderOrbit(0);
+                }
+                return;
+            }
+
+            orbitEnabled = nextState;
+
+            if (animationFrame !== null) {
+                window.cancelAnimationFrame(animationFrame);
+                animationFrame = null;
+            }
+
+            if (orbitEnabled) {
+                animationFrame = window.requestAnimationFrame(renderOrbit);
+            } else {
+                renderOrbit(0);
+            }
+        }
+
+        function bindMediaQuery(query, handler) {
+            if (typeof query.addEventListener === 'function') {
+                query.addEventListener('change', handler);
+                return;
+            }
+            if (typeof query.addListener === 'function') {
+                query.addListener(handler);
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            positionShapes();
+            updateOrbitState();
+        }, { passive: true });
+        document.addEventListener('visibilitychange', updateOrbitState, { passive: true });
+        bindMediaQuery(desktopMotionQuery, updateOrbitState);
+        bindMediaQuery(reducedMotionQuery, updateOrbitState);
+
         positionShapes();
+        updateOrbitState();
     </script>
 </body>
 </html>
