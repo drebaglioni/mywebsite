@@ -278,6 +278,87 @@ body.homepage .nav-links a {
     letter-spacing: 0.11em;
 }
 
+body.homepage .projects-gated-link {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.28em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    body.homepage .projects-gated-link {
+        cursor: not-allowed !important;
+    }
+}
+
+body.homepage .projects-gated-link.is-blocked-hit {
+    animation: projectsBlockedHit 260ms cubic-bezier(0.2, 0.8, 0.2, 1) 1;
+}
+
+@keyframes projectsBlockedHit {
+    0% {
+        transform: translateX(0) scale(1);
+    }
+    25% {
+        transform: translateX(-1px) scale(1.04);
+    }
+    50% {
+        transform: translateX(2px) scale(1.05);
+    }
+    75% {
+        transform: translateX(-1px) scale(1.03);
+    }
+    100% {
+        transform: translateX(0) scale(1);
+    }
+}
+
+body.homepage .projects-gate-toast {
+    position: fixed;
+    top: 86px;
+    right: 40px;
+    width: min(360px, calc(100vw - 80px));
+    border: 1px solid var(--home-blue);
+    background: rgba(242, 240, 230, 0.94);
+    color: var(--home-blue);
+    padding: 10px 12px;
+    z-index: 180;
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+body.homepage .projects-gate-toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+body.homepage .projects-gate-title {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    margin-bottom: 7px;
+}
+
+body.homepage .projects-gate-copy {
+    font-size: 12px;
+    line-height: 1.35;
+    margin-bottom: 10px;
+    text-transform: none;
+}
+
+body.homepage .projects-gate-cta {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--home-orange);
+    border: 1px solid var(--home-orange);
+    padding: 5px 8px;
+    display: inline-block;
+}
+
 body.homepage .hero-canvas {
     position: absolute;
     inset: 0;
@@ -388,6 +469,15 @@ body.homepage .quote-shout {
     body.homepage .quote-shout:hover {
         animation: none !important;
     }
+
+    body.homepage .projects-gated-link.is-blocked-hit {
+        animation: none !important;
+    }
+
+    body.homepage .projects-gate-toast {
+        transition: opacity 120ms linear;
+        transform: none;
+    }
 }
 
 @keyframes homeQuoteShout {
@@ -486,6 +576,25 @@ body.homepage .system-specs {
         border-radius: 8px;
         padding: 8px 4px;
         background: rgba(255, 255, 255, 0.38);
+    }
+
+    body.homepage .projects-gate-toast {
+        top: auto;
+        right: 12px;
+        left: 12px;
+        bottom: calc(74px + env(safe-area-inset-bottom));
+        width: auto;
+        padding: 9px 10px;
+    }
+
+    body.homepage .projects-gate-title {
+        font-size: 9px;
+        margin-bottom: 5px;
+    }
+
+    body.homepage .projects-gate-copy {
+        font-size: 11px;
+        margin-bottom: 8px;
     }
 
     body.homepage .type-anchor {
