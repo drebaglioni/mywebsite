@@ -449,7 +449,7 @@ body.homepage .meta-header {
 body.homepage .meta-body {
     font-size: 13px;
     line-height: 1.55;
-    margin-bottom: 18px;
+    margin-bottom: 0;
     text-transform: none;
 }
 
@@ -499,14 +499,6 @@ body.homepage .quote-shout {
     100% {
         transform: translate3d(0, 0, 0) scale(1.02) rotate(0deg);
     }
-}
-
-body.homepage .meta-footer {
-    font-size: 10px;
-    color: var(--home-orange);
-    border: 1px solid var(--home-orange);
-    padding: 10px;
-    text-transform: none;
 }
 
 body.homepage .type-anchor {
