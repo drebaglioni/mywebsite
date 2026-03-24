@@ -372,6 +372,45 @@ body.homepage .meta-body {
     text-transform: none;
 }
 
+body.homepage .quote-shout {
+    display: block;
+    transform-origin: left center;
+    will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    body.homepage .quote-shout:hover {
+        animation: homeQuoteShout 320ms steps(2, end) infinite;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.homepage .quote-shout:hover {
+        animation: none !important;
+    }
+}
+
+@keyframes homeQuoteShout {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1.02) rotate(0deg);
+    }
+    20% {
+        transform: translate3d(-2px, -1px, 0) scale(1.08) rotate(-0.4deg);
+    }
+    40% {
+        transform: translate3d(2px, 1px, 0) scale(1.07) rotate(0.4deg);
+    }
+    60% {
+        transform: translate3d(-1px, 1px, 0) scale(1.09) rotate(-0.35deg);
+    }
+    80% {
+        transform: translate3d(2px, -1px, 0) scale(1.07) rotate(0.35deg);
+    }
+    100% {
+        transform: translate3d(0, 0, 0) scale(1.02) rotate(0deg);
+    }
+}
+
 body.homepage .meta-footer {
     font-size: 10px;
     color: var(--home-orange);
