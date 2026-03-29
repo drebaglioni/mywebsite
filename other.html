@@ -88,7 +88,6 @@
     </main>
 
     <script>
-        const SPINE_HEIGHTS = [240, 270, 300, 330];
         const KNOWN_SUBJECT_HUES = {
             ai: 226,
             philosophy: 282,
@@ -164,95 +163,12 @@
             return Math.abs(hash);
         }
 
-        function pickFrom(input, values) {
-            return values[hashCode(input) % values.length];
-        }
-
         function clamp(min, value, max) {
             return Math.max(min, Math.min(value, max));
         }
 
         function normalizedSubject(value) {
             return normalizeText(value).toLowerCase().replace(/\s+/g, '-');
-        }
-
-        function buildSpineLabel(title, width) {
-            let label = normalizeText(title);
-            const colonIndex = label.indexOf(':');
-            if (colonIndex > 0) {
-                const beforeColon = normalizeText(label.slice(0, colonIndex));
-                if (beforeColon.length >= 10) {
-                    label = beforeColon;
-                }
-            }
-
-            let maxChars = 22;
-            if (width < 90) {
-                maxChars = 14;
-            } else if (width < 110) {
-                maxChars = 18;
-            }
-
-            if (label.length > maxChars) {
-                label = label.slice(0, Math.max(0, maxChars - 3)).trimEnd() + '...';
-            }
-            return label;
-        }
-
-        function formatSpineAuthor(author) {
-            const rawAuthor = normalizeText(author);
-            if (!rawAuthor) {
-                return 'UNKNOWN';
-            }
-
-            const primaryAuthor = normalizeText(rawAuthor.split(/[;,]/)[0]);
-            const parts = primaryAuthor.split(/\s+/).filter(Boolean);
-            let compact = '';
-
-            if (parts.length > 1) {
-                compact = parts[0].charAt(0) + '. ' + parts[parts.length - 1];
-            } else {
-                compact = parts[0] || 'UNKNOWN';
-            }
-
-            compact = compact.toUpperCase();
-            if (compact.length > 12) {
-                return compact.slice(0, 9).trimEnd() + '...';
-            }
-            return compact;
-        }
-
-        function formatSpineSubject(subject, width) {
-            const normalized = normalizeText(subject).replace(/-/g, ' ').toUpperCase() || 'GENERAL';
-            let maxChars = 11;
-            if (width < 90) {
-                maxChars = 7;
-            } else if (width < 110) {
-                maxChars = 9;
-            }
-
-            if (normalized.length > maxChars) {
-                return normalized.slice(0, Math.max(0, maxChars - 3)).trimEnd() + '...';
-            }
-            return normalized;
-        }
-
-        function computeSpineMetrics(title, itemId) {
-            const condensedLength = normalizeText(title).replace(/\s+/g, '').length;
-            const baseWidth = clamp(76, 68 + condensedLength * 1.45, 132);
-            const jitter = (hashCode(itemId + '-w-jitter') % 15) - 7;
-            const width = Math.round(clamp(76, baseWidth + jitter, 132));
-            const minHeight = width < 90 ? 250 : (width < 110 ? 270 : 290);
-            const titleSize = clamp(0.84, width / 120, 1.03);
-            const titleTracking = width >= 110 ? -0.002 : (width >= 90 ? -0.001 : 0);
-
-            return {
-                width,
-                minHeight,
-                titleSize,
-                titleLeading: 0.93,
-                titleTracking
-            };
         }
 
         function hexToRgb(hexColor) {
@@ -349,30 +265,12 @@
             return normalized.slice(0, 39).trimEnd() + '...';
         }
 
-        function buildRailTitle(title) {
+        function buildPosterTitle(title) {
             const normalized = normalizeText(title);
-            if (normalized.length <= 34) {
+            if (normalized.length <= 64) {
                 return normalized;
             }
-            return normalized.slice(0, 31).trimEnd() + '...';
-        }
-
-        function buildRailMeta(author, year) {
-            const compactAuthor = formatSpineAuthor(author || 'Unknown').replace(/\.\.\.$/, '');
-            return compactAuthor + ' · ' + String(year);
-        }
-
-        function formatCodeLabel(item) {
-            if (item.format === 'article') {
-                return 'ARTICLE';
-            }
-            if (item.format === 'podcast') {
-                return 'POD';
-            }
-            if (item.format === 'audiobook') {
-                return 'ABK';
-            }
-            return 'BK';
+            return normalized.slice(0, 61).trimEnd() + '...';
         }
 
         function getSourceDomain(urlValue) {
@@ -511,9 +409,6 @@
             const author = normalizeText(rawItem.author) || 'Unknown';
             const subjects = Array.isArray(rawItem.subjects) ? rawItem.subjects : [];
             const primarySubject = subjects.length > 0 ? subjects[0] : rawItem.format;
-            const metrics = computeSpineMetrics(rawItem.title, rawItem.id);
-            const baseHeight = pickFrom(rawItem.id + '-h', SPINE_HEIGHTS);
-            const spineHeight = Math.max(baseHeight, metrics.minHeight);
             const topicColor = resolveTopicBaseColor({ subjects, format: rawItem.format });
 
             return {
@@ -525,22 +420,12 @@
                     .join(' ')
                     .toLowerCase(),
                 _ui: {
-                    spineAuthor: formatSpineAuthor(author),
-                    spineLabel: buildSpineLabel(rawItem.title, metrics.width),
-                    spineSubjectLabel: formatSpineSubject(primarySubject, metrics.width),
                     coverUrl: getInitialCoverUrl(rawItem),
                     fallbackCoverTitle: buildFallbackCoverTitle(rawItem.title),
-                    railTitle: buildRailTitle(rawItem.title),
-                    railMeta: buildRailMeta(author, rawItem.year),
-                    codeLabel: formatCodeLabel(rawItem),
+                    posterTitle: buildPosterTitle(rawItem.title),
                     domainLabel: getSourceDomain(rawItem.url),
                     subjectDisplay: normalizeText(primarySubject).replace(/-/g, ' ').toUpperCase(),
-                    topicColor,
-                    width: String(metrics.width) + 'px',
-                    height: String(spineHeight) + 'px',
-                    titleSize: String(metrics.titleSize) + 'rem',
-                    titleTracking: String(metrics.titleTracking) + 'em',
-                    titleLeading: String(metrics.titleLeading)
+                    topicColor
                 }
             };
         }
@@ -644,7 +529,7 @@
             refs.shelf.innerHTML = '';
             const fragment = document.createDocumentFragment();
 
-            items.forEach((item) => {
+            items.forEach((item, index) => {
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.className = 'cover-item';
@@ -667,27 +552,33 @@
                 const safeAuthor = escapeHtml(item._author);
                 const safeSubject = escapeHtml(item._ui.subjectDisplay);
                 const fallbackTitle = escapeHtml(item._ui.fallbackCoverTitle);
-                const railTitle = escapeHtml(item._ui.railTitle);
-                const railMeta = escapeHtml(item._ui.railMeta);
-                const codeLabel = escapeHtml(item._ui.codeLabel);
+                const posterTitle = escapeHtml(item._ui.posterTitle);
                 const domainLabel = escapeHtml(item._ui.domainLabel);
+                const fallbackTitleAttr = escapeAttr(item._ui.fallbackCoverTitle);
+                const fallbackAuthorAttr = escapeAttr(item._author);
+                const fallbackSubjectAttr = escapeAttr(item._ui.subjectDisplay);
                 const coverUrl = normalizeText(item._ui.coverUrl);
                 const hasCover = Boolean(coverUrl);
                 const useArticlePoster = item.format === 'article';
+                const posterVariant = 'poster-v' + String(hashCode(item.id + '-poster') % 3);
+                const loadingStrategy = index < 9 ? 'eager' : 'lazy';
+                const fetchPriority = index < 4 ? 'high' : 'auto';
 
                 let surfaceContent = '';
                 if (useArticlePoster) {
                     surfaceContent = [
-                        '<span class="article-poster">',
-                            '<span class="poster-kicker">EDITORIAL NOTE</span>',
-                            '<strong class="poster-title">' + fallbackTitle + '</strong>',
-                            '<span class="poster-domain">' + domainLabel + '</span>',
+                        '<span class="article-poster ' + posterVariant + '">',
+                            '<span class="poster-kicker">FIELD NOTE</span>',
+                            '<strong class="poster-title">' + posterTitle + '</strong>',
+                            '<span class="poster-chip">ARTICLE</span>',
                             '<span class="poster-rule"></span>',
+                            '<span class="poster-domain">' + domainLabel + '</span>',
                             '<span class="poster-subject">' + safeSubject + '</span>',
+                            '<span class="poster-orb" aria-hidden="true"></span>',
                         '</span>'
                     ].join('');
                 } else if (hasCover) {
-                    surfaceContent = '<img class="cover-image" src="' + escapeAttr(coverUrl) + '" alt="Cover for ' + escapeAttr(item.title) + '" loading="lazy" decoding="async">';
+                    surfaceContent = '<img class="cover-image" src="' + escapeAttr(coverUrl) + '" alt="Cover for ' + escapeAttr(item.title) + '" loading="' + loadingStrategy + '" fetchpriority="' + fetchPriority + '" decoding="async" data-fallback-title="' + fallbackTitleAttr + '" data-fallback-author="' + fallbackAuthorAttr + '" data-fallback-subject="' + fallbackSubjectAttr + '">';
                 } else {
                     surfaceContent = [
                         '<span class="cover-fallback">',
@@ -700,17 +591,9 @@
 
                 button.innerHTML = [
                     '<span class="cover-card">',
-                        '<span class="cover-top-strip">' +
-                            '<span class="strip-tag">' + codeLabel + '</span>' +
-                            '<span class="strip-domain">' + domainLabel + '</span>' +
-                        '</span>',
                         '<span class="cover-surface">' +
                             surfaceContent +
                             (isAudioFormat(item) ? '<span class="cover-audio-chip">AUDIO</span>' : '') +
-                        '</span>',
-                        '<span class="cover-bottom-rail">' +
-                            '<span class="rail-title">' + railTitle + '</span>' +
-                            '<span class="rail-meta">' + railMeta + '</span>' +
                         '</span>',
                     '</span>'
                 ].join('');
@@ -870,9 +753,12 @@
                 image.remove();
                 return;
             }
+            const fallbackTitle = normalizeText(image.getAttribute('data-fallback-title')) || 'COVER UNAVAILABLE';
+            const fallbackAuthor = normalizeText(image.getAttribute('data-fallback-author')) || 'SOURCE IMAGE FAILED';
+            const fallbackSubject = normalizeText(image.getAttribute('data-fallback-subject')) || 'TRY AGAIN LATER';
             const created = document.createElement('span');
             created.className = 'cover-fallback';
-            created.innerHTML = '<strong>COVER UNAVAILABLE</strong><small>SOURCE IMAGE FAILED</small><small>TRY AGAIN LATER</small>';
+            created.innerHTML = '<strong>' + escapeHtml(fallbackTitle) + '</strong><small>' + escapeHtml(fallbackAuthor) + '</small><small>' + escapeHtml(fallbackSubject) + '</small>';
             if (image.parentElement) {
                 image.parentElement.appendChild(created);
             }
