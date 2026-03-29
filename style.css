@@ -656,7 +656,7 @@ body.library-page {
     background: var(--lib-bg);
     color: #151515;
     font-family: "JetBrains Mono", "Courier New", monospace;
-    overflow: hidden;
+    overflow: auto;
     cursor: default !important;
 }
 
@@ -682,8 +682,8 @@ body.library-page a {
     flex-direction: column;
     gap: 1.25rem;
     background: #ffffff;
-    overflow-y: auto;
-    contain: layout paint;
+    overflow: visible;
+    contain: none;
 }
 
 .library-home-link {
@@ -811,11 +811,11 @@ body.library-page a {
 
 .library-main {
     padding: 2.5rem 3rem;
-    overflow-y: auto;
+    overflow: visible;
     display: flex;
     flex-direction: column;
     gap: 1.4rem;
-    contain: layout paint;
+    contain: none;
 }
 
 .library-main-header {
@@ -1109,8 +1109,8 @@ body.library-page a {
     border-left: 3px solid #151515;
     padding: 2.5rem 1.5rem;
     background: #ffffff;
-    overflow-y: auto;
-    contain: layout paint;
+    overflow: visible;
+    contain: none;
 }
 
 .library-detail h3 {
