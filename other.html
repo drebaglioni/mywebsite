@@ -219,6 +219,29 @@
             return normalized;
         }
 
+        function formatPodcastTitle(title) {
+            let label = normalizeText(title);
+            const colonIndex = label.indexOf(':');
+            if (colonIndex > 0) {
+                const beforeColon = normalizeText(label.slice(0, colonIndex));
+                if (beforeColon.length >= 10) {
+                    label = beforeColon;
+                }
+            }
+            if (label.length > 28) {
+                label = label.slice(0, 25).trimEnd() + '...';
+            }
+            return label;
+        }
+
+        function formatPodcastSubject(subject) {
+            const normalized = normalizeText(subject).replace(/-/g, ' ').toUpperCase() || 'GENERAL';
+            if (normalized.length > 12) {
+                return normalized.slice(0, 9).trimEnd() + '...';
+            }
+            return normalized;
+        }
+
         function computeSpineMetrics(title, itemId) {
             const condensedLength = normalizeText(title).replace(/\s+/g, '').length;
             const baseWidth = clamp(76, 68 + condensedLength * 1.45, 132);
@@ -235,16 +258,6 @@
                 titleLeading: 0.93,
                 titleTracking
             };
-        }
-
-        function getPodcastStampMetrics(widthPx) {
-            if (widthPx <= 90) {
-                return { left: '76%', top: '56%', width: '18px', height: '10px', compact: true };
-            }
-            if (widthPx < 110) {
-                return { left: '72%', top: '55%', width: '22px', height: '12px', compact: false };
-            }
-            return { left: '68%', top: '54%', width: '26px', height: '14px', compact: false };
         }
 
         function hexToRgb(hexColor) {
@@ -438,10 +451,11 @@
                     .join(' ')
                     .toLowerCase(),
                 _ui: {
-                    podcastStamp: getPodcastStampMetrics(metrics.width),
                     spineAuthor: formatSpineAuthor(author),
                     spineLabel: buildSpineLabel(rawItem.title, metrics.width),
                     spineSubjectLabel: formatSpineSubject(primarySubject, metrics.width),
+                    podcastTitle: formatPodcastTitle(rawItem.title),
+                    podcastSubject: formatPodcastSubject(primarySubject),
                     width: String(metrics.width) + 'px',
                     height: String(spineHeight) + 'px',
                     titleSize: String(metrics.titleSize) + 'rem',
@@ -560,6 +574,9 @@
                 button.className = 'spine-item';
                 button.dataset.id = item.id;
                 button.dataset.format = item.format;
+                if (item.format === 'podcast') {
+                    button.classList.add('podcast-item');
+                }
                 button.title = item.title;
                 button.setAttribute('aria-label', item.title);
                 button.style.setProperty('--spine-width', item._ui.width);
@@ -569,7 +586,7 @@
                 button.style.setProperty('--spine-title-tracking', item._ui.titleTracking);
                 button.style.setProperty('--spine-title-leading', item._ui.titleLeading);
 
-                if (isDarkColor) {
+                if (isDarkColor && item.format !== 'podcast') {
                     button.classList.add('dark');
                 }
                 if (state.selectedId === item.id) {
@@ -577,30 +594,45 @@
                 }
 
                 if (item.format === 'podcast') {
-                    button.style.setProperty('--podcast-left', item._ui.podcastStamp.left);
-                    button.style.setProperty('--podcast-top', item._ui.podcastStamp.top);
-                    button.style.setProperty('--podcast-w', item._ui.podcastStamp.width);
-                    button.style.setProperty('--podcast-h', item._ui.podcastStamp.height);
-                    if (item._ui.podcastStamp.compact) {
-                        button.classList.add('podcast-compact');
-                    }
+                    const subjectKey = (item.subjects && item.subjects[0]) || item.format;
+                    const hue = getSubjectHue(subjectKey);
+                    const bodyHex = hslToHex(hue, 62, 42);
+                    const bodyIsDark = isColorDark(bodyHex);
+                    button.style.setProperty('--podcast-body', 'hsl(' + hue + ', 62%, 42%)');
+                    button.style.setProperty('--podcast-body-deep', 'hsl(' + hue + ', 58%, 32%)');
+                    button.style.setProperty('--podcast-accent', 'hsl(' + hue + ', 80%, 70%)');
+                    button.style.setProperty('--podcast-ink', bodyIsDark ? 'rgba(255, 255, 255, 0.92)' : 'rgba(21, 21, 21, 0.9)');
+                    button.style.setProperty('--podcast-window-bg', bodyIsDark ? 'rgba(245, 245, 244, 0.94)' : 'rgba(255, 255, 255, 0.82)');
+                    button.style.setProperty('--podcast-window-ink', 'rgba(21, 21, 21, 0.84)');
+                    button.style.setProperty('--podcast-meter', bodyIsDark ? '#7EA3FF' : '#1F2BFF');
                 }
 
-                const podcastMark = item.format === 'podcast'
-                    ? '<span class="spine-podcast-mark" aria-hidden="true"><span class="podcast-vu-window"></span><span class="podcast-vu-knob"></span></span>'
-                    : '';
-
-                button.innerHTML = [
-                    '<span class="spine-top">' + item._ui.spineAuthor + '</span>',
-                    '<span class="spine-title">' + item._ui.spineLabel + '</span>',
-                    podcastMark,
-                    '<span class="spine-bottom">' + String(item.year) + '<em>' + item._ui.spineSubjectLabel + '</em></span>',
-                    '<span class="hover-card">' +
-                        '<strong>' + item.title + '</strong>' +
-                        '<small>' + item._author + ' · ' + String(item.year) + '</small>' +
-                        '<small>' + capitalize(item.format) + ' · ' + capitalize(item.status) + '</small>' +
-                    '</span>'
-                ].join('');
+                if (item.format === 'podcast') {
+                    button.innerHTML = [
+                        '<span class="podcast-shell">',
+                            '<span class="podcast-topline"><span class="podcast-author">' + item._ui.spineAuthor + '</span><span class="podcast-year">' + String(item.year) + '</span></span>',
+                            '<span class="podcast-title">' + item._ui.podcastTitle + '</span>',
+                            '<span class="podcast-window"><span class="podcast-reel podcast-reel-left"></span><span class="podcast-reel podcast-reel-right"></span><span class="podcast-window-label">PODCAST</span></span>',
+                            '<span class="podcast-bottomline"><span class="podcast-subject">' + item._ui.podcastSubject + '</span><span class="podcast-format">AUDIO</span></span>',
+                        '</span>',
+                        '<span class="hover-card">' +
+                            '<strong>' + item.title + '</strong>' +
+                            '<small>' + item._author + ' · ' + String(item.year) + '</small>' +
+                            '<small>' + capitalize(item.format) + ' · ' + capitalize(item.status) + '</small>' +
+                        '</span>'
+                    ].join('');
+                } else {
+                    button.innerHTML = [
+                        '<span class="spine-top">' + item._ui.spineAuthor + '</span>',
+                        '<span class="spine-title">' + item._ui.spineLabel + '</span>',
+                        '<span class="spine-bottom">' + String(item.year) + '<em>' + item._ui.spineSubjectLabel + '</em></span>',
+                        '<span class="hover-card">' +
+                            '<strong>' + item.title + '</strong>' +
+                            '<small>' + item._author + ' · ' + String(item.year) + '</small>' +
+                            '<small>' + capitalize(item.format) + ' · ' + capitalize(item.status) + '</small>' +
+                        '</span>'
+                    ].join('');
+                }
 
                 fragment.appendChild(button);
             });
