@@ -168,17 +168,55 @@
                 }
             }
 
-            let maxChars = 27;
+            let maxChars = 22;
             if (width < 90) {
-                maxChars = 18;
+                maxChars = 14;
             } else if (width < 110) {
-                maxChars = 22;
+                maxChars = 18;
             }
 
             if (label.length > maxChars) {
                 label = label.slice(0, Math.max(0, maxChars - 3)).trimEnd() + '...';
             }
             return label;
+        }
+
+        function formatSpineAuthor(author) {
+            const rawAuthor = normalizeText(author);
+            if (!rawAuthor) {
+                return 'UNKNOWN';
+            }
+
+            const primaryAuthor = normalizeText(rawAuthor.split(/[;,]/)[0]);
+            const parts = primaryAuthor.split(/\s+/).filter(Boolean);
+            let compact = '';
+
+            if (parts.length > 1) {
+                compact = parts[0].charAt(0) + '. ' + parts[parts.length - 1];
+            } else {
+                compact = parts[0] || 'UNKNOWN';
+            }
+
+            compact = compact.toUpperCase();
+            if (compact.length > 12) {
+                return compact.slice(0, 9).trimEnd() + '...';
+            }
+            return compact;
+        }
+
+        function formatSpineSubject(subject, width) {
+            const normalized = normalizeText(subject).replace(/-/g, ' ').toUpperCase() || 'GENERAL';
+            let maxChars = 11;
+            if (width < 90) {
+                maxChars = 7;
+            } else if (width < 110) {
+                maxChars = 9;
+            }
+
+            if (normalized.length > maxChars) {
+                return normalized.slice(0, Math.max(0, maxChars - 3)).trimEnd() + '...';
+            }
+            return normalized;
         }
 
         function computeSpineMetrics(title, itemId) {
@@ -390,7 +428,9 @@
                     .join(' ')
                     .toLowerCase(),
                 _ui: {
+                    spineAuthor: formatSpineAuthor(author),
                     spineLabel: buildSpineLabel(rawItem.title, metrics.width),
+                    spineSubjectLabel: formatSpineSubject(primarySubject, metrics.width),
                     width: String(metrics.width) + 'px',
                     height: String(spineHeight) + 'px',
                     titleSize: String(metrics.titleSize) + 'rem',
@@ -526,9 +566,9 @@
                 }
 
                 button.innerHTML = [
-                    '<span class="spine-top">' + item._author + '</span>',
+                    '<span class="spine-top">' + item._ui.spineAuthor + '</span>',
                     '<span class="spine-title">' + item._ui.spineLabel + '</span>',
-                    '<span class="spine-bottom">' + String(item.year) + '<em>' + capitalize(item._primarySubject) + '</em></span>',
+                    '<span class="spine-bottom">' + String(item.year) + '<em>' + item._ui.spineSubjectLabel + '</em></span>',
                     '<span class="hover-card">' +
                         '<strong>' + item.title + '</strong>' +
                         '<small>' + item._author + ' · ' + String(item.year) + '</small>' +

@@ -902,6 +902,10 @@ body.library-page a {
     transform: rotate(180deg);
     margin: 4px auto 0 auto;
     line-height: 1;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .spine-title {
@@ -921,6 +925,7 @@ body.library-page a {
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    max-width: 100%;
 }
 
 .spine-bottom {
@@ -937,11 +942,19 @@ body.library-page a {
     padding: 4px 3px;
     min-height: 40px;
     line-height: 1.08;
+    width: 100%;
+    overflow: hidden;
 }
 
 .spine-bottom em {
     font-style: normal;
     opacity: 0.78;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
 }
 
 .hover-card {
