@@ -886,122 +886,177 @@ body.library-page a {
 }
 
 .spine-item.podcast-item {
-    --podcast-body: #3153ff;
-    --podcast-body-deep: #2536aa;
-    --podcast-accent: #90a4ff;
+    --podcast-body: #3346b8;
+    --podcast-body-deep: #24317a;
+    --podcast-label: #a8b6ff;
+    --podcast-accent: #6f88ff;
     --podcast-ink: rgba(255, 255, 255, 0.92);
     --podcast-window-bg: rgba(245, 245, 244, 0.94);
     --podcast-window-ink: rgba(21, 21, 21, 0.84);
     --podcast-meter: #1F2BFF;
-    border-radius: 8px 8px 0 0;
+    border: 2px solid rgba(21, 21, 21, 0.92);
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
     display: block;
-    border-color: rgba(21, 21, 21, 0.92);
-    background: linear-gradient(
-        180deg,
-        var(--podcast-accent) 0%,
-        var(--podcast-accent) 14%,
-        var(--podcast-body) 14%,
-        var(--podcast-body) 86%,
-        var(--podcast-body-deep) 86%,
-        var(--podcast-body-deep) 100%
-    );
+    background: linear-gradient(180deg, var(--podcast-body) 0%, var(--podcast-body-deep) 100%);
     color: var(--podcast-ink);
     padding: 0;
     overflow: hidden;
 }
 
-.podcast-shell {
+.podcast-cassette {
+    position: relative;
     height: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    padding: 0.5rem 0.32rem 0.36rem;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 0.28rem;
+    padding: 0.44rem 0.34rem 0.34rem;
 }
 
-.podcast-topline,
-.podcast-bottomline {
+.cassette-screws {
+    position: absolute;
+    inset: 0.2rem;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.cassette-screws span {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--podcast-window-bg);
+    border: 1px solid rgba(21, 21, 21, 0.36);
+    opacity: 0.86;
+}
+
+.cassette-screws span:nth-child(1) { top: 0; left: 0; }
+.cassette-screws span:nth-child(2) { top: 0; right: 0; }
+.cassette-screws span:nth-child(3) { bottom: 0; left: 0; }
+.cassette-screws span:nth-child(4) { bottom: 0; right: 0; }
+
+.cassette-top-meta,
+.cassette-bottom-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 0.24rem;
     width: 100%;
-    min-height: 1rem;
+    min-height: 0.95rem;
+    z-index: 2;
 }
 
-.podcast-author,
-.podcast-year,
-.podcast-subject,
-.podcast-format {
-    font-size: 0.52rem;
-    letter-spacing: 0.07em;
+.cassette-author,
+.cassette-year,
+.cassette-subject {
+    font-size: 0.5rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 1.05;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: var(--podcast-ink);
 }
 
-.podcast-author,
-.podcast-subject {
+.cassette-author,
+.cassette-subject {
     max-width: 70%;
 }
 
-.podcast-title {
-    display: block;
+.cassette-label-strip {
     width: 100%;
-    text-align: left;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 800;
-    font-size: clamp(0.7rem, 1.1vw, 0.88rem);
-    line-height: 1.08;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0.08rem 0.14rem;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 2px;
-    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(21, 21, 21, 0.3);
+    border-radius: 3px;
+    background: var(--podcast-label);
+    min-height: 2.5rem;
+    padding: 0.14rem 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.podcast-window {
+.cassette-title {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 800;
+    font-size: clamp(0.64rem, 1vw, 0.82rem);
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    text-align: center;
+    color: rgba(21, 21, 21, 0.94);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.cassette-window {
     position: relative;
     flex: 1;
-    min-height: 58px;
+    min-height: 66px;
     border-radius: 4px;
-    border: 1px solid rgba(21, 21, 21, 0.28);
+    border: 1px solid rgba(21, 21, 21, 0.34);
     background: var(--podcast-window-bg);
     color: var(--podcast-window-ink);
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
     justify-items: center;
-    gap: 0.22rem;
-    padding: 0.22rem 0.24rem 0.8rem;
+    gap: 0.34rem;
+    padding: 0.28rem 0.34rem 0.92rem;
 }
 
-.podcast-reel {
-    width: clamp(12px, 42%, 18px);
+.cassette-reel {
+    width: clamp(16px, 46%, 24px);
     aspect-ratio: 1;
     border-radius: 50%;
     border: 1px solid var(--podcast-window-ink);
     background:
-        radial-gradient(circle at center, transparent 0 22%, var(--podcast-window-ink) 22% 23%, transparent 23% 56%, var(--podcast-window-ink) 56% 57%, transparent 57% 100%),
-        repeating-conic-gradient(from 0deg, var(--podcast-meter) 0 16deg, transparent 16deg 36deg);
+        radial-gradient(circle at center, var(--podcast-window-ink) 0 2px, transparent 2px 6px, var(--podcast-window-ink) 6px 7px, transparent 7px 100%),
+        repeating-conic-gradient(from 0deg, var(--podcast-meter) 0 18deg, transparent 18deg 42deg);
 }
 
-.podcast-window-label {
+.cassette-tape-bridge {
     position: absolute;
-    left: 0.3rem;
-    right: 0.3rem;
-    bottom: 0.2rem;
+    left: 22%;
+    right: 22%;
+    top: 50%;
+    height: 2px;
+    transform: translateY(-50%);
+    background: var(--podcast-window-ink);
+    opacity: 0.42;
+}
+
+.cassette-window-label {
+    position: absolute;
+    left: 0.34rem;
+    right: 0.34rem;
+    bottom: 0.24rem;
     font-size: 0.45rem;
     letter-spacing: 0.14em;
     text-align: center;
     text-transform: uppercase;
-    border-top: 1px solid rgba(21, 21, 21, 0.24);
-    padding-top: 0.15rem;
+    color: var(--podcast-window-ink);
+    border-top: 1px solid rgba(21, 21, 21, 0.26);
+    padding-top: 0.14rem;
+}
+
+.cassette-format {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.46rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1;
+    padding: 0.1rem 0.2rem;
+    border: 1px solid rgba(21, 21, 21, 0.28);
+    border-radius: 2px;
+    background: var(--podcast-accent);
+    color: rgba(21, 21, 21, 0.92);
 }
 
 .spine-item:hover,

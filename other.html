@@ -219,7 +219,7 @@
             return normalized;
         }
 
-        function formatPodcastTitle(title) {
+        function formatPodcastTitleReadable(title, width) {
             let label = normalizeText(title);
             const colonIndex = label.indexOf(':');
             if (colonIndex > 0) {
@@ -228,8 +228,16 @@
                     label = beforeColon;
                 }
             }
-            if (label.length > 28) {
-                label = label.slice(0, 25).trimEnd() + '...';
+
+            let maxChars = 32;
+            if (width < 90) {
+                maxChars = 20;
+            } else if (width < 110) {
+                maxChars = 26;
+            }
+
+            if (label.length > maxChars) {
+                label = label.slice(0, Math.max(0, maxChars - 3)).trimEnd() + '...';
             }
             return label;
         }
@@ -288,42 +296,6 @@
             return 0.2126 * r + 0.7152 * g + 0.0722 * b;
         }
 
-        function getHueDegrees(hexColor) {
-            const rgb = hexToRgb(hexColor);
-            if (!rgb) {
-                return null;
-            }
-
-            const r = rgb.r / 255;
-            const g = rgb.g / 255;
-            const b = rgb.b / 255;
-            const max = Math.max(r, g, b);
-            const min = Math.min(r, g, b);
-            const delta = max - min;
-            if (delta === 0) {
-                return 0;
-            }
-
-            let hue = 0;
-            if (max === r) {
-                hue = ((g - b) / delta) % 6;
-            } else if (max === g) {
-                hue = (b - r) / delta + 2;
-            } else {
-                hue = (r - g) / delta + 4;
-            }
-            hue *= 60;
-            if (hue < 0) {
-                hue += 360;
-            }
-            return hue;
-        }
-
-        function hueDistance(a, b) {
-            const diff = Math.abs(a - b);
-            return Math.min(diff, 360 - diff);
-        }
-
         function hslToHex(h, s, l) {
             const saturation = clamp(0, s, 100) / 100;
             const lightness = clamp(0, l, 100) / 100;
@@ -373,57 +345,13 @@
             return BALANCED_HUE_WHEEL[hashCode(normalizedKey + '-hue') % BALANCED_HUE_WHEEL.length];
         }
 
-        function getNextWheelHue(hue) {
-            let closestIndex = 0;
-            let closestDistance = Infinity;
-            BALANCED_HUE_WHEEL.forEach((wheelHue, index) => {
-                const distance = hueDistance(hue, wheelHue);
-                if (distance < closestDistance) {
-                    closestDistance = distance;
-                    closestIndex = index;
-                }
-            });
-            return BALANCED_HUE_WHEEL[(closestIndex + 1) % BALANCED_HUE_WHEEL.length];
+        function getTopicKey(item) {
+            return normalizeText((item.subjects && item.subjects[0]) || item.format);
         }
 
-        function buildToneColor(hue, tone) {
-            if (tone === 'primary') {
-                return hslToHex(hue, 88, 47);
-            }
-            return hslToHex(hue, 82, 64);
-        }
-
-        function colorsAreTooClose(a, b) {
-            if (!a || !b) {
-                return false;
-            }
-
-            const hueA = getHueDegrees(a);
-            const hueB = getHueDegrees(b);
-            const lumA = getRelativeLuminance(a);
-            const lumB = getRelativeLuminance(b);
-
-            if (hueA == null || hueB == null || lumA == null || lumB == null) {
-                return false;
-            }
-
-            return hueDistance(hueA, hueB) < 32 && Math.abs(lumA - lumB) < 0.2;
-        }
-
-        function resolveAlternatingSpineColor(item, index, previousColor) {
-            const subjectKey = normalizeText((item.subjects && item.subjects[0]) || item.format);
-            const tone = index % 2 === 0 ? 'primary' : 'contrast';
-            let hue = getSubjectHue(subjectKey);
-            let color = buildToneColor(hue, tone);
-
-            if (previousColor) {
-                for (let attempts = 0; attempts < BALANCED_HUE_WHEEL.length && colorsAreTooClose(color, previousColor); attempts += 1) {
-                    hue = getNextWheelHue(hue);
-                    color = buildToneColor(hue, tone);
-                }
-            }
-
-            return color;
+        function resolveTopicBaseColor(item) {
+            const hue = getSubjectHue(getTopicKey(item));
+            return hslToHex(hue, 58, 36);
         }
 
         function isColorDark(hexColor) {
@@ -454,7 +382,7 @@
                     spineAuthor: formatSpineAuthor(author),
                     spineLabel: buildSpineLabel(rawItem.title, metrics.width),
                     spineSubjectLabel: formatSpineSubject(primarySubject, metrics.width),
-                    podcastTitle: formatPodcastTitle(rawItem.title),
+                    podcastTitleReadable: formatPodcastTitleReadable(rawItem.title, metrics.width),
                     podcastSubject: formatPodcastSubject(primarySubject),
                     width: String(metrics.width) + 'px',
                     height: String(spineHeight) + 'px',
@@ -563,12 +491,10 @@
         function renderShelf(items) {
             refs.shelf.innerHTML = '';
             const fragment = document.createDocumentFragment();
-            let previousColor = null;
 
-            items.forEach((item, index) => {
-                const spineColor = resolveAlternatingSpineColor(item, index, previousColor);
-                const isDarkColor = isColorDark(spineColor);
-                previousColor = spineColor;
+            items.forEach((item) => {
+                const topicColor = resolveTopicBaseColor(item);
+                const isDarkColor = isColorDark(topicColor);
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.className = 'spine-item';
@@ -581,7 +507,7 @@
                 button.setAttribute('aria-label', item.title);
                 button.style.setProperty('--spine-width', item._ui.width);
                 button.style.setProperty('--spine-height', item._ui.height);
-                button.style.setProperty('--spine-color', spineColor);
+                button.style.setProperty('--spine-color', topicColor);
                 button.style.setProperty('--spine-title-size', item._ui.titleSize);
                 button.style.setProperty('--spine-title-tracking', item._ui.titleTracking);
                 button.style.setProperty('--spine-title-leading', item._ui.titleLeading);
@@ -594,13 +520,12 @@
                 }
 
                 if (item.format === 'podcast') {
-                    const subjectKey = (item.subjects && item.subjects[0]) || item.format;
-                    const hue = getSubjectHue(subjectKey);
-                    const bodyHex = hslToHex(hue, 62, 42);
-                    const bodyIsDark = isColorDark(bodyHex);
-                    button.style.setProperty('--podcast-body', 'hsl(' + hue + ', 62%, 42%)');
-                    button.style.setProperty('--podcast-body-deep', 'hsl(' + hue + ', 58%, 32%)');
-                    button.style.setProperty('--podcast-accent', 'hsl(' + hue + ', 80%, 70%)');
+                    const hue = getSubjectHue(getTopicKey(item));
+                    const bodyIsDark = isColorDark(topicColor);
+                    button.style.setProperty('--podcast-body', topicColor);
+                    button.style.setProperty('--podcast-body-deep', 'hsl(' + hue + ', 58%, 26%)');
+                    button.style.setProperty('--podcast-label', 'hsl(' + hue + ', 70%, 72%)');
+                    button.style.setProperty('--podcast-accent', 'hsl(' + hue + ', 82%, 62%)');
                     button.style.setProperty('--podcast-ink', bodyIsDark ? 'rgba(255, 255, 255, 0.92)' : 'rgba(21, 21, 21, 0.9)');
                     button.style.setProperty('--podcast-window-bg', bodyIsDark ? 'rgba(245, 245, 244, 0.94)' : 'rgba(255, 255, 255, 0.82)');
                     button.style.setProperty('--podcast-window-ink', 'rgba(21, 21, 21, 0.84)');
@@ -609,11 +534,12 @@
 
                 if (item.format === 'podcast') {
                     button.innerHTML = [
-                        '<span class="podcast-shell">',
-                            '<span class="podcast-topline"><span class="podcast-author">' + item._ui.spineAuthor + '</span><span class="podcast-year">' + String(item.year) + '</span></span>',
-                            '<span class="podcast-title">' + item._ui.podcastTitle + '</span>',
-                            '<span class="podcast-window"><span class="podcast-reel podcast-reel-left"></span><span class="podcast-reel podcast-reel-right"></span><span class="podcast-window-label">PODCAST</span></span>',
-                            '<span class="podcast-bottomline"><span class="podcast-subject">' + item._ui.podcastSubject + '</span><span class="podcast-format">AUDIO</span></span>',
+                        '<span class="podcast-cassette">',
+                            '<span class="cassette-screws" aria-hidden="true"><span></span><span></span><span></span><span></span></span>',
+                            '<span class="cassette-top-meta"><span class="cassette-author">' + item._ui.spineAuthor + '</span><span class="cassette-year">' + String(item.year) + '</span></span>',
+                            '<span class="cassette-label-strip"><span class="cassette-title">' + item._ui.podcastTitleReadable + '</span></span>',
+                            '<span class="cassette-window"><span class="cassette-reel cassette-reel-left"></span><span class="cassette-tape-bridge"></span><span class="cassette-reel cassette-reel-right"></span><span class="cassette-window-label">PODCAST</span></span>',
+                            '<span class="cassette-bottom-meta"><span class="cassette-subject">' + item._ui.podcastSubject + '</span><span class="cassette-format">AUDIO</span></span>',
                         '</span>',
                         '<span class="hover-card">' +
                             '<strong>' + item.title + '</strong>' +
