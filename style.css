@@ -647,7 +647,13 @@ body.homepage .system-specs {
    7. LIBRARY PAGE
    ========================================= */
 body.library-page {
-    background: #f4f4f2;
+    --lib-bg: #efeee9;
+    --card-bg: #f7f6f1;
+    --ink: #151515;
+    --rail-h: 38px;
+    --lift-y: -4px;
+    --dur-fast: 160ms;
+    background: var(--lib-bg);
     color: #151515;
     font-family: "JetBrains Mono", "Courier New", monospace;
     overflow: hidden;
@@ -666,7 +672,7 @@ body.library-page a {
     min-height: 100vh;
     display: grid;
     grid-template-columns: 300px 1fr 340px;
-    background: #f4f4f2;
+    background: var(--lib-bg);
 }
 
 .library-sidebar {
@@ -837,19 +843,11 @@ body.library-page a {
 .cover-grid {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 0.9rem;
+    gap: 1rem;
     align-content: start;
     align-items: start;
-    padding-top: 0.1rem;
+    padding-top: 0.15rem;
     contain: layout paint;
-}
-
-.cover-grid:hover .cover-item {
-    opacity: 0.78;
-}
-
-.cover-grid:hover .cover-item:hover {
-    opacity: 1;
 }
 
 .cover-item {
@@ -860,34 +858,77 @@ body.library-page a {
     margin: 0;
     padding: 0;
     font: inherit;
-    line-height: 0;
+    line-height: 1;
     cursor: pointer;
     position: relative;
     text-align: left;
     outline: none;
-    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
+    transition: transform var(--dur-fast) cubic-bezier(0.16, 1, 0.3, 1), box-shadow var(--dur-fast) ease;
 }
 
 .cover-item:hover,
 .cover-item.selected {
-    transform: translateY(-5px) scale(1.008);
+    transform: translateY(var(--lift-y)) scale(1.004);
     z-index: 10;
 }
 
-.cover-frame {
+.cover-card {
+    border: 1px solid var(--ink);
+    background: var(--card-bg);
+    box-shadow: 0 1px 0 rgba(21, 21, 21, 0.2), 0 8px 18px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+.cover-item.selected .cover-card {
+    box-shadow: 0 1px 0 rgba(21, 21, 21, 0.28), 0 10px 20px rgba(0, 0, 0, 0.14);
+}
+
+.cover-top-strip {
+    height: 24px;
+    border-bottom: 1px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.025) 0%, rgba(0, 0, 0, 0.065) 100%);
+}
+
+.strip-tag {
+    padding-left: 0.42rem;
+    font-size: 0.48rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--topic-accent, #1f2bff);
+}
+
+.strip-domain {
+    max-width: 62%;
+    padding-right: 0.42rem;
+    font-size: 0.48rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(21, 21, 21, 0.72);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cover-surface {
     position: relative;
     width: 100%;
     aspect-ratio: 2 / 3;
-    border: 1px solid rgba(21, 21, 21, 0.74);
-    background: #f2f0e8;
+    background: #eceae2;
     overflow: hidden;
-    box-shadow: 0 1px 0 rgba(21, 21, 21, 0.1), 0 10px 18px rgba(0, 0, 0, 0.1);
 }
 
 .cover-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 44%;
     display: block;
     background: #e6e4de;
 }
@@ -898,9 +939,9 @@ body.library-page a {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    gap: 0.3rem;
-    padding: 0.62rem 0.54rem;
-    background: #f6f4ec;
+    gap: 0.32rem;
+    padding: 0.65rem 0.56rem;
+    background: linear-gradient(180deg, #f6f4ea 0%, #ebe8dd 100%);
 }
 
 .cover-fallback::before {
@@ -909,24 +950,16 @@ body.library-page a {
     left: 0;
     right: 0;
     top: 0;
-    height: 4px;
-    background: var(--cover-topic-color, #3553b6);
-}
-
-.cover-item.topic-light .cover-fallback {
-    background: #f6f4ec;
-}
-
-.cover-fallback.is-hidden {
-    display: none;
+    height: 3px;
+    background: var(--topic-accent, #1f2bff);
 }
 
 .cover-fallback strong {
     margin: 0;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     font-weight: 800;
-    line-height: 1.08;
+    line-height: 1.1;
     letter-spacing: -0.01em;
     text-transform: uppercase;
     color: rgba(21, 21, 21, 0.94);
@@ -934,46 +967,129 @@ body.library-page a {
 
 .cover-fallback small {
     margin: 0;
-    font-size: 0.54rem;
+    font-size: 0.52rem;
     letter-spacing: 0.06em;
     line-height: 1.22;
     text-transform: uppercase;
     color: rgba(21, 21, 21, 0.74);
 }
 
-.cover-item.topic-light .cover-fallback strong,
-.cover-item.topic-light .cover-fallback small {
-    color: rgba(21, 21, 21, 0.88);
+.cover-bottom-rail {
+    min-height: var(--rail-h);
+    border-top: 1px solid var(--ink);
+    background: #fbfaf6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.14rem;
+    padding: 0.34rem 0.46rem 0.38rem;
 }
 
-.cover-audio-badge {
+.rail-title {
+    display: block;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.64rem;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: rgba(21, 21, 21, 0.95);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rail-meta {
+    display: block;
+    font-size: 0.49rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(21, 21, 21, 0.66);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cover-audio-chip {
     position: absolute;
-    right: 0.3rem;
-    top: 0.3rem;
+    right: 0.32rem;
+    top: 0.32rem;
     font-size: 0.42rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     line-height: 1;
-    padding: 0.16rem 0.22rem;
-    border: 1px solid rgba(21, 21, 21, 0.44);
+    padding: 0.16rem 0.2rem;
+    border: 1px solid rgba(21, 21, 21, 0.46);
     background: rgba(255, 255, 255, 0.9);
     color: rgba(21, 21, 21, 0.84);
 }
 
-.cover-item.topic-dark .cover-audio-badge {
-    background: rgba(21, 21, 21, 0.68);
-    border-color: rgba(255, 255, 255, 0.52);
-    color: rgba(255, 255, 255, 0.9);
+.article-poster {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto auto auto;
+    gap: 0.38rem;
+    padding: 0.52rem 0.5rem 0.56rem;
+    background: linear-gradient(180deg, #f7f6ef 0%, #ece9de 100%);
 }
 
-.cover-item:focus-visible .cover-frame {
-    outline: 2px solid #1e32d6;
+.poster-kicker {
+    font-size: 0.45rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(21, 21, 21, 0.62);
+}
+
+.poster-title {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(0.78rem, 1.7vw, 1rem);
+    line-height: 1.03;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: rgba(21, 21, 21, 0.95);
+    align-self: end;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.poster-domain {
+    font-size: 0.48rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(21, 21, 21, 0.68);
+}
+
+.poster-rule {
+    height: 3px;
+    width: 100%;
+    background: var(--topic-accent, #1f2bff);
+}
+
+.poster-subject {
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(21, 21, 21, 0.72);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cover-item.audio-item .cover-audio-chip {
+    border-color: var(--topic-accent, #1f2bff);
+    color: rgba(21, 21, 21, 0.92);
+}
+
+.cover-item:focus-visible .cover-card {
+    outline: 2px solid var(--topic-accent, #1f2bff);
     outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
     .cover-item {
-        transition: opacity 0.12s linear;
+        transition: none;
     }
 
     .cover-item:hover,
