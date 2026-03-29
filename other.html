@@ -89,78 +89,13 @@
 
     <script>
         const SPINE_HEIGHTS = [240, 270, 300, 330];
-        const SUBJECT_COLOR_GROUPS = [
-            {
-                match: ['design', 'art', 'typography'],
-                primary: ['#ff3b30', '#ff5a36', '#ff2e55'],
-                contrast: ['#1f2bff', '#00b8ff', '#16b3c6']
-            },
-            {
-                match: ['philosophy', 'ethics', 'logic'],
-                primary: ['#8b2cff', '#c44dff', '#3153ff'],
-                contrast: ['#00c7a5', '#18b84a', '#00b8ff']
-            },
-            {
-                match: ['technology', 'computing', 'ai', 'frontier-tech'],
-                primary: ['#1f2bff', '#3153ff', '#00b8ff'],
-                contrast: ['#ffc400', '#ff8a00', '#ff3b30']
-            },
-            {
-                match: ['history', 'politics'],
-                primary: ['#ff2e88', '#8b2cff', '#c44dff'],
-                contrast: ['#00c7a5', '#16b3c6', '#18b84a']
-            },
-            {
-                match: ['language', 'korean', 'culture'],
-                primary: ['#ffc400', '#ffb200', '#ff8a00'],
-                contrast: ['#1f2bff', '#3153ff', '#8b2cff']
-            },
-            {
-                match: ['systems', 'decision-making'],
-                primary: ['#16b3c6', '#00b8ff', '#2f74ff'],
-                contrast: ['#ff5a36', '#ffc400', '#ff2e88']
-            },
-            {
-                match: ['math', 'physics', 'science'],
-                primary: ['#ff2e88', '#ff3f8e', '#ff5a36'],
-                contrast: ['#00b8ff', '#3153ff', '#00c7a5']
-            },
-            {
-                match: ['football', 'sport'],
-                primary: ['#18b84a', '#2c8c3c', '#00a67e'],
-                contrast: ['#ff3b30', '#ffc400', '#ff8a00']
-            }
-        ];
-        const FORMAT_COLOR_GROUPS = {
-            book: {
-                primary: ['#1f2bff', '#3153ff', '#00b8ff'],
-                contrast: ['#ff3b30', '#ffc400', '#ff8a00']
-            },
-            article: {
-                primary: ['#00b8ff', '#16b3c6', '#00c7a5'],
-                contrast: ['#8b2cff', '#ff2e88', '#ff3b30']
-            },
-            podcast: {
-                primary: ['#ff3b30', '#ff5a36', '#ff2e88'],
-                contrast: ['#1f2bff', '#00b8ff', '#18b84a']
-            }
+        const KNOWN_SUBJECT_HUES = {
+            ai: 226,
+            philosophy: 282,
+            literature: 14,
+            memory: 40
         };
-        const FALLBACK_PRIMARY_COLORS = [
-            '#1f2bff',
-            '#3153ff',
-            '#00b8ff',
-            '#16b3c6',
-            '#8b2cff',
-            '#00c7a5'
-        ];
-        const FALLBACK_CONTRAST_COLORS = [
-            '#ff3b30',
-            '#ffc400',
-            '#ff2e88',
-            '#18b84a',
-            '#e4572e',
-            '#ff8a00'
-        ];
+        const BALANCED_HUE_WHEEL = [12, 38, 68, 96, 128, 166, 196, 222, 252, 286, 318, 346];
 
         const state = {
             items: [],
@@ -215,11 +150,15 @@
             return values[hashCode(input) % values.length];
         }
 
+        function clamp(min, value, max) {
+            return Math.max(min, Math.min(value, max));
+        }
+
         function normalizedSubject(value) {
             return normalizeText(value).toLowerCase().replace(/\s+/g, '-');
         }
 
-        function buildSpineLabel(title) {
+        function buildSpineLabel(title, width) {
             let label = normalizeText(title);
             const colonIndex = label.indexOf(':');
             if (colonIndex > 0) {
@@ -228,48 +167,35 @@
                     label = beforeColon;
                 }
             }
-            if (label.length > 24) {
-                label = label.slice(0, 21).trimEnd() + '...';
+
+            let maxChars = 27;
+            if (width < 90) {
+                maxChars = 18;
+            } else if (width < 110) {
+                maxChars = 22;
+            }
+
+            if (label.length > maxChars) {
+                label = label.slice(0, Math.max(0, maxChars - 3)).trimEnd() + '...';
             }
             return label;
         }
 
-        function getTitleMetrics(title) {
+        function computeSpineMetrics(title, itemId) {
             const condensedLength = normalizeText(title).replace(/\s+/g, '').length;
-
-            if (condensedLength <= 18) {
-                return { width: 72, size: 1.03, tracking: 0.004, leading: 0.92, minHeight: 250 };
-            }
-            if (condensedLength <= 28) {
-                return { width: 84, size: 0.96, tracking: 0.002, leading: 0.92, minHeight: 250 };
-            }
-            if (condensedLength <= 38) {
-                return { width: 96, size: 0.9, tracking: 0, leading: 0.92, minHeight: 270 };
-            }
-            if (condensedLength <= 50) {
-                return { width: 110, size: 0.86, tracking: 0, leading: 0.92, minHeight: 290 };
-            }
-            return { width: 124, size: 0.82, tracking: -0.002, leading: 0.92, minHeight: 290 };
-        }
-
-        function getColorGroup(subjects, format) {
-            const normalizedSubjects = subjects.map(normalizedSubject).filter(Boolean);
-            for (const subject of normalizedSubjects) {
-                for (const group of SUBJECT_COLOR_GROUPS) {
-                    if (group.match.includes(subject)) {
-                        return group;
-                    }
-                }
-            }
-
-            const normalizedFormat = normalizeText(format).toLowerCase();
-            if (FORMAT_COLOR_GROUPS[normalizedFormat]) {
-                return FORMAT_COLOR_GROUPS[normalizedFormat];
-            }
+            const baseWidth = clamp(76, 68 + condensedLength * 1.45, 132);
+            const jitter = (hashCode(itemId + '-w-jitter') % 15) - 7;
+            const width = Math.round(clamp(76, baseWidth + jitter, 132));
+            const minHeight = width < 90 ? 250 : (width < 110 ? 270 : 290);
+            const titleSize = clamp(0.84, width / 120, 1.03);
+            const titleTracking = width >= 110 ? -0.002 : (width >= 90 ? -0.001 : 0);
 
             return {
-                primary: FALLBACK_PRIMARY_COLORS,
-                contrast: FALLBACK_CONTRAST_COLORS
+                width,
+                minHeight,
+                titleSize,
+                titleLeading: 0.93,
+                titleTracking
             };
         }
 
@@ -337,6 +263,75 @@
             return Math.min(diff, 360 - diff);
         }
 
+        function hslToHex(h, s, l) {
+            const saturation = clamp(0, s, 100) / 100;
+            const lightness = clamp(0, l, 100) / 100;
+            const hue = ((h % 360) + 360) % 360;
+
+            const c = (1 - Math.abs(2 * lightness - 1)) * saturation;
+            const x = c * (1 - Math.abs(((hue / 60) % 2) - 1));
+            const m = lightness - c / 2;
+
+            let rPrime = 0;
+            let gPrime = 0;
+            let bPrime = 0;
+
+            if (hue < 60) {
+                rPrime = c;
+                gPrime = x;
+            } else if (hue < 120) {
+                rPrime = x;
+                gPrime = c;
+            } else if (hue < 180) {
+                gPrime = c;
+                bPrime = x;
+            } else if (hue < 240) {
+                gPrime = x;
+                bPrime = c;
+            } else if (hue < 300) {
+                rPrime = x;
+                bPrime = c;
+            } else {
+                rPrime = c;
+                bPrime = x;
+            }
+
+            const toHex = (value) => {
+                const channel = Math.round((value + m) * 255);
+                return channel.toString(16).padStart(2, '0');
+            };
+
+            return '#' + toHex(rPrime) + toHex(gPrime) + toHex(bPrime);
+        }
+
+        function getSubjectHue(subjectKey) {
+            const normalizedKey = normalizedSubject(subjectKey);
+            if (Object.prototype.hasOwnProperty.call(KNOWN_SUBJECT_HUES, normalizedKey)) {
+                return KNOWN_SUBJECT_HUES[normalizedKey];
+            }
+            return BALANCED_HUE_WHEEL[hashCode(normalizedKey + '-hue') % BALANCED_HUE_WHEEL.length];
+        }
+
+        function getNextWheelHue(hue) {
+            let closestIndex = 0;
+            let closestDistance = Infinity;
+            BALANCED_HUE_WHEEL.forEach((wheelHue, index) => {
+                const distance = hueDistance(hue, wheelHue);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestIndex = index;
+                }
+            });
+            return BALANCED_HUE_WHEEL[(closestIndex + 1) % BALANCED_HUE_WHEEL.length];
+        }
+
+        function buildToneColor(hue, tone) {
+            if (tone === 'primary') {
+                return hslToHex(hue, 88, 47);
+            }
+            return hslToHex(hue, 82, 64);
+        }
+
         function colorsAreTooClose(a, b) {
             if (!a || !b) {
                 return false;
@@ -354,24 +349,17 @@
             return hueDistance(hueA, hueB) < 32 && Math.abs(lumA - lumB) < 0.2;
         }
 
-        function pickContrastingFallback(seed, previousColor) {
-            const start = hashCode(seed + '-fallback-rotate') % FALLBACK_CONTRAST_COLORS.length;
-            for (let i = 0; i < FALLBACK_CONTRAST_COLORS.length; i += 1) {
-                const color = FALLBACK_CONTRAST_COLORS[(start + i) % FALLBACK_CONTRAST_COLORS.length];
-                if (!colorsAreTooClose(color, previousColor)) {
-                    return color;
-                }
-            }
-            return FALLBACK_CONTRAST_COLORS[start];
-        }
-
         function resolveAlternatingSpineColor(item, index, previousColor) {
-            const group = getColorGroup(item.subjects || [], item.format);
-            const track = index % 2 === 0 ? group.primary : group.contrast;
-            let color = pickFrom(item.id + '-alt', track);
+            const subjectKey = normalizeText((item.subjects && item.subjects[0]) || item.format);
+            const tone = index % 2 === 0 ? 'primary' : 'contrast';
+            let hue = getSubjectHue(subjectKey);
+            let color = buildToneColor(hue, tone);
 
-            if (previousColor && colorsAreTooClose(color, previousColor)) {
-                color = pickContrastingFallback(item.id, previousColor);
+            if (previousColor) {
+                for (let attempts = 0; attempts < BALANCED_HUE_WHEEL.length && colorsAreTooClose(color, previousColor); attempts += 1) {
+                    hue = getNextWheelHue(hue);
+                    color = buildToneColor(hue, tone);
+                }
             }
 
             return color;
@@ -389,9 +377,9 @@
             const author = normalizeText(rawItem.author) || 'Unknown';
             const subjects = Array.isArray(rawItem.subjects) ? rawItem.subjects : [];
             const primarySubject = subjects.length > 0 ? subjects[0] : rawItem.format;
-            const titleMetrics = getTitleMetrics(rawItem.title);
+            const metrics = computeSpineMetrics(rawItem.title, rawItem.id);
             const baseHeight = pickFrom(rawItem.id + '-h', SPINE_HEIGHTS);
-            const spineHeight = Math.max(baseHeight, titleMetrics.minHeight);
+            const spineHeight = Math.max(baseHeight, metrics.minHeight);
 
             return {
                 ...rawItem,
@@ -402,12 +390,12 @@
                     .join(' ')
                     .toLowerCase(),
                 _ui: {
-                    spineLabel: buildSpineLabel(rawItem.title),
-                    width: String(titleMetrics.width) + 'px',
+                    spineLabel: buildSpineLabel(rawItem.title, metrics.width),
+                    width: String(metrics.width) + 'px',
                     height: String(spineHeight) + 'px',
-                    titleSize: String(titleMetrics.size) + 'rem',
-                    titleTracking: String(titleMetrics.tracking) + 'em',
-                    titleLeading: String(titleMetrics.leading)
+                    titleSize: String(metrics.titleSize) + 'rem',
+                    titleTracking: String(metrics.titleTracking) + 'em',
+                    titleLeading: String(metrics.titleLeading)
                 }
             };
         }

@@ -859,7 +859,7 @@ body.library-page a {
     --spine-color: #ffffff;
     --spine-title-size: 0.9rem;
     --spine-title-tracking: 0em;
-    --spine-title-leading: 0.92;
+    --spine-title-leading: 0.93;
     width: var(--spine-width);
     height: var(--spine-height);
     border: 1px solid #151515;
