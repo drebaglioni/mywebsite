@@ -109,13 +109,23 @@ def parse_url(value: str, row_no: int) -> str | None:
 def parse_cover(value: str, row_no: int) -> str | None:
     if value == "":
         return None
-    if re.match(r"^https?://", value):
-        return value
-    if value.startswith("/"):
+    normalized = value.strip()
+
+    markdown_link_match = re.fullmatch(r"\[[^\]]*\]\(([^)]+)\)", normalized)
+    if markdown_link_match:
+        normalized = markdown_link_match.group(1).strip()
+
+    if normalized.startswith("data:"):
+        # Ignore inline data URIs to keep library JSON lightweight.
+        return None
+
+    if re.match(r"^https?://", normalized):
+        return normalized
+    if normalized.startswith("/"):
         raise ValueError(f"Row {row_no}: cover local path must be relative, not absolute")
-    if re.search(r"\s", value):
+    if re.search(r"\s", normalized):
         raise ValueError(f"Row {row_no}: cover local path cannot contain spaces")
-    return value
+    return normalized
 
 
 def parse_isbn(value: str, row_no: int) -> str | None:

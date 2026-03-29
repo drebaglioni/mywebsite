@@ -66,7 +66,9 @@
     "finished": "2026-03-23",
     "rating": null,
     "url": "https://www.astralcodexten.com/p/being-john-rawls",
-    "notes": "Rawlsian life-swap parable"
+    "notes": "Rawlsian life-swap parable",
+    "cover_image": "https://cdn.britannica.com/35/100835-050-1568EFE5/John-Rawls.jpg",
+    "cover_source": "manual"
   },
   {
     "id": "if-anyone-builds-it-everyone-dies-2025",
@@ -117,6 +119,8 @@
     "finished": null,
     "rating": null,
     "url": "https://www.youtube.com/watch?v=zzXyPGEtseI&list=PLqYmG7hTraZBiUr6_Qf8YTS2Oqy3OGZEj&index=2",
-    "notes": "David Silver on the 'era of experience' in RL"
+    "notes": "David Silver on the 'era of experience' in RL",
+    "cover_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9pYaB6m8pbUm7hUV-z4_DW6f3hP34NIj36A&s",
+    "cover_source": "manual"
   }
 ]
