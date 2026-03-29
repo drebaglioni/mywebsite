@@ -77,7 +77,7 @@
                 <span id="result-count">0 items</span>
             </div>
 
-            <div class="book-shelf" id="book-shelf" aria-live="polite"></div>
+            <div class="cover-grid" id="book-shelf" aria-live="polite"></div>
             <div class="library-empty" id="empty-state" hidden>No entries match your current filters.</div>
         </section>
 
@@ -96,6 +96,7 @@
             memory: 40
         };
         const BALANCED_HUE_WHEEL = [12, 38, 68, 96, 128, 166, 196, 222, 252, 286, 318, 346];
+        const OPEN_LIBRARY_CACHE = new Map();
 
         const state = {
             items: [],
@@ -130,11 +131,28 @@
             return (value || '').toString().trim();
         }
 
+        function escapeHtml(value) {
+            return normalizeText(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
+
+        function escapeAttr(value) {
+            return escapeHtml(value)
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
         function capitalize(value) {
             return value
                 .split('-')
                 .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
                 .join(' ');
+        }
+
+        function isAudioFormat(item) {
+            return item.format === 'podcast' || item.format === 'audiobook';
         }
 
         function hashCode(input) {
@@ -215,37 +233,6 @@
 
             if (normalized.length > maxChars) {
                 return normalized.slice(0, Math.max(0, maxChars - 3)).trimEnd() + '...';
-            }
-            return normalized;
-        }
-
-        function formatPodcastTitleReadable(title, width) {
-            let label = normalizeText(title);
-            const colonIndex = label.indexOf(':');
-            if (colonIndex > 0) {
-                const beforeColon = normalizeText(label.slice(0, colonIndex));
-                if (beforeColon.length >= 10) {
-                    label = beforeColon;
-                }
-            }
-
-            let maxChars = 32;
-            if (width < 90) {
-                maxChars = 20;
-            } else if (width < 110) {
-                maxChars = 26;
-            }
-
-            if (label.length > maxChars) {
-                label = label.slice(0, Math.max(0, maxChars - 3)).trimEnd() + '...';
-            }
-            return label;
-        }
-
-        function formatPodcastSubject(subject) {
-            const normalized = normalizeText(subject).replace(/-/g, ' ').toUpperCase() || 'GENERAL';
-            if (normalized.length > 12) {
-                return normalized.slice(0, 9).trimEnd() + '...';
             }
             return normalized;
         }
@@ -354,6 +341,137 @@
             return hslToHex(hue, 58, 36);
         }
 
+        function buildFallbackCoverTitle(title) {
+            const normalized = normalizeText(title);
+            if (normalized.length <= 42) {
+                return normalized;
+            }
+            return normalized.slice(0, 39).trimEnd() + '...';
+        }
+
+        function extractYouTubeId(urlValue) {
+            const raw = normalizeText(urlValue);
+            if (!raw) {
+                return '';
+            }
+
+            const shortMatch = raw.match(/youtu\.be\/([A-Za-z0-9_-]{11})/);
+            if (shortMatch) {
+                return shortMatch[1];
+            }
+
+            const watchMatch = raw.match(/[?&]v=([A-Za-z0-9_-]{11})/);
+            if (watchMatch) {
+                return watchMatch[1];
+            }
+
+            const embedMatch = raw.match(/\/embed\/([A-Za-z0-9_-]{11})/);
+            if (embedMatch) {
+                return embedMatch[1];
+            }
+
+            return '';
+        }
+
+        function buildArticleThumbnail(urlValue) {
+            const raw = normalizeText(urlValue);
+            if (!raw) {
+                return '';
+            }
+            return 'https://s.wordpress.com/mshots/v1/' + encodeURIComponent(raw) + '?w=720';
+        }
+
+        function getInitialCoverUrl(rawItem) {
+            const manualCover = normalizeText(rawItem.cover_image || rawItem.cover_url || rawItem.cover || rawItem.image);
+            if (manualCover) {
+                return manualCover;
+            }
+
+            if (rawItem.format === 'podcast') {
+                const youtubeId = extractYouTubeId(rawItem.url);
+                if (youtubeId) {
+                    return 'https://img.youtube.com/vi/' + youtubeId + '/hqdefault.jpg';
+                }
+            }
+
+            if (rawItem.format === 'article') {
+                return buildArticleThumbnail(rawItem.url);
+            }
+
+            return '';
+        }
+
+        function makeBookCoverKey(item) {
+            return [normalizeText(item.title).toLowerCase(), normalizeText(item._author).toLowerCase()].join('|');
+        }
+
+        async function fetchOpenLibraryCover(item) {
+            const cacheKey = makeBookCoverKey(item);
+            if (OPEN_LIBRARY_CACHE.has(cacheKey)) {
+                return OPEN_LIBRARY_CACHE.get(cacheKey);
+            }
+
+            const query = new URLSearchParams();
+            query.set('title', normalizeText(item.title));
+            query.set('limit', '4');
+            if (item._author && item._author.toLowerCase() !== 'unknown') {
+                query.set('author', item._author);
+            }
+
+            let coverUrl = '';
+            try {
+                const response = await fetch('https://openlibrary.org/search.json?' + query.toString());
+                if (response.ok) {
+                    const payload = await response.json();
+                    const docs = Array.isArray(payload.docs) ? payload.docs : [];
+                    const match = docs.find((doc) => doc.cover_i || (Array.isArray(doc.isbn) && doc.isbn.length > 0));
+                    if (match) {
+                        if (match.cover_i) {
+                            coverUrl = 'https://covers.openlibrary.org/b/id/' + String(match.cover_i) + '-L.jpg';
+                        } else if (Array.isArray(match.isbn) && match.isbn.length > 0) {
+                            coverUrl = 'https://covers.openlibrary.org/b/isbn/' + encodeURIComponent(match.isbn[0]) + '-L.jpg';
+                        }
+                    }
+                }
+            } catch (error) {
+                coverUrl = '';
+            }
+
+            OPEN_LIBRARY_CACHE.set(cacheKey, coverUrl);
+            return coverUrl;
+        }
+
+        async function hydrateMissingBookCovers(items) {
+            const pending = items.filter((item) =>
+                (item.format === 'book' || item.format === 'audiobook') && !normalizeText(item._ui.coverUrl)
+            );
+
+            if (pending.length === 0) {
+                return;
+            }
+
+            const results = await Promise.all(pending.map(async (item) => ({
+                id: item.id,
+                coverUrl: await fetchOpenLibraryCover(item)
+            })));
+
+            let changed = false;
+            results.forEach((result) => {
+                if (!result.coverUrl) {
+                    return;
+                }
+                const target = state.itemById.get(result.id);
+                if (target && target._ui.coverUrl !== result.coverUrl) {
+                    target._ui.coverUrl = result.coverUrl;
+                    changed = true;
+                }
+            });
+
+            if (changed) {
+                scheduleRender();
+            }
+        }
+
         function isColorDark(hexColor) {
             const luminance = getRelativeLuminance(hexColor);
             if (luminance == null) {
@@ -369,6 +487,7 @@
             const metrics = computeSpineMetrics(rawItem.title, rawItem.id);
             const baseHeight = pickFrom(rawItem.id + '-h', SPINE_HEIGHTS);
             const spineHeight = Math.max(baseHeight, metrics.minHeight);
+            const topicColor = resolveTopicBaseColor({ subjects, format: rawItem.format });
 
             return {
                 ...rawItem,
@@ -382,8 +501,10 @@
                     spineAuthor: formatSpineAuthor(author),
                     spineLabel: buildSpineLabel(rawItem.title, metrics.width),
                     spineSubjectLabel: formatSpineSubject(primarySubject, metrics.width),
-                    podcastTitleReadable: formatPodcastTitleReadable(rawItem.title, metrics.width),
-                    podcastSubject: formatPodcastSubject(primarySubject),
+                    coverUrl: getInitialCoverUrl(rawItem),
+                    fallbackCoverTitle: buildFallbackCoverTitle(rawItem.title),
+                    topicColor,
+                    topicIsDark: isColorDark(topicColor),
                     width: String(metrics.width) + 'px',
                     height: String(spineHeight) + 'px',
                     titleSize: String(metrics.titleSize) + 'rem',
@@ -493,72 +614,54 @@
             const fragment = document.createDocumentFragment();
 
             items.forEach((item) => {
-                const topicColor = resolveTopicBaseColor(item);
-                const isDarkColor = isColorDark(topicColor);
                 const button = document.createElement('button');
                 button.type = 'button';
-                button.className = 'spine-item';
+                button.className = 'cover-item';
                 button.dataset.id = item.id;
                 button.dataset.format = item.format;
-                if (item.format === 'podcast') {
-                    button.classList.add('podcast-item');
-                }
                 button.title = item.title;
                 button.setAttribute('aria-label', item.title);
-                button.style.setProperty('--spine-width', item._ui.width);
-                button.style.setProperty('--spine-height', item._ui.height);
-                button.style.setProperty('--spine-color', topicColor);
-                button.style.setProperty('--spine-title-size', item._ui.titleSize);
-                button.style.setProperty('--spine-title-tracking', item._ui.titleTracking);
-                button.style.setProperty('--spine-title-leading', item._ui.titleLeading);
+                button.style.setProperty('--cover-topic-color', item._ui.topicColor);
 
-                if (isDarkColor && item.format !== 'podcast') {
-                    button.classList.add('dark');
+                if (item._ui.topicIsDark) {
+                    button.classList.add('topic-dark');
+                } else {
+                    button.classList.add('topic-light');
                 }
                 if (state.selectedId === item.id) {
                     button.classList.add('selected');
                 }
-
-                if (item.format === 'podcast') {
-                    const hue = getSubjectHue(getTopicKey(item));
-                    const bodyIsDark = isColorDark(topicColor);
-                    button.style.setProperty('--podcast-body', topicColor);
-                    button.style.setProperty('--podcast-body-deep', 'hsl(' + hue + ', 58%, 26%)');
-                    button.style.setProperty('--podcast-label', 'hsl(' + hue + ', 70%, 72%)');
-                    button.style.setProperty('--podcast-accent', 'hsl(' + hue + ', 82%, 62%)');
-                    button.style.setProperty('--podcast-ink', bodyIsDark ? 'rgba(255, 255, 255, 0.92)' : 'rgba(21, 21, 21, 0.9)');
-                    button.style.setProperty('--podcast-window-bg', bodyIsDark ? 'rgba(245, 245, 244, 0.94)' : 'rgba(255, 255, 255, 0.82)');
-                    button.style.setProperty('--podcast-window-ink', 'rgba(21, 21, 21, 0.84)');
-                    button.style.setProperty('--podcast-meter', bodyIsDark ? '#7EA3FF' : '#1F2BFF');
+                if (isAudioFormat(item)) {
+                    button.classList.add('audio-item');
                 }
 
-                if (item.format === 'podcast') {
-                    button.innerHTML = [
-                        '<span class="podcast-cassette">',
-                            '<span class="cassette-screws" aria-hidden="true"><span></span><span></span><span></span><span></span></span>',
-                            '<span class="cassette-top-meta"><span class="cassette-author">' + item._ui.spineAuthor + '</span><span class="cassette-year">' + String(item.year) + '</span></span>',
-                            '<span class="cassette-label-strip"><span class="cassette-title">' + item._ui.podcastTitleReadable + '</span></span>',
-                            '<span class="cassette-window"><span class="cassette-reel cassette-reel-left"></span><span class="cassette-tape-bridge"></span><span class="cassette-reel cassette-reel-right"></span><span class="cassette-window-label">PODCAST</span></span>',
-                            '<span class="cassette-bottom-meta"><span class="cassette-subject">' + item._ui.podcastSubject + '</span><span class="cassette-format">AUDIO</span></span>',
+                const safeTitle = escapeHtml(item.title);
+                const safeAuthor = escapeHtml(item._author);
+                const safeFormat = escapeHtml(capitalize(item.format));
+                const safeStatus = escapeHtml(capitalize(item.status));
+                const safeSubject = escapeHtml(item._ui.spineSubjectLabel);
+                const fallbackTitle = escapeHtml(item._ui.fallbackCoverTitle);
+                const coverUrl = normalizeText(item._ui.coverUrl);
+                const hasCover = Boolean(coverUrl);
+
+                button.innerHTML = [
+                    '<span class="cover-frame">',
+                        hasCover
+                            ? '<img class="cover-image" src="' + escapeAttr(coverUrl) + '" alt="Cover for ' + escapeAttr(item.title) + '" loading="lazy" decoding="async">'
+                            : '',
+                        '<span class="cover-fallback' + (hasCover ? ' is-hidden' : '') + '">' +
+                            '<strong>' + fallbackTitle + '</strong>' +
+                            '<small>' + safeAuthor + ' · ' + escapeHtml(String(item.year)) + '</small>' +
+                            '<small>' + safeSubject + '</small>' +
                         '</span>',
-                        '<span class="hover-card">' +
-                            '<strong>' + item.title + '</strong>' +
-                            '<small>' + item._author + ' · ' + String(item.year) + '</small>' +
-                            '<small>' + capitalize(item.format) + ' · ' + capitalize(item.status) + '</small>' +
-                        '</span>'
-                    ].join('');
-                } else {
-                    button.innerHTML = [
-                        '<span class="spine-top">' + item._ui.spineAuthor + '</span>',
-                        '<span class="spine-title">' + item._ui.spineLabel + '</span>',
-                        '<span class="spine-bottom">' + String(item.year) + '<em>' + item._ui.spineSubjectLabel + '</em></span>',
-                        '<span class="hover-card">' +
-                            '<strong>' + item.title + '</strong>' +
-                            '<small>' + item._author + ' · ' + String(item.year) + '</small>' +
-                            '<small>' + capitalize(item.format) + ' · ' + capitalize(item.status) + '</small>' +
-                        '</span>'
-                    ].join('');
-                }
+                        isAudioFormat(item) ? '<span class="cover-audio-badge">AUDIO</span>' : '',
+                    '</span>',
+                    '<span class="hover-card">' +
+                        '<strong>' + safeTitle + '</strong>' +
+                        '<small>' + safeAuthor + ' · ' + escapeHtml(String(item.year)) + '</small>' +
+                        '<small>' + safeFormat + ' · ' + safeStatus + '</small>' +
+                    '</span>'
+                ].join('');
 
                 fragment.appendChild(button);
             });
@@ -663,6 +766,7 @@
                 buildFilterButtons(refs.statusFilters, state.filterOptions.statuses, 'statuses', capitalize);
 
                 scheduleRender();
+                hydrateMissingBookCovers(state.items);
             } catch (error) {
                 refs.shelf.innerHTML = '';
                 refs.empty.hidden = false;
@@ -695,14 +799,26 @@
         refs.statusFilters.addEventListener('click', onFilterClick);
 
         refs.shelf.addEventListener('click', (event) => {
-            const spine = event.target.closest('.spine-item');
-            if (!spine) {
+            const cover = event.target.closest('.cover-item');
+            if (!cover) {
                 return;
             }
-            const itemId = spine.dataset.id;
+            const itemId = cover.dataset.id;
             state.selectedId = state.selectedId === itemId ? null : itemId;
             scheduleRender();
         });
+
+        refs.shelf.addEventListener('error', (event) => {
+            const image = event.target.closest('.cover-image');
+            if (!image) {
+                return;
+            }
+            const fallback = image.parentElement ? image.parentElement.querySelector('.cover-fallback') : null;
+            if (fallback) {
+                fallback.classList.remove('is-hidden');
+            }
+            image.remove();
+        }, true);
 
         const updateSearch = debounce((value) => {
             state.filters.search = value;
@@ -730,7 +846,7 @@
                 return;
             }
 
-            const clickedSpine = event.target.closest('.spine-item');
+            const clickedSpine = event.target.closest('.cover-item');
             const clickedDetail = event.target.closest('.library-detail');
             if (!clickedSpine && !clickedDetail) {
                 state.selectedId = null;

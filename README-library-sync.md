@@ -20,7 +20,7 @@ Create or update one note (for example: `Library Export.md`) with this exact str
 ## 2) Field requirements
 - `title`: required text.
 - `author`: optional text.
-- `format`: required, must be `book`, `article`, or `podcast`.
+- `format`: required, must be `book`, `article`, `podcast`, or `audiobook`.
 - `subjects`: optional, semicolon-separated values (`design;systems`).
 - `year`: required, 4-digit year (`2026`).
 - `status`: required, one of `completed`, `in-progress`, `queued`.
