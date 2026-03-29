@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
-EXPECTED_COLUMNS = [
+REQUIRED_COLUMNS = [
     "title",
     "author",
     "format",
@@ -22,6 +22,7 @@ EXPECTED_COLUMNS = [
     "url",
     "notes",
 ]
+OPTIONAL_COLUMNS = ["cover", "isbn"]
 
 VALID_FORMATS = {"book", "article", "podcast", "audiobook"}
 VALID_STATUSES = {"completed", "in-progress", "queued"}
@@ -105,6 +106,27 @@ def parse_url(value: str, row_no: int) -> str | None:
     return value
 
 
+def parse_cover(value: str, row_no: int) -> str | None:
+    if value == "":
+        return None
+    if re.match(r"^https?://", value):
+        return value
+    if value.startswith("/"):
+        raise ValueError(f"Row {row_no}: cover local path must be relative, not absolute")
+    if re.search(r"\s", value):
+        raise ValueError(f"Row {row_no}: cover local path cannot contain spaces")
+    return value
+
+
+def parse_isbn(value: str, row_no: int) -> str | None:
+    if value == "":
+        return None
+    normalized = re.sub(r"[\s-]+", "", value).upper()
+    if not re.fullmatch(r"(?:[0-9]{13}|[0-9]{9}[0-9X])", normalized):
+        raise ValueError(f"Row {row_no}: isbn must be ISBN-10 or ISBN-13")
+    return normalized
+
+
 def parse_subjects(value: str) -> list[str]:
     if value == "":
         return []
@@ -145,6 +167,25 @@ def normalize_obsidian_title(value: str) -> str:
     return value
 
 
+def validate_header_columns(header_cells: list[str], line_no: int) -> list[str]:
+    unknown = [column for column in header_cells if column not in REQUIRED_COLUMNS and column not in OPTIONAL_COLUMNS]
+    if unknown:
+        raise ValueError(
+            "Unknown header columns: " + ", ".join(unknown)
+            + f" (line {line_no})"
+        )
+
+    missing = [column for column in REQUIRED_COLUMNS if column not in header_cells]
+    if missing:
+        raise ValueError(
+            "Missing required header columns: " + ", ".join(missing)
+            + f" (line {line_no})"
+        )
+
+    # Preserve the incoming order for row-to-column mapping.
+    return header_cells
+
+
 def parse_table(source_path: Path) -> list[dict]:
     if not source_path.exists():
         raise ValueError(f"Source file not found: {source_path}")
@@ -173,11 +214,7 @@ def parse_table(source_path: Path) -> list[dict]:
 
     header_line_no, header_line = table_lines[0]
     header_cells = [cell.lower() for cell in split_row(header_line)]
-    if header_cells != EXPECTED_COLUMNS:
-        raise ValueError(
-            "Header columns must exactly match: " + ", ".join(EXPECTED_COLUMNS)
-            + f" (found at line {header_line_no})"
-        )
+    normalized_columns = validate_header_columns(header_cells, header_line_no)
 
     separator_cells = split_row(table_lines[1][1])
     if not is_separator_row(separator_cells):
@@ -191,10 +228,12 @@ def parse_table(source_path: Path) -> list[dict]:
             continue
 
         cells = split_row(row_line)
-        if len(cells) != len(EXPECTED_COLUMNS):
-            raise ValueError(f"Row {row_line_no}: expected {len(EXPECTED_COLUMNS)} columns, found {len(cells)}")
+        if len(cells) != len(normalized_columns):
+            raise ValueError(
+                f"Row {row_line_no}: expected {len(normalized_columns)} columns, found {len(cells)}"
+            )
 
-        row = dict(zip(EXPECTED_COLUMNS, cells))
+        row = dict(zip(normalized_columns, cells))
 
         title = normalize_obsidian_title(row["title"].strip())
         if not title:
@@ -216,6 +255,8 @@ def parse_table(source_path: Path) -> list[dict]:
 
         author = normalize_author(row["author"])
         notes = row["notes"].strip() or None
+        cover = parse_cover(row.get("cover", "").strip(), row_line_no)
+        isbn = parse_isbn(row.get("isbn", "").strip(), row_line_no)
 
         base_id = slugify(f"{title}-{year}")
         item_id = base_id
@@ -226,21 +267,26 @@ def parse_table(source_path: Path) -> list[dict]:
 
         seen_ids.add(item_id)
 
-        items.append(
-            {
-                "id": item_id,
-                "title": title,
-                "author": author,
-                "format": item_format,
-                "subjects": subjects,
-                "year": year,
-                "status": status,
-                "finished": finished,
-                "rating": rating,
-                "url": url,
-                "notes": notes,
-            }
-        )
+        item = {
+            "id": item_id,
+            "title": title,
+            "author": author,
+            "format": item_format,
+            "subjects": subjects,
+            "year": year,
+            "status": status,
+            "finished": finished,
+            "rating": rating,
+            "url": url,
+            "notes": notes,
+        }
+        if cover:
+            item["cover_image"] = cover
+            item["cover_source"] = "manual"
+        if isbn:
+            item["isbn"] = isbn
+
+        items.append(item)
 
     completed = [item for item in items if item["status"] == "completed"]
     in_progress = [item for item in items if item["status"] == "in-progress"]
