@@ -88,59 +88,78 @@
     </main>
 
     <script>
-        const SPINE_HEIGHTS = [220, 260, 290, 320];
+        const SPINE_HEIGHTS = [240, 270, 300, 330];
         const SUBJECT_COLOR_GROUPS = [
             {
                 match: ['design', 'art', 'typography'],
-                colors: ['#ff3b30', '#ff5a36', '#ff2e55']
+                primary: ['#ff3b30', '#ff5a36', '#ff2e55'],
+                contrast: ['#1f2bff', '#00b8ff', '#16b3c6']
             },
             {
                 match: ['philosophy', 'ethics', 'logic'],
-                colors: ['#1f2bff', '#3153ff', '#8b2cff']
+                primary: ['#8b2cff', '#c44dff', '#3153ff'],
+                contrast: ['#00c7a5', '#18b84a', '#00b8ff']
             },
             {
                 match: ['technology', 'computing', 'ai', 'frontier-tech'],
-                colors: ['#00c7a5', '#00b8ff', '#16b3c6']
+                primary: ['#1f2bff', '#3153ff', '#00b8ff'],
+                contrast: ['#ffc400', '#ff8a00', '#ff3b30']
             },
             {
                 match: ['history', 'politics'],
-                colors: ['#c44dff', '#8b2cff', '#ff2e88']
+                primary: ['#ff2e88', '#8b2cff', '#c44dff'],
+                contrast: ['#00c7a5', '#16b3c6', '#18b84a']
             },
             {
                 match: ['language', 'korean', 'culture'],
-                colors: ['#ffc400', '#ffb200', '#ff8a00']
+                primary: ['#ffc400', '#ffb200', '#ff8a00'],
+                contrast: ['#1f2bff', '#3153ff', '#8b2cff']
             },
             {
                 match: ['systems', 'decision-making'],
-                colors: ['#16b3c6', '#00b8ff', '#2f74ff']
+                primary: ['#16b3c6', '#00b8ff', '#2f74ff'],
+                contrast: ['#ff5a36', '#ffc400', '#ff2e88']
             },
             {
                 match: ['math', 'physics', 'science'],
-                colors: ['#ff2e88', '#ff3f8e', '#ff5a36']
+                primary: ['#ff2e88', '#ff3f8e', '#ff5a36'],
+                contrast: ['#00b8ff', '#3153ff', '#00c7a5']
             },
             {
                 match: ['football', 'sport'],
-                colors: ['#18b84a', '#2c8c3c', '#00a67e']
+                primary: ['#18b84a', '#2c8c3c', '#00a67e'],
+                contrast: ['#ff3b30', '#ffc400', '#ff8a00']
             }
         ];
-        const FORMAT_COLORS = {
-            book: '#1f2bff',
-            article: '#00b8ff',
-            podcast: '#ff3b30'
+        const FORMAT_COLOR_GROUPS = {
+            book: {
+                primary: ['#1f2bff', '#3153ff', '#00b8ff'],
+                contrast: ['#ff3b30', '#ffc400', '#ff8a00']
+            },
+            article: {
+                primary: ['#00b8ff', '#16b3c6', '#00c7a5'],
+                contrast: ['#8b2cff', '#ff2e88', '#ff3b30']
+            },
+            podcast: {
+                primary: ['#ff3b30', '#ff5a36', '#ff2e88'],
+                contrast: ['#1f2bff', '#00b8ff', '#18b84a']
+            }
         };
-        const FALLBACK_COLORS = [
-            '#ff3b30',
+        const FALLBACK_PRIMARY_COLORS = [
             '#1f2bff',
-            '#00c7a5',
-            '#ffc400',
-            '#8b2cff',
+            '#3153ff',
             '#00b8ff',
+            '#16b3c6',
+            '#8b2cff',
+            '#00c7a5'
+        ];
+        const FALLBACK_CONTRAST_COLORS = [
+            '#ff3b30',
+            '#ffc400',
             '#ff2e88',
             '#18b84a',
-            '#f05d9b',
-            '#0e8a5b',
             '#e4572e',
-            '#3a66ff'
+            '#ff8a00'
         ];
 
         const state = {
@@ -200,39 +219,58 @@
             return normalizeText(value).toLowerCase().replace(/\s+/g, '-');
         }
 
+        function buildSpineLabel(title) {
+            let label = normalizeText(title);
+            const colonIndex = label.indexOf(':');
+            if (colonIndex > 0) {
+                const beforeColon = normalizeText(label.slice(0, colonIndex));
+                if (beforeColon.length >= 10) {
+                    label = beforeColon;
+                }
+            }
+            if (label.length > 24) {
+                label = label.slice(0, 21).trimEnd() + '...';
+            }
+            return label;
+        }
+
         function getTitleMetrics(title) {
             const condensedLength = normalizeText(title).replace(/\s+/g, '').length;
 
             if (condensedLength <= 18) {
-                return { width: 54, size: 1.02, tracking: -0.005, leading: 0.88, minHeight: 240 };
+                return { width: 72, size: 1.03, tracking: 0.004, leading: 0.92, minHeight: 250 };
             }
             if (condensedLength <= 28) {
-                return { width: 66, size: 0.95, tracking: -0.005, leading: 0.88, minHeight: 240 };
+                return { width: 84, size: 0.96, tracking: 0.002, leading: 0.92, minHeight: 250 };
             }
             if (condensedLength <= 38) {
-                return { width: 78, size: 0.88, tracking: -0.005, leading: 0.88, minHeight: 270 };
+                return { width: 96, size: 0.9, tracking: 0, leading: 0.92, minHeight: 270 };
             }
             if (condensedLength <= 50) {
-                return { width: 92, size: 0.8, tracking: -0.01, leading: 0.84, minHeight: 290 };
+                return { width: 110, size: 0.86, tracking: 0, leading: 0.92, minHeight: 290 };
             }
-            return { width: 104, size: 0.74, tracking: -0.01, leading: 0.84, minHeight: 290 };
+            return { width: 124, size: 0.82, tracking: -0.002, leading: 0.92, minHeight: 290 };
         }
 
-        function resolveSpineColor(subjects, format, itemId) {
-            const normalizedSubjects = subjects.map(normalizedSubject);
-            for (const group of SUBJECT_COLOR_GROUPS) {
-                const hasMatch = normalizedSubjects.some((subject) => group.match.includes(subject));
-                if (hasMatch) {
-                    return pickFrom(itemId + '-subject', group.colors);
+        function getColorGroup(subjects, format) {
+            const normalizedSubjects = subjects.map(normalizedSubject).filter(Boolean);
+            for (const subject of normalizedSubjects) {
+                for (const group of SUBJECT_COLOR_GROUPS) {
+                    if (group.match.includes(subject)) {
+                        return group;
+                    }
                 }
             }
 
             const normalizedFormat = normalizeText(format).toLowerCase();
-            if (FORMAT_COLORS[normalizedFormat]) {
-                return FORMAT_COLORS[normalizedFormat];
+            if (FORMAT_COLOR_GROUPS[normalizedFormat]) {
+                return FORMAT_COLOR_GROUPS[normalizedFormat];
             }
 
-            return pickFrom(itemId + '-fallback', FALLBACK_COLORS);
+            return {
+                primary: FALLBACK_PRIMARY_COLORS,
+                contrast: FALLBACK_CONTRAST_COLORS
+            };
         }
 
         function hexToRgb(hexColor) {
@@ -247,10 +285,10 @@
             };
         }
 
-        function isColorDark(hexColor) {
+        function getRelativeLuminance(hexColor) {
             const rgb = hexToRgb(hexColor);
             if (!rgb) {
-                return false;
+                return null;
             }
 
             const [r, g, b] = [rgb.r, rgb.g, rgb.b].map((channel) => {
@@ -260,7 +298,90 @@
                     : Math.pow((normalized + 0.055) / 1.055, 2.4);
             });
 
-            const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        }
+
+        function getHueDegrees(hexColor) {
+            const rgb = hexToRgb(hexColor);
+            if (!rgb) {
+                return null;
+            }
+
+            const r = rgb.r / 255;
+            const g = rgb.g / 255;
+            const b = rgb.b / 255;
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            const delta = max - min;
+            if (delta === 0) {
+                return 0;
+            }
+
+            let hue = 0;
+            if (max === r) {
+                hue = ((g - b) / delta) % 6;
+            } else if (max === g) {
+                hue = (b - r) / delta + 2;
+            } else {
+                hue = (r - g) / delta + 4;
+            }
+            hue *= 60;
+            if (hue < 0) {
+                hue += 360;
+            }
+            return hue;
+        }
+
+        function hueDistance(a, b) {
+            const diff = Math.abs(a - b);
+            return Math.min(diff, 360 - diff);
+        }
+
+        function colorsAreTooClose(a, b) {
+            if (!a || !b) {
+                return false;
+            }
+
+            const hueA = getHueDegrees(a);
+            const hueB = getHueDegrees(b);
+            const lumA = getRelativeLuminance(a);
+            const lumB = getRelativeLuminance(b);
+
+            if (hueA == null || hueB == null || lumA == null || lumB == null) {
+                return false;
+            }
+
+            return hueDistance(hueA, hueB) < 32 && Math.abs(lumA - lumB) < 0.2;
+        }
+
+        function pickContrastingFallback(seed, previousColor) {
+            const start = hashCode(seed + '-fallback-rotate') % FALLBACK_CONTRAST_COLORS.length;
+            for (let i = 0; i < FALLBACK_CONTRAST_COLORS.length; i += 1) {
+                const color = FALLBACK_CONTRAST_COLORS[(start + i) % FALLBACK_CONTRAST_COLORS.length];
+                if (!colorsAreTooClose(color, previousColor)) {
+                    return color;
+                }
+            }
+            return FALLBACK_CONTRAST_COLORS[start];
+        }
+
+        function resolveAlternatingSpineColor(item, index, previousColor) {
+            const group = getColorGroup(item.subjects || [], item.format);
+            const track = index % 2 === 0 ? group.primary : group.contrast;
+            let color = pickFrom(item.id + '-alt', track);
+
+            if (previousColor && colorsAreTooClose(color, previousColor)) {
+                color = pickContrastingFallback(item.id, previousColor);
+            }
+
+            return color;
+        }
+
+        function isColorDark(hexColor) {
+            const luminance = getRelativeLuminance(hexColor);
+            if (luminance == null) {
+                return false;
+            }
             return luminance < 0.42;
         }
 
@@ -271,7 +392,6 @@
             const titleMetrics = getTitleMetrics(rawItem.title);
             const baseHeight = pickFrom(rawItem.id + '-h', SPINE_HEIGHTS);
             const spineHeight = Math.max(baseHeight, titleMetrics.minHeight);
-            const spineColor = resolveSpineColor(subjects, rawItem.format, rawItem.id);
 
             return {
                 ...rawItem,
@@ -282,13 +402,12 @@
                     .join(' ')
                     .toLowerCase(),
                 _ui: {
+                    spineLabel: buildSpineLabel(rawItem.title),
                     width: String(titleMetrics.width) + 'px',
                     height: String(spineHeight) + 'px',
-                    color: spineColor,
                     titleSize: String(titleMetrics.size) + 'rem',
                     titleTracking: String(titleMetrics.tracking) + 'em',
-                    titleLeading: String(titleMetrics.leading),
-                    dark: isColorDark(spineColor)
+                    titleLeading: String(titleMetrics.leading)
                 }
             };
         }
@@ -391,21 +510,27 @@
         function renderShelf(items) {
             refs.shelf.innerHTML = '';
             const fragment = document.createDocumentFragment();
+            let previousColor = null;
 
-            items.forEach((item) => {
+            items.forEach((item, index) => {
+                const spineColor = resolveAlternatingSpineColor(item, index, previousColor);
+                const isDarkColor = isColorDark(spineColor);
+                previousColor = spineColor;
                 const button = document.createElement('button');
                 button.type = 'button';
                 button.className = 'spine-item';
                 button.dataset.id = item.id;
                 button.dataset.format = item.format;
+                button.title = item.title;
+                button.setAttribute('aria-label', item.title);
                 button.style.setProperty('--spine-width', item._ui.width);
                 button.style.setProperty('--spine-height', item._ui.height);
-                button.style.setProperty('--spine-color', item._ui.color);
+                button.style.setProperty('--spine-color', spineColor);
                 button.style.setProperty('--spine-title-size', item._ui.titleSize);
                 button.style.setProperty('--spine-title-tracking', item._ui.titleTracking);
                 button.style.setProperty('--spine-title-leading', item._ui.titleLeading);
 
-                if (item._ui.dark) {
+                if (isDarkColor) {
                     button.classList.add('dark');
                 }
                 if (state.selectedId === item.id) {
@@ -414,7 +539,7 @@
 
                 button.innerHTML = [
                     '<span class="spine-top">' + item._author + '</span>',
-                    '<span class="spine-title">' + item.title + '</span>',
+                    '<span class="spine-title">' + item._ui.spineLabel + '</span>',
                     '<span class="spine-bottom">' + String(item.year) + '<em>' + capitalize(item._primarySubject) + '</em></span>',
                     '<span class="hover-card">' +
                         '<strong>' + item.title + '</strong>' +

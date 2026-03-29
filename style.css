@@ -858,8 +858,8 @@ body.library-page a {
     --spine-height: 260px;
     --spine-color: #ffffff;
     --spine-title-size: 0.9rem;
-    --spine-title-tracking: -0.005em;
-    --spine-title-leading: 0.88;
+    --spine-title-tracking: 0em;
+    --spine-title-leading: 0.92;
     width: var(--spine-width);
     height: var(--spine-height);
     border: 1px solid #151515;
@@ -893,29 +893,29 @@ body.library-page a {
 }
 
 .spine-top {
-    font-size: 0.58rem;
+    font-size: 0.56rem;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     opacity: 0.86;
     text-align: center;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
-    margin: 6px auto 0 auto;
+    margin: 4px auto 0 auto;
     line-height: 1;
 }
 
 .spine-title {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
-    text-transform: uppercase;
+    text-transform: none;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 900;
+    font-weight: 800;
     letter-spacing: var(--spine-title-tracking);
     line-height: var(--spine-title-leading);
     font-size: var(--spine-title-size);
     text-align: center;
     margin: 0 auto;
-    padding: 6px 0;
+    padding: 4px 0;
     align-self: stretch;
     display: flex;
     align-items: center;
@@ -933,9 +933,9 @@ body.library-page a {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
-    padding: 6px 3px;
-    min-height: 44px;
+    gap: 1px;
+    padding: 4px 3px;
+    min-height: 40px;
     line-height: 1.08;
 }
 
