@@ -237,6 +237,16 @@
             };
         }
 
+        function getPodcastStampMetrics(widthPx) {
+            if (widthPx <= 90) {
+                return { left: '76%', top: '56%', width: '18px', height: '10px', compact: true };
+            }
+            if (widthPx < 110) {
+                return { left: '72%', top: '55%', width: '22px', height: '12px', compact: false };
+            }
+            return { left: '68%', top: '54%', width: '26px', height: '14px', compact: false };
+        }
+
         function hexToRgb(hexColor) {
             const hex = normalizeText(hexColor).replace('#', '');
             if (!/^[a-fA-F0-9]{6}$/.test(hex)) {
@@ -428,6 +438,7 @@
                     .join(' ')
                     .toLowerCase(),
                 _ui: {
+                    podcastStamp: getPodcastStampMetrics(metrics.width),
                     spineAuthor: formatSpineAuthor(author),
                     spineLabel: buildSpineLabel(rawItem.title, metrics.width),
                     spineSubjectLabel: formatSpineSubject(primarySubject, metrics.width),
@@ -565,9 +576,24 @@
                     button.classList.add('selected');
                 }
 
+                if (item.format === 'podcast') {
+                    button.style.setProperty('--podcast-left', item._ui.podcastStamp.left);
+                    button.style.setProperty('--podcast-top', item._ui.podcastStamp.top);
+                    button.style.setProperty('--podcast-w', item._ui.podcastStamp.width);
+                    button.style.setProperty('--podcast-h', item._ui.podcastStamp.height);
+                    if (item._ui.podcastStamp.compact) {
+                        button.classList.add('podcast-compact');
+                    }
+                }
+
+                const podcastMark = item.format === 'podcast'
+                    ? '<span class="spine-podcast-mark" aria-hidden="true"><span class="podcast-vu-window"></span><span class="podcast-vu-knob"></span></span>'
+                    : '';
+
                 button.innerHTML = [
                     '<span class="spine-top">' + item._ui.spineAuthor + '</span>',
                     '<span class="spine-title">' + item._ui.spineLabel + '</span>',
+                    podcastMark,
                     '<span class="spine-bottom">' + String(item.year) + '<em>' + item._ui.spineSubjectLabel + '</em></span>',
                     '<span class="hover-card">' +
                         '<strong>' + item.title + '</strong>' +
