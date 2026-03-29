@@ -1,5 +1,39 @@
 [
   {
+    "id": "se-una-notte-d-inverno-un-viaggiatore-1979",
+    "title": "Se una notte d'inverno un viaggiatore",
+    "author": "Italo Calvino",
+    "format": "book",
+    "subjects": [
+      "literature",
+      "metafiction",
+      "italian"
+    ],
+    "year": 1979,
+    "status": "completed",
+    "finished": "2026-03-27",
+    "rating": null,
+    "url": "https://it.wikipedia.org/wiki/Se_una_notte_d%27inverno_un_viaggiatore",
+    "notes": "Italian original metafiction"
+  },
+  {
+    "id": "moonwalking-with-einstein-2011",
+    "title": "Moonwalking with Einstein",
+    "author": "Joshua Foer",
+    "format": "book",
+    "subjects": [
+      "memory",
+      "learning",
+      "practice"
+    ],
+    "year": 2011,
+    "status": "completed",
+    "finished": "2026-03-27",
+    "rating": null,
+    "url": "https://www.joshuafoer.com/moonwalking-with-einstein",
+    "notes": "Memory-palace training memoir"
+  },
+  {
     "id": "world-models-computing-the-uncomputable-2026",
     "title": "World Models: Computing the Uncomputable",
     "author": "Packy McCormick, Pim De Witte",
@@ -65,5 +99,22 @@
     "rating": null,
     "url": "https://www.brianchristian.org/the-alignment-problem",
     "notes": "Imitation vs IRL framing"
+  },
+  {
+    "id": "is-human-data-enough-2025",
+    "title": "Is Human Data Enough?",
+    "author": "Google DeepMind: The Podcast",
+    "format": "podcast",
+    "subjects": [
+      "ai",
+      "reinforcement-learning",
+      "podcast"
+    ],
+    "year": 2025,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://www.youtube.com/watch?v=zzXyPGEtseI&list=PLqYmG7hTraZBiUr6_Qf8YTS2Oqy3OGZEj&index=2",
+    "notes": "David Silver on the 'era of experience' in RL"
   }
 ]

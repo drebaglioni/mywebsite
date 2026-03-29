@@ -83,7 +83,7 @@
 
         <aside class="library-detail" id="library-detail" aria-live="polite">
             <h3>Entry Detail</h3>
-            <div id="detail-content" class="detail-content">Select a book or article to see details.</div>
+            <div id="detail-content" class="detail-content">Select an entry to see details.</div>
         </aside>
     </main>
 
@@ -303,13 +303,13 @@
 
         function renderDetail() {
             if (!state.selectedId) {
-                refs.detail.textContent = 'Select a book or article to see details.';
+                refs.detail.textContent = 'Select an entry to see details.';
                 return;
             }
 
             const selected = state.itemById.get(state.selectedId);
             if (!selected) {
-                refs.detail.textContent = 'Select a book or article to see details.';
+                refs.detail.textContent = 'Select an entry to see details.';
                 return;
             }
 

@@ -23,7 +23,7 @@ EXPECTED_COLUMNS = [
     "notes",
 ]
 
-VALID_FORMATS = {"book", "article"}
+VALID_FORMATS = {"book", "article", "podcast"}
 VALID_STATUSES = {"completed", "in-progress", "queued"}
 STATUS_SORT_ORDER = {"in-progress": 0, "completed": 1, "queued": 2}
 
