@@ -857,18 +857,21 @@ body.library-page a {
     --spine-width: 52px;
     --spine-height: 260px;
     --spine-color: #ffffff;
+    --spine-title-size: 0.9rem;
+    --spine-title-tracking: -0.005em;
+    --spine-title-leading: 0.88;
     width: var(--spine-width);
     height: var(--spine-height);
     border: 1px solid #151515;
     border-bottom: none;
     background: var(--spine-color);
     color: #151515;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
     padding: 0;
     cursor: pointer;
     position: relative;
+    overflow: hidden;
     will-change: transform;
     box-shadow: inset -3px 0 10px rgba(0, 0, 0, 0.06), -1px 0 3px rgba(0, 0, 0, 0.14);
     transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, opacity 0.2s ease;
@@ -897,7 +900,8 @@ body.library-page a {
     text-align: center;
     writing-mode: vertical-rl;
     transform: rotate(180deg);
-    margin: 8px auto 0 auto;
+    margin: 6px auto 0 auto;
+    line-height: 1;
 }
 
 .spine-title {
@@ -906,13 +910,16 @@ body.library-page a {
     text-transform: uppercase;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 900;
-    letter-spacing: -0.015em;
-    line-height: 0.86;
-    font-size: clamp(0.7rem, 1.8vw, 1.1rem);
+    letter-spacing: var(--spine-title-tracking);
+    line-height: var(--spine-title-leading);
+    font-size: var(--spine-title-size);
     text-align: center;
     margin: 0 auto;
-    padding: 8px 0;
-    max-height: 60%;
+    padding: 6px 0;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
 }
 
@@ -927,7 +934,9 @@ body.library-page a {
     flex-direction: column;
     align-items: center;
     gap: 2px;
-    padding: 7px 3px;
+    padding: 6px 3px;
+    min-height: 44px;
+    line-height: 1.08;
 }
 
 .spine-bottom em {
