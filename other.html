@@ -635,10 +635,7 @@
                     button.classList.add('audio-item');
                 }
 
-                const safeTitle = escapeHtml(item.title);
                 const safeAuthor = escapeHtml(item._author);
-                const safeFormat = escapeHtml(capitalize(item.format));
-                const safeStatus = escapeHtml(capitalize(item.status));
                 const safeSubject = escapeHtml(item._ui.spineSubjectLabel);
                 const fallbackTitle = escapeHtml(item._ui.fallbackCoverTitle);
                 const coverUrl = normalizeText(item._ui.coverUrl);
@@ -655,11 +652,6 @@
                             '<small>' + safeSubject + '</small>' +
                         '</span>',
                         isAudioFormat(item) ? '<span class="cover-audio-badge">AUDIO</span>' : '',
-                    '</span>',
-                    '<span class="hover-card">' +
-                        '<strong>' + safeTitle + '</strong>' +
-                        '<small>' + safeAuthor + ' · ' + escapeHtml(String(item.year)) + '</small>' +
-                        '<small>' + safeFormat + ' · ' + safeStatus + '</small>' +
                     '</span>'
                 ].join('');
 
