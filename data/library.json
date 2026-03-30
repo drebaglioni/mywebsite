@@ -106,7 +106,7 @@
     "rating": null,
     "url": "https://www.nateliason.com/notes/peak-anders-ericsson-robert-pool",
     "notes": null,
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780544456259-M.jpg?default=false",
+    "cover_image": "https://m.media-amazon.com/images/I/71IiEIfPHlL._AC_UY218_.jpg",
     "cover_source": "manual",
     "isbn": "9780544456259"
   },
@@ -142,7 +142,7 @@
     "rating": null,
     "url": "https://openlibrary.org/works/OL267171W",
     "notes": null,
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780004216652-M.jpg?default=false",
+    "cover_image": "https://m.media-amazon.com/images/I/712v3OY7t9L._AC_UY218_.jpg",
     "cover_source": "manual",
     "isbn": "9780004216652"
   },
@@ -165,6 +165,25 @@
     "isbn": "9780374146702"
   },
   {
+    "id": "notes-on-the-synthesis-of-form-1964",
+    "title": "Notes on the Synthesis of Form",
+    "author": "Christopher Alexander",
+    "format": "book",
+    "subjects": [
+      "design",
+      "architecture",
+      "systems"
+    ],
+    "year": 1964,
+    "status": "completed",
+    "finished": null,
+    "rating": 5,
+    "url": "https://monoskop.org/images/f/ff/Alexander_Christopher_Notes_on_the_Synthesis_of_Form.pdf",
+    "notes": "Recommended by Ivan Zhao.",
+    "cover_image": "https://i.thriftbooks.com/api/imagehandler/E97EEE2A5FDF80360B702C8D2C41D5005F31770B.jpeg",
+    "cover_source": "manual"
+  },
+  {
     "id": "broken-earth-series-the-obelisk-gate-2016",
     "title": "Broken Earth Series: The Obelisk Gate",
     "author": "N. K. Jemisin",
@@ -181,45 +200,6 @@
     "cover_image": "https://covers.openlibrary.org/b/isbn/9780316229265-M.jpg?default=false",
     "cover_source": "manual",
     "isbn": "9780316229265"
-  },
-  {
-    "id": "se-una-notte-d-inverno-un-viaggiatore-1979",
-    "title": "Se una notte d'inverno un viaggiatore",
-    "author": "Italo Calvino",
-    "format": "book",
-    "subjects": [
-      "literature",
-      "metafiction",
-      "italian"
-    ],
-    "year": 1979,
-    "status": "completed",
-    "finished": "2026-03-27",
-    "rating": 5,
-    "url": "https://it.wikipedia.org/wiki/Se_una_notte_d%27inverno_un_viaggiatore",
-    "notes": "Italian original metafiction",
-    "cover_image": "https://media.anobii.com/covers/01a1817ed0f19bbeda/175/294/2.5/paperback/png/1707090585",
-    "cover_source": "manual"
-  },
-  {
-    "id": "moonwalking-with-einstein-2011",
-    "title": "Moonwalking with Einstein",
-    "author": "Joshua Foer",
-    "format": "book",
-    "subjects": [
-      "memory",
-      "learning",
-      "practice"
-    ],
-    "year": 2011,
-    "status": "completed",
-    "finished": "2026-03-27",
-    "rating": 5,
-    "url": "https://openlibrary.org/works/OL15683431W",
-    "notes": "Memory-palace training memoir",
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780141032139-M.jpg?default=false",
-    "cover_source": "manual",
-    "isbn": "9780141032139"
   },
   {
     "id": "world-models-computing-the-uncomputable-2026",
@@ -309,8 +289,8 @@
     "finished": "2025-12-03",
     "rating": null,
     "url": "https://openlibrary.org/works/OL36433603W",
-    "notes": "Based in Barcelona, fantasy book about authors and books and adventure",
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9781439569740-M.jpg?default=false",
+    "notes": "Based in Barcelona, fantasy book about authors and books and adventure; rec by Kirk",
+    "cover_image": "https://m.media-amazon.com/images/I/51AOOWpJgsL._AC_UY218_.jpg",
     "cover_source": "manual",
     "isbn": "9781439569740"
   },
@@ -367,7 +347,7 @@
     "rating": 5,
     "url": "https://openlibrary.org/works/OL20149336W",
     "notes": "Great short essays",
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9781035039210-M.jpg?default=false",
+    "cover_image": "https://m.media-amazon.com/images/I/71JyKN+UUOL._AC_UY218_.jpg",
     "cover_source": "manual",
     "isbn": "9781035039210"
   },
@@ -441,7 +421,7 @@
     "status": "completed",
     "finished": "2023-10-02",
     "rating": 4,
-    "url": "https://openlibrary.org/works/OL27846746W",
+    "url": "https://www.simonandschuster.com/books/Chip-War/Chris-Miller/9781982172008",
     "notes": "Semiconductor geopolitics and the fight for advanced fabs.",
     "cover_image": "https://covers.openlibrary.org/b/isbn/9781982172008-M.jpg?default=false",
     "cover_source": "manual",
@@ -503,6 +483,25 @@
     "isbn": "9780307593313"
   },
   {
+    "id": "se-una-notte-d-inverno-un-viaggiatore-1979",
+    "title": "Se una notte d'inverno un viaggiatore",
+    "author": "Italo Calvino",
+    "format": "book",
+    "subjects": [
+      "literature",
+      "metafiction",
+      "italian"
+    ],
+    "year": 1979,
+    "status": "completed",
+    "finished": "2022-03-27",
+    "rating": 5,
+    "url": "https://it.wikipedia.org/wiki/Se_una_notte_d%27inverno_un_viaggiatore",
+    "notes": "Italian original metafiction",
+    "cover_image": "https://media.anobii.com/covers/01a1817ed0f19bbeda/175/294/2.5/paperback/png/1707090585",
+    "cover_source": "manual"
+  },
+  {
     "id": "circe-2022",
     "title": "Circe",
     "author": "Madeline Miller",
@@ -517,7 +516,7 @@
     "rating": null,
     "url": "https://openlibrary.org/works/OL18012166W",
     "notes": "Greek mythology. Fun but not a page turner until the end. Story of the maga Circe and how she gets exiled to her island Enea, her love for mortal people, her story with odisseo, then Penelope and her son. She chooses to live as a mortal at the end and seems happier for it.",
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780316421140-M.jpg?default=false",
+    "cover_image": "https://m.media-amazon.com/images/I/81zBuPWY0wL._AC_UY218_.jpg",
     "cover_source": "manual",
     "isbn": "9780316421140"
   },
@@ -589,13 +588,13 @@
     "rating": 4,
     "url": "https://en.wikipedia.org/wiki/A_Wild_Sheep_Chase",
     "notes": "Cool cover - came with 3d glasses",
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780375718943-M.jpg?default=false",
+    "cover_image": "https://m.media-amazon.com/images/I/11GArHPo2FL._AC_UY218_.jpg",
     "cover_source": "manual",
     "isbn": "9780375718943"
   },
   {
     "id": "globalization-a-very-short-introduction-2021",
-    "title": "Globalization: A Very Short Introduction",
+    "title": "Globalization: A very short introduction",
     "author": "Manfred B. Steger",
     "format": "book",
     "subjects": [
@@ -613,7 +612,7 @@
   },
   {
     "id": "city-planning-a-very-short-introduction-2021",
-    "title": "City Planning: A Very Short Introduction",
+    "title": "City Planning: A very short introduction",
     "author": "Carl Abbott",
     "format": "book",
     "subjects": [
@@ -715,7 +714,7 @@
     "rating": null,
     "url": "https://en.wikipedia.org/wiki/Sputnik_Sweetheart",
     "notes": null,
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780375726054-M.jpg?default=false",
+    "cover_image": "https://m.media-amazon.com/images/I/61G14unNlML._AC_UY218_.jpg",
     "cover_source": "manual",
     "isbn": "9780375726054"
   },
@@ -787,7 +786,7 @@
     "rating": null,
     "url": "https://openlibrary.org/works/OL20168133W",
     "notes": null,
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9781090403681-M.jpg?default=false",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781501144318-M.jpg?default=false",
     "cover_source": "manual",
     "isbn": "9781501144318"
   },
@@ -805,7 +804,7 @@
     "rating": null,
     "url": "https://en.wikipedia.org/wiki/The_Name_of_the_Rose",
     "notes": null,
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9798590336197-M.jpg?default=false",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780156001311-M.jpg?default=false",
     "cover_source": "manual",
     "isbn": "9780156001311"
   },
@@ -877,7 +876,7 @@
     "rating": 4,
     "url": "https://openlibrary.org/works/OL38014459W",
     "notes": "Carhys favorite book",
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9781913547875-M.jpg?default=false",
+    "cover_image": "https://m.media-amazon.com/images/I/81wIhGluZYL._AC_UY218_.jpg",
     "cover_source": "manual",
     "isbn": "9781913547875"
   },
@@ -954,6 +953,43 @@
     "isbn": "9780312330521"
   },
   {
+    "id": "moonwalking-with-einstein-2011",
+    "title": "Moonwalking with Einstein",
+    "author": "Joshua Foer",
+    "format": "book",
+    "subjects": [
+      "memory",
+      "learning",
+      "practice"
+    ],
+    "year": 2011,
+    "status": "completed",
+    "finished": "2015-03-27",
+    "rating": 5,
+    "url": "https://openlibrary.org/works/OL15683431W",
+    "notes": "Memory-palace training memoir",
+    "cover_image": "https://pictures.abebooks.com/inventory/32362026723.jpg",
+    "cover_source": "manual",
+    "isbn": "9780141032139"
+  },
+  {
+    "id": "apollo-1989",
+    "title": "Apollo",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "management"
+    ],
+    "year": 1989,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "Rec by Collison",
+    "cover_image": "https://m.media-amazon.com/images/I/810sIXoyKrL._AC_UY218_.jpg",
+    "cover_source": "manual"
+  },
+  {
     "id": "beloved-1987",
     "title": "Beloved",
     "author": "Toni Morrison",
@@ -1015,7 +1051,7 @@
     "rating": null,
     "url": "https://openlibrary.org/works/OL19734800W",
     "notes": null,
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780811227629-M.jpg?default=false",
+    "cover_image": "https://m.media-amazon.com/images/I/51fry57wVTL._AC_UY218_.jpg",
     "cover_source": "manual",
     "isbn": "9780811227629"
   },
@@ -1031,7 +1067,7 @@
     "rating": null,
     "url": "https://openlibrary.org/works/OL17635446W",
     "notes": null,
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780143442547-M.jpg?default=false",
+    "cover_image": "https://m.media-amazon.com/images/I/51FgT3Pl65L._AC_UY218_.jpg",
     "cover_source": "manual",
     "isbn": "9780143442547"
   },
@@ -1052,8 +1088,8 @@
     "isbn": "9780099592532"
   },
   {
-    "id": "grid-systems-in-graphic-design-a-visual-communication-manual-for-graphic-designers-typographers-and-three-dimensional-designers-josef-m-ller-brockmann-1981",
-    "title": "Grid Systems in Graphic Design: A Visual Communication Manual for Graphic Designers, Typographers and Three Dimensional Designers Josef M\u00fcller-Brockmann",
+    "id": "grid-systems-in-graphic-design-josef-m-ller-brockmann-1981",
+    "title": "Grid Systems in Graphic Design: Josef M\u00fcller-Brockmann",
     "author": "Josef M\u00fcller-Brockmann",
     "format": "book",
     "subjects": [
@@ -1275,24 +1311,6 @@
     "isbn": "9780061054815"
   },
   {
-    "id": "shadow-of-the-wind-2001",
-    "title": "Shadow of the Wind",
-    "author": "Carlos Ruiz Zaf\u00f3n",
-    "format": "book",
-    "subjects": [
-      "fiction"
-    ],
-    "year": 2001,
-    "status": "queued",
-    "finished": null,
-    "rating": null,
-    "url": "https://openlibrary.org/works/OL36433603W",
-    "notes": "rec by Kirk",
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9781439569740-M.jpg?default=false",
-    "cover_source": "manual",
-    "isbn": "9781439569740"
-  },
-  {
     "id": "sula-1973",
     "title": "Sula",
     "author": "Toni Morrison",
@@ -1323,6 +1341,8 @@
     "rating": null,
     "url": "https://openlibrary.org/works/OL224128W",
     "notes": "rec by Coinbase",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781840649222-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9781840649222"
   },
   {
@@ -1340,7 +1360,7 @@
     "rating": null,
     "url": "https://openlibrary.org/works/OL27955361W",
     "notes": "Rick Rubin's distilled principles for cultivating creativity.",
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780593652886-M.jpg?default=false",
+    "cover_image": "https://i.thriftbooks.com/api/imagehandler/75EFBDD6E76FD45F04E85FB1ABD9AF20D137D911.jpeg",
     "cover_source": "manual",
     "isbn": "9780593652886"
   },
@@ -1386,6 +1406,7 @@
     "author": "Adam Johnson",
     "format": "book",
     "subjects": [
+      "hisorical-fiction",
       "historical-fiction"
     ],
     "year": 2024,
@@ -1426,6 +1447,8 @@
     "rating": null,
     "url": "https://openlibrary.org/works/OL19635270W",
     "notes": null,
+    "cover_image": "https://m.media-amazon.com/images/I/816R-xxdpGL._AC_UY218_.jpg",
+    "cover_source": "manual",
     "isbn": "0812994825"
   },
   {
@@ -1440,7 +1463,7 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": "https://openlibrary.org/works/OL8396705W",
+    "url": "https://press.jhu.edu/books/title/2845/secret-apollo",
     "notes": "Rec by Collison",
     "cover_image": "https://covers.openlibrary.org/b/isbn/9780801868986-M.jpg?default=false",
     "cover_source": "manual",
@@ -1476,7 +1499,7 @@
     "rating": null,
     "url": "https://openlibrary.org/works/OL42403663W",
     "notes": "Recommended by Taylor \u2014 Graydon was the editor of Vanity Fair. Makes you want to (sometimes) start a magazine",
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780593655900-M.jpg?default=false",
+    "cover_image": "https://m.media-amazon.com/images/I/61iyTYfjAhL._AC_UY218_.jpg",
     "cover_source": "manual",
     "isbn": "9780593655900"
   },
