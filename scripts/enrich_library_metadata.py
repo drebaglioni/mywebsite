@@ -7,6 +7,7 @@ import argparse
 import csv
 import json
 import re
+import socket
 import unicodedata
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -200,7 +201,7 @@ def query_open_library(title: str, author: str, limit: int = 8) -> list[dict[str
     try:
         with urlopen(url, timeout=8) as response:
             payload = json.loads(response.read().decode("utf-8"))
-    except (HTTPError, URLError, TimeoutError, json.JSONDecodeError):
+    except (HTTPError, URLError, TimeoutError, socket.timeout, json.JSONDecodeError):
         return []
 
     docs = payload.get("docs")
@@ -417,11 +418,22 @@ def build_row(cells: list[str]) -> str:
 
 
 def write_queue_csv(path: Path, decisions: list[RowDecision]) -> None:
+    status_rank = {"needs_review": 0, "no_match": 1, "auto_filled": 2}
+    ordered = sorted(
+        decisions,
+        key=lambda decision: (
+            status_rank.get(decision.status, 9),
+            -decision.top_score,
+            -decision.margin,
+            decision.title.lower(),
+        ),
+    )
+
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.writer(handle)
         writer.writerow(["title", "author", "year", "status", "chosen_isbn", "top_score", "margin", "reason"])
-        for decision in decisions:
+        for decision in ordered:
             writer.writerow([
                 decision.title,
                 decision.author,

@@ -12,7 +12,7 @@
     "status": "in-progress",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL17802920W",
     "notes": null
   },
   {
@@ -42,8 +42,10 @@
     "status": "in-progress",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL20175350W",
     "notes": "rec by david",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780804846394-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780804846394"
   },
   {
@@ -59,8 +61,11 @@
     "status": "in-progress",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://openlibrary.org/works/OL18819818W",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780062407801-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780062407801"
   },
   {
     "id": "nothing-a-philosophical-history-2023",
@@ -92,6 +97,8 @@
     "rating": null,
     "url": "https://www.nateliason.com/notes/peak-anders-ericsson-robert-pool",
     "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780544456259-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780544456259"
   },
   {
@@ -121,8 +128,10 @@
     "status": "in-progress",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL267171W",
     "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780004216652-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780004216652"
   },
   {
@@ -137,8 +146,10 @@
     "status": "in-progress",
     "finished": "2024-07-28",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL17932129W",
     "notes": "A couple different essays on math, physics and philosophy",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780374146702-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780374146702"
   },
   {
@@ -174,24 +185,6 @@
     "notes": "Italian original metafiction",
     "cover_image": "https://media.anobii.com/covers/01a1817ed0f19bbeda/175/294/2.5/paperback/png/1707090585",
     "cover_source": "manual"
-  },
-  {
-    "id": "moonwalking-with-einstein-2011",
-    "title": "Moonwalking with Einstein",
-    "author": "Joshua Foer",
-    "format": "book",
-    "subjects": [
-      "memory",
-      "learning",
-      "practice"
-    ],
-    "year": 2011,
-    "status": "completed",
-    "finished": "2026-03-27",
-    "rating": 5,
-    "url": "https://www.joshuafoer.com/moonwalking-with-einstein",
-    "notes": "Memory-palace training memoir",
-    "isbn": "9780141032139"
   },
   {
     "id": "world-models-computing-the-uncomputable-2026",
@@ -263,6 +256,8 @@
     "rating": 4,
     "url": "https://www.brianchristian.org/the-alignment-problem",
     "notes": "Imitation vs IRL framing",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780393635829-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780393635829"
   },
   {
@@ -278,8 +273,10 @@
     "status": "completed",
     "finished": "2025-12-03",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL36433603W",
     "notes": "Based in Barcelona, fantasy book about authors and books and adventure",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781439569740-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9781439569740"
   },
   {
@@ -313,6 +310,8 @@
     "rating": null,
     "url": "https://en.wikipedia.org/wiki/Piranesi_%28novel%29",
     "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781432886578-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9781432886578"
   },
   {
@@ -328,8 +327,10 @@
     "status": "completed",
     "finished": "2024-07-28",
     "rating": 5,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL20149336W",
     "notes": "Great short essays",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781035039210-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9781035039210"
   },
   {
@@ -344,8 +345,10 @@
     "status": "completed",
     "finished": "2024-07-28",
     "rating": 5,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL17373843W",
     "notes": "Recommended by Austin. Great SciFi book about humans and spiders in a post Earth world",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780316452496-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780316452496"
   },
   {
@@ -377,23 +380,31 @@
     "status": "completed",
     "finished": "2023-10-28",
     "rating": 5,
-    "url": null,
-    "notes": "Very good book on the history of calculus."
+    "url": "https://openlibrary.org/works/OL33325414W",
+    "notes": "Very good book on the history of calculus.",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780358299288-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780358299288"
   },
   {
-    "id": "the-chip-wars-2023",
-    "title": "The Chip Wars",
-    "author": null,
+    "id": "chip-war-the-fight-for-the-world-s-most-critical-technology-2022",
+    "title": "Chip War: The Fight for the World's Most Critical Technology",
+    "author": "Chris Miller",
     "format": "book",
     "subjects": [
-      "history"
+      "geopolitics",
+      "history",
+      "technology"
     ],
-    "year": 2023,
+    "year": 2022,
     "status": "completed",
     "finished": "2023-10-02",
     "rating": 4,
-    "url": null,
-    "notes": "The history of microchips and they\u2019re importance for everything in the world today. Whole industry dominated by only a couple players"
+    "url": "https://www.simonandschuster.com/books/Chip-War/Chris-Miller/9781982172008",
+    "notes": "Semiconductor geopolitics and the fight for advanced fabs.",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781982172008-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9781982172008"
   },
   {
     "id": "dark-matter-2023",
@@ -407,7 +418,7 @@
     "status": "completed",
     "finished": "2023-02-16",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL17358795W",
     "notes": "rec by Matt Wyndowe"
   },
   {
@@ -425,6 +436,8 @@
     "rating": null,
     "url": "https://www.goodreads.com/en/book/show/43062156",
     "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780385545174-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780385545174"
   },
   {
@@ -455,8 +468,10 @@
     "status": "completed",
     "finished": "2022-01-15",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL18012166W",
     "notes": "Greek mythology. Fun but not a page turner until the end. Story of the maga Circe and how she gets exiled to her island Enea, her love for mortal people, her story with odisseo, then Penelope and her son. She chooses to live as a mortal at the end and seems happier for it.",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780316421140-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780316421140"
   },
   {
@@ -531,8 +546,10 @@
     "status": "completed",
     "finished": "2021-04-03",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL19370088W",
     "notes": "Read to better understand Cathy's work!",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780199662661-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780199662661"
   },
   {
@@ -562,8 +579,10 @@
     "status": "completed",
     "finished": "2021-03-11",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL20743965W",
     "notes": "See Roam",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780525657606-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780525657606"
   },
   {
@@ -608,8 +627,11 @@
     "status": "completed",
     "finished": "2020-07-17",
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://openlibrary.org/works/OL482454W",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780307483041-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780307483041"
   },
   {
     "id": "sputnik-sweetheart-2020",
@@ -653,8 +675,10 @@
     "status": "completed",
     "finished": "2020-04-15",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL19669797W",
     "notes": "taylor bought it for me",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780525521426-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780525521426"
   },
   {
@@ -684,7 +708,7 @@
     "status": "completed",
     "finished": "2020-02-01",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL29920830W",
     "notes": null
   },
   {
@@ -699,8 +723,10 @@
     "status": "completed",
     "finished": "2020-01-10",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL30894488W",
     "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9798590336197-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9798590336197"
   },
   {
@@ -745,7 +771,7 @@
     "status": "completed",
     "finished": "2019-08-01",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL17797130W",
     "notes": null
   },
   {
@@ -760,8 +786,11 @@
     "status": "completed",
     "finished": "2019-07-01",
     "rating": 4,
-    "url": null,
-    "notes": "Carhys favorite book"
+    "url": "https://openlibrary.org/works/OL38014459W",
+    "notes": "Carhys favorite book",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781913547875-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9781913547875"
   },
   {
     "id": "the-three-body-problem-2019",
@@ -790,7 +819,7 @@
     "status": "completed",
     "finished": "2019-03-01",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL27731185W",
     "notes": null
   },
   {
@@ -820,7 +849,7 @@
     "status": "completed",
     "finished": "2016-05-18",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL32700884W",
     "notes": "rec by shane"
   },
   {
@@ -833,8 +862,10 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL50548W",
     "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780099273936-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780099273936"
   },
   {
@@ -849,8 +880,10 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL2982315W",
     "notes": "rec by aranya",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780385265201-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780385265201"
   },
   {
@@ -863,7 +896,7 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL27736864W",
     "notes": null
   },
   {
@@ -876,8 +909,10 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL19734800W",
     "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780811227629-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780811227629"
   },
   {
@@ -890,8 +925,11 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://openlibrary.org/works/OL17635446W",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780143442547-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780143442547"
   },
   {
     "id": "fates-and-furies-2015",
@@ -903,8 +941,11 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://openlibrary.org/works/OL17830264W",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780099592532-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780099592532"
   },
   {
     "id": "grid-systems-in-graphic-design-a-visual-communication-manual-for-graphic-designers-typographers-and-three-dimensional-designers-josef-m-ller-brockmann-1981",
@@ -1006,8 +1047,10 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL134601W",
     "notes": "rec by Brie",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780330294058-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780330294058"
   },
   {
@@ -1020,8 +1063,10 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL19549950W",
     "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781250185969-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9781250185969"
   },
   {
@@ -1034,8 +1079,11 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://openlibrary.org/works/OL35000005W",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781449843168-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9781449843168"
   },
   {
     "id": "maintenance-of-everything-part-one-2026",
@@ -1067,8 +1115,10 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL5703561W",
     "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781564968937-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9781564968937"
   },
   {
@@ -1085,6 +1135,23 @@
     "notes": null
   },
   {
+    "id": "natural-language-agent-harnesses-2026",
+    "title": "Natural-Language Agent Harnesses",
+    "author": "Linyue Pan et al.",
+    "format": "article",
+    "subjects": [
+      "agents",
+      "research",
+      "nlp"
+    ],
+    "year": 2026,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://arxiv.org/abs/2603.25723",
+    "notes": "ArXiv cs.CL preprint introducing natural-language agent harnesses and the Intelligent Harness Runtime."
+  },
+  {
     "id": "permutation-city-2025",
     "title": "Permutation City",
     "author": "Greg Egan",
@@ -1097,8 +1164,10 @@
     "status": "queued",
     "finished": "2025-07-28",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL115336W",
     "notes": "Very technical sci fi \u2014 what does it mean to be human when consciousness can be copied over and over again. Hard to follow but i think worth it.",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780061054815-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780061054815"
   },
   {
@@ -1115,6 +1184,8 @@
     "rating": null,
     "url": "https://www.worldofbooks.com/en-gb/books/carlos-ruiz-zafon/shadow-of-the-wind/9780753819319?gclid=CjwKCAiArbv_BRA8EiwAYGs23McT4VfAi947b1QW2yaKuvNVWbUMYji4Fej7vs-aUy25rvqL8ztdmhoC17cQAvD_BwE#GOR000049646?keyword=",
     "notes": "rec by Kirk",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781439569740-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9781439569740"
   },
   {
@@ -1127,8 +1198,11 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://openlibrary.org/works/OL50567W",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780099760016-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780099760016"
   },
   {
     "id": "tech-revolutions-and-financial-capital-2002",
@@ -1145,6 +1219,25 @@
     "rating": null,
     "url": "https://www.amazon.com/Technological-Revolutions-Financial-Capital-Dynamics/dp/1843763311",
     "notes": "rec by Coinbase"
+  },
+  {
+    "id": "the-creative-act-a-way-of-being-2023",
+    "title": "The Creative Act: A Way of Being",
+    "author": "Rick Rubin",
+    "format": "book",
+    "subjects": [
+      "creativity",
+      "art"
+    ],
+    "year": 2023,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://www.penguinrandomhouse.com/books/688355/the-creative-act-by-rick-rubin/",
+    "notes": "Rick Rubin's distilled principles for cultivating creativity.",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780593652886-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780593652886"
   },
   {
     "id": "the-origins-of-efficiency-2025",
@@ -1178,8 +1271,10 @@
     "status": "queued",
     "finished": "2024-05-24",
     "rating": 4,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL16419990W",
     "notes": "Fictional book about the world seen by North Koreans. Wild perspective.",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780552778251-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780552778251"
   },
   {
@@ -1205,7 +1300,7 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL17262607W",
     "notes": null
   },
   {
@@ -1220,8 +1315,10 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://press.jhu.edu/books/title/2845/secret-apollo",
     "notes": "Rec by Collison",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780801868986-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780801868986"
   },
   {
@@ -1234,8 +1331,10 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL23165513W",
     "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781858945675-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9781858945675"
   },
   {
@@ -1250,8 +1349,10 @@
     "status": "queued",
     "finished": "2025-07-31",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL42403663W",
     "notes": "Recommended by Taylor \u2014 Graydon was the editor of Vanity Fair. Makes you want to (sometimes) start a magazine",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780593655900-M.jpg?default=false",
+    "cover_source": "manual",
     "isbn": "9780593655900"
   },
   {
