@@ -33,33 +33,147 @@
             --key-col-width: clamp(102px, 9.8vw, 138px);
         }
 
-        .about-back-link {
+        body.about-vector .nav-overlay {
             position: fixed;
-            top: 1.05rem;
-            left: 1.02rem;
-            z-index: 220;
-            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
-            font-size: clamp(0.68rem, 0.82vw, 0.76rem);
-            font-weight: 700;
-            letter-spacing: 0.11em;
-            text-transform: uppercase;
-            line-height: 1;
-            text-decoration: underline;
-            text-decoration-color: transparent;
-            text-underline-offset: 0.2em;
-            color: #0d0d0d;
-            border: 2px solid rgba(13, 13, 13, 0.84);
-            background: rgba(243, 241, 232, 0.92);
-            padding: 0.46rem 0.66rem;
-            transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, text-decoration-color 160ms ease;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 84px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            z-index: 260;
+            pointer-events: none;
         }
 
-        .about-back-link:hover,
-        .about-back-link:focus-visible {
+        body.about-vector .nav-overlay > * {
+            pointer-events: auto;
+        }
+
+        body.about-vector .logo-minimal {
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 1.13rem;
+            font-weight: 900;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #0d0d0d;
+            line-height: 1;
+        }
+
+        body.about-vector .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        body.about-vector .nav-links a {
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.095em;
+            text-transform: uppercase;
+            line-height: 1;
+            text-decoration: none;
+            color: #0d0d0d;
+            opacity: 0.94;
+            transition: color 160ms ease, opacity 160ms ease, text-decoration-color 160ms ease;
+        }
+
+        body.about-vector .nav-links a:hover,
+        body.about-vector .nav-links a:focus-visible {
+            color: #1E32D6;
+            opacity: 1;
+            outline: none;
+        }
+
+        body.about-vector .nav-links a[aria-current="page"] {
+            color: #1E32D6;
+            opacity: 1;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.28em;
+            text-decoration-color: rgba(30, 50, 214, 0.8);
+            pointer-events: none;
+        }
+
+        body.about-vector .projects-gated-link {
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.28em;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body.about-vector .projects-gated-link {
+                cursor: not-allowed !important;
+            }
+        }
+
+        body.about-vector .projects-gated-link.is-blocked-hit {
+            animation: projectsBlockedHit 260ms cubic-bezier(0.2, 0.8, 0.2, 1) 1;
+        }
+
+        body.about-vector .projects-gate-toast {
+            position: fixed;
+            top: 86px;
+            right: 40px;
+            width: min(360px, calc(100vw - 80px));
+            border: 1px solid #1E32D6;
+            background: rgba(243, 241, 232, 0.98);
+            color: #0d0d0d;
+            padding: 10px 12px;
+            opacity: 0;
+            transform: translateY(-8px);
+            pointer-events: none;
+            transition: opacity 180ms ease, transform 180ms ease;
+            z-index: 270;
+            box-shadow: 0 10px 22px rgba(0, 0, 0, 0.1);
+        }
+
+        body.about-vector .projects-gate-toast.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        body.about-vector .projects-gate-title {
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #1E32D6;
+            margin-bottom: 6px;
+        }
+
+        body.about-vector .projects-gate-copy {
+            font-family: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.28;
+            margin-bottom: 8px;
+        }
+
+        body.about-vector .projects-gate-cta {
+            display: inline-block;
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #1E32D6;
+            text-decoration: none;
+            border: 1px solid #1E32D6;
+            padding: 5px 7px;
+            transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+        }
+
+        body.about-vector .projects-gate-cta:hover,
+        body.about-vector .projects-gate-cta:focus-visible {
             background: #1E32D6;
             border-color: #1E32D6;
             color: #f3f1e8;
-            text-decoration-color: rgba(243, 241, 232, 0.72);
             outline: none;
         }
 
@@ -353,6 +467,69 @@
             .shape.s5 { width: 21%; height: 46%; }
         }
 
+        @media (max-width: 768px) {
+            body.about-vector .nav-overlay {
+                padding: 0 24px;
+                height: 68px;
+                justify-content: flex-start;
+            }
+
+            body.about-vector .logo-minimal {
+                font-size: 1.02rem;
+            }
+
+            body.about-vector .nav-links {
+                position: fixed;
+                left: 12px;
+                right: 12px;
+                bottom: calc(10px + env(safe-area-inset-bottom));
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                justify-content: space-between;
+                border: 1px solid #1E32D6;
+                border-radius: 14px;
+                padding: 8px;
+                background: rgba(243, 241, 232, 0.9);
+                backdrop-filter: blur(6px);
+                z-index: 280;
+            }
+
+            body.about-vector .nav-links a {
+                flex: 1;
+                text-align: center;
+                font-size: 11px;
+                letter-spacing: 0.08em;
+                border: 1px solid rgba(30, 50, 214, 0.35);
+                border-radius: 8px;
+                padding: 8px 4px;
+                background: rgba(255, 255, 255, 0.38);
+            }
+
+            body.about-vector .projects-gate-toast {
+                top: auto;
+                right: 12px;
+                left: 12px;
+                bottom: calc(74px + env(safe-area-inset-bottom));
+                width: auto;
+                padding: 9px 10px;
+            }
+
+            body.about-vector .projects-gate-title {
+                font-size: 9px;
+                margin-bottom: 5px;
+            }
+
+            body.about-vector .projects-gate-copy {
+                font-size: 11px;
+                margin-bottom: 8px;
+            }
+
+            .about-shell {
+                padding-bottom: calc(6.8rem + env(safe-area-inset-bottom));
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .place-token,
             .about-value-social a {
@@ -367,7 +544,19 @@
     </style>
 </head>
 <body class="about-vector">
-    <a class="about-back-link" href="index.html" aria-label="Home">Home</a>
+    <nav class="nav-overlay" aria-label="Primary">
+        <a class="logo-minimal" href="index.html">HOME</a>
+        <div class="nav-links">
+            <a href="about.html" aria-current="page">01 About</a>
+            <a href="projects.html" class="projects-gated-link" data-projects-gated="true" aria-disabled="true">02 Projects</a>
+            <a href="other.html">03 Library</a>
+        </div>
+        <div class="projects-gate-toast" id="projectsGateToast" role="status" aria-live="polite" aria-hidden="true">
+            <div class="projects-gate-title">PROJECTS ARE IN THE WORKSHOP</div>
+            <div class="projects-gate-copy">Still prototyping. Try the library in the meantime.</div>
+            <a href="other.html" class="projects-gate-cta">GO TO LIBRARY</a>
+        </div>
+    </nav>
     <main class="about-shell">
         <section class="about-index" aria-label="About index">
             <div class="about-line">
@@ -427,6 +616,12 @@
     </main>
 
     <script>
+        const mediaReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const gateToastAutoDismissMs = 2600;
+        const blockedLinkAnimationMs = 260;
+        const projectsGatedLink = document.querySelector('.projects-gated-link');
+        const projectsGateToast = document.getElementById('projectsGateToast');
+        const currentUrl = new URL(window.location.href);
         const field = document.querySelector('.about-field');
         const shapes = field ? Array.from(field.querySelectorAll('.shape')) : [];
         const desktopMotionQuery = window.matchMedia('(min-width: 900px)');
@@ -445,6 +640,32 @@
         let animationFrame = null;
         let orbitEnabled = false;
         let placeHideTimer = null;
+        let gateToastTimer = null;
+
+        function hideProjectsGateToast() {
+            if (!projectsGateToast) {
+                return;
+            }
+            projectsGateToast.classList.remove('is-visible');
+            projectsGateToast.setAttribute('aria-hidden', 'true');
+        }
+
+        function showProjectsGateToast() {
+            if (!projectsGateToast) {
+                return;
+            }
+
+            if (gateToastTimer !== null) {
+                window.clearTimeout(gateToastTimer);
+            }
+
+            projectsGateToast.classList.add('is-visible');
+            projectsGateToast.setAttribute('aria-hidden', 'false');
+            gateToastTimer = window.setTimeout(() => {
+                hideProjectsGateToast();
+                gateToastTimer = null;
+            }, gateToastAutoDismissMs);
+        }
 
         function canShowPlacePreview() {
             return desktopMotionQuery.matches;
@@ -619,6 +840,28 @@
                 hidePlacePreview(false);
             });
         });
+
+        if (projectsGatedLink) {
+            projectsGatedLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                showProjectsGateToast();
+
+                if (!mediaReducedMotion.matches) {
+                    projectsGatedLink.classList.remove('is-blocked-hit');
+                    void projectsGatedLink.offsetWidth;
+                    projectsGatedLink.classList.add('is-blocked-hit');
+                    window.setTimeout(() => {
+                        projectsGatedLink.classList.remove('is-blocked-hit');
+                    }, blockedLinkAnimationMs);
+                }
+            });
+        }
+
+        if (currentUrl.searchParams.get('projects') === 'locked') {
+            showProjectsGateToast();
+            currentUrl.searchParams.delete('projects');
+            window.history.replaceState({}, '', currentUrl.pathname + currentUrl.search + currentUrl.hash);
+        }
 
         positionShapes();
         updateOrbitState();
