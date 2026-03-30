@@ -365,18 +365,7 @@ body.homepage .hero-canvas {
 }
 
 body.homepage .hero-canvas::before {
-    content: "";
-    position: absolute;
-    width: 54vw;
-    height: 54vw;
-    max-width: 760px;
-    max-height: 760px;
-    right: 12vw;
-    top: 5vh;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 71, 255, 0.16) 0%, rgba(0, 71, 255, 0.02) 46%, rgba(0, 71, 255, 0) 74%);
-    pointer-events: none;
-    z-index: 3;
+    display: none;
 }
 
 body.homepage .quantum-layer {
@@ -390,13 +379,13 @@ body.homepage .quantum-layer {
 
 body.homepage .quantum-backplane {
     position: absolute;
-    top: 22vh;
-    left: 56vw;
-    width: min(29vw, 460px);
-    height: min(29vw, 460px);
+    top: 16vh;
+    left: 60vw;
+    width: min(18vw, 280px);
+    height: min(56vh, 560px);
     border-radius: 0;
-    background: rgba(0, 58, 196, 0.88);
-    opacity: 0.46;
+    background: rgba(0, 46, 182, 0.56);
+    opacity: 1;
     transform: none;
     mix-blend-mode: multiply;
 }
@@ -645,7 +634,7 @@ body.homepage .system-specs {
     }
 
     body.homepage .meta-body {
-        font-size: 14px;
+        font-size: 13px;
         line-height: 1.25;
         max-width: 22ch;
     }
@@ -660,20 +649,16 @@ body.homepage .system-specs {
     }
 
     body.homepage .hero-canvas::before {
-        width: 96vw;
-        height: 96vw;
-        right: -26vw;
-        top: 10vh;
-        opacity: 0.56;
+        display: none;
     }
 
     body.homepage .quantum-backplane {
-        width: 52vw;
-        height: 52vw;
-        top: 19vh;
-        left: 56vw;
+        width: 31vw;
+        height: 44vh;
+        top: 22vh;
+        left: 60vw;
         border-radius: 0;
-        opacity: 0.42;
+        opacity: 1;
         transform: none;
     }
 
