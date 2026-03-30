@@ -390,30 +390,15 @@ body.homepage .quantum-layer {
 
 body.homepage .quantum-backplane {
     position: absolute;
-    top: 20vh;
-    left: 54vw;
+    top: 22vh;
+    left: 56vw;
     width: min(29vw, 460px);
     height: min(29vw, 460px);
-    border-radius: 10px;
-    background: linear-gradient(165deg, rgba(0, 71, 255, 0.88), rgba(0, 71, 255, 0.68));
-    border: 2px solid rgba(0, 71, 255, 0.52);
-    box-shadow: 0 24px 80px rgba(0, 71, 255, 0.2);
-    opacity: 0.38;
-    transform: rotate(13deg);
+    border-radius: 0;
+    background: rgba(0, 58, 196, 0.88);
+    opacity: 0.46;
+    transform: none;
     mix-blend-mode: multiply;
-    animation: homePlaneDrift 18s cubic-bezier(0.3, 0.82, 0.22, 1) infinite alternate;
-}
-
-body.homepage .quantum-backplane::after {
-    content: "";
-    position: absolute;
-    width: 42%;
-    height: 42%;
-    border-radius: 50%;
-    right: -10%;
-    top: -12%;
-    border: 2px solid rgba(0, 71, 255, 0.32);
-    background: rgba(0, 71, 255, 0.06);
 }
 
 body.homepage #quantumCanvasContainer {
@@ -436,31 +421,23 @@ body.homepage #quantumCanvasContainer canvas {
 
 body.homepage .info-tab {
     position: absolute;
-    top: 106px;
+    top: 108px;
     right: 40px;
-    width: min(360px, 28vw);
-    border: 1px solid rgba(0, 71, 255, 0.38);
-    border-left-width: 3px;
-    padding: 12px 14px 12px 16px;
-    background: rgba(242, 240, 230, 0.9);
-    backdrop-filter: blur(3px);
+    width: min(360px, 30vw);
+    padding: 0;
+    border: none;
+    background: transparent;
     z-index: 20;
 }
 
-body.homepage .meta-header {
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    letter-spacing: 0.12em;
-}
-
 body.homepage .meta-body {
-    font-size: 13.5px;
-    line-height: 1.45;
+    font-size: 19px;
+    line-height: 1.26;
+    font-weight: 700;
     margin-bottom: 0;
     text-transform: none;
-    max-width: 32ch;
+    max-width: 24ch;
+    letter-spacing: -0.01em;
 }
 
 body.homepage .quote-shout {
@@ -491,10 +468,6 @@ body.homepage .quote-shout {
 
     body.homepage #quantumCanvasContainer {
         display: none;
-    }
-
-    body.homepage .quantum-backplane {
-        animation: none;
     }
 
     body.homepage .type-anchor {
@@ -556,15 +529,6 @@ body.homepage .system-specs {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     z-index: 30;
-}
-
-@keyframes homePlaneDrift {
-    0% {
-        transform: rotate(11deg) translate3d(0, 0, 0);
-    }
-    100% {
-        transform: rotate(15deg) translate3d(14px, -9px, 0);
-    }
 }
 
 @keyframes homeReveal {
@@ -672,18 +636,18 @@ body.homepage .system-specs {
     }
 
     body.homepage .info-tab {
-        top: 78px;
+        top: 84px;
         right: 16px;
         left: 16px;
         width: auto;
-        padding: 9px 10px 9px 12px;
-        background: rgba(242, 240, 230, 0.86);
-        backdrop-filter: blur(3px);
+        padding: 0;
+        background: transparent;
     }
 
     body.homepage .meta-body {
-        font-size: 11px;
-        line-height: 1.38;
+        font-size: 14px;
+        line-height: 1.25;
+        max-width: 22ch;
     }
 
     body.homepage .system-specs {
@@ -706,11 +670,11 @@ body.homepage .system-specs {
     body.homepage .quantum-backplane {
         width: 52vw;
         height: 52vw;
-        top: 16vh;
+        top: 19vh;
         left: 56vw;
-        border-radius: 8px;
-        opacity: 0.34;
-        transform: rotate(14deg);
+        border-radius: 0;
+        opacity: 0.42;
+        transform: none;
     }
 
     body.homepage #quantumCanvasContainer {
@@ -1291,9 +1255,13 @@ body.library-page a {
     border-left: 3px solid var(--rule);
     padding: 2.5rem 1.5rem;
     background: var(--bg-20);
-    overflow: visible;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     contain: none;
-    position: relative;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: 100vh;
     animation: library-panel-rise 620ms cubic-bezier(0.18, 0.88, 0.3, 1) both;
     animation-delay: 100ms;
 }
@@ -1397,6 +1365,11 @@ body.library-page a {
         border-left: none;
         border-top: 3px solid var(--rule);
         padding: 1.2rem 1.4rem;
+        position: relative;
+        top: auto;
+        max-height: none;
+        overflow: visible;
+        overscroll-behavior: auto;
     }
 }
 

@@ -95,9 +95,6 @@
             memory: 40
         };
         const BALANCED_HUE_WHEEL = [12, 38, 68, 96, 128, 166, 196, 222, 252, 286, 318, 346];
-        const OPEN_LIBRARY_CACHE = new Map();
-        const OPEN_LIBRARY_STORAGE_KEY = 'library-open-library-cache-v1';
-        const MAX_COVER_FETCH_CONCURRENCY = 4;
         const COVER_PLACEHOLDER_DATA_URL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
 
         const state = {
@@ -107,8 +104,6 @@
             filterOptions: null,
             renderScheduled: false,
             shelfSignature: '',
-            pendingCoverIds: new Set(),
-            coverCachePersistTimer: null,
             filters: {
                 subjects: new Set(),
                 years: new Set(),
@@ -129,52 +124,9 @@
             shelf: document.getElementById('book-shelf'),
             count: document.getElementById('result-count'),
             empty: document.getElementById('empty-state'),
-            detail: document.getElementById('detail-content')
+            detail: document.getElementById('detail-content'),
+            detailPanel: document.getElementById('library-detail')
         };
-
-        function loadStoredOpenLibraryCache() {
-            try {
-                const raw = window.localStorage.getItem(OPEN_LIBRARY_STORAGE_KEY);
-                if (!raw) {
-                    return;
-                }
-                const parsed = JSON.parse(raw);
-                if (!parsed || typeof parsed !== 'object') {
-                    return;
-                }
-                Object.entries(parsed).forEach(([key, value]) => {
-                    if (typeof value === 'string') {
-                        OPEN_LIBRARY_CACHE.set(key, value);
-                    }
-                });
-            } catch (error) {
-                // Ignore malformed cache entries.
-            }
-        }
-
-        function persistOpenLibraryCache() {
-            try {
-                const payload = {};
-                OPEN_LIBRARY_CACHE.forEach((value, key) => {
-                    if (typeof value === 'string') {
-                        payload[key] = value;
-                    }
-                });
-                window.localStorage.setItem(OPEN_LIBRARY_STORAGE_KEY, JSON.stringify(payload));
-            } catch (error) {
-                // Ignore storage write failures.
-            }
-        }
-
-        function scheduleOpenLibraryCachePersist() {
-            if (state.coverCachePersistTimer != null) {
-                clearTimeout(state.coverCachePersistTimer);
-            }
-            state.coverCachePersistTimer = setTimeout(() => {
-                state.coverCachePersistTimer = null;
-                persistOpenLibraryCache();
-            }, 300);
-        }
 
         function normalizeText(value) {
             return (value || '').toString().trim();
@@ -366,6 +318,11 @@
                 return manualCover;
             }
 
+            const isbn = normalizeText(rawItem.isbn);
+            if ((rawItem.format === 'book' || rawItem.format === 'audiobook') && isbn) {
+                return 'https://covers.openlibrary.org/b/isbn/' + encodeURIComponent(isbn) + '-M.jpg?default=false';
+            }
+
             if (rawItem.format === 'podcast') {
                 const youtubeId = extractYouTubeId(rawItem.url);
                 if (youtubeId) {
@@ -375,116 +332,6 @@
 
             return '';
         }
-
-        function makeBookCoverKey(item) {
-            return [normalizeText(item.title).toLowerCase(), normalizeText(item._author).toLowerCase()].join('|');
-        }
-
-        function toOpenLibraryCoverUrl(match) {
-            if (!match) {
-                return '';
-            }
-            if (match.cover_i) {
-                return 'https://covers.openlibrary.org/b/id/' + String(match.cover_i) + '-M.jpg?default=false';
-            }
-            if (Array.isArray(match.isbn) && match.isbn.length > 0) {
-                return 'https://covers.openlibrary.org/b/isbn/' + encodeURIComponent(match.isbn[0]) + '-M.jpg?default=false';
-            }
-            return '';
-        }
-
-        async function fetchOpenLibraryCover(item) {
-            const cacheKey = makeBookCoverKey(item);
-            if (OPEN_LIBRARY_CACHE.has(cacheKey)) {
-                return OPEN_LIBRARY_CACHE.get(cacheKey);
-            }
-
-            const query = new URLSearchParams();
-            query.set('title', normalizeText(item.title));
-            query.set('limit', '3');
-            query.set('fields', 'cover_i,isbn');
-            if (item._author && item._author.toLowerCase() !== 'unknown') {
-                query.set('author', item._author);
-            }
-
-            let coverUrl = '';
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 4500);
-            try {
-                const response = await fetch('https://openlibrary.org/search.json?' + query.toString(), {
-                    cache: 'force-cache',
-                    signal: controller.signal
-                });
-                if (response.ok) {
-                    const payload = await response.json();
-                    const docs = Array.isArray(payload.docs) ? payload.docs : [];
-                    const match = docs.find((doc) => doc.cover_i || (Array.isArray(doc.isbn) && doc.isbn.length > 0));
-                    coverUrl = toOpenLibraryCoverUrl(match);
-                }
-            } catch (error) {
-                coverUrl = '';
-            } finally {
-                clearTimeout(timeoutId);
-            }
-
-            OPEN_LIBRARY_CACHE.set(cacheKey, coverUrl);
-            scheduleOpenLibraryCachePersist();
-            return coverUrl;
-        }
-
-        async function hydrateMissingBookCovers(items, options = {}) {
-            const limit = Number.isFinite(options.limit) ? Math.max(1, Number(options.limit)) : 24;
-            const pending = items.filter((item) =>
-                (item.format === 'book' || item.format === 'audiobook') &&
-                !normalizeText(item._ui.coverUrl) &&
-                !state.pendingCoverIds.has(item.id)
-            ).slice(0, limit);
-
-            if (pending.length === 0) {
-                return;
-            }
-
-            pending.forEach((item) => state.pendingCoverIds.add(item.id));
-
-            const queue = pending.slice();
-            const workerCount = Math.min(MAX_COVER_FETCH_CONCURRENCY, queue.length);
-            const results = [];
-
-            await Promise.all(Array.from({ length: workerCount }, async () => {
-                while (queue.length > 0) {
-                    const current = queue.shift();
-                    if (!current) {
-                        continue;
-                    }
-
-                    try {
-                        results.push({
-                            id: current.id,
-                            coverUrl: await fetchOpenLibraryCover(current)
-                        });
-                    } finally {
-                        state.pendingCoverIds.delete(current.id);
-                    }
-                }
-            }));
-
-            let changed = false;
-            results.forEach((result) => {
-                if (!result.coverUrl) {
-                    return;
-                }
-                const target = state.itemById.get(result.id);
-                if (target && target._ui.coverUrl !== result.coverUrl) {
-                    target._ui.coverUrl = result.coverUrl;
-                    changed = true;
-                }
-            });
-
-            if (changed) {
-                scheduleRender();
-            }
-        }
-
         function onDeferredCoverIntersect(entries) {
             entries.forEach((entry) => {
                 if (!entry.isIntersecting) {
@@ -819,7 +666,6 @@
                 syncSelectedCardState();
             }
             renderDetail();
-            hydrateMissingBookCovers(filtered, { limit: 24 });
         }
 
         function scheduleRender() {
@@ -903,6 +749,11 @@
             const itemId = cover.dataset.id;
             state.selectedId = state.selectedId === itemId ? null : itemId;
             scheduleRender();
+            if (window.matchMedia('(max-width: 1180px)').matches && refs.detailPanel) {
+                requestAnimationFrame(() => {
+                    refs.detailPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
         });
 
         refs.shelf.addEventListener('error', (event) => {
@@ -961,7 +812,6 @@
             }
         });
 
-        loadStoredOpenLibraryCache();
         loadLibrary();
     </script>
 </body>
