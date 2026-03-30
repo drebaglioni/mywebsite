@@ -96,6 +96,9 @@
         };
         const BALANCED_HUE_WHEEL = [12, 38, 68, 96, 128, 166, 196, 222, 252, 286, 318, 346];
         const OPEN_LIBRARY_CACHE = new Map();
+        const OPEN_LIBRARY_STORAGE_KEY = 'library-open-library-cache-v1';
+        const MAX_COVER_FETCH_CONCURRENCY = 4;
+        const COVER_PLACEHOLDER_DATA_URL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
 
         const state = {
             items: [],
@@ -103,6 +106,9 @@
             selectedId: null,
             filterOptions: null,
             renderScheduled: false,
+            shelfSignature: '',
+            pendingCoverIds: new Set(),
+            coverCachePersistTimer: null,
             filters: {
                 subjects: new Set(),
                 years: new Set(),
@@ -125,6 +131,50 @@
             empty: document.getElementById('empty-state'),
             detail: document.getElementById('detail-content')
         };
+
+        function loadStoredOpenLibraryCache() {
+            try {
+                const raw = window.localStorage.getItem(OPEN_LIBRARY_STORAGE_KEY);
+                if (!raw) {
+                    return;
+                }
+                const parsed = JSON.parse(raw);
+                if (!parsed || typeof parsed !== 'object') {
+                    return;
+                }
+                Object.entries(parsed).forEach(([key, value]) => {
+                    if (typeof value === 'string') {
+                        OPEN_LIBRARY_CACHE.set(key, value);
+                    }
+                });
+            } catch (error) {
+                // Ignore malformed cache entries.
+            }
+        }
+
+        function persistOpenLibraryCache() {
+            try {
+                const payload = {};
+                OPEN_LIBRARY_CACHE.forEach((value, key) => {
+                    if (typeof value === 'string') {
+                        payload[key] = value;
+                    }
+                });
+                window.localStorage.setItem(OPEN_LIBRARY_STORAGE_KEY, JSON.stringify(payload));
+            } catch (error) {
+                // Ignore storage write failures.
+            }
+        }
+
+        function scheduleOpenLibraryCachePersist() {
+            if (state.coverCachePersistTimer != null) {
+                clearTimeout(state.coverCachePersistTimer);
+            }
+            state.coverCachePersistTimer = setTimeout(() => {
+                state.coverCachePersistTimer = null;
+                persistOpenLibraryCache();
+            }, 300);
+        }
 
         function normalizeText(value) {
             return (value || '').toString().trim();
@@ -319,7 +369,7 @@
             if (rawItem.format === 'podcast') {
                 const youtubeId = extractYouTubeId(rawItem.url);
                 if (youtubeId) {
-                    return 'https://img.youtube.com/vi/' + youtubeId + '/hqdefault.jpg';
+                    return 'https://img.youtube.com/vi/' + youtubeId + '/mqdefault.jpg';
                 }
             }
 
@@ -330,6 +380,19 @@
             return [normalizeText(item.title).toLowerCase(), normalizeText(item._author).toLowerCase()].join('|');
         }
 
+        function toOpenLibraryCoverUrl(match) {
+            if (!match) {
+                return '';
+            }
+            if (match.cover_i) {
+                return 'https://covers.openlibrary.org/b/id/' + String(match.cover_i) + '-M.jpg?default=false';
+            }
+            if (Array.isArray(match.isbn) && match.isbn.length > 0) {
+                return 'https://covers.openlibrary.org/b/isbn/' + encodeURIComponent(match.isbn[0]) + '-M.jpg?default=false';
+            }
+            return '';
+        }
+
         async function fetchOpenLibraryCover(item) {
             const cacheKey = makeBookCoverKey(item);
             if (OPEN_LIBRARY_CACHE.has(cacheKey)) {
@@ -338,47 +401,72 @@
 
             const query = new URLSearchParams();
             query.set('title', normalizeText(item.title));
-            query.set('limit', '4');
+            query.set('limit', '3');
+            query.set('fields', 'cover_i,isbn');
             if (item._author && item._author.toLowerCase() !== 'unknown') {
                 query.set('author', item._author);
             }
 
             let coverUrl = '';
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 4500);
             try {
-                const response = await fetch('https://openlibrary.org/search.json?' + query.toString());
+                const response = await fetch('https://openlibrary.org/search.json?' + query.toString(), {
+                    cache: 'force-cache',
+                    signal: controller.signal
+                });
                 if (response.ok) {
                     const payload = await response.json();
                     const docs = Array.isArray(payload.docs) ? payload.docs : [];
                     const match = docs.find((doc) => doc.cover_i || (Array.isArray(doc.isbn) && doc.isbn.length > 0));
-                    if (match) {
-                        if (match.cover_i) {
-                            coverUrl = 'https://covers.openlibrary.org/b/id/' + String(match.cover_i) + '-L.jpg';
-                        } else if (Array.isArray(match.isbn) && match.isbn.length > 0) {
-                            coverUrl = 'https://covers.openlibrary.org/b/isbn/' + encodeURIComponent(match.isbn[0]) + '-L.jpg';
-                        }
-                    }
+                    coverUrl = toOpenLibraryCoverUrl(match);
                 }
             } catch (error) {
                 coverUrl = '';
+            } finally {
+                clearTimeout(timeoutId);
             }
 
             OPEN_LIBRARY_CACHE.set(cacheKey, coverUrl);
+            scheduleOpenLibraryCachePersist();
             return coverUrl;
         }
 
-        async function hydrateMissingBookCovers(items) {
+        async function hydrateMissingBookCovers(items, options = {}) {
+            const limit = Number.isFinite(options.limit) ? Math.max(1, Number(options.limit)) : 24;
             const pending = items.filter((item) =>
-                (item.format === 'book' || item.format === 'audiobook') && !normalizeText(item._ui.coverUrl)
-            );
+                (item.format === 'book' || item.format === 'audiobook') &&
+                !normalizeText(item._ui.coverUrl) &&
+                !state.pendingCoverIds.has(item.id)
+            ).slice(0, limit);
 
             if (pending.length === 0) {
                 return;
             }
 
-            const results = await Promise.all(pending.map(async (item) => ({
-                id: item.id,
-                coverUrl: await fetchOpenLibraryCover(item)
-            })));
+            pending.forEach((item) => state.pendingCoverIds.add(item.id));
+
+            const queue = pending.slice();
+            const workerCount = Math.min(MAX_COVER_FETCH_CONCURRENCY, queue.length);
+            const results = [];
+
+            await Promise.all(Array.from({ length: workerCount }, async () => {
+                while (queue.length > 0) {
+                    const current = queue.shift();
+                    if (!current) {
+                        continue;
+                    }
+
+                    try {
+                        results.push({
+                            id: current.id,
+                            coverUrl: await fetchOpenLibraryCover(current)
+                        });
+                    } finally {
+                        state.pendingCoverIds.delete(current.id);
+                    }
+                }
+            }));
 
             let changed = false;
             results.forEach((result) => {
@@ -395,6 +483,65 @@
             if (changed) {
                 scheduleRender();
             }
+        }
+
+        function onDeferredCoverIntersect(entries) {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+                const image = entry.target;
+                if (deferredImageObserver) {
+                    deferredImageObserver.unobserve(image);
+                }
+                const deferredSrc = normalizeText(image.getAttribute('data-src'));
+                if (deferredSrc) {
+                    image.setAttribute('src', deferredSrc);
+                    image.removeAttribute('data-src');
+                    image.classList.remove('deferred');
+                }
+            });
+        }
+
+        const deferredImageObserver = ('IntersectionObserver' in window)
+            ? new IntersectionObserver(onDeferredCoverIntersect, {
+                root: null,
+                rootMargin: '300px 0px',
+                threshold: 0.01
+            })
+            : null;
+
+        function observeDeferredCoverImages() {
+            const deferredImages = refs.shelf.querySelectorAll('img.cover-image[data-src]');
+            deferredImages.forEach((image) => {
+                if (deferredImageObserver) {
+                    deferredImageObserver.observe(image);
+                    return;
+                }
+                const deferredSrc = normalizeText(image.getAttribute('data-src'));
+                if (deferredSrc) {
+                    image.setAttribute('src', deferredSrc);
+                    image.removeAttribute('data-src');
+                    image.classList.remove('deferred');
+                }
+            });
+        }
+
+        function makeShelfSignature(items) {
+            return items
+                .map((item) => item.id + '@' + normalizeText(item._ui.coverUrl))
+                .join('|');
+        }
+
+        function syncSelectedCardState() {
+            const cards = refs.shelf.querySelectorAll('.cover-item');
+            cards.forEach((card) => {
+                if (state.selectedId && card.dataset.id === state.selectedId) {
+                    card.classList.add('selected');
+                    return;
+                }
+                card.classList.remove('selected');
+            });
         }
 
         function isColorDark(hexColor) {
@@ -526,6 +673,9 @@
         }
 
         function renderShelf(items) {
+            if (deferredImageObserver) {
+                deferredImageObserver.disconnect();
+            }
             refs.shelf.innerHTML = '';
             const fragment = document.createDocumentFragment();
 
@@ -561,8 +711,9 @@
                 const hasCover = Boolean(coverUrl);
                 const useArticlePoster = item.format === 'article';
                 const posterVariant = 'poster-v' + String(hashCode(item.id + '-poster') % 3);
-                const loadingStrategy = index < 9 ? 'eager' : 'lazy';
-                const fetchPriority = index < 4 ? 'high' : 'auto';
+                const shouldDefer = index >= 10;
+                const loadingStrategy = shouldDefer ? 'lazy' : 'eager';
+                const fetchPriority = index < 2 ? 'high' : 'auto';
 
                 let surfaceContent = '';
                 if (useArticlePoster) {
@@ -578,7 +729,11 @@
                         '</span>'
                     ].join('');
                 } else if (hasCover) {
-                    surfaceContent = '<img class="cover-image" src="' + escapeAttr(coverUrl) + '" alt="Cover for ' + escapeAttr(item.title) + '" loading="' + loadingStrategy + '" fetchpriority="' + fetchPriority + '" decoding="async" data-fallback-title="' + fallbackTitleAttr + '" data-fallback-author="' + fallbackAuthorAttr + '" data-fallback-subject="' + fallbackSubjectAttr + '">';
+                    const srcAttr = shouldDefer
+                        ? 'src="' + COVER_PLACEHOLDER_DATA_URL + '" data-src="' + escapeAttr(coverUrl) + '"'
+                        : 'src="' + escapeAttr(coverUrl) + '"';
+                    const deferredClass = shouldDefer ? ' deferred' : '';
+                    surfaceContent = '<img class="cover-image' + deferredClass + '" ' + srcAttr + ' alt="Cover for ' + escapeAttr(item.title) + '" loading="' + loadingStrategy + '" fetchpriority="' + fetchPriority + '" decoding="async" width="232" height="348" data-fallback-title="' + fallbackTitleAttr + '" data-fallback-author="' + fallbackAuthorAttr + '" data-fallback-subject="' + fallbackSubjectAttr + '">';
                 } else {
                     surfaceContent = [
                         '<span class="cover-fallback">',
@@ -602,6 +757,7 @@
             });
 
             refs.shelf.appendChild(fragment);
+            observeDeferredCoverImages();
         }
 
         function renderDetail() {
@@ -655,8 +811,15 @@
                 state.selectedId = null;
             }
 
-            renderShelf(filtered);
+            const nextShelfSignature = makeShelfSignature(filtered);
+            if (state.shelfSignature !== nextShelfSignature) {
+                state.shelfSignature = nextShelfSignature;
+                renderShelf(filtered);
+            } else {
+                syncSelectedCardState();
+            }
             renderDetail();
+            hydrateMissingBookCovers(filtered, { limit: 24 });
         }
 
         function scheduleRender() {
@@ -701,7 +864,6 @@
                 buildFilterButtons(refs.statusFilters, state.filterOptions.statuses, 'statuses', capitalize);
 
                 scheduleRender();
-                hydrateMissingBookCovers(state.items);
             } catch (error) {
                 refs.shelf.innerHTML = '';
                 refs.empty.hidden = false;
@@ -799,6 +961,7 @@
             }
         });
 
+        loadStoredOpenLibraryCache();
         loadLibrary();
     </script>
 </body>

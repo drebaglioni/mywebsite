@@ -928,6 +928,8 @@ body.library-page a {
     border-radius: 0;
     box-shadow: none;
     transition: background var(--dur-fast) ease;
+    content-visibility: auto;
+    contain-intrinsic-size: 306px 232px;
 }
 
 .cover-item:hover,
@@ -976,6 +978,10 @@ body.library-page a {
     object-position: center 42%;
     display: block;
     background: var(--card-base);
+}
+
+.cover-image.deferred {
+    opacity: 0.85;
 }
 
 .cover-fallback {
