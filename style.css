@@ -843,10 +843,10 @@ body.library-page a {
 .cover-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.72rem;
+    gap: 0.2rem;
     align-content: start;
     align-items: stretch;
-    padding: 0.18rem 0 0.46rem;
+    padding: 0.05rem 0 0.14rem;
     background: transparent;
     border: 0;
     border-radius: 0;
@@ -870,8 +870,8 @@ body.library-page a {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 324px;
-    padding: 0.9rem 0.8rem;
+    min-height: 306px;
+    padding: 0.6rem 0.56rem;
     background: linear-gradient(
         148deg,
         color-mix(in oklab, var(--topic-accent, #1f2bff) 29%, #ffffff 71%) 0%,
@@ -903,8 +903,8 @@ body.library-page a {
 }
 
 .cover-card {
-    width: min(226px, 84%);
-    filter: drop-shadow(0 8px 9px rgba(0, 0, 0, 0.16));
+    width: min(232px, 92%);
+    filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.14));
 }
 
 .cover-surface {
@@ -1168,7 +1168,7 @@ body.library-page a {
 
     .cover-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.64rem;
+        gap: 0.22rem;
     }
 
     .library-detail {
@@ -1207,7 +1207,7 @@ body.library-page a {
 
     .cover-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0.56rem;
+        gap: 0.2rem;
     }
 
     .library-detail {
@@ -1218,11 +1218,11 @@ body.library-page a {
 @media screen and (max-width: 620px) {
     .cover-grid {
         grid-template-columns: 1fr;
-        gap: 0.54rem;
+        gap: 0.18rem;
     }
 
     .cover-item {
-        min-height: 302px;
-        padding: 0.8rem 0.68rem;
+        min-height: 292px;
+        padding: 0.54rem 0.46rem;
     }
 }
