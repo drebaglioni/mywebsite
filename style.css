@@ -877,15 +877,14 @@ body.library-page a {
         color-mix(in oklab, var(--topic-accent, #1f2bff) 29%, #ffffff 71%) 0%,
         color-mix(in oklab, var(--topic-accent, #1f2bff) 14%, #ecebe3 86%) 100%
     );
-    border: 1px solid color-mix(in oklab, var(--topic-accent, #1f2bff) 44%, #ffffff 56%);
+    border: none;
     border-radius: 0;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.44);
-    transition: transform var(--dur-fast) cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: none;
+    transition: none;
 }
 
 .cover-item:hover,
-.cover-item.selected {
-    transform: translateY(-4px) scale(1.01);
+.cover-item:focus-within {
     z-index: 10;
 }
 
@@ -905,6 +904,14 @@ body.library-page a {
 .cover-card {
     width: min(232px, 92%);
     filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.14));
+    transition: transform var(--dur-fast) cubic-bezier(0.16, 1, 0.3, 1), filter var(--dur-fast) ease;
+}
+
+.cover-item:hover .cover-card,
+.cover-item:focus-visible .cover-card,
+.cover-item:focus-within .cover-card {
+    transform: translateY(-4px) scale(1.01);
+    filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.18));
 }
 
 .cover-surface {
@@ -913,7 +920,7 @@ body.library-page a {
     width: 100%;
     aspect-ratio: 2 / 3;
     border-radius: 0;
-    border: 1px solid rgba(21, 21, 21, 0.16);
+    border: none;
     background: #efeee8;
     overflow: hidden;
 }
@@ -1087,13 +1094,15 @@ body.library-page a {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .cover-item {
+    .cover-card {
         transition: none;
     }
 
-    .cover-item:hover,
-    .cover-item.selected {
+    .cover-item:hover .cover-card,
+    .cover-item:focus-visible .cover-card,
+    .cover-item:focus-within .cover-card {
         transform: none;
+        filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.14));
     }
 }
 
