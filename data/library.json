@@ -43,7 +43,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": "rec by david"
+    "notes": "rec by david",
+    "isbn": "9780804846394"
   },
   {
     "id": "never-split-the-difference-2016",
@@ -524,7 +525,8 @@
     "finished": "2021-04-03",
     "rating": null,
     "url": null,
-    "notes": "Read to better understand Cathy's work!"
+    "notes": "Read to better understand Cathy's work!",
+    "isbn": "9780199662661"
   },
   {
     "id": "city-planning-a-very-short-introduction-2021",
