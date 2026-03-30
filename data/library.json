@@ -2,7 +2,7 @@
   {
     "id": "da-vinci-2017",
     "title": "Da Vinci",
-    "author": null,
+    "author": "Walter Isaacson",
     "format": "book",
     "subjects": [
       "biography",
@@ -38,7 +38,7 @@
   {
     "id": "korea-the-impossible-country-2012",
     "title": "Korea the Impossible Country",
-    "author": null,
+    "author": "Daniel Tudor",
     "format": "book",
     "subjects": [
       "korea"
@@ -56,7 +56,7 @@
   {
     "id": "never-split-the-difference-2016",
     "title": "Never Split the Difference",
-    "author": null,
+    "author": "Chris Voss, Tahl Raz",
     "format": "book",
     "subjects": [
       "business",
@@ -111,7 +111,7 @@
   {
     "id": "the-body-a-guide-by-inhabitants-2019",
     "title": "The Body: A Guide by Inhabitants",
-    "author": null,
+    "author": "Bill Bryson",
     "format": "book",
     "subjects": [
       "health"
@@ -129,7 +129,7 @@
   {
     "id": "war-and-peace-1869",
     "title": "War and Peace",
-    "author": null,
+    "author": "Leo Tolstoy",
     "format": "book",
     "subjects": [
       "fiction"
@@ -165,7 +165,7 @@
   {
     "id": "broken-earth-series-the-obelisk-gate-2016",
     "title": "Broken Earth Series: The Obelisk Gate",
-    "author": null,
+    "author": "N. K. Jemisin",
     "format": "book",
     "subjects": [
       "sci-fi"
@@ -296,7 +296,7 @@
   {
     "id": "the-shadow-of-the-wind-2001",
     "title": "The Shadow of the Wind",
-    "author": null,
+    "author": "Carlos Ruiz Zaf\u00f3n",
     "format": "book",
     "subjects": [
       "fantasy",
@@ -503,7 +503,7 @@
   {
     "id": "circe-2022",
     "title": "Circe",
-    "author": null,
+    "author": "Madeline Miller",
     "format": "book",
     "subjects": [
       "fiction",
@@ -540,7 +540,7 @@
   {
     "id": "stormlight-chronicles-rhythm-of-war-2021",
     "title": "Stormlight Chronicles: Rhythm of War",
-    "author": null,
+    "author": "Brandon Sanderson",
     "format": "book",
     "subjects": [
       "fiction"
@@ -558,7 +558,7 @@
   {
     "id": "broken-earth-series-the-stone-sky-2021",
     "title": "Broken Earth Series: The Stone Sky",
-    "author": null,
+    "author": "N. K. Jemisin",
     "format": "book",
     "subjects": [
       "sci-fi"
@@ -594,7 +594,7 @@
   {
     "id": "globalization-a-very-short-introduction-2021",
     "title": "Globalization \\| A Very Short Introduction",
-    "author": null,
+    "author": "Manfred B. Steger",
     "format": "book",
     "subjects": [
       "globalization"
@@ -629,7 +629,7 @@
   {
     "id": "hamnet-2021",
     "title": "Hamnet",
-    "author": null,
+    "author": "Maggie O'Farrell",
     "format": "book",
     "subjects": [
       "historical-fiction"
@@ -647,7 +647,7 @@
   {
     "id": "broken-earth-series-the-fifth-season-2020",
     "title": "Broken Earth Series: The Fifth Season",
-    "author": null,
+    "author": "N. K. Jemisin",
     "format": "book",
     "subjects": [
       "sci-fi"
@@ -665,7 +665,7 @@
   {
     "id": "stormlight-chronicles-oathbringer-2020",
     "title": "Stormlight Chronicles: Oathbringer",
-    "author": null,
+    "author": "Brandon Sanderson",
     "format": "book",
     "subjects": [
       "fiction"
@@ -683,7 +683,7 @@
   {
     "id": "cloud-atlas-2020",
     "title": "Cloud Atlas",
-    "author": null,
+    "author": "David Mitchell",
     "format": "book",
     "subjects": [
       "fiction"
@@ -719,7 +719,7 @@
   {
     "id": "stormlight-chronicles-words-of-radiance-2020",
     "title": "Stormlight chronicles: Words of Radiance",
-    "author": null,
+    "author": "Brandon Sanderson",
     "format": "book",
     "subjects": [
       "fiction"
@@ -737,7 +737,7 @@
   {
     "id": "washington-black-2020",
     "title": "Washington Black",
-    "author": null,
+    "author": "Esi Edugyan",
     "format": "book",
     "subjects": [
       "fiction"
@@ -755,7 +755,7 @@
   {
     "id": "la-vita-nostra-2020",
     "title": "La Vita Nostra",
-    "author": null,
+    "author": "Marina Dyachenko, Sergey Dyachenko",
     "format": "book",
     "subjects": [
       "fiction"
@@ -772,7 +772,7 @@
   {
     "id": "why-we-sleep-2020",
     "title": "Why We Sleep",
-    "author": null,
+    "author": "Matthew Walker",
     "format": "book",
     "subjects": [
       "health"
@@ -790,7 +790,7 @@
   {
     "id": "the-name-of-the-rose-2020",
     "title": "The Name of the Rose",
-    "author": null,
+    "author": "Umberto Eco",
     "format": "book",
     "subjects": [
       "fiction"
@@ -844,7 +844,7 @@
   {
     "id": "a-gentleman-in-moscow-2019",
     "title": "A Gentleman in Moscow",
-    "author": null,
+    "author": "Amor Towles",
     "format": "book",
     "subjects": [
       "fiction"
@@ -862,7 +862,7 @@
   {
     "id": "the-elegance-of-the-hedgehog-2019",
     "title": "The Elegance of the Hedgehog",
-    "author": null,
+    "author": "Muriel Barbery",
     "format": "book",
     "subjects": [
       "fiction"
@@ -898,7 +898,7 @@
   {
     "id": "station-eleven-2019",
     "title": "Station Eleven",
-    "author": null,
+    "author": "Emily St. John Mandel",
     "format": "book",
     "subjects": [
       "fiction"
@@ -916,7 +916,7 @@
   {
     "id": "stormlight-chronicles-the-way-of-kings-2018",
     "title": "Stormlight Chronicles: The Way of Kings",
-    "author": null,
+    "author": "Brandon Sanderson",
     "format": "book",
     "subjects": [
       "fiction"
@@ -934,7 +934,7 @@
   {
     "id": "shantaram-2016",
     "title": "Shantaram",
-    "author": null,
+    "author": "Gregory David Roberts",
     "format": "book",
     "subjects": [
       "fiction"
@@ -952,7 +952,7 @@
   {
     "id": "beloved-1987",
     "title": "Beloved",
-    "author": null,
+    "author": "Toni Morrison",
     "format": "book",
     "subjects": [],
     "year": 1987,
@@ -968,7 +968,7 @@
   {
     "id": "cartoon-history-of-the-universe-1978",
     "title": "Cartoon History of the Universe",
-    "author": null,
+    "author": "Larry Gonick",
     "format": "book",
     "subjects": [
       "history"
@@ -986,7 +986,7 @@
   {
     "id": "colorless-tsukuru-tazaki-2013",
     "title": "Colorless Tsukuru Tazaki",
-    "author": null,
+    "author": "Haruki Murakami",
     "format": "book",
     "subjects": [],
     "year": 2013,
@@ -1002,7 +1002,7 @@
   {
     "id": "emissary-2018",
     "title": "Emissary",
-    "author": null,
+    "author": "Y\u014dko Tawada",
     "format": "book",
     "subjects": [],
     "year": 2018,
@@ -1018,7 +1018,7 @@
   {
     "id": "exit-west-2017",
     "title": "Exit West",
-    "author": null,
+    "author": "Mohsin Hamid",
     "format": "book",
     "subjects": [],
     "year": 2017,
@@ -1034,7 +1034,7 @@
   {
     "id": "fates-and-furies-2015",
     "title": "Fates and Furies",
-    "author": null,
+    "author": "Lauren Groff",
     "format": "book",
     "subjects": [],
     "year": 2015,
@@ -1050,7 +1050,7 @@
   {
     "id": "grid-systems-in-graphic-design-a-visual-communication-manual-for-graphic-designers-typographers-and-three-dimensional-designers-josef-m-ller-brockmann-1981",
     "title": "Grid Systems in Graphic Design: A Visual Communication Manual for Graphic Designers, Typographers and Three Dimensional Designers Josef M\u00fcller-Brockmann",
-    "author": null,
+    "author": "Josef M\u00fcller-Brockmann",
     "format": "book",
     "subjects": [
       "design"
@@ -1067,7 +1067,7 @@
   {
     "id": "into-thin-air-a-personal-account-of-the-mt-everest-disaster-1997",
     "title": "Into Thin Air: A Personal Account of the Mt. Everest Disaster",
-    "author": null,
+    "author": "Jon Krakauer",
     "format": "book",
     "subjects": [
       "non-fiction"
@@ -1104,7 +1104,7 @@
   {
     "id": "jonathan-ledgard-believes-imagination-could-save-the-world-the-new-yorker-2015",
     "title": "Jonathan Ledgard Believes Imagination Could Save the World \\| The New Yorker",
-    "author": null,
+    "author": "Joshua Yaffa",
     "format": "book",
     "subjects": [],
     "year": 2015,
@@ -1119,7 +1119,7 @@
   {
     "id": "kafka-on-the-shore-2002",
     "title": "Kafka on the Shore",
-    "author": null,
+    "author": "Haruki Murakami",
     "format": "book",
     "subjects": [
       "fiction"
@@ -1137,7 +1137,7 @@
   {
     "id": "less-winner-of-the-pulitzer-prize-a-novel-2017",
     "title": "Less (Winner of the Pulitzer Prize): A Novel",
-    "author": null,
+    "author": "Andrew Sean Greer",
     "format": "book",
     "subjects": [],
     "year": 2017,
@@ -1153,7 +1153,7 @@
   {
     "id": "lonesome-dove-1985",
     "title": "Lonesome Dove",
-    "author": null,
+    "author": "Larry McMurtry",
     "format": "book",
     "subjects": [],
     "year": 1985,
@@ -1169,7 +1169,7 @@
   {
     "id": "loonshots-2019",
     "title": "Loonshots",
-    "author": null,
+    "author": "Safi Bahcall",
     "format": "book",
     "subjects": [],
     "year": 2019,
@@ -1185,7 +1185,7 @@
   {
     "id": "luka-and-the-fire-of-life-2010",
     "title": "Luka and the Fire of Life",
-    "author": null,
+    "author": "Salman Rushdie",
     "format": "book",
     "subjects": [],
     "year": 2010,
@@ -1221,7 +1221,7 @@
   {
     "id": "making-and-breaking-the-grid-2002",
     "title": "Making and Breaking the Grid",
-    "author": null,
+    "author": "Timothy Samara",
     "format": "book",
     "subjects": [],
     "year": 2002,
@@ -1237,7 +1237,7 @@
   {
     "id": "making-of-a-manager-fb-2019",
     "title": "Making of a Manager (fb)",
-    "author": null,
+    "author": "Julie Zhuo",
     "format": "book",
     "subjects": [],
     "year": 2019,
@@ -1289,7 +1289,7 @@
   {
     "id": "shadow-of-the-wind-2001",
     "title": "Shadow of the wind",
-    "author": null,
+    "author": "Carlos Ruiz Zaf\u00f3n",
     "format": "book",
     "subjects": [
       "fiction"
@@ -1307,7 +1307,7 @@
   {
     "id": "sula-1973",
     "title": "Sula",
-    "author": null,
+    "author": "Toni Morrison",
     "format": "book",
     "subjects": [],
     "year": 1973,
@@ -1323,7 +1323,7 @@
   {
     "id": "tech-revolutions-and-financial-capital-2002",
     "title": "Tech Revolutions and Financial Capital",
-    "author": null,
+    "author": "Carlota Perez",
     "format": "book",
     "subjects": [
       "finance",
@@ -1396,7 +1396,7 @@
   {
     "id": "the-overstory-a-novel-2018",
     "title": "The Overstory: A Novel",
-    "author": null,
+    "author": "Richard Powers",
     "format": "book",
     "subjects": [],
     "year": 2018,
@@ -1412,7 +1412,7 @@
   {
     "id": "the-return-2016",
     "title": "The Return",
-    "author": null,
+    "author": "Hisham Matar",
     "format": "book",
     "subjects": [],
     "year": 2016,
@@ -1443,7 +1443,7 @@
   {
     "id": "type-matters-2012",
     "title": "Type Matters",
-    "author": null,
+    "author": "Jim Williams",
     "format": "book",
     "subjects": [],
     "year": 2012,
@@ -1477,7 +1477,7 @@
   {
     "id": "why-we-age-and-why-we-don-t-have-to-2019",
     "title": "Why We Age and Why We Don\u2019t Have To",
-    "author": null,
+    "author": "David Sinclair, Matthew D. LaPlante",
     "format": "book",
     "subjects": [],
     "year": 2019,
