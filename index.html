@@ -61,6 +61,7 @@
             initialized: false,
             active: false,
             rafId: null,
+            introStartTs: null,
             scene: null,
             camera: null,
             renderer: null,
@@ -115,7 +116,7 @@
             let pointIndex = 0;
 
             function assignParticle(i, x, y, z) {
-                const spread = 8.6;
+                const spread = 9.3;
                 positions[i * 3] = x * spread;
                 positions[i * 3 + 1] = y * spread;
                 positions[i * 3 + 2] = z * spread;
@@ -137,11 +138,12 @@
                     }
 
                     const radius = Math.sqrt(radiusSq);
-                    const axisProjection = x / radius;
+                    const axisProjectionX = x / radius;
+                    const axisProjectionY = y / radius;
                     const envelope = Math.exp(-2.8 * radius);
-                    const orbitalLobes = axisProjection * axisProjection;
+                    const orbitalLobes = axisProjectionX * axisProjectionX * 0.82 + axisProjectionY * axisProjectionY * 0.18;
                     const radialTerm = radius * radius;
-                    const probability = Math.min(1, envelope * orbitalLobes * radialTerm * 11.5);
+                    const probability = Math.min(1, envelope * orbitalLobes * radialTerm * 12.6);
 
                     if (Math.random() < probability) {
                         assignParticle(pointIndex, x, y, z);
@@ -178,7 +180,7 @@
             const THREE = window.THREE;
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(46, window.innerWidth / window.innerHeight, 0.1, 120);
-            camera.position.set(0, 0, 28);
+            camera.position.set(0.6, -0.1, 27);
 
             const renderer = new THREE.WebGLRenderer({
                 alpha: true,
@@ -194,12 +196,14 @@
             const material = new THREE.ShaderMaterial({
                 uniforms: {
                     uTime: { value: 0 },
+                    uIntro: { value: 0 },
                     uPointer: { value: new THREE.Vector2(0, 0) }
                 },
                 vertexShader: `
                     attribute float aPhase;
                     attribute float aEnergy;
                     uniform float uTime;
+                    uniform float uIntro;
                     uniform vec2 uPointer;
                     varying float vEnergy;
                     varying float vWave;
@@ -211,13 +215,14 @@
                         float pointerTwist = (uPointer.x * position.y - uPointer.y * position.x) * 0.05;
 
                         vec3 displaced = position;
-                        displaced += normalize(position) * (wave * (0.28 + aEnergy * 0.88));
-                        displaced.x += pointerTwist * (0.36 + aEnergy * 0.42);
-                        displaced.y += sin(uTime * 0.72 + position.z * 0.18 + aPhase) * 0.14 * aEnergy;
+                        displaced += normalize(position) * (wave * (0.22 + aEnergy * 0.92));
+                        displaced.x += pointerTwist * (0.26 + aEnergy * 0.38);
+                        displaced.y += sin(uTime * 0.72 + position.z * 0.18 + aPhase) * 0.12 * aEnergy;
+                        displaced *= (0.88 + uIntro * 0.12);
 
                         vec4 mvPosition = modelViewMatrix * vec4(displaced, 1.0);
-                        float size = (2.35 + aEnergy * 3.2 + pulse * 0.75) * (42.0 / -mvPosition.z);
-                        gl_PointSize = clamp(size, 1.1, 9.0);
+                        float size = (2.8 + aEnergy * 4.3 + pulse * 1.2) * (44.0 / -mvPosition.z);
+                        gl_PointSize = clamp(size, 1.5, 11.5);
                         gl_Position = projectionMatrix * mvPosition;
                         vEnergy = aEnergy;
                         vWave = wave;
@@ -226,6 +231,7 @@
                 fragmentShader: `
                     varying float vEnergy;
                     varying float vWave;
+                    uniform float uIntro;
 
                     void main() {
                         vec2 center = gl_PointCoord - vec2(0.5);
@@ -239,22 +245,24 @@
                         vec3 highlight = vec3(0.94, 0.97, 1.0);
                         float blend = clamp(0.34 + vEnergy * 0.55 + vWave * 0.25, 0.0, 1.0);
                         vec3 color = mix(deepBlue, highlight, blend);
-                        float alpha = falloff * (0.28 + vEnergy * 0.45);
+                        float alpha = falloff * (0.46 + vEnergy * 0.52) * uIntro;
                         gl_FragColor = vec4(color, alpha);
                     }
                 `,
                 transparent: true,
                 depthWrite: false,
-                blending: THREE.AdditiveBlending
+                depthTest: false,
+                blending: THREE.NormalBlending
             });
 
             const cloud = new THREE.Points(geometry, material);
-            cloud.position.set(2.8, 0.8, -1.0);
-            cloud.rotation.set(0.2, 0.36, -0.2);
+            cloud.position.set(4.6, 0.5, -1.0);
+            cloud.scale.set(1.08, 1.24, 0.92);
+            cloud.rotation.set(0.16, 0.34, -0.14);
             scene.add(cloud);
 
             const debrisGeometry = new THREE.BufferGeometry();
-            const debrisCount = 320;
+            const debrisCount = 180;
             const debrisPositions = new Float32Array(debrisCount * 3);
             for (let i = 0; i < debrisCount; i += 1) {
                 const j = i * 3;
@@ -268,8 +276,8 @@
                 debrisGeometry,
                 new THREE.PointsMaterial({
                     color: 0x0047ff,
-                    size: 0.06,
-                    opacity: 0.22,
+                    size: 0.085,
+                    opacity: 0.16,
                     transparent: true,
                     depthWrite: false
                 })
@@ -313,16 +321,23 @@
             }
 
             const elapsed = timestamp * 0.001;
-            quantumState.currentX += (quantumState.targetX - quantumState.currentX) * 0.06;
-            quantumState.currentY += (quantumState.targetY - quantumState.currentY) * 0.06;
+            if (quantumState.introStartTs === null) {
+                quantumState.introStartTs = timestamp;
+            }
+
+            const introElapsed = (timestamp - quantumState.introStartTs) / 1000;
+            const introProgress = Math.min(1, introElapsed / 1.2);
+            quantumState.currentX += (quantumState.targetX - quantumState.currentX) * 0.045;
+            quantumState.currentY += (quantumState.targetY - quantumState.currentY) * 0.045;
 
             if (quantumState.cloud && quantumState.cloudMaterial) {
-                quantumState.cloud.rotation.y += (quantumState.currentX * 0.46 - quantumState.cloud.rotation.y) * 0.03;
-                quantumState.cloud.rotation.x += (quantumState.currentY * 0.33 - quantumState.cloud.rotation.x) * 0.03;
-                quantumState.cloud.rotation.z += 0.00085;
-                quantumState.cloud.position.x = 2.8 + quantumState.currentX * 1.1;
-                quantumState.cloud.position.y = 0.8 + quantumState.currentY * 0.8;
+                quantumState.cloud.rotation.y += (0.22 + quantumState.currentX * 0.34 - quantumState.cloud.rotation.y) * 0.022;
+                quantumState.cloud.rotation.x += (-0.05 + quantumState.currentY * 0.26 - quantumState.cloud.rotation.x) * 0.022;
+                quantumState.cloud.rotation.z += 0.0005;
+                quantumState.cloud.position.x = 4.7 + quantumState.currentX * 0.72;
+                quantumState.cloud.position.y = 0.5 + quantumState.currentY * 0.54;
                 quantumState.cloudMaterial.uniforms.uTime.value = elapsed;
+                quantumState.cloudMaterial.uniforms.uIntro.value = introProgress;
                 quantumState.cloudMaterial.uniforms.uPointer.value.set(quantumState.currentX, quantumState.currentY);
             }
 
@@ -332,10 +347,10 @@
             }
 
             if (typeAnchor) {
-                const targetParallaxX = -quantumState.currentX * 8;
-                const targetParallaxY = -quantumState.currentY * 8;
-                quantumState.parallaxX += (targetParallaxX - quantumState.parallaxX) * 0.09;
-                quantumState.parallaxY += (targetParallaxY - quantumState.parallaxY) * 0.09;
+                const targetParallaxX = -quantumState.currentX * 6;
+                const targetParallaxY = -quantumState.currentY * 6;
+                quantumState.parallaxX += (targetParallaxX - quantumState.parallaxX) * 0.07;
+                quantumState.parallaxY += (targetParallaxY - quantumState.parallaxY) * 0.07;
                 typeAnchor.style.transform = `translate3d(${quantumState.parallaxX.toFixed(2)}px, ${quantumState.parallaxY.toFixed(2)}px, 0)`;
             }
 
@@ -362,6 +377,7 @@
                     cancelAnimationFrame(quantumState.rafId);
                     quantumState.rafId = null;
                 }
+                quantumState.introStartTs = null;
                 quantumState.targetX = 0;
                 quantumState.targetY = 0;
                 quantumState.currentX = 0;
