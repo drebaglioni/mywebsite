@@ -365,67 +365,59 @@ body.homepage .hero-canvas {
     overflow: hidden;
 }
 
-body.homepage .geo-layer {
+body.homepage .hero-canvas::before {
+    content: "";
+    position: absolute;
+    width: 52vw;
+    height: 52vw;
+    max-width: 720px;
+    max-height: 720px;
+    right: 17vw;
+    top: 8vh;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 71, 255, 0.19) 0%, rgba(0, 71, 255, 0) 72%);
+    pointer-events: none;
+    z-index: 3;
+}
+
+body.homepage .quantum-layer {
     position: absolute;
     inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 5;
+    isolation: isolate;
+}
+
+body.homepage .quantum-backplane {
+    position: absolute;
+    top: 13vh;
+    left: 38vw;
+    width: min(34vw, 560px);
+    height: min(64vh, 760px);
+    border-radius: 42vw;
+    background: linear-gradient(164deg, rgba(0, 51, 204, 0.92), rgba(0, 71, 255, 0.8));
+    opacity: 0.34;
+    transform: rotate(-16deg);
     mix-blend-mode: multiply;
 }
 
-body.homepage .shape {
+body.homepage #quantumCanvasContainer {
     position: absolute;
-    will-change: transform;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 360ms ease;
+    mix-blend-mode: screen;
 }
 
-body.homepage .shape-circle {
-    border-radius: 50%;
+body.homepage.is-quantum-active #quantumCanvasContainer {
+    opacity: 1;
 }
 
-body.homepage .s1 {
-    width: 68vw;
-    height: 68vw;
-    background-color: var(--home-orange);
-    top: -21vw;
-    right: -9vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-body.homepage .s1::after {
-    content: "";
-    width: 15%;
-    height: 15%;
-    background: var(--home-bg);
-    border-radius: 50%;
-}
-
-body.homepage .s2 {
-    width: 29vw;
-    height: 86vh;
-    background-color: var(--home-blue);
-    border-radius: 40vw;
-    top: 8vh;
-    left: 31vw;
-    transform: rotate(-24deg);
-}
-
-body.homepage .s3 {
-    width: 50vw;
-    height: 50vw;
-    background-color: var(--home-orange);
-    bottom: -16vw;
-    left: -6vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-body.homepage .s3::after {
-    content: "";
-    width: 10%;
-    height: 10%;
-    background: var(--home-bg);
-    border-radius: 50%;
+body.homepage #quantumCanvasContainer canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 body.homepage .info-tab {
@@ -477,6 +469,14 @@ body.homepage .quote-shout {
     body.homepage .projects-gate-toast {
         transition: opacity 120ms linear;
         transform: none;
+    }
+
+    body.homepage #quantumCanvasContainer {
+        display: none;
+    }
+
+    body.homepage .type-anchor {
+        transform: none !important;
     }
 }
 
@@ -622,24 +622,25 @@ body.homepage .system-specs {
         font-size: 9px;
     }
 
-    body.homepage .s1 {
-        width: 94vw;
-        height: 94vw;
-        right: -32vw;
-        top: -31vw;
+    body.homepage .hero-canvas::before {
+        width: 88vw;
+        height: 88vw;
+        right: -16vw;
+        top: 20vh;
+        opacity: 0.7;
     }
 
-    body.homepage .s2 {
-        width: 38vw;
-        left: 46vw;
-        height: 62vh;
+    body.homepage .quantum-backplane {
+        width: 58vw;
+        height: 50vh;
+        top: 22vh;
+        left: 44vw;
+        border-radius: 50vw;
+        opacity: 0.32;
     }
 
-    body.homepage .s3 {
-        width: 74vw;
-        height: 74vw;
-        bottom: -30vw;
-        left: -24vw;
+    body.homepage #quantumCanvasContainer {
+        display: none;
     }
 }
 
