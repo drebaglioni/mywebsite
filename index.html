@@ -241,7 +241,7 @@
             const geometry = new THREE.BufferGeometry();
             geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positionsList), 3));
             geometry.setAttribute('normal', new THREE.BufferAttribute(new Float32Array(normalsList), 3));
-            geometry.scale(1.52, 1.62, 1.08);
+            geometry.scale(1.74, 1.9, 1.24);
             return geometry;
         }
 
@@ -380,7 +380,7 @@
             const shapeDefinitions = {
                 '6': {
                     buildGeometry: () => buildShape6GyroidFragment(THREE),
-                    position: new THREE.Vector3(2.25, 0.03, -0.78),
+                    position: new THREE.Vector3(2.48, 0.01, -0.62),
                     rotation: new THREE.Euler(0.10, 0.33, -0.08)
                 },
                 '4': {
@@ -462,7 +462,7 @@
                 quantumState.pointCloud.rotation.y += (rotYTarget - quantumState.pointCloud.rotation.y) * 0.048;
                 quantumState.pointCloud.rotation.x += (rotXTarget - quantumState.pointCloud.rotation.x) * 0.048;
                 quantumState.pointCloud.rotation.z += 0.0009;
-                quantumState.pointCloud.position.x = quantumState.baseCloudX + quantumState.currentX * 0.40;
+                quantumState.pointCloud.position.x = quantumState.baseCloudX + quantumState.currentX * 0.46;
                 quantumState.pointCloud.position.y = quantumState.baseCloudY + quantumState.currentY * 0.24;
                 quantumState.pointCloud.position.z = quantumState.baseCloudZ;
                 quantumState.cloudMaterial.uniforms.uTime.value = timestamp * 0.001;
