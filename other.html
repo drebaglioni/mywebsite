@@ -96,12 +96,6 @@
         };
         const BALANCED_HUE_WHEEL = [12, 38, 68, 96, 128, 166, 196, 222, 252, 286, 318, 346];
         const OPEN_LIBRARY_CACHE = new Map();
-        const CARD_TONE_CACHE = new Map();
-        const CARD_TONE_PENDING = new Map();
-        const DEFAULT_CARD_TONE = {
-            top: '#e9dfcf',
-            bottom: '#d7cab5'
-        };
 
         const state = {
             items: [],
@@ -246,156 +240,6 @@
             return '#' + toHex(rPrime) + toHex(gPrime) + toHex(bPrime);
         }
 
-        function rgbToHex(r, g, b) {
-            const toHex = (value) => clamp(0, Math.round(value), 255).toString(16).padStart(2, '0');
-            return '#' + toHex(r) + toHex(g) + toHex(b);
-        }
-
-        function rgbToHsl(r, g, b) {
-            const red = clamp(0, r, 255) / 255;
-            const green = clamp(0, g, 255) / 255;
-            const blue = clamp(0, b, 255) / 255;
-
-            const max = Math.max(red, green, blue);
-            const min = Math.min(red, green, blue);
-            const delta = max - min;
-
-            let hue = 0;
-            if (delta !== 0) {
-                if (max === red) {
-                    hue = ((green - blue) / delta) % 6;
-                } else if (max === green) {
-                    hue = ((blue - red) / delta) + 2;
-                } else {
-                    hue = ((red - green) / delta) + 4;
-                }
-            }
-            hue = Math.round((hue * 60 + 360) % 360);
-
-            const lightness = (max + min) / 2;
-            const saturation = delta === 0 ? 0 : delta / (1 - Math.abs(2 * lightness - 1));
-
-            return {
-                h: hue,
-                s: saturation * 100,
-                l: lightness * 100
-            };
-        }
-
-        function buildCardToneFromHex(hexColor) {
-            const rgb = hexToRgb(hexColor);
-            if (!rgb) {
-                return {
-                    top: DEFAULT_CARD_TONE.top,
-                    bottom: DEFAULT_CARD_TONE.bottom
-                };
-            }
-
-            const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
-            const softenedSaturation = clamp(6, hsl.s * 0.36, 24);
-            const topLightness = clamp(82, 72 + hsl.l * 0.2, 92);
-            const bottomLightness = clamp(74, topLightness - 8, 86);
-
-            return {
-                top: hslToHex(hsl.h, softenedSaturation, topLightness),
-                bottom: hslToHex(hsl.h, Math.min(30, softenedSaturation + 2), bottomLightness)
-            };
-        }
-
-        function extractDominantColorFromImage(urlValue) {
-            const url = normalizeText(urlValue);
-            if (!url) {
-                return Promise.resolve('');
-            }
-
-            return new Promise((resolve) => {
-                const image = new Image();
-                let settled = false;
-
-                const finish = (value) => {
-                    if (settled) {
-                        return;
-                    }
-                    settled = true;
-                    resolve(value || '');
-                };
-
-                const timeoutId = setTimeout(() => finish(''), 4500);
-
-                image.crossOrigin = 'anonymous';
-                image.referrerPolicy = 'no-referrer';
-                image.decoding = 'async';
-
-                image.onerror = () => {
-                    clearTimeout(timeoutId);
-                    finish('');
-                };
-
-                image.onload = () => {
-                    clearTimeout(timeoutId);
-                    try {
-                        const sampleSize = 24;
-                        const canvas = document.createElement('canvas');
-                        canvas.width = sampleSize;
-                        canvas.height = sampleSize;
-                        const context = canvas.getContext('2d', { willReadFrequently: true });
-                        if (!context) {
-                            finish('');
-                            return;
-                        }
-
-                        context.drawImage(image, 0, 0, sampleSize, sampleSize);
-                        const imageData = context.getImageData(0, 0, sampleSize, sampleSize).data;
-
-                        function aggregate(allowExtremes) {
-                            let sumR = 0;
-                            let sumG = 0;
-                            let sumB = 0;
-                            let sumWeight = 0;
-
-                            for (let i = 0; i < imageData.length; i += 4) {
-                                const alpha = imageData[i + 3] / 255;
-                                if (alpha < 0.45) {
-                                    continue;
-                                }
-
-                                const red = imageData[i];
-                                const green = imageData[i + 1];
-                                const blue = imageData[i + 2];
-                                const max = Math.max(red, green, blue);
-                                const min = Math.min(red, green, blue);
-                                const saturation = max === 0 ? 0 : (max - min) / max;
-                                const luminance = (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255;
-
-                                if (!allowExtremes && (luminance < 0.05 || luminance > 0.95)) {
-                                    continue;
-                                }
-
-                                const weight = alpha * (0.5 + saturation * 1.4);
-                                sumR += red * weight;
-                                sumG += green * weight;
-                                sumB += blue * weight;
-                                sumWeight += weight;
-                            }
-
-                            if (sumWeight < 1) {
-                                return '';
-                            }
-
-                            return rgbToHex(sumR / sumWeight, sumG / sumWeight, sumB / sumWeight);
-                        }
-
-                        const dominantColor = aggregate(false) || aggregate(true);
-                        finish(dominantColor);
-                    } catch (error) {
-                        finish('');
-                    }
-                };
-
-                image.src = url;
-            });
-        }
-
         function getSubjectHue(subjectKey) {
             const normalizedKey = normalizedSubject(subjectKey);
             if (Object.prototype.hasOwnProperty.call(KNOWN_SUBJECT_HUES, normalizedKey)) {
@@ -411,59 +255,6 @@
         function resolveTopicBaseColor(item) {
             const hue = getSubjectHue(getTopicKey(item));
             return hslToHex(hue, 18, 38);
-        }
-
-        function requestCardToneForItem(item) {
-            const coverUrl = normalizeText(item._ui.coverUrl);
-            if (!coverUrl) {
-                return;
-            }
-
-            if (CARD_TONE_CACHE.has(coverUrl)) {
-                const cached = CARD_TONE_CACHE.get(coverUrl);
-                let changed = false;
-                if (item._ui.cardToneTop !== cached.top || item._ui.cardToneBottom !== cached.bottom) {
-                    item._ui.cardToneTop = cached.top;
-                    item._ui.cardToneBottom = cached.bottom;
-                    changed = true;
-                }
-                if (changed) {
-                    scheduleRender();
-                }
-                return;
-            }
-
-            if (CARD_TONE_PENDING.has(coverUrl)) {
-                return;
-            }
-
-            const samplingPromise = extractDominantColorFromImage(coverUrl)
-                .then((dominantColor) => {
-                    const tone = buildCardToneFromHex(dominantColor || item._ui.topicColor);
-                    CARD_TONE_CACHE.set(coverUrl, tone);
-
-                    let changed = false;
-                    state.items.forEach((entry) => {
-                        if (normalizeText(entry._ui.coverUrl) !== coverUrl) {
-                            return;
-                        }
-                        if (entry._ui.cardToneTop !== tone.top || entry._ui.cardToneBottom !== tone.bottom) {
-                            entry._ui.cardToneTop = tone.top;
-                            entry._ui.cardToneBottom = tone.bottom;
-                            changed = true;
-                        }
-                    });
-
-                    if (changed) {
-                        scheduleRender();
-                    }
-                })
-                .catch(() => {})
-                .finally(() => {
-                    CARD_TONE_PENDING.delete(coverUrl);
-                });
-
-            CARD_TONE_PENDING.set(coverUrl, samplingPromise);
         }
 
         function buildFallbackCoverTitle(title) {
@@ -619,7 +410,6 @@
             const subjects = Array.isArray(rawItem.subjects) ? rawItem.subjects : [];
             const primarySubject = subjects.length > 0 ? subjects[0] : rawItem.format;
             const topicColor = resolveTopicBaseColor({ subjects, format: rawItem.format });
-            const cardTone = buildCardToneFromHex(topicColor);
 
             return {
                 ...rawItem,
@@ -635,9 +425,7 @@
                     posterTitle: buildPosterTitle(rawItem.title),
                     domainLabel: getSourceDomain(rawItem.url),
                     subjectDisplay: normalizeText(primarySubject).replace(/-/g, ' ').toUpperCase(),
-                    topicColor,
-                    cardToneTop: cardTone.top,
-                    cardToneBottom: cardTone.bottom
+                    topicColor
                 }
             };
         }
@@ -750,8 +538,6 @@
                 button.title = item.title;
                 button.setAttribute('aria-label', item.title);
                 button.style.setProperty('--topic-accent', item._ui.topicColor);
-                button.style.setProperty('--card-tint-a', item._ui.cardToneTop);
-                button.style.setProperty('--card-tint-b', item._ui.cardToneBottom);
 
                 if (state.selectedId === item.id) {
                     button.classList.add('selected');
@@ -792,7 +578,6 @@
                         '</span>'
                     ].join('');
                 } else if (hasCover) {
-                    requestCardToneForItem(item);
                     surfaceContent = '<img class="cover-image" src="' + escapeAttr(coverUrl) + '" alt="Cover for ' + escapeAttr(item.title) + '" loading="' + loadingStrategy + '" fetchpriority="' + fetchPriority + '" decoding="async" data-fallback-title="' + fallbackTitleAttr + '" data-fallback-author="' + fallbackAuthorAttr + '" data-fallback-subject="' + fallbackSubjectAttr + '">';
                 } else {
                     surfaceContent = [

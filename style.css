@@ -656,8 +656,10 @@ body.library-page {
     --text-muted: #b7aea1;
     --accent-orange: #ff4f00;
     --accent-orange-deep: #a23812;
-    --card-ink: color-mix(in oklab, var(--bg-00) 90%, var(--accent-orange-deep) 10%);
-    --card-ink-muted: color-mix(in oklab, var(--bg-00) 60%, var(--text-muted) 40%);
+    --card-base: #f0f0f0;
+    --card-base-deep: color-mix(in oklab, var(--card-base) 86%, #c7b9a2 14%);
+    --card-ink: #1a1713;
+    --card-ink-muted: #5f5448;
     --lift-y: -4px;
     --dur-fast: 160ms;
     background:
@@ -921,21 +923,17 @@ body.library-page a {
     justify-content: center;
     min-height: 306px;
     padding: 0.6rem 0.56rem;
-    background: linear-gradient(
-        152deg,
-        var(--card-tint-a, color-mix(in oklab, var(--text-strong) 90%, var(--accent-orange-deep) 10%)) 0%,
-        var(--card-tint-b, color-mix(in oklab, var(--text-strong) 72%, var(--accent-orange-deep) 28%)) 100%
-    );
+    background: var(--card-base);
     border: none;
     border-radius: 0;
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--rule) 58%, var(--card-tint-b, var(--surface-10)) 42%);
-    transition: box-shadow var(--dur-fast) ease;
+    box-shadow: none;
+    transition: background var(--dur-fast) ease;
 }
 
 .cover-item:hover,
 .cover-item:focus-within {
     z-index: 10;
-    box-shadow: inset 0 0 0 2px var(--accent-orange-deep);
+    background: var(--accent-orange);
 }
 
 .cover-card {
@@ -952,7 +950,7 @@ body.library-page a {
 }
 
 .cover-item.selected {
-    box-shadow: inset 0 0 0 2px var(--accent-orange);
+    background: var(--accent-orange);
 }
 
 .cover-item.selected .cover-card {
@@ -967,7 +965,7 @@ body.library-page a {
     aspect-ratio: 2 / 3;
     border-radius: 0;
     border: none;
-    background: var(--card-tint-b, color-mix(in oklab, var(--text-strong) 72%, var(--accent-orange-deep) 28%));
+    background: var(--card-base);
     overflow: hidden;
 }
 
@@ -977,7 +975,7 @@ body.library-page a {
     object-fit: cover;
     object-position: center 42%;
     display: block;
-    background: var(--card-tint-b, color-mix(in oklab, var(--text-strong) 72%, var(--accent-orange-deep) 28%));
+    background: var(--card-base);
 }
 
 .cover-fallback {
@@ -988,11 +986,7 @@ body.library-page a {
     justify-content: flex-end;
     gap: 0.35rem;
     padding: 0.68rem 0.56rem;
-    background: linear-gradient(
-        160deg,
-        color-mix(in oklab, var(--card-tint-a, var(--text-strong)) 94%, var(--text-strong) 6%) 0%,
-        var(--card-tint-b, color-mix(in oklab, var(--text-strong) 72%, var(--accent-orange-deep) 28%)) 100%
-    );
+    background: linear-gradient(160deg, var(--card-base) 0%, var(--card-base-deep) 100%);
 }
 
 .cover-fallback::before {
@@ -1035,7 +1029,7 @@ body.library-page a {
     line-height: 1;
     padding: 0.16rem 0.24rem;
     border: 1px solid var(--rule);
-    background: color-mix(in oklab, var(--card-tint-a, var(--text-strong)) 78%, var(--text-strong) 22%);
+    background: color-mix(in oklab, var(--card-base) 82%, #d5c7b2 18%);
     color: var(--card-ink-muted);
 }
 
@@ -1046,34 +1040,30 @@ body.library-page a {
     grid-template-rows: auto 1fr auto auto auto;
     gap: 0.4rem;
     padding: 0.58rem 0.56rem 0.64rem;
-    background: linear-gradient(
-        144deg,
-        color-mix(in oklab, var(--card-tint-a, var(--text-strong)) 94%, var(--text-strong) 6%) 0%,
-        var(--card-tint-b, color-mix(in oklab, var(--text-strong) 72%, var(--accent-orange-deep) 28%)) 100%
-    );
+    background: linear-gradient(144deg, var(--card-base) 0%, var(--card-base-deep) 100%);
 }
 
 .article-poster.poster-v0 {
     background: linear-gradient(
         138deg,
-        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 7%, var(--card-tint-a, var(--text-strong)) 93%) 0%,
-        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 10%, var(--card-tint-b, var(--text-strong)) 90%) 100%
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 4%, var(--card-base) 96%) 0%,
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 6%, var(--card-base-deep) 94%) 100%
     );
 }
 
 .article-poster.poster-v1 {
     background: linear-gradient(
         162deg,
-        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 6%, var(--card-tint-a, var(--text-strong)) 94%) 0%,
-        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 9%, var(--card-tint-b, var(--text-strong)) 91%) 100%
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 5%, var(--card-base) 95%) 0%,
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 5%, var(--card-base-deep) 95%) 100%
     );
 }
 
 .article-poster.poster-v2 {
     background: linear-gradient(
         160deg,
-        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 5%, var(--card-tint-a, var(--text-strong)) 95%) 0%,
-        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 8%, var(--card-tint-b, var(--text-strong)) 92%) 100%
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 3%, var(--card-base) 97%) 0%,
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 6%, var(--card-base-deep) 94%) 100%
     );
 }
 
@@ -1106,7 +1096,7 @@ body.library-page a {
     line-height: 1;
     padding: 0.18rem 0.24rem;
     border: 1px solid var(--accent-orange-deep);
-    background: color-mix(in oklab, var(--card-tint-a, var(--text-strong)) 80%, var(--accent-orange-deep) 20%);
+    background: color-mix(in oklab, var(--card-base) 86%, #d5c7b2 14%);
     color: var(--accent-orange);
     font-weight: 700;
 }
@@ -1145,7 +1135,7 @@ body.library-page a {
     border-radius: 50%;
     right: -24px;
     top: -24px;
-    background: color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 34%, var(--card-tint-b, var(--text-strong)) 66%);
+    background: color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 30%, var(--card-base-deep) 70%);
     opacity: 0.56;
     pointer-events: none;
 }
@@ -1156,8 +1146,37 @@ body.library-page a {
 }
 
 .cover-item:focus-visible .cover-card {
-    outline: 2px solid var(--accent-orange);
+    outline: 2px solid var(--bg-00);
     outline-offset: 2px;
+}
+
+.cover-item:hover .cover-fallback,
+.cover-item:focus-within .cover-fallback,
+.cover-item.selected .cover-fallback,
+.cover-item:hover .article-poster,
+.cover-item:focus-within .article-poster,
+.cover-item.selected .article-poster,
+.cover-item:hover .cover-surface,
+.cover-item:focus-within .cover-surface,
+.cover-item.selected .cover-surface {
+    background: var(--accent-orange);
+}
+
+.cover-item:hover .cover-fallback::before,
+.cover-item:focus-within .cover-fallback::before,
+.cover-item.selected .cover-fallback::before,
+.cover-item:hover .poster-rule,
+.cover-item:focus-within .poster-rule,
+.cover-item.selected .poster-rule {
+    background: var(--card-ink);
+}
+
+.cover-item:hover .poster-chip,
+.cover-item:focus-within .poster-chip,
+.cover-item.selected .poster-chip {
+    border-color: var(--card-ink);
+    background: color-mix(in oklab, var(--card-base) 85%, #d8cbb7 15%);
+    color: var(--card-ink);
 }
 
 @media (prefers-reduced-motion: reduce) {
