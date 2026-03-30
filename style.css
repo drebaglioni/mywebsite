@@ -1255,9 +1255,13 @@ body.library-page a {
     border-left: 3px solid var(--rule);
     padding: 2.5rem 1.5rem;
     background: var(--bg-20);
-    overflow: visible;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     contain: none;
-    position: relative;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: 100vh;
     animation: library-panel-rise 620ms cubic-bezier(0.18, 0.88, 0.3, 1) both;
     animation-delay: 100ms;
 }
@@ -1361,6 +1365,11 @@ body.library-page a {
         border-left: none;
         border-top: 3px solid var(--rule);
         padding: 1.2rem 1.4rem;
+        position: relative;
+        top: auto;
+        max-height: none;
+        overflow: visible;
+        overscroll-behavior: auto;
     }
 }
 

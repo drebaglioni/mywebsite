@@ -257,7 +257,8 @@
     "finished": "2026-03-21",
     "rating": 4,
     "url": "https://www.brianchristian.org/the-alignment-problem",
-    "notes": "Imitation vs IRL framing"
+    "notes": "Imitation vs IRL framing",
+    "isbn": "9780393635829"
   },
   {
     "id": "the-shadow-of-the-wind-2001",
@@ -305,7 +306,8 @@
     "finished": "2025-01-18",
     "rating": null,
     "url": "https://en.wikipedia.org/wiki/Piranesi_%28novel%29",
-    "notes": null
+    "notes": null,
+    "isbn": "9781432886578"
   },
   {
     "id": "exhalation-2024",
@@ -321,7 +323,8 @@
     "finished": "2024-07-28",
     "rating": 5,
     "url": null,
-    "notes": "Great short essays"
+    "notes": "Great short essays",
+    "isbn": "9781035039210"
   },
   {
     "id": "children-of-time-2024",
@@ -414,7 +417,8 @@
     "finished": "2023-01-11",
     "rating": null,
     "url": "https://www.goodreads.com/en/book/show/43062156",
-    "notes": null
+    "notes": null,
+    "isbn": "9780385545174"
   },
   {
     "id": "1q84-2022",
@@ -1001,7 +1005,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9781250185969"
   },
   {
     "id": "luka-and-the-fire-of-life-2010",
@@ -1155,7 +1160,8 @@
     "finished": "2024-05-24",
     "rating": 4,
     "url": null,
-    "notes": "Fictional book about the world seen by North Koreans. Wild perspective."
+    "notes": "Fictional book about the world seen by North Koreans. Wild perspective.",
+    "isbn": "9780552778251"
   },
   {
     "id": "the-overstory-a-novel-2018",
@@ -1196,7 +1202,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": "Rec by Collison"
+    "notes": "Rec by Collison",
+    "isbn": "9780801868986"
   },
   {
     "id": "type-matters-2012",
@@ -1224,7 +1231,8 @@
     "finished": "2025-07-31",
     "rating": null,
     "url": null,
-    "notes": "Recommended by Taylor \u2014 Graydon was the editor of Vanity Fair. Makes you want to (sometimes) start a magazine"
+    "notes": "Recommended by Taylor \u2014 Graydon was the editor of Vanity Fair. Makes you want to (sometimes) start a magazine",
+    "isbn": "9780593655900"
   },
   {
     "id": "why-we-age-and-why-we-don-t-have-to-2019",

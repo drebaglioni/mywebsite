@@ -24,7 +24,7 @@ REQUIRED_COLUMNS = [
 ]
 OPTIONAL_COLUMNS = ["cover", "isbn"]
 
-VALID_FORMATS = {"book", "article", "podcast", "audiobook"}
+VALID_FORMATS = {"book", "ebook", "article", "podcast", "audiobook"}
 VALID_STATUSES = {"completed", "in-progress", "queued"}
 STATUS_SORT_ORDER = {"in-progress": 0, "completed": 1, "queued": 2}
 
@@ -252,6 +252,8 @@ def parse_table(source_path: Path) -> list[dict]:
         item_format = row["format"].strip().lower()
         if item_format not in VALID_FORMATS:
             raise ValueError(f"Row {row_line_no}: format must be one of {sorted(VALID_FORMATS)}")
+        if item_format == "ebook":
+            item_format = "book"
 
         status = row["status"].strip().lower()
         if status not in VALID_STATUSES:
