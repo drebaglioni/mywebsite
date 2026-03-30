@@ -51,6 +51,9 @@
         const projectsGatedLink = document.querySelector('.projects-gated-link');
         const projectsGateToast = document.getElementById('projectsGateToast');
         const currentUrl = new URL(window.location.href);
+        const SHAPE_MODE_DEFAULT = '6';
+        const shapeParam = currentUrl.searchParams.get('shape');
+        const selectedShapeMode = shapeParam === '4' || shapeParam === '6' ? shapeParam : SHAPE_MODE_DEFAULT;
         const quantumCanvasContainer = document.getElementById('quantumCanvasContainer');
         const typeAnchor = document.querySelector('.type-anchor');
 
@@ -65,6 +68,10 @@
             renderer: null,
             pointCloud: null,
             cloudMaterial: null,
+            shapeMode: selectedShapeMode,
+            baseCloudX: 2.0,
+            baseCloudY: 0.08,
+            baseCloudZ: -0.84,
             targetX: 0,
             targetY: 0,
             currentX: 0,
@@ -106,41 +113,123 @@
             }
         }
 
-        function initQuantumHero() {
-            if (quantumState.initialized || !window.THREE || !quantumCanvasContainer) {
-                return;
+        function buildShape6GyroidDoubleLoop(THREE) {
+            const loopSegments = 640;
+            const radialSegments = 110;
+            const tubeRadius = 1.08;
+            const totalPoints = loopSegments * radialSegments;
+            const positions = new Float32Array(totalPoints * 3);
+            const normals = new Float32Array(totalPoints * 3);
+            const delta = 0.0027;
+            const gyroidK = 2.35;
+            let cursor = 0;
+
+            function getCenterPoint(t) {
+                const x = 7.1 * Math.sin(t);
+                const y = 5.0 * Math.sin(t) * Math.cos(t);
+                const z = 1.58 * Math.cos(2.0 * t);
+                return new THREE.Vector3(x, y, z);
             }
 
-            const THREE = window.THREE;
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 160);
-            camera.position.set(4.4, 0.0, 22.5);
+            for (let i = 0; i < loopSegments; i += 1) {
+                const t = (i / loopSegments) * Math.PI * 2.0;
+                const center = getCenterPoint(t);
+                const ahead = getCenterPoint(t + delta);
+                const behind = getCenterPoint(t - delta);
+                const tangent = ahead.sub(behind).normalize();
+                const guide = Math.abs(tangent.y) > 0.92
+                    ? new THREE.Vector3(1, 0, 0)
+                    : new THREE.Vector3(0, 1, 0);
+                const frameB = new THREE.Vector3().crossVectors(tangent, guide).normalize();
+                const frameN = new THREE.Vector3().crossVectors(frameB, tangent).normalize();
+                const centerPinch = 1.0 - 0.18 * Math.exp(-Math.pow(center.y / 1.7, 2));
 
-            const renderer = new THREE.WebGLRenderer({
-                alpha: true,
-                antialias: true,
-                powerPreference: 'high-performance'
-            });
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.domElement.setAttribute('aria-hidden', 'true');
-            quantumCanvasContainer.appendChild(renderer.domElement);
+                for (let j = 0; j < radialSegments; j += 1) {
+                    const phi = (j / radialSegments) * Math.PI * 2.0;
+                    const radial = new THREE.Vector3()
+                        .copy(frameN)
+                        .multiplyScalar(Math.cos(phi))
+                        .add(new THREE.Vector3().copy(frameB).multiplyScalar(Math.sin(phi)))
+                        .normalize();
+                    const gx = center.x * 0.34 + Math.cos(phi) * 0.47;
+                    const gy = center.y * 0.34 + Math.sin(phi) * 0.41;
+                    const gz = center.z * 0.34 + Math.cos(phi * 1.5) * 0.24;
+                    const gyroid = Math.sin(gyroidK * gx) * Math.cos(gyroidK * gy)
+                        + Math.sin(gyroidK * gy) * Math.cos(gyroidK * gz)
+                        + Math.sin(gyroidK * gz) * Math.cos(gyroidK * gx);
+                    const radius = tubeRadius * centerPinch * (1.0 + gyroid * 0.17);
+                    const point = new THREE.Vector3().copy(center).add(new THREE.Vector3().copy(radial).multiplyScalar(radius));
 
-            const geometry = new THREE.TorusKnotGeometry(6.0, 1.85, 520, 96);
-            geometry.scale(1.18, 1.34, 0.94);
-            const vertexCount = geometry.attributes.position.count;
-            const seeds = new Float32Array(vertexCount);
-            const sizeSeeds = new Float32Array(vertexCount);
-
-            for (let i = 0; i < vertexCount; i += 1) {
-                seeds[i] = Math.random();
-                sizeSeeds[i] = Math.random();
+                    positions[cursor] = point.x;
+                    positions[cursor + 1] = point.y;
+                    positions[cursor + 2] = point.z;
+                    normals[cursor] = radial.x;
+                    normals[cursor + 1] = radial.y;
+                    normals[cursor + 2] = radial.z;
+                    cursor += 3;
+                }
             }
 
-            geometry.setAttribute('aSeed', new THREE.BufferAttribute(seeds, 1));
-            geometry.setAttribute('aSizeSeed', new THREE.BufferAttribute(sizeSeeds, 1));
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('normal', new THREE.BufferAttribute(normals, 3));
+            geometry.scale(1.1, 1.28, 0.92);
+            return geometry;
+        }
 
-            const material = new THREE.ShaderMaterial({
+        function buildShape4MobiusRibbon(THREE) {
+            const uSegments = 560;
+            const vSegments = 120;
+            const totalPoints = uSegments * vSegments;
+            const positions = new Float32Array(totalPoints * 3);
+            const normals = new Float32Array(totalPoints * 3);
+            const R = 6.1;
+            const halfWidth = 1.45;
+            let cursor = 0;
+
+            for (let i = 0; i < uSegments; i += 1) {
+                const u = (i / uSegments) * Math.PI * 2.0;
+                const cu = Math.cos(u);
+                const su = Math.sin(u);
+                const chu = Math.cos(u * 0.5);
+                const shu = Math.sin(u * 0.5);
+
+                for (let j = 0; j < vSegments; j += 1) {
+                    const v = ((j / (vSegments - 1)) * 2.0 - 1.0) * halfWidth;
+                    const ring = R + v * chu;
+                    const x = ring * cu;
+                    const y = ring * su;
+                    const z = v * shu * 2.2;
+
+                    const dxdu = -ring * su + (-v * 0.5 * shu) * cu;
+                    const dydu = ring * cu + (-v * 0.5 * shu) * su;
+                    const dzdu = v * 0.5 * chu * 2.2;
+                    const dxdv = chu * cu;
+                    const dydv = chu * su;
+                    const dzdv = shu * 2.2;
+                    const normal = new THREE.Vector3(dxdu, dydu, dzdu)
+                        .cross(new THREE.Vector3(dxdv, dydv, dzdv))
+                        .normalize();
+
+                    positions[cursor] = x;
+                    positions[cursor + 1] = y;
+                    positions[cursor + 2] = z;
+                    normals[cursor] = normal.x;
+                    normals[cursor + 1] = normal.y;
+                    normals[cursor + 2] = normal.z;
+                    cursor += 3;
+                }
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('normal', new THREE.BufferAttribute(normals, 3));
+            geometry.scale(1.16, 1.26, 0.92);
+            return geometry;
+        }
+
+        function createQuantumCloudMaterial(THREE) {
+            return new THREE.ShaderMaterial({
                 uniforms: {
                     uTime: { value: 0 },
                     uIntro: { value: 0 },
@@ -157,16 +246,16 @@
 
                     void main() {
                         vec3 displaced = position;
-                        float pulse = sin((uTime * 0.72) + aSeed * 6.2831 + position.y * 0.09);
-                        float shimmer = cos((uTime * 0.93) + aSeed * 4.7 + position.x * 0.06);
-                        displaced += normal * (pulse * 0.22 + shimmer * 0.08);
-                        displaced.x += uPointer.x * (0.22 + aSeed * 0.16);
-                        displaced.y += uPointer.y * (0.18 + (1.0 - aSeed) * 0.14);
+                        float pulse = sin((uTime * 0.58) + aSeed * 6.2831 + position.y * 0.08);
+                        float shimmer = cos((uTime * 0.81) + aSeed * 4.9 + position.x * 0.05);
+                        displaced += normal * (pulse * 0.10 + shimmer * 0.04);
+                        displaced.x += uPointer.x * (0.18 + aSeed * 0.12);
+                        displaced.y += uPointer.y * (0.14 + (1.0 - aSeed) * 0.10);
 
                         vec4 mvPosition = modelViewMatrix * vec4(displaced, 1.0);
-                        float depthScale = 38.0 / -mvPosition.z;
-                        float size = (0.8 + aSizeSeed * 2.9 + sin(uTime * 1.2 + aSeed * 8.0) * 0.35) * depthScale;
-                        gl_PointSize = clamp(size, 0.8, 5.2);
+                        float depthScale = 36.0 / -mvPosition.z;
+                        float size = (0.72 + aSizeSeed * 2.55 + sin(uTime * 1.08 + aSeed * 8.0) * 0.22) * depthScale;
+                        gl_PointSize = clamp(size, 0.7, 4.8);
                         gl_Position = projectionMatrix * mvPosition;
 
                         vSeed = aSeed;
@@ -187,9 +276,9 @@
 
                         vec3 darkBase = vec3(0.02, 0.08, 0.30);
                         vec3 midAccent = vec3(0.03, 0.22, 0.66);
-                        float blend = clamp(vSeed * 0.65 + vDepth * 0.55, 0.0, 1.0);
+                        float blend = clamp(vSeed * 0.64 + vDepth * 0.58, 0.0, 1.0);
                         vec3 color = mix(darkBase, midAccent, blend);
-                        float alpha = smoothstep(0.5, 0.0, dist) * (0.54 + vDepth * 0.34) * uIntro;
+                        float alpha = smoothstep(0.5, 0.0, dist) * (0.62 + vDepth * 0.30) * uIntro;
                         gl_FragColor = vec4(color, alpha);
                     }
                 `,
@@ -198,9 +287,58 @@
                 depthTest: true,
                 blending: THREE.NormalBlending
             });
+        }
+
+        function initQuantumHero() {
+            if (quantumState.initialized || !window.THREE || !quantumCanvasContainer) {
+                return;
+            }
+
+            const THREE = window.THREE;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 160);
+            camera.position.set(4.4, 0.0, 22.5);
+
+            const renderer = new THREE.WebGLRenderer({
+                alpha: true,
+                antialias: true,
+                powerPreference: 'high-performance'
+            });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.domElement.setAttribute('aria-hidden', 'true');
+            quantumCanvasContainer.appendChild(renderer.domElement);
+
+            const shapeDefinitions = {
+                '6': {
+                    buildGeometry: () => buildShape6GyroidDoubleLoop(THREE),
+                    position: new THREE.Vector3(1.9, 0.08, -0.84),
+                    rotation: new THREE.Euler(0.12, 0.34, -0.10)
+                },
+                '4': {
+                    buildGeometry: () => buildShape4MobiusRibbon(THREE),
+                    position: new THREE.Vector3(1.95, 0.02, -0.86),
+                    rotation: new THREE.Euler(0.10, 0.30, -0.08)
+                }
+            };
+            const shapeDefinition = shapeDefinitions[quantumState.shapeMode] || shapeDefinitions[SHAPE_MODE_DEFAULT];
+            const geometry = shapeDefinition.buildGeometry();
+            const vertexCount = geometry.attributes.position.count;
+            const seeds = new Float32Array(vertexCount);
+            const sizeSeeds = new Float32Array(vertexCount);
+
+            for (let i = 0; i < vertexCount; i += 1) {
+                seeds[i] = Math.random();
+                sizeSeeds[i] = Math.random();
+            }
+
+            geometry.setAttribute('aSeed', new THREE.BufferAttribute(seeds, 1));
+            geometry.setAttribute('aSizeSeed', new THREE.BufferAttribute(sizeSeeds, 1));
+
+            const material = createQuantumCloudMaterial(THREE);
             const pointCloud = new THREE.Points(geometry, material);
-            pointCloud.position.set(2.1, 0.1, -0.8);
-            pointCloud.rotation.set(0.14, 0.34, -0.12);
+            pointCloud.position.copy(shapeDefinition.position);
+            pointCloud.rotation.copy(shapeDefinition.rotation);
             scene.add(pointCloud);
 
             quantumState.scene = scene;
@@ -208,6 +346,9 @@
             quantumState.renderer = renderer;
             quantumState.pointCloud = pointCloud;
             quantumState.cloudMaterial = material;
+            quantumState.baseCloudX = shapeDefinition.position.x;
+            quantumState.baseCloudY = shapeDefinition.position.y;
+            quantumState.baseCloudZ = shapeDefinition.position.z;
             quantumState.initialized = true;
         }
 
@@ -253,8 +394,9 @@
                 quantumState.pointCloud.rotation.y += (rotYTarget - quantumState.pointCloud.rotation.y) * 0.048;
                 quantumState.pointCloud.rotation.x += (rotXTarget - quantumState.pointCloud.rotation.x) * 0.048;
                 quantumState.pointCloud.rotation.z += 0.0009;
-                quantumState.pointCloud.position.x = 2.1 + quantumState.currentX * 0.32;
-                quantumState.pointCloud.position.y = 0.1 + quantumState.currentY * 0.24;
+                quantumState.pointCloud.position.x = quantumState.baseCloudX + quantumState.currentX * 0.32;
+                quantumState.pointCloud.position.y = quantumState.baseCloudY + quantumState.currentY * 0.24;
+                quantumState.pointCloud.position.z = quantumState.baseCloudZ;
                 quantumState.cloudMaterial.uniforms.uTime.value = timestamp * 0.001;
                 quantumState.cloudMaterial.uniforms.uIntro.value = introProgress;
                 quantumState.cloudMaterial.uniforms.uPointer.value.set(quantumState.currentX, quantumState.currentY);
