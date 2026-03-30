@@ -585,22 +585,24 @@
             if (!Number.isFinite(parsed)) {
                 return null;
             }
-            return clamp(0, Math.round(parsed), 5);
+            const rounded = clamp(0, Math.round(parsed), 5);
+            return rounded > 0 ? rounded : null;
         }
 
         function buildRatingMarkup(item) {
             const ratingValue = resolveRatingValue(item.rating);
-            const filledStars = ratingValue == null ? 0 : ratingValue;
-            const ratingClass = ratingValue == null ? 'cover-rating unrated' : 'cover-rating';
-            const ratingLabel = ratingValue == null ? 'Unrated' : String(ratingValue) + ' out of 5 stars';
+            if (ratingValue == null) {
+                return '';
+            }
+            const ratingLabel = String(ratingValue) + ' out of 5 stars';
 
             let starsMarkup = '';
             for (let index = 0; index < 5; index += 1) {
-                const starClass = index < filledStars ? 'star is-on' : 'star';
+                const starClass = index < ratingValue ? 'star is-on' : 'star';
                 starsMarkup += '<span class="' + starClass + '" aria-hidden="true">&#9733;</span>';
             }
 
-            return '<span class="' + ratingClass + '" aria-label="' + escapeAttr(ratingLabel) + '">' + starsMarkup + '</span>';
+            return '<span class="cover-rating" aria-label="' + escapeAttr(ratingLabel) + '">' + starsMarkup + '</span>';
         }
 
         function renderShelf(items) {
@@ -689,9 +691,9 @@
                     '<span class="cover-card">',
                         '<span class="cover-surface">' +
                             surfaceContent +
-                            ratingMarkup +
                             (isAudioFormat(item) ? '<span class="cover-audio-chip">AUDIO</span>' : '') +
-                        '</span>',
+                        '</span>' +
+                        '<span class="cover-meta">' + ratingMarkup + '</span>',
                     '</span>'
                 ].join('');
 
