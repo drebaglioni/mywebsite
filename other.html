@@ -580,6 +580,29 @@
             return filtered;
         }
 
+        function resolveRatingValue(rawRating) {
+            const parsed = Number(rawRating);
+            if (!Number.isFinite(parsed)) {
+                return null;
+            }
+            return clamp(0, Math.round(parsed), 5);
+        }
+
+        function buildRatingMarkup(item) {
+            const ratingValue = resolveRatingValue(item.rating);
+            const filledStars = ratingValue == null ? 0 : ratingValue;
+            const ratingClass = ratingValue == null ? 'cover-rating unrated' : 'cover-rating';
+            const ratingLabel = ratingValue == null ? 'Unrated' : String(ratingValue) + ' out of 5 stars';
+
+            let starsMarkup = '';
+            for (let index = 0; index < 5; index += 1) {
+                const starClass = index < filledStars ? 'star is-on' : 'star';
+                starsMarkup += '<span class="' + starClass + '" aria-hidden="true">&#9733;</span>';
+            }
+
+            return '<span class="' + ratingClass + '" aria-label="' + escapeAttr(ratingLabel) + '">' + starsMarkup + '</span>';
+        }
+
         function renderShelf(items) {
             if (deferredImageObserver) {
                 deferredImageObserver.disconnect();
@@ -622,6 +645,7 @@
                 const shouldDefer = index >= 10;
                 const loadingStrategy = shouldDefer ? 'lazy' : 'eager';
                 const fetchPriority = index < 2 ? 'high' : 'auto';
+                const ratingMarkup = buildRatingMarkup(item);
 
                 let surfaceContent = '';
                 if (useArticlePoster) {
@@ -665,6 +689,7 @@
                     '<span class="cover-card">',
                         '<span class="cover-surface">' +
                             surfaceContent +
+                            ratingMarkup +
                             (isAudioFormat(item) ? '<span class="cover-audio-chip">AUDIO</span>' : '') +
                         '</span>',
                     '</span>'
