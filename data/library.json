@@ -15,7 +15,7 @@
     "rating": null,
     "url": "https://it.wikipedia.org/wiki/Se_una_notte_d%27inverno_un_viaggiatore",
     "notes": "Italian original metafiction",
-    "cover_image": "assets/images/library/covers/se-una-notte-italian.png",
+    "cover_image": "https://media.anobii.com/covers/01a1817ed0f19bbeda/175/294/2.5/paperback/png/1707090585",
     "cover_source": "manual"
   },
   {
@@ -85,7 +85,9 @@
     "finished": "2026-03-22",
     "rating": null,
     "url": "https://ifanyonebuildsit.com",
-    "notes": "Superhuman AI warning"
+    "notes": "Superhuman AI warning",
+    "cover_image": "https://i.ebayimg.com/images/g/LzAAAeSw6JZpwXSo/s-l1600.webp",
+    "cover_source": "manual"
   },
   {
     "id": "the-alignment-problem-2020",
