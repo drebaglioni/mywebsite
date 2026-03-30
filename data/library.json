@@ -13,7 +13,10 @@
     "finished": null,
     "rating": null,
     "url": "https://openlibrary.org/works/OL17802920W",
-    "notes": null
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781501139154-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9781501139154"
   },
   {
     "id": "how-to-reassess-your-chess-silvman-2010",
@@ -113,8 +116,11 @@
     "status": "in-progress",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": "rec by dad"
+    "url": "https://en.wikipedia.org/wiki/The_Body:_A_Guide_for_Occupants",
+    "notes": "rec by dad",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780385539302-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780385539302"
   },
   {
     "id": "war-and-peace-1869",
@@ -164,8 +170,11 @@
     "status": "completed",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": "Broken Earth series, book 2"
+    "url": "https://en.wikipedia.org/wiki/The_Obelisk_Gate",
+    "notes": "Broken Earth series, book 2",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780316229265-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780316229265"
   },
   {
     "id": "se-una-notte-d-inverno-un-viaggiatore-1979",
@@ -185,6 +194,26 @@
     "notes": "Italian original metafiction",
     "cover_image": "https://media.anobii.com/covers/01a1817ed0f19bbeda/175/294/2.5/paperback/png/1707090585",
     "cover_source": "manual"
+  },
+  {
+    "id": "moonwalking-with-einstein-2011",
+    "title": "Moonwalking with Einstein",
+    "author": "Joshua Foer",
+    "format": "book",
+    "subjects": [
+      "memory",
+      "learning",
+      "practice"
+    ],
+    "year": 2011,
+    "status": "completed",
+    "finished": "2026-03-27",
+    "rating": 5,
+    "url": "https://www.joshuafoer.com/moonwalking-with-einstein",
+    "notes": "Memory-palace training memoir",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780141032139-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780141032139"
   },
   {
     "id": "world-models-computing-the-uncomputable-2026",
@@ -293,7 +322,10 @@
     "finished": "2025-03-21",
     "rating": null,
     "url": "https://littleredreviewer.wordpress.com/2021/04/03/the-library-at-mount-char-by-scott-hawkins/",
-    "notes": "Recommended by Aranya"
+    "notes": "Recommended by Aranya",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780553418620-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780553418620"
   },
   {
     "id": "piranesi-2025",
@@ -363,8 +395,11 @@
     "status": "completed",
     "finished": "2024-02-28",
     "rating": null,
-    "url": null,
-    "notes": "Classic Murakami."
+    "url": "https://en.wikipedia.org/wiki/The_Strange_Library",
+    "notes": "Classic Murakami.",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780385354301-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780385354301"
   },
   {
     "id": "infinite-powers-2023",
@@ -419,7 +454,10 @@
     "finished": "2023-02-16",
     "rating": null,
     "url": "https://openlibrary.org/works/OL17358795W",
-    "notes": "rec by Matt Wyndowe"
+    "notes": "rec by Matt Wyndowe",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781101904220-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9781101904220"
   },
   {
     "id": "all-the-wrong-moves-2023",
@@ -452,8 +490,11 @@
     "status": "completed",
     "finished": "2022-07-13",
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://en.wikipedia.org/wiki/1Q84",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780307593313-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780307593313"
   },
   {
     "id": "circe-2022",
@@ -486,8 +527,11 @@
     "status": "completed",
     "finished": "2022-01-14",
     "rating": 4,
-    "url": null,
-    "notes": "The foundation of a lot of Metaverse stuff. Long winded story, though, and very complicated to follow"
+    "url": "https://en.wikipedia.org/wiki/Snow_Crash",
+    "notes": "The foundation of a lot of Metaverse stuff. Long winded story, though, and very complicated to follow",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780553380958-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780553380958"
   },
   {
     "id": "stormlight-chronicles-rhythm-of-war-2021",
@@ -501,8 +545,11 @@
     "status": "completed",
     "finished": "2021-11-20",
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://en.wikipedia.org/wiki/Rhythm_of_War",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780765326386-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780765326386"
   },
   {
     "id": "broken-earth-series-the-stone-sky-2021",
@@ -516,8 +563,11 @@
     "status": "completed",
     "finished": "2021-10-01",
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://en.wikipedia.org/wiki/The_Stone_Sky",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780316229241-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780316229241"
   },
   {
     "id": "a-wild-sheep-chase-2021",
@@ -531,8 +581,11 @@
     "status": "completed",
     "finished": "2021-04-15",
     "rating": 4,
-    "url": null,
-    "notes": "Cool cover - came with 3d glasses"
+    "url": "https://en.wikipedia.org/wiki/A_Wild_Sheep_Chase",
+    "notes": "Cool cover - came with 3d glasses",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780375718943-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780375718943"
   },
   {
     "id": "globalization-a-very-short-introduction-2021",
@@ -597,8 +650,11 @@
     "status": "completed",
     "finished": "2020-12-25",
     "rating": null,
-    "url": null,
-    "notes": "Science fiction, trilogy, present by Seth"
+    "url": "https://en.wikipedia.org/wiki/The_Fifth_Season_(novel)",
+    "notes": "Science fiction, trilogy, present by Seth",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780316229296-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780316229296"
   },
   {
     "id": "stormlight-chronicles-oathbringer-2020",
@@ -612,8 +668,11 @@
     "status": "completed",
     "finished": "2020-10-15",
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://en.wikipedia.org/wiki/Oathbringer",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780765326379-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780765326379"
   },
   {
     "id": "cloud-atlas-2020",
@@ -645,8 +704,11 @@
     "status": "completed",
     "finished": "2020-07-10",
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://en.wikipedia.org/wiki/Sputnik_Sweetheart",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780375726054-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780375726054"
   },
   {
     "id": "stormlight-chronicles-words-of-radiance-2020",
@@ -660,8 +722,11 @@
     "status": "completed",
     "finished": "2020-05-01",
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://en.wikipedia.org/wiki/Words_of_Radiance",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780765326362-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780765326362"
   },
   {
     "id": "washington-black-2020",
@@ -709,7 +774,10 @@
     "finished": "2020-02-01",
     "rating": null,
     "url": "https://openlibrary.org/works/OL29920830W",
-    "notes": null
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781090403681-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9781501144318"
   },
   {
     "id": "the-name-of-the-rose-2020",
@@ -741,8 +809,11 @@
     "status": "completed",
     "finished": "2020-01-01",
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://en.wikipedia.org/wiki/Death%27s_End",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780765377104-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780765377104"
   },
   {
     "id": "three-body-problem-the-dark-forest-2019",
@@ -756,8 +827,11 @@
     "status": "completed",
     "finished": "2019-09-01",
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://en.wikipedia.org/wiki/The_Dark_Forest",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780765377081-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780765377081"
   },
   {
     "id": "a-gentleman-in-moscow-2019",
@@ -772,7 +846,10 @@
     "finished": "2019-08-01",
     "rating": null,
     "url": "https://openlibrary.org/works/OL17797130W",
-    "notes": null
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780091944247-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780091944247"
   },
   {
     "id": "the-elegance-of-the-hedgehog-2019",
@@ -804,8 +881,11 @@
     "status": "completed",
     "finished": "2019-06-01",
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://en.wikipedia.org/wiki/The_Three-Body_Problem_(novel)",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780765377067-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780765377067"
   },
   {
     "id": "station-eleven-2019",
@@ -820,7 +900,10 @@
     "finished": "2019-03-01",
     "rating": null,
     "url": "https://openlibrary.org/works/OL27731185W",
-    "notes": null
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780385353304-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780385353304"
   },
   {
     "id": "stormlight-chronicles-the-way-of-kings-2018",
@@ -834,8 +917,11 @@
     "status": "completed",
     "finished": "2018-12-01",
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://en.wikipedia.org/wiki/The_Way_of_Kings",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780765326355-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780765326355"
   },
   {
     "id": "shantaram-2016",
@@ -850,7 +936,10 @@
     "finished": "2016-05-18",
     "rating": null,
     "url": "https://openlibrary.org/works/OL32700884W",
-    "notes": "rec by shane"
+    "notes": "rec by shane",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780312330521-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780312330521"
   },
   {
     "id": "beloved-1987",
@@ -897,7 +986,10 @@
     "finished": null,
     "rating": null,
     "url": "https://openlibrary.org/works/OL27736864W",
-    "notes": null
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780385352116-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780385352116"
   },
   {
     "id": "emissary-2018",
@@ -974,8 +1066,11 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": "Rec by Katie M"
+    "url": "https://en.wikipedia.org/wiki/Into_Thin_Air",
+    "notes": "Rec by Katie M",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780385494786-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780385494786"
   },
   {
     "id": "is-human-data-enough-2025",
@@ -1021,8 +1116,11 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://en.wikipedia.org/wiki/Kafka_on_the_Shore",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781400079278-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9781400079278"
   },
   {
     "id": "less-winner-of-the-pulitzer-prize-a-novel-2017",
@@ -1034,8 +1132,11 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": "Rec by Katie M"
+    "url": "https://en.wikipedia.org/wiki/Less_(novel)",
+    "notes": "Rec by Katie M",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780316316125-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780316316125"
   },
   {
     "id": "lonesome-dove-1985",
@@ -1131,8 +1232,11 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": null
+    "url": "https://www.penguinrandomhouse.com/books/566552/the-making-of-a-manager-by-julie-zhuo/",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780735219564-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780735219564"
   },
   {
     "id": "natural-language-agent-harnesses-2026",
@@ -1287,8 +1391,11 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": "Rec by Katie M"
+    "url": "https://en.wikipedia.org/wiki/The_Overstory",
+    "notes": "Rec by Katie M",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780393356687-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780393356687"
   },
   {
     "id": "the-return-2016",
@@ -1365,7 +1472,10 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": "Rec by Keith R"
+    "url": "https://en.wikipedia.org/wiki/Lifespan:_Why_We_Age%E2%80%94and_Why_We_Don%27t_Have_To",
+    "notes": "Rec by Keith R",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781501191978-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9781501191978"
   }
 ]

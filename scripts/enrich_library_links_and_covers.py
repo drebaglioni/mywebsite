@@ -75,6 +75,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--report", default=DEFAULT_REPORT_PATH, help="Path to markdown report")
     parser.add_argument("--queue-csv", default=DEFAULT_QUEUE_CSV_PATH, help="Path to review queue CSV")
     parser.add_argument("--limit", type=int, default=8, help="Result limit per upstream lookup")
+    parser.add_argument("--http-timeout", type=float, default=5.0, help="HTTP timeout in seconds")
+    parser.add_argument("--http-retries", type=int, default=1, help="HTTP retry attempts per lookup")
     return parser.parse_args()
 
 
@@ -84,12 +86,16 @@ def split_row(line: str) -> list[str]:
         raise ValueError("Table row must start and end with '|'")
 
     content = stripped.strip("|")
+    content = content.replace("\\|", "__ESCAPED_PIPE__")
     protected = re.sub(
-        r"\[\[[^\]]+\]\]",
+        r"\[\[[^\]]+\]\]|\[[^\]]+\]\([^)]+\)",
         lambda match: match.group(0).replace("|", "__PIPE__"),
         content,
     )
-    return [cell.strip().replace("__PIPE__", "|") for cell in protected.split("|")]
+    return [
+        cell.strip().replace("__PIPE__", "|").replace("__ESCAPED_PIPE__", "\\|")
+        for cell in protected.split("|")
+    ]
 
 
 def normalize_obsidian_title(value: str) -> str:
@@ -103,7 +109,7 @@ def normalize_obsidian_title(value: str) -> str:
     markdown_match = re.fullmatch(r"\[([^\]]+)\]\([^)]+\)", value)
     if markdown_match:
         return markdown_match.group(1).strip()
-    return value
+    return value.replace("\\|", "|")
 
 
 def normalize_author(value: str) -> str:
@@ -187,10 +193,10 @@ def contains_derivative_noise(query_title: str, candidate_title: str) -> bool:
     return False
 
 
-def fetch_json(url: str, retries: int = 3) -> dict[str, Any] | list[Any] | None:
+def fetch_json(url: str, timeout: float = 5.0, retries: int = 1) -> dict[str, Any] | list[Any] | None:
     for attempt in range(1, retries + 1):
         try:
-            with urlopen(url, timeout=8) as response:
+            with urlopen(url, timeout=timeout) as response:
                 return json.loads(response.read().decode("utf-8"))
         except (HTTPError, URLError, TimeoutError, socket.timeout, ConnectionResetError, OSError, json.JSONDecodeError) as exc:
             if attempt >= retries:
@@ -201,7 +207,14 @@ def fetch_json(url: str, retries: int = 3) -> dict[str, Any] | list[Any] | None:
     return None
 
 
-def build_wikipedia_candidates(title: str, author: str, year: int | None, limit: int) -> list[UrlCandidate]:
+def build_wikipedia_candidates(
+    title: str,
+    author: str,
+    year: int | None,
+    limit: int,
+    timeout: float,
+    retries: int,
+) -> list[UrlCandidate]:
     query_bits = [title]
     primary = primary_author(author)
     if primary:
@@ -216,7 +229,7 @@ def build_wikipedia_candidates(title: str, author: str, year: int | None, limit:
         "format": "json",
         "utf8": "1",
     }
-    payload = fetch_json(WIKIPEDIA_SEARCH_API + "?" + urlencode(params))
+    payload = fetch_json(WIKIPEDIA_SEARCH_API + "?" + urlencode(params), timeout=timeout, retries=retries)
     if not isinstance(payload, dict):
         return []
 
@@ -267,7 +280,14 @@ def build_wikipedia_candidates(title: str, author: str, year: int | None, limit:
     return candidates
 
 
-def build_openlibrary_candidates(title: str, author: str, year: int | None, limit: int) -> list[UrlCandidate]:
+def build_openlibrary_candidates(
+    title: str,
+    author: str,
+    year: int | None,
+    limit: int,
+    timeout: float,
+    retries: int,
+) -> list[UrlCandidate]:
     params = {
         "title": title,
         "limit": str(limit),
@@ -276,7 +296,7 @@ def build_openlibrary_candidates(title: str, author: str, year: int | None, limi
     if author:
         params["author"] = primary_author(author)
 
-    payload = fetch_json(OPEN_LIBRARY_SEARCH_API + "?" + urlencode(params))
+    payload = fetch_json(OPEN_LIBRARY_SEARCH_API + "?" + urlencode(params), timeout=timeout, retries=retries)
     if not isinstance(payload, dict):
         return []
     docs = payload.get("docs")
@@ -337,7 +357,18 @@ def choose_url_candidate(wiki_candidates: list[UrlCandidate], openlibrary_candid
 
 
 def build_row(cells: list[str]) -> str:
-    return "| " + " | ".join(cells) + " |"
+    escaped_cells: list[str] = []
+    for cell in cells:
+        value = str(cell).replace("\\|", "__ESCAPED_PIPE__")
+        value = re.sub(
+            r"\[\[[^\]]+\]\]|\[[^\]]+\]\([^)]+\)",
+            lambda match: match.group(0).replace("|", "__PIPE__"),
+            value,
+        )
+        value = value.replace("|", "\\|")
+        value = value.replace("__PIPE__", "|").replace("__ESCAPED_PIPE__", "\\|")
+        escaped_cells.append(value)
+    return "| " + " | ".join(escaped_cells) + " |"
 
 
 def write_csv(queue_path: Path, actions: list[ActionRow]) -> None:
@@ -528,8 +559,22 @@ def run(args: argparse.Namespace) -> tuple[int, int, int, int, int]:
             lines[row_idx] = build_row(cells)
             continue
 
-        wiki_candidates = build_wikipedia_candidates(title, author, year_value, args.limit)
-        openlibrary_candidates = build_openlibrary_candidates(title, author, year_value, args.limit)
+        wiki_candidates = build_wikipedia_candidates(
+            title,
+            author,
+            year_value,
+            args.limit,
+            args.http_timeout,
+            args.http_retries,
+        )
+        openlibrary_candidates = build_openlibrary_candidates(
+            title,
+            author,
+            year_value,
+            args.limit,
+            args.http_timeout,
+            args.http_retries,
+        )
         selected, decision_reason = choose_url_candidate(wiki_candidates, openlibrary_candidates)
         if selected:
             cells[url_idx] = selected.url

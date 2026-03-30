@@ -8,6 +8,7 @@ import csv
 import json
 import re
 import socket
+import time
 import unicodedata
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -27,6 +28,8 @@ DEFAULT_QUEUE_CSV_PATH = ".context/library_enrichment_review_queue.csv"
 AUTO_FILL_MIN_SCORE = 0.96
 AUTO_FILL_MIN_MARGIN = 0.01
 TOP_CANDIDATES_IN_REPORT = 3
+DEFAULT_SCORE_MIN = 0.95
+DEFAULT_MARGIN_MIN = 0.005
 
 # Guardrails: these tokens often indicate bundles/audio junk results.
 EXCLUDED_CANDIDATE_TOKENS = (
@@ -70,6 +73,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--report", default=DEFAULT_APPLY_REPORT_PATH, help="Path for markdown apply report")
     parser.add_argument("--queue-csv", default=DEFAULT_QUEUE_CSV_PATH, help="Path for review queue CSV")
     parser.add_argument("--limit", type=int, default=8, help="OpenLibrary search result limit per row")
+    parser.add_argument("--score-min", type=float, default=DEFAULT_SCORE_MIN, help="Minimum score to auto-fill")
+    parser.add_argument("--margin-min", type=float, default=DEFAULT_MARGIN_MIN, help="Minimum top-vs-second margin to auto-fill")
+    parser.add_argument("--http-timeout", type=float, default=5.0, help="HTTP timeout in seconds")
+    parser.add_argument("--http-retries", type=int, default=1, help="HTTP retry attempts per lookup")
     return parser.parse_args()
 
 
@@ -79,12 +86,16 @@ def split_row(line: str) -> list[str]:
         raise ValueError("Table row must start and end with '|'")
 
     content = stripped.strip("|")
+    content = content.replace("\\|", "__ESCAPED_PIPE__")
     protected = re.sub(
-        r"\[\[[^\]]+\]\]",
+        r"\[\[[^\]]+\]\]|\[[^\]]+\]\([^)]+\)",
         lambda match: match.group(0).replace("|", "__PIPE__"),
         content,
     )
-    return [cell.strip().replace("__PIPE__", "|") for cell in protected.split("|")]
+    return [
+        cell.strip().replace("__PIPE__", "|").replace("__ESCAPED_PIPE__", "\\|")
+        for cell in protected.split("|")
+    ]
 
 
 def normalize_obsidian_title(value: str) -> str:
@@ -98,7 +109,7 @@ def normalize_obsidian_title(value: str) -> str:
     markdown_match = re.fullmatch(r"\[([^\]]+)\]\([^)]+\)", value)
     if markdown_match:
         return markdown_match.group(1).strip()
-    return value
+    return value.replace("\\|", "|")
 
 
 def normalize_author(value: str) -> str:
@@ -188,7 +199,13 @@ def pick_isbn(isbns: list[str]) -> str:
     return sorted(set(normalized))[0]
 
 
-def query_open_library(title: str, author: str, limit: int = 8) -> list[dict[str, Any]]:
+def query_open_library(
+    title: str,
+    author: str,
+    limit: int = 8,
+    timeout: float = 5.0,
+    retries: int = 1,
+) -> list[dict[str, Any]]:
     params = {
         "title": title,
         "limit": str(limit),
@@ -198,11 +215,18 @@ def query_open_library(title: str, author: str, limit: int = 8) -> list[dict[str
         params["author"] = author
 
     url = OPEN_LIBRARY_ENDPOINT + "?" + urlencode(params)
-    try:
-        with urlopen(url, timeout=8) as response:
-            payload = json.loads(response.read().decode("utf-8"))
-    except (HTTPError, URLError, TimeoutError, socket.timeout, json.JSONDecodeError):
-        return []
+    payload = None
+    for attempt in range(1, max(1, retries) + 1):
+        try:
+            with urlopen(url, timeout=timeout) as response:
+                payload = json.loads(response.read().decode("utf-8"))
+                break
+        except (HTTPError, URLError, TimeoutError, socket.timeout, ConnectionResetError, OSError, json.JSONDecodeError) as exc:
+            if isinstance(exc, HTTPError) and 400 <= exc.code < 500 and exc.code not in {408, 429}:
+                return []
+            if attempt >= max(1, retries):
+                return []
+            time.sleep(0.25 * attempt)
 
     docs = payload.get("docs")
     if not isinstance(docs, list):
@@ -306,6 +330,8 @@ def classify_decision(
     year_text: str,
     line_no: int,
     candidates: list[Candidate],
+    score_min: float,
+    margin_min: float,
 ) -> RowDecision:
     display_author = author or "Unknown"
     display_year = year_text or "Unknown"
@@ -329,13 +355,13 @@ def classify_decision(
     margin = best.score - (second.score if second else 0.0)
     has_author = bool(author.strip())
 
-    if best.score < AUTO_FILL_MIN_SCORE:
+    if best.score < score_min:
         return RowDecision(
             title=title,
             author=display_author,
             year=display_year,
             status="needs_review",
-            reason=f"top score {best.score:.3f} below {AUTO_FILL_MIN_SCORE:.2f}",
+            reason=f"top score {best.score:.3f} below {score_min:.2f}",
             chosen_isbn="",
             top_score=best.score,
             margin=margin,
@@ -371,13 +397,13 @@ def classify_decision(
             line_no=line_no,
         )
 
-    if margin >= AUTO_FILL_MIN_MARGIN:
+    if margin >= margin_min:
         return RowDecision(
             title=title,
             author=display_author,
             year=display_year,
             status="auto_filled",
-            reason=f"accepted: margin {margin:.3f} >= {AUTO_FILL_MIN_MARGIN:.2f}",
+            reason=f"accepted: margin {margin:.3f} >= {margin_min:.2f}",
             chosen_isbn=best.isbn,
             top_score=best.score,
             margin=margin,
@@ -404,7 +430,7 @@ def classify_decision(
         author=display_author,
         year=display_year,
         status="needs_review",
-        reason=f"margin {margin:.3f} below {AUTO_FILL_MIN_MARGIN:.2f}",
+        reason=f"margin {margin:.3f} below {margin_min:.2f}",
         chosen_isbn="",
         top_score=best.score,
         margin=margin,
@@ -414,7 +440,18 @@ def classify_decision(
 
 
 def build_row(cells: list[str]) -> str:
-    return "| " + " | ".join(cells) + " |"
+    escaped_cells: list[str] = []
+    for cell in cells:
+        value = str(cell).replace("\\|", "__ESCAPED_PIPE__")
+        value = re.sub(
+            r"\[\[[^\]]+\]\]|\[[^\]]+\]\([^)]+\)",
+            lambda match: match.group(0).replace("|", "__PIPE__"),
+            value,
+        )
+        value = value.replace("|", "\\|")
+        value = value.replace("__PIPE__", "|").replace("__ESCAPED_PIPE__", "\\|")
+        escaped_cells.append(value)
+    return "| " + " | ".join(escaped_cells) + " |"
 
 
 def write_queue_csv(path: Path, decisions: list[RowDecision]) -> None:
@@ -450,7 +487,7 @@ def write_apply_report(
     path: Path,
     source_path: Path,
     rows_considered: int,
-    already_filled: int,
+    already_has_isbn: int,
     decisions: list[RowDecision],
 ) -> None:
     status_counts = {
@@ -468,7 +505,7 @@ def write_apply_report(
     lines.append(f"- Generated at: {datetime.now(timezone.utc).isoformat()}")
     lines.append(f"- Source: `{source_path}`")
     lines.append(f"- Book rows considered: **{rows_considered}**")
-    lines.append(f"- Already had `cover`/`isbn`: **{already_filled}**")
+    lines.append(f"- Already had `isbn`: **{already_has_isbn}**")
     lines.append(f"- Auto-filled: **{status_counts['auto_filled']}**")
     lines.append(f"- Needs review: **{status_counts['needs_review']}**")
     lines.append(f"- No match: **{status_counts['no_match']}**")
@@ -567,7 +604,7 @@ def run(args: argparse.Namespace) -> tuple[int, int, int, int, int]:
     decisions: list[RowDecision] = []
 
     rows_considered = 0
-    already_filled = 0
+    already_has_isbn = 0
     auto_filled = 0
 
     for row_idx in table_line_indexes[2:]:
@@ -579,12 +616,12 @@ def run(args: argparse.Namespace) -> tuple[int, int, int, int, int]:
             continue
 
         item_format = cells[format_idx].strip().lower()
-        if item_format not in {"book", "ebook"}:
+        if item_format not in {"book", "ebook", "audiobook"}:
             continue
 
         rows_considered += 1
-        if cells[cover_idx].strip() or cells[isbn_idx].strip():
-            already_filled += 1
+        if cells[isbn_idx].strip():
+            already_has_isbn += 1
             continue
 
         raw_title = cells[title_idx]
@@ -595,11 +632,25 @@ def run(args: argparse.Namespace) -> tuple[int, int, int, int, int]:
 
         cache_key = (title, author, year)
         if cache_key not in cache:
-            docs = query_open_library(title, author, limit=args.limit)
+            docs = query_open_library(
+                title,
+                author,
+                limit=args.limit,
+                timeout=args.http_timeout,
+                retries=args.http_retries,
+            )
             cache[cache_key] = score_candidates(title, author, year, docs)
         candidates = cache[cache_key]
 
-        decision = classify_decision(title, author, year_text, row_idx + 1, candidates)
+        decision = classify_decision(
+            title,
+            author,
+            year_text,
+            row_idx + 1,
+            candidates,
+            args.score_min,
+            args.margin_min,
+        )
         decisions.append(decision)
 
         if decision.status == "auto_filled" and decision.chosen_isbn:
@@ -608,12 +659,12 @@ def run(args: argparse.Namespace) -> tuple[int, int, int, int, int]:
             auto_filled += 1
 
     source_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    write_apply_report(report_path, source_path, rows_considered, already_filled, decisions)
+    write_apply_report(report_path, source_path, rows_considered, already_has_isbn, decisions)
     write_queue_csv(queue_csv_path, decisions)
 
     needs_review = sum(1 for d in decisions if d.status == "needs_review")
     no_match = sum(1 for d in decisions if d.status == "no_match")
-    return rows_considered, already_filled, auto_filled, needs_review, no_match
+    return rows_considered, already_has_isbn, auto_filled, needs_review, no_match
 
 
 def main() -> int:
