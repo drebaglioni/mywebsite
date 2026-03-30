@@ -20,7 +20,7 @@ Create or update one note (for example: `Library Export.md`) with this structure
 ## 2) Field requirements
 - `title`: required text.
 - `author`: optional text.
-- `format`: required, must be `book`, `ebook`, `article`, `podcast`, or `audiobook`.
+- `format`: required, must be `book`, `ebook`, `article`, `paper`, `podcast`, or `audiobook`.
 - `subjects`: optional, semicolon-separated values (`design;systems`).
 - `year`: required, 4-digit year (`2026`).
 - `status`: required, one of `completed`, `in-progress`, `queued`.
@@ -37,6 +37,7 @@ Important:
 - Required columns must be present exactly as named.
 - Optional columns `cover` and `isbn` are supported.
 - `ebook` is accepted and normalized to `book` in `data/library.json`.
+- `paper` is accepted and normalized to `article` in `data/library.json`.
 - Do not put `|` characters inside cell text.
 
 Cover precedence:
