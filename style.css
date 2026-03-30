@@ -647,19 +647,26 @@ body.homepage .system-specs {
    7. LIBRARY PAGE
    ========================================= */
 body.library-page {
-    --lib-bg: #f5f1e8;
-    --card-bg: #fff9ef;
-    --ink: #0d0d0d;
+    --bg-00: #090909;
+    --bg-10: #12110f;
+    --bg-20: #1b1814;
+    --surface-10: #23201b;
+    --rule: #3a332a;
+    --text-strong: #f4efe5;
+    --text-muted: #b7aea1;
     --accent-orange: #ff4f00;
-    --accent-cyan: #00c7ff;
-    --accent-cyan-ink: #007799;
-    --rail-h: 38px;
+    --accent-orange-deep: #a23812;
     --lift-y: -4px;
     --dur-fast: 160ms;
     background:
-        radial-gradient(circle at 16% -12%, rgba(255, 79, 0, 0.12) 0, rgba(255, 79, 0, 0) 48%),
-        linear-gradient(180deg, #f8f4ea 0%, var(--lib-bg) 45%, #efe9df 100%);
-    color: var(--ink);
+        radial-gradient(circle at 86% -18%, color-mix(in oklab, var(--accent-orange) 22%, transparent) 0%, transparent 52%),
+        linear-gradient(
+            180deg,
+            color-mix(in oklab, var(--bg-10) 58%, var(--bg-00) 42%) 0%,
+            var(--bg-00) 46%,
+            color-mix(in oklab, var(--bg-20) 44%, var(--bg-00) 56%) 100%
+        );
+    color: var(--text-strong);
     font-family: "IBM Plex Mono", "JetBrains Mono", "Courier New", monospace;
     overflow: auto;
     cursor: default !important;
@@ -677,24 +684,25 @@ body.library-page a {
     min-height: 100vh;
     display: grid;
     grid-template-columns: 300px 1fr 340px;
-    background: transparent;
+    background: var(--bg-00);
 }
 
 .library-sidebar {
-    border-right: 3px solid var(--ink);
+    border-right: 3px solid var(--rule);
     padding: 1.8rem 1.4rem;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    background: color-mix(in oklab, #ffffff 85%, var(--lib-bg) 15%);
+    background: var(--bg-10);
     overflow: visible;
     contain: none;
     animation: library-panel-rise 500ms cubic-bezier(0.18, 0.88, 0.3, 1) both;
 }
 
 .library-home-link {
-    color: var(--ink) !important;
-    border: 2px solid var(--ink);
+    color: var(--text-strong) !important;
+    border: 2px solid var(--rule);
+    background: var(--surface-10);
     display: inline-block;
     width: fit-content;
     font-weight: 800;
@@ -708,11 +716,17 @@ body.library-page a {
 .library-home-link:hover,
 .library-home-link:focus-visible {
     background: var(--accent-orange);
-    color: #ffffff !important;
+    border-color: var(--accent-orange);
+    color: var(--text-strong) !important;
+}
+
+.library-home-link:focus-visible {
+    outline: 2px solid var(--accent-orange);
+    outline-offset: 2px;
 }
 
 .library-header {
-    border-bottom: 4px solid var(--ink);
+    border-bottom: 4px solid var(--rule);
     padding-bottom: 0.92rem;
 }
 
@@ -723,6 +737,7 @@ body.library-page a {
     letter-spacing: -0.06em;
     line-height: 0.84;
     text-transform: uppercase;
+    color: var(--text-strong);
     animation: none;
 }
 
@@ -730,7 +745,7 @@ body.library-page a {
     margin-top: 0.55rem;
     display: inline-block;
     background: var(--accent-orange);
-    color: #ffffff;
+    color: var(--text-strong);
     font-size: 0.74rem;
     font-family: "Arial Black", "Impact", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 900;
@@ -749,15 +764,16 @@ body.library-page a {
     display: flex;
     justify-content: space-between;
     font-size: 0.74rem;
-    border-bottom: 2px solid rgba(13, 13, 13, 0.88);
+    border-bottom: 2px solid var(--rule);
     padding-bottom: 0.2rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     font-weight: 700;
+    color: var(--text-muted);
 }
 
 .filter-title span:last-child {
-    color: var(--accent-cyan-ink);
+    color: var(--text-muted);
 }
 
 .filter-list {
@@ -775,20 +791,21 @@ body.library-page a {
     gap: 0.45rem;
     padding: 0.1rem 0;
     font-size: 0.82rem;
-    color: var(--ink);
+    color: var(--text-muted);
     cursor: pointer;
     font-family: "IBM Plex Mono", "JetBrains Mono", "Courier New", monospace;
     transition: color var(--dur-fast) ease;
 }
 
 .filter-item:hover {
-    color: var(--accent-orange);
+    color: var(--text-strong);
 }
 
 .filter-box {
     width: 12px;
     height: 12px;
-    border: 1px solid var(--ink);
+    border: 1px solid var(--rule);
+    background: var(--bg-20);
     display: inline-block;
     flex-shrink: 0;
 }
@@ -805,9 +822,9 @@ body.library-page a {
 
 .search-input,
 .sort-select {
-    border: 2px solid var(--ink);
-    background: #ffffff;
-    color: var(--ink);
+    border: 2px solid var(--rule);
+    background: var(--surface-10);
+    color: var(--text-strong);
     font-family: "IBM Plex Mono", "JetBrains Mono", "Courier New", monospace;
     font-size: 0.82rem;
     padding: 0.5rem;
@@ -817,24 +834,24 @@ body.library-page a {
 .sort-select:focus {
     outline: 2px solid var(--accent-orange);
     outline-offset: 2px;
-    box-shadow: 0 0 0 3px rgba(0, 199, 255, 0.2);
 }
 
 .library-sync-note {
     margin-top: auto;
     font-size: 0.67rem;
     line-height: 1.45;
-    color: rgba(13, 13, 13, 0.68);
+    color: var(--text-muted);
 }
 
 .library-sync-note code {
     font-size: 0.65rem;
-    color: var(--accent-cyan-ink);
+    color: var(--accent-orange-deep);
     font-weight: 700;
 }
 
 .library-main {
     padding: 2.5rem 3rem;
+    background: var(--bg-00);
     overflow: visible;
     display: flex;
     flex-direction: column;
@@ -848,7 +865,7 @@ body.library-page a {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    border-bottom: 3px solid var(--ink);
+    border-bottom: 3px solid var(--rule);
     padding-bottom: 0.5rem;
 }
 
@@ -859,13 +876,14 @@ body.library-page a {
     font-size: clamp(2.2rem, 3.4vw, 2.95rem);
     font-weight: 900;
     line-height: 0.92;
+    color: var(--text-strong);
 }
 
 .library-main-header span {
     font-size: 0.76rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--accent-cyan-ink);
+    color: var(--text-muted);
     font-weight: 700;
 }
 
@@ -903,19 +921,19 @@ body.library-page a {
     padding: 0.6rem 0.56rem;
     background: linear-gradient(
         152deg,
-        color-mix(in oklab, var(--topic-accent, #1f2bff) 26%, #ffffff 74%) 0%,
-        color-mix(in oklab, var(--topic-accent, #1f2bff) 11%, var(--lib-bg) 89%) 100%
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 14%, var(--surface-10) 86%) 0%,
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 8%, var(--bg-20) 92%) 100%
     );
     border: none;
     border-radius: 0;
-    box-shadow: inset 0 0 0 1px rgba(13, 13, 13, 0.2);
+    box-shadow: inset 0 0 0 1px var(--rule);
     transition: box-shadow var(--dur-fast) ease;
 }
 
 .cover-item:hover,
 .cover-item:focus-within {
     z-index: 10;
-    box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--accent-orange) 42%, rgba(13, 13, 13, 0.2) 58%);
+    box-shadow: inset 0 0 0 2px var(--accent-orange-deep);
 }
 
 .cover-card {
@@ -947,7 +965,7 @@ body.library-page a {
     aspect-ratio: 2 / 3;
     border-radius: 0;
     border: none;
-    background: #efeee8;
+    background: var(--bg-20);
     overflow: hidden;
 }
 
@@ -957,7 +975,7 @@ body.library-page a {
     object-fit: cover;
     object-position: center 42%;
     display: block;
-    background: #e6e4de;
+    background: var(--bg-20);
 }
 
 .cover-fallback {
@@ -968,7 +986,7 @@ body.library-page a {
     justify-content: flex-end;
     gap: 0.35rem;
     padding: 0.68rem 0.56rem;
-    background: linear-gradient(160deg, #fbfaf3 0%, #f1ede0 100%);
+    background: linear-gradient(160deg, var(--surface-10) 0%, var(--bg-20) 100%);
 }
 
 .cover-fallback::before {
@@ -978,7 +996,7 @@ body.library-page a {
     right: 0;
     top: 0;
     height: 5px;
-    background: var(--topic-accent, #1f2bff);
+    background: var(--accent-orange);
 }
 
 .cover-fallback strong {
@@ -989,7 +1007,7 @@ body.library-page a {
     line-height: 1.1;
     letter-spacing: -0.01em;
     text-transform: uppercase;
-    color: rgba(21, 21, 21, 0.94);
+    color: var(--text-strong);
 }
 
 .cover-fallback small {
@@ -998,7 +1016,7 @@ body.library-page a {
     letter-spacing: 0.08em;
     line-height: 1.22;
     text-transform: uppercase;
-    color: rgba(21, 21, 21, 0.74);
+    color: var(--text-muted);
 }
 
 .cover-audio-chip {
@@ -1010,9 +1028,9 @@ body.library-page a {
     text-transform: uppercase;
     line-height: 1;
     padding: 0.16rem 0.24rem;
-    border: 1px solid rgba(13, 13, 13, 0.56);
-    background: rgba(255, 255, 255, 0.92);
-    color: rgba(13, 13, 13, 0.9);
+    border: 1px solid var(--rule);
+    background: color-mix(in oklab, var(--bg-10) 72%, var(--bg-20) 28%);
+    color: var(--text-muted);
 }
 
 .article-poster {
@@ -1022,26 +1040,42 @@ body.library-page a {
     grid-template-rows: auto 1fr auto auto auto;
     gap: 0.4rem;
     padding: 0.58rem 0.56rem 0.64rem;
-    background: linear-gradient(144deg, #fff7e8 0%, #efece2 100%);
+    background: linear-gradient(
+        144deg,
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 12%, var(--surface-10) 88%) 0%,
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 8%, var(--bg-20) 92%) 100%
+    );
 }
 
 .article-poster.poster-v0 {
-    background: linear-gradient(138deg, color-mix(in oklab, var(--topic-accent) 38%, #ffffff 62%) 0%, #f4efe4 100%);
+    background: linear-gradient(
+        138deg,
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 14%, var(--surface-10) 86%) 0%,
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 8%, var(--bg-20) 92%) 100%
+    );
 }
 
 .article-poster.poster-v1 {
-    background: linear-gradient(162deg, #faf2ff 0%, color-mix(in oklab, var(--topic-accent) 26%, #ffffff 74%) 100%);
+    background: linear-gradient(
+        162deg,
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 12%, var(--surface-10) 88%) 0%,
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 10%, var(--bg-20) 90%) 100%
+    );
 }
 
 .article-poster.poster-v2 {
-    background: linear-gradient(160deg, #fff5ef 0%, color-mix(in oklab, var(--topic-accent) 31%, #ffffff 69%) 100%);
+    background: linear-gradient(
+        160deg,
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 10%, var(--surface-10) 90%) 0%,
+        color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 7%, var(--bg-20) 93%) 100%
+    );
 }
 
 .poster-kicker {
     font-size: 0.47rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--accent-cyan-ink);
+    color: var(--text-muted);
 }
 
 .poster-title {
@@ -1050,7 +1084,7 @@ body.library-page a {
     line-height: 1.02;
     letter-spacing: -0.01em;
     text-transform: uppercase;
-    color: rgba(21, 21, 21, 0.95);
+    color: var(--text-strong);
     align-self: end;
     display: -webkit-box;
     -webkit-line-clamp: 5;
@@ -1065,8 +1099,8 @@ body.library-page a {
     text-transform: uppercase;
     line-height: 1;
     padding: 0.18rem 0.24rem;
-    border: 1px solid color-mix(in oklab, var(--accent-orange) 56%, #0d0d0d 44%);
-    background: rgba(255, 255, 255, 0.86);
+    border: 1px solid var(--accent-orange-deep);
+    background: color-mix(in oklab, var(--accent-orange-deep) 14%, var(--surface-10) 86%);
     color: var(--accent-orange);
     font-weight: 700;
 }
@@ -1075,7 +1109,7 @@ body.library-page a {
     font-size: 0.5rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(21, 21, 21, 0.68);
+    color: var(--text-muted);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1085,14 +1119,14 @@ body.library-page a {
     height: 5px;
     width: 100%;
     background: var(--accent-orange);
-    box-shadow: 0 0 0 1px rgba(21, 21, 21, 0.16) inset;
+    box-shadow: 0 0 0 1px color-mix(in oklab, var(--accent-orange-deep) 65%, transparent 35%) inset;
 }
 
 .poster-subject {
     font-size: 0.5rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(21, 21, 21, 0.72);
+    color: var(--text-muted);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1105,23 +1139,19 @@ body.library-page a {
     border-radius: 50%;
     right: -24px;
     top: -24px;
-    background: color-mix(in oklab, var(--topic-accent) 56%, #ffffff 44%);
-    opacity: 0.65;
+    background: color-mix(in oklab, var(--topic-accent, var(--accent-orange-deep)) 26%, var(--bg-20) 74%);
+    opacity: 0.56;
     pointer-events: none;
 }
 
 .cover-item.audio-item .cover-audio-chip {
     border-color: var(--accent-orange);
-    color: rgba(13, 13, 13, 0.92);
+    color: var(--text-strong);
 }
 
 .cover-item:focus-visible .cover-card {
     outline: 2px solid var(--accent-orange);
     outline-offset: 2px;
-}
-
-.cover-item.selected .cover-card:focus-visible {
-    outline-color: var(--accent-cyan);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1144,17 +1174,17 @@ body.library-page a {
 }
 
 .library-empty {
-    border: 2px dashed var(--accent-orange);
-    background: #ffffff;
-    color: var(--ink);
+    border: 2px dashed var(--accent-orange-deep);
+    background: var(--bg-20);
+    color: var(--text-muted);
     padding: 1rem;
     font-size: 0.84rem;
 }
 
 .library-detail {
-    border-left: 3px solid var(--ink);
+    border-left: 3px solid var(--rule);
     padding: 2.5rem 1.5rem;
-    background: #fffdf7;
+    background: var(--bg-20);
     overflow: visible;
     contain: none;
     position: relative;
@@ -1169,7 +1199,7 @@ body.library-page a {
     right: 0;
     top: 0;
     height: 6px;
-    background: linear-gradient(90deg, var(--accent-orange) 0%, color-mix(in oklab, var(--accent-cyan) 62%, #0d0d0d 38%) 100%);
+    background: var(--accent-orange);
 }
 
 .library-detail h3 {
@@ -1179,6 +1209,7 @@ body.library-page a {
     text-transform: uppercase;
     letter-spacing: -0.04em;
     margin-bottom: 0.9rem;
+    color: var(--text-strong);
 }
 
 .detail-content {
@@ -1187,6 +1218,7 @@ body.library-page a {
     display: flex;
     flex-direction: column;
     gap: 0.55rem;
+    color: var(--text-muted);
 }
 
 .detail-content h4 {
@@ -1195,6 +1227,7 @@ body.library-page a {
     text-transform: uppercase;
     letter-spacing: -0.02em;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--text-strong);
 }
 
 .detail-content p {
@@ -1203,17 +1236,18 @@ body.library-page a {
 
 .detail-content strong {
     font-weight: 700;
-    color: var(--accent-orange);
+    color: var(--accent-orange-deep);
 }
 
 .detail-link {
     margin-top: 0.3rem;
-    border: 2px solid var(--ink);
+    border: 2px solid var(--rule);
+    background: var(--surface-10);
     width: fit-content;
     font-size: 0.75rem !important;
     letter-spacing: 0.09em;
     padding: 0.44rem 0.58rem;
-    color: var(--ink) !important;
+    color: var(--text-strong) !important;
     text-transform: uppercase;
     font-weight: 700;
     transition: background var(--dur-fast) ease, color var(--dur-fast) ease, border-color var(--dur-fast) ease;
@@ -1222,11 +1256,11 @@ body.library-page a {
 .detail-link:hover {
     background: var(--accent-orange);
     border-color: var(--accent-orange);
-    color: #ffffff !important;
+    color: var(--text-strong) !important;
 }
 
 .detail-link:focus-visible {
-    outline: 2px solid var(--accent-cyan);
+    outline: 2px solid var(--accent-orange);
     outline-offset: 2px;
 }
 
@@ -1255,7 +1289,7 @@ body.library-page a {
     .library-detail {
         grid-column: 1 / -1;
         border-left: none;
-        border-top: 3px solid var(--ink);
+        border-top: 3px solid var(--rule);
         padding: 1.2rem 1.4rem;
     }
 }
@@ -1273,7 +1307,7 @@ body.library-page a {
 
     .library-sidebar {
         border-right: none;
-        border-bottom: 3px solid var(--ink);
+        border-bottom: 3px solid var(--rule);
         padding: 1.2rem;
         max-height: none;
     }
