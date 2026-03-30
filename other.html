@@ -96,6 +96,24 @@
         };
         const BALANCED_HUE_WHEEL = [12, 38, 68, 96, 128, 166, 196, 222, 252, 286, 318, 346];
         const COVER_PLACEHOLDER_DATA_URL = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+        const KNOWN_MISSING_OPENLIB_ISBNS = new Set([
+            '9780375718943',
+            '9780316421140',
+            '9780811227629',
+            '9781035039210',
+            '9780143442547',
+            '9780141032139',
+            '9780544456259',
+            '9781439569740',
+            '9780375726054',
+            '9781913547875',
+            '9798590336197',
+            '9780385354301',
+            '9780004216652',
+            '9780593655900',
+            '9781090403681'
+        ]);
+        const failedCoverUrls = new Set();
 
         const state = {
             items: [],
@@ -312,15 +330,58 @@
             return '';
         }
 
+        function normalizeIsbn(value) {
+            return normalizeText(value).replace(/[^0-9Xx]/g, '').toUpperCase();
+        }
+
+        function extractOpenLibraryIsbn(coverUrl) {
+            const raw = normalizeText(coverUrl);
+            if (!raw) {
+                return '';
+            }
+            const match = raw.match(/covers\.openlibrary\.org\/b\/isbn\/([^/?#-]+)-[SML]\.jpg/i);
+            if (!match) {
+                return '';
+            }
+            try {
+                return normalizeIsbn(decodeURIComponent(match[1]));
+            } catch (error) {
+                return normalizeIsbn(match[1]);
+            }
+        }
+
+        function isKnownMissingOpenLibraryCover(coverUrl) {
+            const isbn = extractOpenLibraryIsbn(coverUrl);
+            return Boolean(isbn && KNOWN_MISSING_OPENLIB_ISBNS.has(isbn));
+        }
+
+        function rememberFailedCoverUrl(coverUrl) {
+            const normalized = normalizeText(coverUrl);
+            if (!normalized) {
+                return;
+            }
+            failedCoverUrls.add(normalized);
+        }
+
         function getInitialCoverUrl(rawItem) {
             const manualCover = normalizeText(rawItem.cover_image || rawItem.cover_url || rawItem.cover || rawItem.image);
             if (manualCover) {
+                if (failedCoverUrls.has(manualCover) || isKnownMissingOpenLibraryCover(manualCover)) {
+                    return '';
+                }
                 return manualCover;
             }
 
-            const isbn = normalizeText(rawItem.isbn);
+            const isbn = normalizeIsbn(rawItem.isbn);
             if ((rawItem.format === 'book' || rawItem.format === 'audiobook') && isbn) {
-                return 'https://covers.openlibrary.org/b/isbn/' + encodeURIComponent(isbn) + '-M.jpg?default=false';
+                if (KNOWN_MISSING_OPENLIB_ISBNS.has(isbn)) {
+                    return '';
+                }
+                const derivedCoverUrl = 'https://covers.openlibrary.org/b/isbn/' + encodeURIComponent(isbn) + '-M.jpg?default=false';
+                if (failedCoverUrls.has(derivedCoverUrl)) {
+                    return '';
+                }
+                return derivedCoverUrl;
             }
 
             if (rawItem.format === 'podcast') {
@@ -580,7 +641,16 @@
                         ? 'src="' + COVER_PLACEHOLDER_DATA_URL + '" data-src="' + escapeAttr(coverUrl) + '"'
                         : 'src="' + escapeAttr(coverUrl) + '"';
                     const deferredClass = shouldDefer ? ' deferred' : '';
-                    surfaceContent = '<img class="cover-image' + deferredClass + '" ' + srcAttr + ' alt="Cover for ' + escapeAttr(item.title) + '" loading="' + loadingStrategy + '" fetchpriority="' + fetchPriority + '" decoding="async" width="232" height="348" data-fallback-title="' + fallbackTitleAttr + '" data-fallback-author="' + fallbackAuthorAttr + '" data-fallback-subject="' + fallbackSubjectAttr + '">';
+                    const fallbackMarkup = [
+                        '<span class="cover-fallback">',
+                            '<strong>' + fallbackTitle + '</strong>',
+                            '<small>' + safeAuthor + '</small>',
+                            '<small>' + safeSubject + '</small>',
+                        '</span>'
+                    ].join('');
+                    surfaceContent =
+                        fallbackMarkup +
+                        '<img class="cover-image' + deferredClass + '" ' + srcAttr + ' alt="Cover for ' + escapeAttr(item.title) + '" loading="' + loadingStrategy + '" fetchpriority="' + fetchPriority + '" decoding="async" width="232" height="348" data-fallback-title="' + fallbackTitleAttr + '" data-fallback-author="' + fallbackAuthorAttr + '" data-fallback-subject="' + fallbackSubjectAttr + '">';
                 } else {
                     surfaceContent = [
                         '<span class="cover-fallback">',
@@ -760,6 +830,17 @@
             const image = event.target.closest('.cover-image');
             if (!image) {
                 return;
+            }
+            const attemptedUrl = normalizeText(image.getAttribute('data-src') || image.currentSrc || image.getAttribute('src'));
+            if (attemptedUrl) {
+                rememberFailedCoverUrl(attemptedUrl);
+            }
+            const card = image.closest('.cover-item');
+            if (card && card.dataset.id) {
+                const failedItem = state.itemById.get(card.dataset.id);
+                if (failedItem && failedItem._ui) {
+                    failedItem._ui.coverUrl = '';
+                }
             }
             const fallback = image.parentElement ? image.parentElement.querySelector('.cover-fallback') : null;
             if (fallback) {
