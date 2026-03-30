@@ -60,7 +60,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9780062407801"
   },
   {
     "id": "nothing-a-philosophical-history-2023",
@@ -378,7 +379,8 @@
     "finished": "2023-10-28",
     "rating": 5,
     "url": null,
-    "notes": "Very good book on the history of calculus."
+    "notes": "Very good book on the history of calculus.",
+    "isbn": "9780358299288"
   },
   {
     "id": "the-chip-wars-2023",
@@ -609,7 +611,8 @@
     "finished": "2020-07-17",
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9780307483041"
   },
   {
     "id": "sputnik-sweetheart-2020",
@@ -761,7 +764,8 @@
     "finished": "2019-07-01",
     "rating": 4,
     "url": null,
-    "notes": "Carhys favorite book"
+    "notes": "Carhys favorite book",
+    "isbn": "9781913547875"
   },
   {
     "id": "the-three-body-problem-2019",
@@ -891,7 +895,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9780143442547"
   },
   {
     "id": "fates-and-furies-2015",
@@ -904,7 +909,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9780099592532"
   },
   {
     "id": "grid-systems-in-graphic-design-a-visual-communication-manual-for-graphic-designers-typographers-and-three-dimensional-designers-josef-m-ller-brockmann-1981",
@@ -1035,7 +1041,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9781449843168"
   },
   {
     "id": "maintenance-of-everything-part-one-2026",
@@ -1128,7 +1135,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9780099760016"
   },
   {
     "id": "tech-revolutions-and-financial-capital-2002",

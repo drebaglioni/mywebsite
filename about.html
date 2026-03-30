@@ -35,22 +35,32 @@
 
         .about-back-link {
             position: fixed;
-            top: 1.18rem;
-            left: 1.05rem;
+            top: 1.05rem;
+            left: 1.02rem;
             z-index: 220;
             font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
-            font-size: clamp(0.98rem, 1.12vw, 1.18rem);
+            font-size: clamp(0.68rem, 0.82vw, 0.76rem);
             font-weight: 700;
-            letter-spacing: 0.09em;
+            letter-spacing: 0.11em;
             text-transform: uppercase;
             line-height: 1;
-            text-decoration: none;
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            text-underline-offset: 0.2em;
             color: #0d0d0d;
-            transition: opacity 180ms ease-in-out;
+            border: 2px solid rgba(13, 13, 13, 0.84);
+            background: rgba(243, 241, 232, 0.92);
+            padding: 0.46rem 0.66rem;
+            transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, text-decoration-color 160ms ease;
         }
 
-        .about-back-link:hover {
-            opacity: 0.6;
+        .about-back-link:hover,
+        .about-back-link:focus-visible {
+            background: #1E32D6;
+            border-color: #1E32D6;
+            color: #f3f1e8;
+            text-decoration-color: rgba(243, 241, 232, 0.72);
+            outline: none;
         }
 
         .about-shell {
@@ -357,7 +367,7 @@
     </style>
 </head>
 <body class="about-vector">
-    <a class="about-back-link" href="index.html" aria-label="Back to home">←</a>
+    <a class="about-back-link" href="index.html" aria-label="Home">Home</a>
     <main class="about-shell">
         <section class="about-index" aria-label="About index">
             <div class="about-line">
