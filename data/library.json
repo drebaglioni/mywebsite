@@ -19,9 +19,9 @@
     "isbn": "9781501139154"
   },
   {
-    "id": "how-to-reassess-your-chess-silvman-2010",
-    "title": "How to reassess your chess \\| Silvman",
-    "author": null,
+    "id": "how-to-reassess-your-chess-silman-2010",
+    "title": "How to Reassess Your Chess \\| Silman",
+    "author": "Jeremy Silman",
     "format": "book",
     "subjects": [
       "chess"
@@ -31,11 +31,13 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": "Chess"
+    "notes": "Chess",
+    "cover_image": "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9781890085131.jpg",
+    "cover_source": "manual"
   },
   {
     "id": "korea-the-impossible-country-2012",
-    "title": "Korea the impossible country",
+    "title": "Korea the Impossible Country",
     "author": null,
     "format": "book",
     "subjects": [
@@ -53,7 +55,7 @@
   },
   {
     "id": "never-split-the-difference-2016",
-    "title": "Never Split the difference",
+    "title": "Never Split the Difference",
     "author": null,
     "format": "book",
     "subjects": [
@@ -72,7 +74,7 @@
   },
   {
     "id": "nothing-a-philosophical-history-2023",
-    "title": "Nothing: A philosophical history",
+    "title": "Nothing: A Philosophical History",
     "author": "Roy Sorensen",
     "format": "book",
     "subjects": [
@@ -84,7 +86,9 @@
     "finished": "2023-01-12",
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "cover_image": "https://m.media-amazon.com/images/I/41zZTkNuTWL._AC_UF1000,1000_QL80_.jpg",
+    "cover_source": "manual"
   },
   {
     "id": "peak-2023",
@@ -106,7 +110,7 @@
   },
   {
     "id": "the-body-a-guide-by-inhabitants-2019",
-    "title": "The Body: a guide by inhabitants",
+    "title": "The Body: A Guide by Inhabitants",
     "author": null,
     "format": "book",
     "subjects": [
@@ -142,7 +146,7 @@
   },
   {
     "id": "when-einstein-walked-with-godel-2024",
-    "title": "When Einstein walked with Godel",
+    "title": "When Einstein Walked with Godel",
     "author": "Jim Holt",
     "format": "book",
     "subjects": [
@@ -291,7 +295,7 @@
   },
   {
     "id": "the-shadow-of-the-wind-2001",
-    "title": "The shadow of the wind",
+    "title": "The Shadow of the Wind",
     "author": null,
     "format": "book",
     "subjects": [
@@ -367,7 +371,7 @@
   },
   {
     "id": "children-of-time-2024",
-    "title": "Children of time",
+    "title": "Children of Time",
     "author": "Adrian Tchaikovsky",
     "format": "book",
     "subjects": [
@@ -461,7 +465,7 @@
   },
   {
     "id": "all-the-wrong-moves-2023",
-    "title": "All the wrong moves",
+    "title": "All the Wrong Moves",
     "author": "Sasha Chapin",
     "format": "book",
     "subjects": [
@@ -516,8 +520,8 @@
     "isbn": "9780316421140"
   },
   {
-    "id": "snowcrash-2022",
-    "title": "Snowcrash",
+    "id": "snow-crash-2022",
+    "title": "Snow Crash",
     "author": "Neal Stephenson",
     "format": "audiobook",
     "subjects": [
@@ -535,7 +539,7 @@
   },
   {
     "id": "stormlight-chronicles-rhythm-of-war-2021",
-    "title": "Stormlight chronicles: Rhythm of War",
+    "title": "Stormlight Chronicles: Rhythm of War",
     "author": null,
     "format": "book",
     "subjects": [
@@ -571,7 +575,7 @@
   },
   {
     "id": "a-wild-sheep-chase-2021",
-    "title": "A wild Sheep chase",
+    "title": "A Wild Sheep Chase",
     "author": "Haruki Murakami",
     "format": "book",
     "subjects": [
@@ -589,7 +593,7 @@
   },
   {
     "id": "globalization-a-very-short-introduction-2021",
-    "title": "Globalization \\| A very short introduction",
+    "title": "Globalization \\| A Very Short Introduction",
     "author": null,
     "format": "book",
     "subjects": [
@@ -607,8 +611,8 @@
   },
   {
     "id": "city-planning-a-very-short-introduction-2021",
-    "title": "City Planning \\| A very short introduction",
-    "author": null,
+    "title": "City Planning \\| A Very Short Introduction",
+    "author": "Carl Abbott",
     "format": "book",
     "subjects": [
       "cities"
@@ -618,7 +622,9 @@
     "finished": "2021-03-18",
     "rating": null,
     "url": null,
-    "notes": "See Roam"
+    "notes": "See Roam",
+    "cover_image": "https://m.media-amazon.com/images/I/81+vXVuhpAL._AC_UF1000,1000_QL80_.jpg",
+    "cover_source": "manual"
   },
   {
     "id": "hamnet-2021",
@@ -626,7 +632,7 @@
     "author": null,
     "format": "book",
     "subjects": [
-      "hisorical-fiction"
+      "historical-fiction"
     ],
     "year": 2021,
     "status": "completed",
@@ -640,7 +646,7 @@
   },
   {
     "id": "broken-earth-series-the-fifth-season-2020",
-    "title": "Broken Earth Series: The fifth season",
+    "title": "Broken Earth Series: The Fifth Season",
     "author": null,
     "format": "book",
     "subjects": [
@@ -658,7 +664,7 @@
   },
   {
     "id": "stormlight-chronicles-oathbringer-2020",
-    "title": "Stormlight chronicles: Oathbringer",
+    "title": "Stormlight Chronicles: Oathbringer",
     "author": null,
     "format": "book",
     "subjects": [
@@ -759,7 +765,9 @@
     "finished": "2020-02-13",
     "rating": null,
     "url": "https://www.amazon.com/dp/B076ZHKVQP",
-    "notes": "rec by Gabe Dillon"
+    "notes": "rec by Gabe Dillon",
+    "cover_image": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1525132805i/38633526.jpg",
+    "cover_source": "manual"
   },
   {
     "id": "why-we-sleep-2020",
@@ -781,7 +789,7 @@
   },
   {
     "id": "the-name-of-the-rose-2020",
-    "title": "The name of the rose",
+    "title": "The Name of the Rose",
     "author": null,
     "format": "book",
     "subjects": [
@@ -799,7 +807,7 @@
   },
   {
     "id": "three-body-problem-death-s-end-2020",
-    "title": "Three Body Problem: Death's end",
+    "title": "Three Body Problem: Death's End",
     "author": "Liu Cixin",
     "format": "book",
     "subjects": [
@@ -835,7 +843,7 @@
   },
   {
     "id": "a-gentleman-in-moscow-2019",
-    "title": "A gentleman in Moscow",
+    "title": "A Gentleman in Moscow",
     "author": null,
     "format": "book",
     "subjects": [
@@ -853,7 +861,7 @@
   },
   {
     "id": "the-elegance-of-the-hedgehog-2019",
-    "title": "The elegance of the hedgehog",
+    "title": "The Elegance of the Hedgehog",
     "author": null,
     "format": "book",
     "subjects": [
@@ -871,7 +879,7 @@
   },
   {
     "id": "the-three-body-problem-2019",
-    "title": "The three body problem",
+    "title": "The Three Body Problem",
     "author": "Liu Cixin",
     "format": "book",
     "subjects": [
@@ -889,7 +897,7 @@
   },
   {
     "id": "station-eleven-2019",
-    "title": "Station eleven",
+    "title": "Station Eleven",
     "author": null,
     "format": "book",
     "subjects": [
@@ -907,7 +915,7 @@
   },
   {
     "id": "stormlight-chronicles-the-way-of-kings-2018",
-    "title": "Stormlight chronicles: The Way of Kings",
+    "title": "Stormlight Chronicles: The Way of Kings",
     "author": null,
     "format": "book",
     "subjects": [
@@ -959,7 +967,7 @@
   },
   {
     "id": "cartoon-history-of-the-universe-1978",
-    "title": "cartoon history of the universe",
+    "title": "Cartoon History of the Universe",
     "author": null,
     "format": "book",
     "subjects": [
@@ -977,7 +985,7 @@
   },
   {
     "id": "colorless-tsukuru-tazaki-2013",
-    "title": "Colorless tsukuru tazaki",
+    "title": "Colorless Tsukuru Tazaki",
     "author": null,
     "format": "book",
     "subjects": [],
@@ -1009,7 +1017,7 @@
   },
   {
     "id": "exit-west-2017",
-    "title": "Exit west",
+    "title": "Exit West",
     "author": null,
     "format": "book",
     "subjects": [],
@@ -1025,7 +1033,7 @@
   },
   {
     "id": "fates-and-furies-2015",
-    "title": "Fates and furies",
+    "title": "Fates and Furies",
     "author": null,
     "format": "book",
     "subjects": [],
@@ -1051,8 +1059,10 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": null,
-    "notes": "design"
+    "url": "https://ia803105.us.archive.org/29/items/GridSystemsInGraphicDesignJosefMullerBrockmann/Grid%20systems%20in%20graphic%20design%20-%20Josef%20Muller-Brockmann.pdf",
+    "notes": "design",
+    "cover_image": "https://img.btimages.net/2dp/LCB60301.jpg",
+    "cover_source": "manual"
   },
   {
     "id": "into-thin-air-a-personal-account-of-the-mt-everest-disaster-1997",
@@ -1102,11 +1112,13 @@
     "finished": null,
     "rating": null,
     "url": "https://www.newyorker.com/magazine/2019/09/23/jonathan-ledgard-believes-imagination-could-save-the-world",
-    "notes": "Rec by Soph"
+    "notes": "Rec by Soph",
+    "cover_image": "https://media.newyorker.com/photos/5d7ab703b2f2460008c096f9/master/w_1600%2Cc_limit/2019_09_23.jpg",
+    "cover_source": "manual"
   },
   {
     "id": "kafka-on-the-shore-2002",
-    "title": "Kafka on the shore",
+    "title": "Kafka on the Shore",
     "author": null,
     "format": "book",
     "subjects": [
@@ -1172,7 +1184,7 @@
   },
   {
     "id": "luka-and-the-fire-of-life-2010",
-    "title": "Luka and the fire of life",
+    "title": "Luka and the Fire of Life",
     "author": null,
     "format": "book",
     "subjects": [],
@@ -1208,7 +1220,7 @@
   },
   {
     "id": "making-and-breaking-the-grid-2002",
-    "title": "Making and breaking the grid",
+    "title": "Making and Breaking the Grid",
     "author": null,
     "format": "book",
     "subjects": [],
@@ -1224,7 +1236,7 @@
   },
   {
     "id": "making-of-a-manager-fb-2019",
-    "title": "Making of a manager (fb)",
+    "title": "Making of a Manager (fb)",
     "author": null,
     "format": "book",
     "subjects": [],
@@ -1310,7 +1322,7 @@
   },
   {
     "id": "tech-revolutions-and-financial-capital-2002",
-    "title": "Tech revolutions and financial capital",
+    "title": "Tech Revolutions and Financial Capital",
     "author": null,
     "format": "book",
     "subjects": [
@@ -1365,11 +1377,11 @@
   },
   {
     "id": "the-orphan-master-s-son-2024",
-    "title": "The Orphan Master\u2019s son",
+    "title": "The Orphan Master\u2019s Son",
     "author": "Adam Johnson",
     "format": "book",
     "subjects": [
-      "hisorical-fiction"
+      "historical-fiction"
     ],
     "year": 2024,
     "status": "queued",
@@ -1399,7 +1411,7 @@
   },
   {
     "id": "the-return-2016",
-    "title": "The return",
+    "title": "The Return",
     "author": null,
     "format": "book",
     "subjects": [],
@@ -1430,7 +1442,7 @@
   },
   {
     "id": "type-matters-2012",
-    "title": "Type matters",
+    "title": "Type Matters",
     "author": null,
     "format": "book",
     "subjects": [],
@@ -1446,7 +1458,7 @@
   },
   {
     "id": "when-the-going-was-good-2025",
-    "title": "When the going was good",
+    "title": "When the Going Was Good",
     "author": "Graydon Carter",
     "format": "book",
     "subjects": [
@@ -1464,7 +1476,7 @@
   },
   {
     "id": "why-we-age-and-why-we-don-t-have-to-2019",
-    "title": "Why we age and why we don\u2019t have to",
+    "title": "Why We Age and Why We Don\u2019t Have To",
     "author": null,
     "format": "book",
     "subjects": [],
