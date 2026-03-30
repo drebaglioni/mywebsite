@@ -103,6 +103,7 @@
         }
 
         .about-value-home,
+        .about-value-previous,
         .about-value-social {
             display: flex;
             flex-wrap: wrap;
@@ -363,6 +364,18 @@
                 </span>
             </div>
             <div class="about-line">
+                <span class="about-key">PREVIOUS</span>
+                <span class="about-value about-value-previous">
+                    <span>PRINCETON</span>
+                    <span class="about-sep">/</span>
+                    <span>SQUARE</span>
+                    <span class="about-sep">/</span>
+                    <span>ALGOLIA</span>
+                    <span class="about-sep">/</span>
+                    <span>SOLANA</span>
+                </span>
+            </div>
+            <div class="about-line">
                 <span class="about-key">LEARNING</span>
                 <span class="about-value">KOREAN / CHESS / FRONTIER TECH</span>
             </div>
@@ -402,6 +415,7 @@
         const desktopMotionQuery = window.matchMedia('(min-width: 900px)');
         const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
         const motionOverride = new URLSearchParams(window.location.search).get('motion') === 'on';
+        const orbitSpeedMultiplier = 1.5;
         const placeTokens = Array.from(document.querySelectorAll('.place-token'));
         const placePreview = document.getElementById('aboutPlacePreview');
         const placePreviewImg = document.getElementById('aboutPlacePreviewImg');
@@ -509,8 +523,9 @@
                 const b = Number(shape.dataset.b || 0);
                 const omega = Number(shape.dataset.w || 0.1);
                 const phase = Number(shape.dataset.p || 0);
-                const xShift = orbitEnabled ? a * Math.cos((omega * time) + phase) : 0;
-                const yShift = orbitEnabled ? b * Math.sin((omega * time) + phase) : 0;
+                const orbitTime = (omega * orbitSpeedMultiplier * time) + phase;
+                const xShift = orbitEnabled ? a * Math.cos(orbitTime) : 0;
+                const yShift = orbitEnabled ? b * Math.sin(orbitTime) : 0;
 
                 shape.style.transform = `translate3d(-50%, -50%, 0) translate3d(${xShift}px, ${yShift}px, 0) rotate(${angle}deg) scale(${scale})`;
             });
