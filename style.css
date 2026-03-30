@@ -888,19 +888,6 @@ body.library-page a {
     z-index: 10;
 }
 
-.cover-item::after {
-    content: "";
-    position: absolute;
-    top: 0.44rem;
-    right: 0.44rem;
-    width: 9px;
-    height: 9px;
-    border-radius: 0;
-    background: rgba(255, 255, 255, 0.92);
-    border: 1px solid rgba(21, 21, 21, 0.2);
-    box-shadow: 0 1px 0 rgba(21, 21, 21, 0.08);
-}
-
 .cover-card {
     width: min(232px, 92%);
     filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.14));
