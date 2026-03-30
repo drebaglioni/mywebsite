@@ -54,6 +54,22 @@ python3 scripts/sync_library.py --source "/absolute/path/to/Library Export.md" -
 If the source is valid, the script prints how many entries were synced.
 If not, it shows an exact row-level error.
 
+## 3b) Optional: Conservative ISBN autofill + review flags
+Before syncing, you can auto-fill only high-confidence ISBN matches and produce review artifacts:
+
+```bash
+python3 scripts/enrich_library_metadata.py --source "/absolute/path/to/Library Export.md"
+```
+
+Outputs:
+- `.context/library_enrichment_apply_report.md` with `auto_filled`, `needs_review`, and `no_match` sections.
+- `.context/library_enrichment_review_queue.csv` for quick triage in a spreadsheet.
+
+Notes:
+- Existing `cover`/`isbn` values are never overwritten.
+- Only `book`/`ebook` rows are considered.
+- Candidate matching uses OpenLibrary only.
+
 ## 4) Publish
 After sync:
 

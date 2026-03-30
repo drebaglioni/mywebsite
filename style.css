@@ -377,17 +377,17 @@ body.homepage .quantum-layer {
     isolation: isolate;
 }
 
-body.homepage .quantum-backplane {
+body.homepage .quantum-layer::before {
+    content: "";
     position: absolute;
-    top: 16vh;
-    left: 60vw;
-    width: min(18vw, 280px);
-    height: min(56vh, 560px);
-    border-radius: 0;
-    background: rgba(0, 46, 182, 0.56);
-    opacity: 1;
-    transform: none;
+    width: min(80vw, 1180px);
+    height: min(80vw, 1180px);
+    right: -24vw;
+    top: -18vh;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 71, 255, 0.1) 0%, rgba(0, 71, 255, 0.03) 42%, rgba(0, 71, 255, 0) 74%);
     mix-blend-mode: multiply;
+    pointer-events: none;
 }
 
 body.homepage #quantumCanvasContainer {
@@ -648,18 +648,12 @@ body.homepage .system-specs {
         padding: 4px 6px;
     }
 
-    body.homepage .hero-canvas::before {
-        display: none;
-    }
-
-    body.homepage .quantum-backplane {
-        width: 31vw;
-        height: 44vh;
-        top: 22vh;
-        left: 60vw;
-        border-radius: 0;
-        opacity: 1;
-        transform: none;
+    body.homepage .quantum-layer::before {
+        width: 96vw;
+        height: 96vw;
+        right: -34vw;
+        top: -2vh;
+        opacity: 0.7;
     }
 
     body.homepage #quantumCanvasContainer {

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Enrich Obsidian library table with high-confidence ISBN matches."""
+"""Enrich Obsidian library table with conservative ISBN autofill + review flags."""
 
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import re
 import unicodedata
@@ -19,7 +20,21 @@ from urllib.request import urlopen
 
 TABLE_SECTION_HEADER = "## export"
 OPEN_LIBRARY_ENDPOINT = "https://openlibrary.org/search.json"
-DEFAULT_REPORT_PATH = ".context/library_enrichment_review.md"
+DEFAULT_APPLY_REPORT_PATH = ".context/library_enrichment_apply_report.md"
+DEFAULT_QUEUE_CSV_PATH = ".context/library_enrichment_review_queue.csv"
+
+AUTO_FILL_MIN_SCORE = 0.96
+AUTO_FILL_MIN_MARGIN = 0.01
+TOP_CANDIDATES_IN_REPORT = 3
+
+# Guardrails: these tokens often indicate bundles/audio junk results.
+EXCLUDED_CANDIDATE_TOKENS = (
+    "audiofy",
+    "chips",
+    "3 book set",
+    "box set",
+    "book set",
+)
 
 
 @dataclass
@@ -35,22 +50,25 @@ class Candidate:
 
 
 @dataclass
-class ReviewItem:
+class RowDecision:
     title: str
     author: str
     year: str
+    status: str  # auto_filled | needs_review | no_match
     reason: str
+    chosen_isbn: str
+    top_score: float
+    margin: float
     top_candidates: list[Candidate]
+    line_no: int
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Auto-fill high-confidence ISBNs for Obsidian library table rows.")
+    parser = argparse.ArgumentParser(description="Auto-fill likely ISBNs and generate review flags for Obsidian library rows.")
     parser.add_argument("--source", required=True, help="Absolute path to Obsidian Library.md")
-    parser.add_argument("--report", default=DEFAULT_REPORT_PATH, help="Path for markdown review report")
-    parser.add_argument("--min-score-author", type=float, default=0.90, help="Minimum score when author exists")
-    parser.add_argument("--min-score-title-only", type=float, default=0.97, help="Minimum score when author missing")
-    parser.add_argument("--min-margin-author", type=float, default=0.07, help="Minimum top-vs-next score margin with author")
-    parser.add_argument("--min-margin-title-only", type=float, default=0.12, help="Minimum top-vs-next score margin without author")
+    parser.add_argument("--report", default=DEFAULT_APPLY_REPORT_PATH, help="Path for markdown apply report")
+    parser.add_argument("--queue-csv", default=DEFAULT_QUEUE_CSV_PATH, help="Path for review queue CSV")
+    parser.add_argument("--limit", type=int, default=8, help="OpenLibrary search result limit per row")
     return parser.parse_args()
 
 
@@ -191,11 +209,24 @@ def query_open_library(title: str, author: str, limit: int = 8) -> list[dict[str
     return [doc for doc in docs if isinstance(doc, dict)]
 
 
+def candidate_is_excluded(query_title: str, candidate_title: str) -> tuple[bool, str]:
+    query_norm = normalize_for_match(query_title)
+    candidate_norm = normalize_for_match(candidate_title)
+    for token in EXCLUDED_CANDIDATE_TOKENS:
+        if token in candidate_norm and token not in query_norm:
+            return True, f"excluded token '{token}'"
+    return False, ""
+
+
 def score_candidates(title: str, author: str, year: int | None, docs: list[dict[str, Any]]) -> list[Candidate]:
     scored: list[Candidate] = []
     for doc in docs:
         candidate_title = str(doc.get("title") or "").strip()
         if not candidate_title:
+            continue
+
+        excluded, _ = candidate_is_excluded(title, candidate_title)
+        if excluded:
             continue
 
         candidate_authors = doc.get("author_name")
@@ -238,35 +269,256 @@ def score_candidates(title: str, author: str, year: int | None, docs: list[dict[
     return scored
 
 
-def should_accept(best: Candidate, second_best: Candidate | None, has_author: bool, args: argparse.Namespace) -> tuple[bool, str]:
-    margin = best.score - (second_best.score if second_best else 0.0)
-    if has_author:
-        if best.score < args.min_score_author:
-            return False, f"score {best.score:.3f} below threshold"
-        if best.title_ratio < 0.88:
-            return False, f"title ratio {best.title_ratio:.3f} below threshold"
-        if best.author_ratio < 0.82:
-            return False, f"author ratio {best.author_ratio:.3f} below threshold"
-        if margin < args.min_margin_author:
-            return False, f"top margin {margin:.3f} below threshold"
-        return True, "accepted with author"
+def primary_author_key(author: str) -> str:
+    if not author:
+        return ""
+    first = re.split(r"[;,]", author)[0].strip()
+    return normalize_for_match(first)
 
-    if best.score < args.min_score_title_only:
-        return False, f"title-only score {best.score:.3f} below threshold"
-    if best.title_ratio < 0.95:
-        return False, f"title-only ratio {best.title_ratio:.3f} below threshold"
-    if margin < args.min_margin_title_only:
-        return False, f"title-only margin {margin:.3f} below threshold"
-    return True, "accepted title-only"
+
+def same_work_key(title: str, author: str) -> tuple[str, str]:
+    return normalize_for_match(title), primary_author_key(author)
+
+
+def is_same_work(candidate_a: Candidate, candidate_b: Candidate) -> bool:
+    a_title, a_author = same_work_key(candidate_a.title, candidate_a.author)
+    b_title, b_author = same_work_key(candidate_b.title, candidate_b.author)
+
+    if not a_title or not b_title:
+        return False
+    title_match = a_title == b_title or SequenceMatcher(None, a_title, b_title).ratio() >= 0.985
+    if not title_match:
+        return False
+
+    if a_author and b_author:
+        return a_author == b_author
+    return True
+
+
+def exact_title_match(query_title: str, candidate_title: str) -> bool:
+    return normalize_for_match(query_title) == normalize_for_match(candidate_title)
+
+
+def classify_decision(
+    title: str,
+    author: str,
+    year_text: str,
+    line_no: int,
+    candidates: list[Candidate],
+) -> RowDecision:
+    display_author = author or "Unknown"
+    display_year = year_text or "Unknown"
+
+    if not candidates:
+        return RowDecision(
+            title=title,
+            author=display_author,
+            year=display_year,
+            status="no_match",
+            reason="no candidates from OpenLibrary",
+            chosen_isbn="",
+            top_score=0.0,
+            margin=0.0,
+            top_candidates=[],
+            line_no=line_no,
+        )
+
+    best = candidates[0]
+    second = candidates[1] if len(candidates) > 1 else None
+    margin = best.score - (second.score if second else 0.0)
+    has_author = bool(author.strip())
+
+    if best.score < AUTO_FILL_MIN_SCORE:
+        return RowDecision(
+            title=title,
+            author=display_author,
+            year=display_year,
+            status="needs_review",
+            reason=f"top score {best.score:.3f} below {AUTO_FILL_MIN_SCORE:.2f}",
+            chosen_isbn="",
+            top_score=best.score,
+            margin=margin,
+            top_candidates=candidates[:TOP_CANDIDATES_IN_REPORT],
+            line_no=line_no,
+        )
+
+    if has_author and best.author_ratio < 0.82:
+        return RowDecision(
+            title=title,
+            author=display_author,
+            year=display_year,
+            status="needs_review",
+            reason=f"author ratio {best.author_ratio:.3f} below 0.82",
+            chosen_isbn="",
+            top_score=best.score,
+            margin=margin,
+            top_candidates=candidates[:TOP_CANDIDATES_IN_REPORT],
+            line_no=line_no,
+        )
+
+    if not has_author and not exact_title_match(title, best.title):
+        return RowDecision(
+            title=title,
+            author=display_author,
+            year=display_year,
+            status="needs_review",
+            reason="title-only match not exact after normalization",
+            chosen_isbn="",
+            top_score=best.score,
+            margin=margin,
+            top_candidates=candidates[:TOP_CANDIDATES_IN_REPORT],
+            line_no=line_no,
+        )
+
+    if margin >= AUTO_FILL_MIN_MARGIN:
+        return RowDecision(
+            title=title,
+            author=display_author,
+            year=display_year,
+            status="auto_filled",
+            reason=f"accepted: margin {margin:.3f} >= {AUTO_FILL_MIN_MARGIN:.2f}",
+            chosen_isbn=best.isbn,
+            top_score=best.score,
+            margin=margin,
+            top_candidates=candidates[:TOP_CANDIDATES_IN_REPORT],
+            line_no=line_no,
+        )
+
+    if second and is_same_work(best, second):
+        return RowDecision(
+            title=title,
+            author=display_author,
+            year=display_year,
+            status="auto_filled",
+            reason="accepted: same-work edition tie",
+            chosen_isbn=best.isbn,
+            top_score=best.score,
+            margin=margin,
+            top_candidates=candidates[:TOP_CANDIDATES_IN_REPORT],
+            line_no=line_no,
+        )
+
+    return RowDecision(
+        title=title,
+        author=display_author,
+        year=display_year,
+        status="needs_review",
+        reason=f"margin {margin:.3f} below {AUTO_FILL_MIN_MARGIN:.2f}",
+        chosen_isbn="",
+        top_score=best.score,
+        margin=margin,
+        top_candidates=candidates[:TOP_CANDIDATES_IN_REPORT],
+        line_no=line_no,
+    )
 
 
 def build_row(cells: list[str]) -> str:
     return "| " + " | ".join(cells) + " |"
 
 
-def run(args: argparse.Namespace) -> tuple[int, int, int, int]:
+def write_queue_csv(path: Path, decisions: list[RowDecision]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(["title", "author", "year", "status", "chosen_isbn", "top_score", "margin", "reason"])
+        for decision in decisions:
+            writer.writerow([
+                decision.title,
+                decision.author,
+                decision.year,
+                decision.status,
+                decision.chosen_isbn,
+                f"{decision.top_score:.3f}" if decision.top_score else "",
+                f"{decision.margin:.3f}" if decision.top_candidates else "",
+                decision.reason,
+            ])
+
+
+def write_apply_report(
+    path: Path,
+    source_path: Path,
+    rows_considered: int,
+    already_filled: int,
+    decisions: list[RowDecision],
+) -> None:
+    status_counts = {
+        "auto_filled": sum(1 for d in decisions if d.status == "auto_filled"),
+        "needs_review": sum(1 for d in decisions if d.status == "needs_review"),
+        "no_match": sum(1 for d in decisions if d.status == "no_match"),
+    }
+    auto_filled = [d for d in decisions if d.status == "auto_filled"]
+    needs_review = [d for d in decisions if d.status == "needs_review"]
+    no_match = [d for d in decisions if d.status == "no_match"]
+
+    lines: list[str] = []
+    lines.append("# Library Enrichment Apply Report")
+    lines.append("")
+    lines.append(f"- Generated at: {datetime.now(timezone.utc).isoformat()}")
+    lines.append(f"- Source: `{source_path}`")
+    lines.append(f"- Book rows considered: **{rows_considered}**")
+    lines.append(f"- Already had `cover`/`isbn`: **{already_filled}**")
+    lines.append(f"- Auto-filled: **{status_counts['auto_filled']}**")
+    lines.append(f"- Needs review: **{status_counts['needs_review']}**")
+    lines.append(f"- No match: **{status_counts['no_match']}**")
+    lines.append("")
+
+    lines.append("## Auto Filled")
+    lines.append("")
+    if not auto_filled:
+        lines.append("No auto-filled rows.")
+    else:
+        for item in auto_filled:
+            lines.append(f"### {item.title} ({item.year})")
+            lines.append(f"- Author: {item.author}")
+            lines.append(f"- Chosen ISBN: `{item.chosen_isbn}`")
+            lines.append(f"- Score: `{item.top_score:.3f}`")
+            lines.append(f"- Margin: `{item.margin:.3f}`")
+            lines.append(f"- Reason: {item.reason}")
+            lines.append(f"- Line: `{item.line_no}`")
+            if item.top_candidates:
+                best = item.top_candidates[0]
+                year_label = str(best.year) if best.year is not None else "?"
+                lines.append(f"- Picked candidate: `{best.title}` by `{best.author or 'Unknown'}` ({year_label})")
+            lines.append("")
+
+    lines.append("## Needs Review")
+    lines.append("")
+    if not needs_review:
+        lines.append("No rows need review.")
+    else:
+        for item in needs_review:
+            lines.append(f"### {item.title} ({item.year})")
+            lines.append(f"- Author: {item.author}")
+            lines.append(f"- Reason: {item.reason}")
+            lines.append(f"- Top score: `{item.top_score:.3f}`")
+            lines.append(f"- Margin: `{item.margin:.3f}`")
+            lines.append(f"- Line: `{item.line_no}`")
+            if item.top_candidates:
+                lines.append("- Top candidates:")
+                for candidate in item.top_candidates:
+                    year_label = str(candidate.year) if candidate.year is not None else "?"
+                    lines.append(
+                        f"  - `{candidate.title}` by `{candidate.author or 'Unknown'}` ({year_label}) "
+                        f"ISBN `{candidate.isbn}` score `{candidate.score:.3f}`"
+                    )
+            lines.append("")
+
+    lines.append("## No Match")
+    lines.append("")
+    if not no_match:
+        lines.append("No no-match rows.")
+    else:
+        for item in no_match:
+            lines.append(f"- {item.title} ({item.year}) — {item.author} [line {item.line_no}]")
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+
+
+def run(args: argparse.Namespace) -> tuple[int, int, int, int, int]:
     source_path = Path(args.source).expanduser().resolve()
     report_path = Path(args.report).expanduser().resolve()
+    queue_csv_path = Path(args.queue_csv).expanduser().resolve()
     lines = source_path.read_text(encoding="utf-8").splitlines()
 
     export_index = -1
@@ -299,14 +551,12 @@ def run(args: argparse.Namespace) -> tuple[int, int, int, int]:
     format_idx = header_cells.index("format")
     year_idx = header_cells.index("year")
 
-    cache: dict[tuple[str, str], list[Candidate]] = {}
-    review_items: list[ReviewItem] = []
+    cache: dict[tuple[str, str, int | None], list[Candidate]] = {}
+    decisions: list[RowDecision] = []
 
-    total_candidates = 0
-    filled_rows = 0
-    already_filled = 0
     rows_considered = 0
-    updated_line_indexes: list[int] = []
+    already_filled = 0
+    auto_filled = 0
 
     for row_idx in table_line_indexes[2:]:
         row_line = lines[row_idx]
@@ -331,91 +581,36 @@ def run(args: argparse.Namespace) -> tuple[int, int, int, int]:
         year_text = cells[year_idx].strip()
         year = int(year_text) if re.fullmatch(r"\d{4}", year_text) else None
 
-        cache_key = (title, author)
+        cache_key = (title, author, year)
         if cache_key not in cache:
-            docs = query_open_library(title, author)
+            docs = query_open_library(title, author, limit=args.limit)
             cache[cache_key] = score_candidates(title, author, year, docs)
         candidates = cache[cache_key]
 
-        if not candidates:
-            review_items.append(ReviewItem(
-                title=title,
-                author=author or "Unknown",
-                year=year_text or "Unknown",
-                reason="no candidates from OpenLibrary",
-                top_candidates=[],
-            ))
-            continue
+        decision = classify_decision(title, author, year_text, row_idx + 1, candidates)
+        decisions.append(decision)
 
-        total_candidates += len(candidates)
-        best = candidates[0]
-        second = candidates[1] if len(candidates) > 1 else None
-        accepted, reason = should_accept(best, second, bool(author.strip()), args)
-        if not accepted:
-            review_items.append(ReviewItem(
-                title=title,
-                author=author or "Unknown",
-                year=year_text or "Unknown",
-                reason=reason,
-                top_candidates=candidates[:3],
-            ))
-            continue
-
-        cells[isbn_idx] = best.isbn
-        lines[row_idx] = build_row(cells)
-        updated_line_indexes.append(row_idx + 1)
-        filled_rows += 1
+        if decision.status == "auto_filled" and decision.chosen_isbn:
+            cells[isbn_idx] = decision.chosen_isbn
+            lines[row_idx] = build_row(cells)
+            auto_filled += 1
 
     source_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    write_apply_report(report_path, source_path, rows_considered, already_filled, decisions)
+    write_queue_csv(queue_csv_path, decisions)
 
-    report_lines: list[str] = []
-    report_lines.append("# Library Enrichment Review")
-    report_lines.append("")
-    report_lines.append(f"- Generated at: {datetime.now(timezone.utc).isoformat()}")
-    report_lines.append(f"- Source: `{source_path}`")
-    report_lines.append(f"- Book rows considered: **{rows_considered}**")
-    report_lines.append(f"- Already had `cover`/`isbn`: **{already_filled}**")
-    report_lines.append(f"- Auto-filled ISBN rows: **{filled_rows}**")
-    report_lines.append(f"- Needs review: **{len(review_items)}**")
-    report_lines.append("")
-    if updated_line_indexes:
-        report_lines.append("## Updated Row Line Numbers")
-        report_lines.append("")
-        report_lines.append(", ".join(str(line_no) for line_no in updated_line_indexes))
-        report_lines.append("")
-
-    report_lines.append("## Needs Review")
-    report_lines.append("")
-    if not review_items:
-        report_lines.append("No unresolved rows.")
-    else:
-        for item in review_items:
-            report_lines.append(f"### {item.title} ({item.year})")
-            report_lines.append(f"- Author: {item.author}")
-            report_lines.append(f"- Reason: {item.reason}")
-            if item.top_candidates:
-                report_lines.append("- Top candidates:")
-                for candidate in item.top_candidates:
-                    year_label = str(candidate.year) if candidate.year is not None else "?"
-                    report_lines.append(
-                        f"  - `{candidate.title}` by `{candidate.author or 'Unknown'}` ({year_label}) "
-                        f"ISBN `{candidate.isbn}` score `{candidate.score:.3f}`"
-                    )
-            report_lines.append("")
-
-    report_path.parent.mkdir(parents=True, exist_ok=True)
-    report_path.write_text("\n".join(report_lines).rstrip() + "\n", encoding="utf-8")
-
-    return rows_considered, already_filled, filled_rows, len(review_items)
+    needs_review = sum(1 for d in decisions if d.status == "needs_review")
+    no_match = sum(1 for d in decisions if d.status == "no_match")
+    return rows_considered, already_filled, auto_filled, needs_review, no_match
 
 
 def main() -> int:
     args = parse_args()
-    rows_considered, already_filled, filled_rows, review_count = run(args)
+    rows_considered, already_filled, auto_filled, needs_review, no_match = run(args)
     print(
         "Rows considered: "
         f"{rows_considered} | Already filled: {already_filled} | "
-        f"Auto-filled: {filled_rows} | Needs review: {review_count}"
+        f"Auto-filled: {auto_filled} | Needs review: {needs_review} | No match: {no_match}"
     )
     return 0
 

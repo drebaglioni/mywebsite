@@ -91,7 +91,8 @@
     "finished": "2023-02-16",
     "rating": null,
     "url": "https://www.nateliason.com/notes/peak-anders-ericsson-robert-pool",
-    "notes": null
+    "notes": null,
+    "isbn": "9780544456259"
   },
   {
     "id": "the-body-a-guide-by-inhabitants-2019",
@@ -121,7 +122,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9780004216652"
   },
   {
     "id": "when-einstein-walked-with-godel-2024",
@@ -136,7 +138,8 @@
     "finished": "2024-07-28",
     "rating": null,
     "url": null,
-    "notes": "A couple different essays on math, physics and philosophy"
+    "notes": "A couple different essays on math, physics and philosophy",
+    "isbn": "9780374146702"
   },
   {
     "id": "broken-earth-series-the-obelisk-gate-2016",
@@ -187,7 +190,8 @@
     "finished": "2026-03-27",
     "rating": 5,
     "url": "https://www.joshuafoer.com/moonwalking-with-einstein",
-    "notes": "Memory-palace training memoir"
+    "notes": "Memory-palace training memoir",
+    "isbn": "9780141032139"
   },
   {
     "id": "world-models-computing-the-uncomputable-2026",
@@ -275,7 +279,8 @@
     "finished": "2025-12-03",
     "rating": null,
     "url": null,
-    "notes": "Based in Barcelona, fantasy book about authors and books and adventure"
+    "notes": "Based in Barcelona, fantasy book about authors and books and adventure",
+    "isbn": "9781439569740"
   },
   {
     "id": "library-at-mt-char-2025",
@@ -340,7 +345,8 @@
     "finished": "2024-07-28",
     "rating": 5,
     "url": null,
-    "notes": "Recommended by Austin. Great SciFi book about humans and spiders in a post Earth world"
+    "notes": "Recommended by Austin. Great SciFi book about humans and spiders in a post Earth world",
+    "isbn": "9780316452496"
   },
   {
     "id": "the-strange-library-2024",
@@ -450,7 +456,8 @@
     "finished": "2022-01-15",
     "rating": null,
     "url": null,
-    "notes": "Greek mythology. Fun but not a page turner until the end. Story of the maga Circe and how she gets exiled to her island Enea, her love for mortal people, her story with odisseo, then Penelope and her son. She chooses to live as a mortal at the end and seems happier for it."
+    "notes": "Greek mythology. Fun but not a page turner until the end. Story of the maga Circe and how she gets exiled to her island Enea, her love for mortal people, her story with odisseo, then Penelope and her son. She chooses to live as a mortal at the end and seems happier for it.",
+    "isbn": "9780316421140"
   },
   {
     "id": "snowcrash-2022",
@@ -556,7 +563,8 @@
     "finished": "2021-03-11",
     "rating": null,
     "url": null,
-    "notes": "See Roam"
+    "notes": "See Roam",
+    "isbn": "9780525657606"
   },
   {
     "id": "broken-earth-series-the-fifth-season-2020",
@@ -646,7 +654,8 @@
     "finished": "2020-04-15",
     "rating": null,
     "url": null,
-    "notes": "taylor bought it for me"
+    "notes": "taylor bought it for me",
+    "isbn": "9780525521426"
   },
   {
     "id": "la-vita-nostra-2020",
@@ -691,7 +700,8 @@
     "finished": "2020-01-10",
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9798590336197"
   },
   {
     "id": "three-body-problem-death-s-end-2020",
@@ -824,7 +834,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9780099273936"
   },
   {
     "id": "cartoon-history-of-the-universe-1978",
@@ -839,7 +850,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": "rec by aranya"
+    "notes": "rec by aranya",
+    "isbn": "9780385265201"
   },
   {
     "id": "colorless-tsukuru-tazaki-2013",
@@ -865,7 +877,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9780811227629"
   },
   {
     "id": "exit-west-2017",
@@ -994,7 +1007,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": "rec by Brie"
+    "notes": "rec by Brie",
+    "isbn": "9780330294058"
   },
   {
     "id": "loonshots-2019",
@@ -1054,7 +1068,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9781564968937"
   },
   {
     "id": "making-of-a-manager-fb-2019",
@@ -1083,7 +1098,8 @@
     "finished": "2025-07-28",
     "rating": null,
     "url": null,
-    "notes": "Very technical sci fi \u2014 what does it mean to be human when consciousness can be copied over and over again. Hard to follow but i think worth it."
+    "notes": "Very technical sci fi \u2014 what does it mean to be human when consciousness can be copied over and over again. Hard to follow but i think worth it.",
+    "isbn": "9780061054815"
   },
   {
     "id": "shadow-of-the-wind-2001",
@@ -1098,7 +1114,8 @@
     "finished": null,
     "rating": null,
     "url": "https://www.worldofbooks.com/en-gb/books/carlos-ruiz-zafon/shadow-of-the-wind/9780753819319?gclid=CjwKCAiArbv_BRA8EiwAYGs23McT4VfAi947b1QW2yaKuvNVWbUMYji4Fej7vs-aUy25rvqL8ztdmhoC17cQAvD_BwE#GOR000049646?keyword=",
-    "notes": "rec by Kirk"
+    "notes": "rec by Kirk",
+    "isbn": "9781439569740"
   },
   {
     "id": "sula-1973",
@@ -1218,7 +1235,8 @@
     "finished": null,
     "rating": null,
     "url": null,
-    "notes": null
+    "notes": null,
+    "isbn": "9781858945675"
   },
   {
     "id": "when-the-going-was-good-2025",
