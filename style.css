@@ -647,15 +647,20 @@ body.homepage .system-specs {
    7. LIBRARY PAGE
    ========================================= */
 body.library-page {
-    --lib-bg: #f2f1eb;
-    --card-bg: #f7f6f1;
-    --ink: #151515;
+    --lib-bg: #f5f1e8;
+    --card-bg: #fff9ef;
+    --ink: #0d0d0d;
+    --accent-orange: #ff4f00;
+    --accent-cyan: #00c7ff;
+    --accent-cyan-ink: #007799;
     --rail-h: 38px;
     --lift-y: -4px;
     --dur-fast: 160ms;
-    background: var(--lib-bg);
-    color: #151515;
-    font-family: "JetBrains Mono", "Courier New", monospace;
+    background:
+        radial-gradient(circle at 16% -12%, rgba(255, 79, 0, 0.12) 0, rgba(255, 79, 0, 0) 48%),
+        linear-gradient(180deg, #f8f4ea 0%, var(--lib-bg) 45%, #efe9df 100%);
+    color: var(--ink);
+    font-family: "IBM Plex Mono", "JetBrains Mono", "Courier New", monospace;
     overflow: auto;
     cursor: default !important;
 }
@@ -672,55 +677,65 @@ body.library-page a {
     min-height: 100vh;
     display: grid;
     grid-template-columns: 300px 1fr 340px;
-    background: var(--lib-bg);
+    background: transparent;
 }
 
 .library-sidebar {
-    border-right: 3px solid #151515;
+    border-right: 3px solid var(--ink);
     padding: 1.8rem 1.4rem;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    background: #ffffff;
+    background: color-mix(in oklab, #ffffff 85%, var(--lib-bg) 15%);
     overflow: visible;
     contain: none;
+    animation: library-panel-rise 500ms cubic-bezier(0.18, 0.88, 0.3, 1) both;
 }
 
 .library-home-link {
-    color: #151515 !important;
-    border: 1px solid #151515;
+    color: var(--ink) !important;
+    border: 2px solid var(--ink);
     display: inline-block;
     width: fit-content;
-    font-weight: 700;
-    font-size: 0.72rem !important;
-    letter-spacing: 0.08em;
-    padding: 0.45rem 0.6rem;
+    font-weight: 800;
+    font-size: 0.74rem !important;
+    letter-spacing: 0.1em;
+    padding: 0.45rem 0.66rem;
+    text-transform: uppercase;
+    transition: background var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+
+.library-home-link:hover,
+.library-home-link:focus-visible {
+    background: var(--accent-orange);
+    color: #ffffff !important;
 }
 
 .library-header {
-    border-bottom: 3px solid #151515;
-    padding-bottom: 0.8rem;
+    border-bottom: 4px solid var(--ink);
+    padding-bottom: 0.92rem;
 }
 
 .library-header h1 {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 2.3rem;
+    font-family: "Arial Black", "Impact", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: clamp(2.85rem, 6vw, 3.45rem);
     font-weight: 900;
-    letter-spacing: -0.05em;
-    line-height: 0.9;
+    letter-spacing: -0.06em;
+    line-height: 0.84;
+    text-transform: uppercase;
     animation: none;
 }
 
 .library-volume {
     margin-top: 0.55rem;
     display: inline-block;
-    background: #151515;
+    background: var(--accent-orange);
     color: #ffffff;
-    font-size: 0.78rem;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    padding: 0.14rem 0.35rem;
+    font-size: 0.74rem;
+    font-family: "Arial Black", "Impact", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 900;
+    letter-spacing: 0.09em;
+    padding: 0.18rem 0.4rem;
     text-transform: uppercase;
 }
 
@@ -734,10 +749,15 @@ body.library-page a {
     display: flex;
     justify-content: space-between;
     font-size: 0.74rem;
-    border-bottom: 1px solid #151515;
+    border-bottom: 2px solid rgba(13, 13, 13, 0.88);
     padding-bottom: 0.2rem;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
+    font-weight: 700;
+}
+
+.filter-title span:last-child {
+    color: var(--accent-cyan-ink);
 }
 
 .filter-list {
@@ -755,58 +775,62 @@ body.library-page a {
     gap: 0.45rem;
     padding: 0.1rem 0;
     font-size: 0.82rem;
-    color: #151515;
+    color: var(--ink);
     cursor: pointer;
-    font-family: "JetBrains Mono", "Courier New", monospace;
+    font-family: "IBM Plex Mono", "JetBrains Mono", "Courier New", monospace;
+    transition: color var(--dur-fast) ease;
 }
 
 .filter-item:hover {
-    opacity: 0.66;
+    color: var(--accent-orange);
 }
 
 .filter-box {
     width: 12px;
     height: 12px;
-    border: 1px solid #151515;
+    border: 1px solid var(--ink);
     display: inline-block;
     flex-shrink: 0;
 }
 
 .filter-item.active {
     font-weight: 700;
+    color: var(--accent-orange);
 }
 
 .filter-item.active .filter-box {
-    background: #f45624;
-    border-color: #f45624;
+    background: var(--accent-orange);
+    border-color: var(--accent-orange);
 }
 
 .search-input,
 .sort-select {
-    border: 1px solid #151515;
+    border: 2px solid var(--ink);
     background: #ffffff;
-    color: #151515;
-    font-family: "JetBrains Mono", "Courier New", monospace;
+    color: var(--ink);
+    font-family: "IBM Plex Mono", "JetBrains Mono", "Courier New", monospace;
     font-size: 0.82rem;
     padding: 0.5rem;
 }
 
 .search-input:focus,
 .sort-select:focus {
-    outline: 2px solid #f45624;
-    outline-offset: 1px;
+    outline: 2px solid var(--accent-orange);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(0, 199, 255, 0.2);
 }
 
 .library-sync-note {
     margin-top: auto;
     font-size: 0.67rem;
     line-height: 1.45;
-    color: #666666;
+    color: rgba(13, 13, 13, 0.68);
 }
 
 .library-sync-note code {
     font-size: 0.65rem;
-    color: #151515;
+    color: var(--accent-cyan-ink);
+    font-weight: 700;
 }
 
 .library-main {
@@ -816,28 +840,33 @@ body.library-page a {
     flex-direction: column;
     gap: 1.4rem;
     contain: none;
+    animation: library-panel-rise 560ms cubic-bezier(0.18, 0.88, 0.3, 1) both;
+    animation-delay: 60ms;
 }
 
 .library-main-header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    border-bottom: 1px solid #151515;
-    padding-bottom: 0.45rem;
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 0.5rem;
 }
 
 .library-main-header h2 {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Arial Black", "Impact", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
-    letter-spacing: -0.03em;
-    font-size: 1.9rem;
+    letter-spacing: -0.045em;
+    font-size: clamp(2.2rem, 3.4vw, 2.95rem);
     font-weight: 900;
+    line-height: 0.92;
 }
 
 .library-main-header span {
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
+    color: var(--accent-cyan-ink);
+    font-weight: 700;
 }
 
 .cover-grid {
@@ -873,24 +902,25 @@ body.library-page a {
     min-height: 306px;
     padding: 0.6rem 0.56rem;
     background: linear-gradient(
-        148deg,
-        color-mix(in oklab, var(--topic-accent, #1f2bff) 29%, #ffffff 71%) 0%,
-        color-mix(in oklab, var(--topic-accent, #1f2bff) 14%, #ecebe3 86%) 100%
+        152deg,
+        color-mix(in oklab, var(--topic-accent, #1f2bff) 26%, #ffffff 74%) 0%,
+        color-mix(in oklab, var(--topic-accent, #1f2bff) 11%, var(--lib-bg) 89%) 100%
     );
     border: none;
     border-radius: 0;
-    box-shadow: none;
-    transition: none;
+    box-shadow: inset 0 0 0 1px rgba(13, 13, 13, 0.2);
+    transition: box-shadow var(--dur-fast) ease;
 }
 
 .cover-item:hover,
 .cover-item:focus-within {
     z-index: 10;
+    box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--accent-orange) 42%, rgba(13, 13, 13, 0.2) 58%);
 }
 
 .cover-card {
     width: min(232px, 92%);
-    filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.14));
+    filter: drop-shadow(0 7px 9px rgba(0, 0, 0, 0.15));
     transition: transform var(--dur-fast) cubic-bezier(0.16, 1, 0.3, 1), filter var(--dur-fast) ease;
 }
 
@@ -898,7 +928,16 @@ body.library-page a {
 .cover-item:focus-visible .cover-card,
 .cover-item:focus-within .cover-card {
     transform: translateY(-4px) scale(1.01);
-    filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.18));
+    filter: drop-shadow(0 12px 15px rgba(0, 0, 0, 0.2));
+}
+
+.cover-item.selected {
+    box-shadow: inset 0 0 0 2px var(--accent-orange);
+}
+
+.cover-item.selected .cover-card {
+    transform: translateY(-4px) scale(1.01);
+    filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.22));
 }
 
 .cover-surface {
@@ -971,9 +1010,9 @@ body.library-page a {
     text-transform: uppercase;
     line-height: 1;
     padding: 0.16rem 0.24rem;
-    border: 1px solid rgba(21, 21, 21, 0.52);
+    border: 1px solid rgba(13, 13, 13, 0.56);
     background: rgba(255, 255, 255, 0.92);
-    color: rgba(21, 21, 21, 0.9);
+    color: rgba(13, 13, 13, 0.9);
 }
 
 .article-poster {
@@ -1002,7 +1041,7 @@ body.library-page a {
     font-size: 0.47rem;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(21, 21, 21, 0.62);
+    color: var(--accent-cyan-ink);
 }
 
 .poster-title {
@@ -1026,9 +1065,10 @@ body.library-page a {
     text-transform: uppercase;
     line-height: 1;
     padding: 0.18rem 0.24rem;
-    border: 1px solid rgba(21, 21, 21, 0.46);
-    background: rgba(255, 255, 255, 0.72);
-    color: rgba(21, 21, 21, 0.9);
+    border: 1px solid color-mix(in oklab, var(--accent-orange) 56%, #0d0d0d 44%);
+    background: rgba(255, 255, 255, 0.86);
+    color: var(--accent-orange);
+    font-weight: 700;
 }
 
 .poster-domain {
@@ -1044,7 +1084,7 @@ body.library-page a {
 .poster-rule {
     height: 5px;
     width: 100%;
-    background: var(--topic-accent, #1f2bff);
+    background: var(--accent-orange);
     box-shadow: 0 0 0 1px rgba(21, 21, 21, 0.16) inset;
 }
 
@@ -1071,16 +1111,26 @@ body.library-page a {
 }
 
 .cover-item.audio-item .cover-audio-chip {
-    border-color: var(--topic-accent, #1f2bff);
-    color: rgba(21, 21, 21, 0.92);
+    border-color: var(--accent-orange);
+    color: rgba(13, 13, 13, 0.92);
 }
 
 .cover-item:focus-visible .cover-card {
-    outline: 2px solid var(--topic-accent, #1f2bff);
+    outline: 2px solid var(--accent-orange);
     outline-offset: 2px;
 }
 
+.cover-item.selected .cover-card:focus-visible {
+    outline-color: var(--accent-cyan);
+}
+
 @media (prefers-reduced-motion: reduce) {
+    .library-sidebar,
+    .library-main,
+    .library-detail {
+        animation: none;
+    }
+
     .cover-card {
         transition: none;
     }
@@ -1094,27 +1144,40 @@ body.library-page a {
 }
 
 .library-empty {
-    border: 1px dashed #151515;
+    border: 2px dashed var(--accent-orange);
     background: #ffffff;
-    color: #151515;
+    color: var(--ink);
     padding: 1rem;
     font-size: 0.84rem;
 }
 
 .library-detail {
-    border-left: 3px solid #151515;
+    border-left: 3px solid var(--ink);
     padding: 2.5rem 1.5rem;
-    background: #ffffff;
+    background: #fffdf7;
     overflow: visible;
     contain: none;
+    position: relative;
+    animation: library-panel-rise 620ms cubic-bezier(0.18, 0.88, 0.3, 1) both;
+    animation-delay: 100ms;
+}
+
+.library-detail::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent-orange) 0%, color-mix(in oklab, var(--accent-cyan) 62%, #0d0d0d 38%) 100%);
 }
 
 .library-detail h3 {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 1.4rem;
+    font-family: "Arial Black", "Impact", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.62rem;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.04em;
     margin-bottom: 0.9rem;
 }
 
@@ -1140,21 +1203,43 @@ body.library-page a {
 
 .detail-content strong {
     font-weight: 700;
+    color: var(--accent-orange);
 }
 
 .detail-link {
     margin-top: 0.3rem;
-    border: 1px solid #151515;
+    border: 2px solid var(--ink);
     width: fit-content;
     font-size: 0.75rem !important;
-    letter-spacing: 0.06em;
-    padding: 0.42rem 0.52rem;
-    color: #151515 !important;
+    letter-spacing: 0.09em;
+    padding: 0.44rem 0.58rem;
+    color: var(--ink) !important;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: background var(--dur-fast) ease, color var(--dur-fast) ease, border-color var(--dur-fast) ease;
 }
 
 .detail-link:hover {
-    background: #151515;
+    background: var(--accent-orange);
+    border-color: var(--accent-orange);
     color: #ffffff !important;
+}
+
+.detail-link:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 2px;
+}
+
+@keyframes library-panel-rise {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @media screen and (max-width: 1180px) {
@@ -1170,7 +1255,7 @@ body.library-page a {
     .library-detail {
         grid-column: 1 / -1;
         border-left: none;
-        border-top: 3px solid #151515;
+        border-top: 3px solid var(--ink);
         padding: 1.2rem 1.4rem;
     }
 }
@@ -1188,7 +1273,7 @@ body.library-page a {
 
     .library-sidebar {
         border-right: none;
-        border-bottom: 3px solid #151515;
+        border-bottom: 3px solid var(--ink);
         padding: 1.2rem;
         max-height: none;
     }
@@ -1198,7 +1283,7 @@ body.library-page a {
     }
 
     .library-main-header h2 {
-        font-size: 1.35rem;
+        font-size: 1.68rem;
     }
 
     .cover-grid {
