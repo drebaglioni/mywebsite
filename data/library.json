@@ -1,5 +1,158 @@
 [
   {
+    "id": "da-vinci-2017",
+    "title": "Da Vinci",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "biography",
+      "design"
+    ],
+    "year": 2017,
+    "status": "in-progress",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "how-to-reassess-your-chess-silvman-2010",
+    "title": "How to reassess your chess \\| Silvman",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "chess"
+    ],
+    "year": 2010,
+    "status": "in-progress",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "Chess"
+  },
+  {
+    "id": "korea-the-impossible-country-2012",
+    "title": "Korea the impossible country",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "korea"
+    ],
+    "year": 2012,
+    "status": "in-progress",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "rec by david"
+  },
+  {
+    "id": "never-split-the-difference-2016",
+    "title": "Never Split the difference",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "business",
+      "management"
+    ],
+    "year": 2016,
+    "status": "in-progress",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "nothing-a-philosophical-history-2023",
+    "title": "Nothing: A philosophical history",
+    "author": "Roy Sorensen",
+    "format": "book",
+    "subjects": [
+      "history",
+      "philosophy"
+    ],
+    "year": 2023,
+    "status": "in-progress",
+    "finished": "2023-01-12",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "peak-2023",
+    "title": "Peak",
+    "author": "Anders Ericsson",
+    "format": "book",
+    "subjects": [
+      "non-fiction"
+    ],
+    "year": 2023,
+    "status": "in-progress",
+    "finished": "2023-02-16",
+    "rating": null,
+    "url": "https://www.nateliason.com/notes/peak-anders-ericsson-robert-pool",
+    "notes": null
+  },
+  {
+    "id": "the-body-a-guide-by-inhabitants-2019",
+    "title": "The Body: a guide by inhabitants",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "health"
+    ],
+    "year": 2019,
+    "status": "in-progress",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "rec by dad"
+  },
+  {
+    "id": "war-and-peace-1869",
+    "title": "War and Peace",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 1869,
+    "status": "in-progress",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "when-einstein-walked-with-godel-2024",
+    "title": "When Einstein walked with Godel",
+    "author": "Jim Holt",
+    "format": "book",
+    "subjects": [
+      "science"
+    ],
+    "year": 2024,
+    "status": "in-progress",
+    "finished": "2024-07-28",
+    "rating": null,
+    "url": null,
+    "notes": "A couple different essays on math, physics and philosophy"
+  },
+  {
+    "id": "broken-earth-series-the-obelisk-gate-2016",
+    "title": "Broken Earth Series: The Obelisk Gate",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 2016,
+    "status": "completed",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "Broken Earth series, book 2"
+  },
+  {
     "id": "se-una-notte-d-inverno-un-viaggiatore-1979",
     "title": "Se una notte d'inverno un viaggiatore",
     "author": "Italo Calvino",
@@ -12,7 +165,7 @@
     "year": 1979,
     "status": "completed",
     "finished": "2026-03-27",
-    "rating": null,
+    "rating": 5,
     "url": "https://it.wikipedia.org/wiki/Se_una_notte_d%27inverno_un_viaggiatore",
     "notes": "Italian original metafiction",
     "cover_image": "https://media.anobii.com/covers/01a1817ed0f19bbeda/175/294/2.5/paperback/png/1707090585",
@@ -31,7 +184,7 @@
     "year": 2011,
     "status": "completed",
     "finished": "2026-03-27",
-    "rating": null,
+    "rating": 5,
     "url": "https://www.joshuafoer.com/moonwalking-with-einstein",
     "notes": "Memory-palace training memoir"
   },
@@ -48,7 +201,7 @@
     "year": 2026,
     "status": "completed",
     "finished": "2026-03-23",
-    "rating": null,
+    "rating": 3,
     "url": "https://www.notboring.co/p/world-models",
     "notes": "Guide to action-conditioned embodied models"
   },
@@ -64,7 +217,7 @@
     "year": 2026,
     "status": "completed",
     "finished": "2026-03-23",
-    "rating": null,
+    "rating": 3,
     "url": "https://www.astralcodexten.com/p/being-john-rawls",
     "notes": "Rawlsian life-swap parable",
     "cover_image": "https://cdn.britannica.com/35/100835-050-1568EFE5/John-Rawls.jpg",
@@ -83,7 +236,7 @@
     "year": 2025,
     "status": "completed",
     "finished": "2026-03-22",
-    "rating": null,
+    "rating": 2,
     "url": "https://ifanyonebuildsit.com",
     "notes": "Superhuman AI warning",
     "cover_image": "https://i.ebayimg.com/images/g/LzAAAeSw6JZpwXSo/s-l1600.webp",
@@ -102,9 +255,667 @@
     "year": 2020,
     "status": "completed",
     "finished": "2026-03-21",
-    "rating": null,
+    "rating": 4,
     "url": "https://www.brianchristian.org/the-alignment-problem",
     "notes": "Imitation vs IRL framing"
+  },
+  {
+    "id": "the-shadow-of-the-wind-2001",
+    "title": "The shadow of the wind",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fantasy",
+      "fiction"
+    ],
+    "year": 2001,
+    "status": "completed",
+    "finished": "2025-12-03",
+    "rating": null,
+    "url": null,
+    "notes": "Based in Barcelona, fantasy book about authors and books and adventure"
+  },
+  {
+    "id": "library-at-mt-char-2025",
+    "title": "Library at Mt Char",
+    "author": "Scott Hawkins",
+    "format": "book",
+    "subjects": [
+      "fantasy",
+      "fiction"
+    ],
+    "year": 2025,
+    "status": "completed",
+    "finished": "2025-03-21",
+    "rating": null,
+    "url": "https://littleredreviewer.wordpress.com/2021/04/03/the-library-at-mount-char-by-scott-hawkins/",
+    "notes": "Recommended by Aranya"
+  },
+  {
+    "id": "piranesi-2025",
+    "title": "Piranesi",
+    "author": "Susanna Clarke",
+    "format": "book",
+    "subjects": [
+      "fantasy",
+      "fiction"
+    ],
+    "year": 2025,
+    "status": "completed",
+    "finished": "2025-01-18",
+    "rating": null,
+    "url": "https://en.wikipedia.org/wiki/Piranesi_%28novel%29",
+    "notes": null
+  },
+  {
+    "id": "exhalation-2024",
+    "title": "Exhalation",
+    "author": "Ted Chiang",
+    "format": "book",
+    "subjects": [
+      "fiction",
+      "sci-fi"
+    ],
+    "year": 2024,
+    "status": "completed",
+    "finished": "2024-07-28",
+    "rating": 5,
+    "url": null,
+    "notes": "Great short essays"
+  },
+  {
+    "id": "children-of-time-2024",
+    "title": "Children of time",
+    "author": "Adrian Tchaikovsky",
+    "format": "book",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 2024,
+    "status": "completed",
+    "finished": "2024-07-28",
+    "rating": 5,
+    "url": null,
+    "notes": "Recommended by Austin. Great SciFi book about humans and spiders in a post Earth world"
+  },
+  {
+    "id": "the-strange-library-2024",
+    "title": "The Strange Library",
+    "author": "Haruki Murakami",
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2024,
+    "status": "completed",
+    "finished": "2024-02-28",
+    "rating": null,
+    "url": null,
+    "notes": "Classic Murakami."
+  },
+  {
+    "id": "infinite-powers-2023",
+    "title": "Infinite Powers",
+    "author": "Steven Strogatz",
+    "format": "book",
+    "subjects": [
+      "history",
+      "math",
+      "science"
+    ],
+    "year": 2023,
+    "status": "completed",
+    "finished": "2023-10-28",
+    "rating": 5,
+    "url": null,
+    "notes": "Very good book on the history of calculus."
+  },
+  {
+    "id": "the-chip-wars-2023",
+    "title": "The Chip Wars",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "history"
+    ],
+    "year": 2023,
+    "status": "completed",
+    "finished": "2023-10-02",
+    "rating": 4,
+    "url": null,
+    "notes": "The history of microchips and they\u2019re importance for everything in the world today. Whole industry dominated by only a couple players"
+  },
+  {
+    "id": "dark-matter-2023",
+    "title": "Dark Matter",
+    "author": "Blake Crouch",
+    "format": "audiobook",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 2023,
+    "status": "completed",
+    "finished": "2023-02-16",
+    "rating": null,
+    "url": null,
+    "notes": "rec by Matt Wyndowe"
+  },
+  {
+    "id": "all-the-wrong-moves-2023",
+    "title": "All the wrong moves",
+    "author": "Sasha Chapin",
+    "format": "book",
+    "subjects": [
+      "chess",
+      "non-fiction"
+    ],
+    "year": 2023,
+    "status": "completed",
+    "finished": "2023-01-11",
+    "rating": null,
+    "url": "https://www.goodreads.com/en/book/show/43062156",
+    "notes": null
+  },
+  {
+    "id": "1q84-2022",
+    "title": "1Q84",
+    "author": "Haruki Murakami",
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2022,
+    "status": "completed",
+    "finished": "2022-07-13",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "circe-2022",
+    "title": "Circe",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction",
+      "greek-mythology"
+    ],
+    "year": 2022,
+    "status": "completed",
+    "finished": "2022-01-15",
+    "rating": null,
+    "url": null,
+    "notes": "Greek mythology. Fun but not a page turner until the end. Story of the maga Circe and how she gets exiled to her island Enea, her love for mortal people, her story with odisseo, then Penelope and her son. She chooses to live as a mortal at the end and seems happier for it."
+  },
+  {
+    "id": "snowcrash-2022",
+    "title": "Snowcrash",
+    "author": "Neal Stephenson",
+    "format": "audiobook",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 2022,
+    "status": "completed",
+    "finished": "2022-01-14",
+    "rating": 4,
+    "url": null,
+    "notes": "The foundation of a lot of Metaverse stuff. Long winded story, though, and very complicated to follow"
+  },
+  {
+    "id": "stormlight-chronicles-rhythm-of-war-2021",
+    "title": "Stormlight chronicles: Rhythm of War",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2021,
+    "status": "completed",
+    "finished": "2021-11-20",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "broken-earth-series-the-stone-sky-2021",
+    "title": "Broken Earth Series: The Stone Sky",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 2021,
+    "status": "completed",
+    "finished": "2021-10-01",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "a-wild-sheep-chase-2021",
+    "title": "A wild Sheep chase",
+    "author": "Haruki Murakami",
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2021,
+    "status": "completed",
+    "finished": "2021-04-15",
+    "rating": 4,
+    "url": null,
+    "notes": "Cool cover - came with 3d glasses"
+  },
+  {
+    "id": "globalization-a-very-short-introduction-2021",
+    "title": "Globalization \\| A very short introduction",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "globalization"
+    ],
+    "year": 2021,
+    "status": "completed",
+    "finished": "2021-04-03",
+    "rating": null,
+    "url": null,
+    "notes": "Read to better understand Cathy's work!"
+  },
+  {
+    "id": "city-planning-a-very-short-introduction-2021",
+    "title": "City Planning \\| A very short introduction",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "cities"
+    ],
+    "year": 2021,
+    "status": "completed",
+    "finished": "2021-03-18",
+    "rating": null,
+    "url": null,
+    "notes": "See Roam"
+  },
+  {
+    "id": "hamnet-2021",
+    "title": "Hamnet",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "hisorical-fiction"
+    ],
+    "year": 2021,
+    "status": "completed",
+    "finished": "2021-03-11",
+    "rating": null,
+    "url": null,
+    "notes": "See Roam"
+  },
+  {
+    "id": "broken-earth-series-the-fifth-season-2020",
+    "title": "Broken Earth Series: The fifth season",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 2020,
+    "status": "completed",
+    "finished": "2020-12-25",
+    "rating": null,
+    "url": null,
+    "notes": "Science fiction, trilogy, present by Seth"
+  },
+  {
+    "id": "stormlight-chronicles-oathbringer-2020",
+    "title": "Stormlight chronicles: Oathbringer",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2020,
+    "status": "completed",
+    "finished": "2020-10-15",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "cloud-atlas-2020",
+    "title": "Cloud Atlas",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2020,
+    "status": "completed",
+    "finished": "2020-07-17",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "sputnik-sweetheart-2020",
+    "title": "Sputnik Sweetheart",
+    "author": "Haruki Murakami",
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2020,
+    "status": "completed",
+    "finished": "2020-07-10",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "stormlight-chronicles-words-of-radiance-2020",
+    "title": "Stormlight chronicles: Words of Radiance",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2020,
+    "status": "completed",
+    "finished": "2020-05-01",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "washington-black-2020",
+    "title": "Washington Black",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2020,
+    "status": "completed",
+    "finished": "2020-04-15",
+    "rating": null,
+    "url": null,
+    "notes": "taylor bought it for me"
+  },
+  {
+    "id": "la-vita-nostra-2020",
+    "title": "La Vita Nostra",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2020,
+    "status": "completed",
+    "finished": "2020-02-13",
+    "rating": null,
+    "url": "https://www.amazon.com/dp/B076ZHKVQP",
+    "notes": "rec by Gabe Dillon"
+  },
+  {
+    "id": "why-we-sleep-2020",
+    "title": "Why We Sleep",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "health"
+    ],
+    "year": 2020,
+    "status": "completed",
+    "finished": "2020-02-01",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "the-name-of-the-rose-2020",
+    "title": "The name of the rose",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2020,
+    "status": "completed",
+    "finished": "2020-01-10",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "three-body-problem-death-s-end-2020",
+    "title": "Three Body Problem: Death's end",
+    "author": "Liu Cixin",
+    "format": "book",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 2020,
+    "status": "completed",
+    "finished": "2020-01-01",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "three-body-problem-the-dark-forest-2019",
+    "title": "Three Body Problem: The Dark Forest",
+    "author": "Liu Cixin",
+    "format": "book",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 2019,
+    "status": "completed",
+    "finished": "2019-09-01",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "a-gentleman-in-moscow-2019",
+    "title": "A gentleman in Moscow",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2019,
+    "status": "completed",
+    "finished": "2019-08-01",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "the-elegance-of-the-hedgehog-2019",
+    "title": "The elegance of the hedgehog",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2019,
+    "status": "completed",
+    "finished": "2019-07-01",
+    "rating": 4,
+    "url": null,
+    "notes": "Carhys favorite book"
+  },
+  {
+    "id": "the-three-body-problem-2019",
+    "title": "The three body problem",
+    "author": "Liu Cixin",
+    "format": "book",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 2019,
+    "status": "completed",
+    "finished": "2019-06-01",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "station-eleven-2019",
+    "title": "Station eleven",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2019,
+    "status": "completed",
+    "finished": "2019-03-01",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "stormlight-chronicles-the-way-of-kings-2018",
+    "title": "Stormlight chronicles: The Way of Kings",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2018,
+    "status": "completed",
+    "finished": "2018-12-01",
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "shantaram-2016",
+    "title": "Shantaram",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2016,
+    "status": "completed",
+    "finished": "2016-05-18",
+    "rating": null,
+    "url": null,
+    "notes": "rec by shane"
+  },
+  {
+    "id": "beloved-1987",
+    "title": "Beloved",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 1987,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "cartoon-history-of-the-universe-1978",
+    "title": "cartoon history of the universe",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "history"
+    ],
+    "year": 1978,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "rec by aranya"
+  },
+  {
+    "id": "colorless-tsukuru-tazaki-2013",
+    "title": "Colorless tsukuru tazaki",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2013,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "emissary-2018",
+    "title": "Emissary",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2018,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "exit-west-2017",
+    "title": "Exit west",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2017,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "fates-and-furies-2015",
+    "title": "Fates and furies",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2015,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "grid-systems-in-graphic-design-a-visual-communication-manual-for-graphic-designers-typographers-and-three-dimensional-designers-josef-m-ller-brockmann-1981",
+    "title": "Grid Systems in Graphic Design: A Visual Communication Manual for Graphic Designers, Typographers and Three Dimensional Designers Josef M\u00fcller-Brockmann",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "design"
+    ],
+    "year": 1981,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "design"
+  },
+  {
+    "id": "into-thin-air-a-personal-account-of-the-mt-everest-disaster-1997",
+    "title": "Into Thin Air: A Personal Account of the Mt. Everest Disaster",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "non-fiction"
+    ],
+    "year": 1997,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "Rec by Katie M"
   },
   {
     "id": "is-human-data-enough-2025",
@@ -119,10 +930,313 @@
     "year": 2025,
     "status": "queued",
     "finished": null,
-    "rating": null,
+    "rating": 2,
     "url": "https://www.youtube.com/watch?v=zzXyPGEtseI&list=PLqYmG7hTraZBiUr6_Qf8YTS2Oqy3OGZEj&index=2",
     "notes": "David Silver on the 'era of experience' in RL",
     "cover_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9pYaB6m8pbUm7hUV-z4_DW6f3hP34NIj36A&s",
     "cover_source": "manual"
+  },
+  {
+    "id": "jonathan-ledgard-believes-imagination-could-save-the-world-the-new-yorker-2015",
+    "title": "Jonathan Ledgard Believes Imagination Could Save the World \\| The New Yorker",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2015,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://www.newyorker.com/magazine/2019/09/23/jonathan-ledgard-believes-imagination-could-save-the-world",
+    "notes": "Rec by Soph"
+  },
+  {
+    "id": "kafka-on-the-shore-2002",
+    "title": "Kafka on the shore",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2002,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "less-winner-of-the-pulitzer-prize-a-novel-2017",
+    "title": "Less (Winner of the Pulitzer Prize): A Novel",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2017,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "Rec by Katie M"
+  },
+  {
+    "id": "lonesome-dove-1985",
+    "title": "Lonesome Dove",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 1985,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "rec by Brie"
+  },
+  {
+    "id": "loonshots-2019",
+    "title": "Loonshots",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2019,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "luka-and-the-fire-of-life-2010",
+    "title": "Luka and the fire of life",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2010,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "maintenance-of-everything-part-one-2026",
+    "title": "Maintenance: Of Everything, Part One",
+    "author": "Stewart Brand",
+    "format": "book",
+    "subjects": [
+      "maintenance",
+      "civilization",
+      "infrastructure"
+    ],
+    "year": 2026,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://stripe.press/maintenance",
+    "notes": "Stripe Press Part One",
+    "cover_image": "https://www.stripe.press/images/maintenance/maintenance_social_card.jpg",
+    "cover_source": "manual",
+    "isbn": "9781953953490"
+  },
+  {
+    "id": "making-and-breaking-the-grid-2002",
+    "title": "Making and breaking the grid",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2002,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "making-of-a-manager-fb-2019",
+    "title": "Making of a manager (fb)",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2019,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "permutation-city-2025",
+    "title": "Permutation City",
+    "author": "Greg Egan",
+    "format": "book",
+    "subjects": [
+      "philosophy",
+      "sci-fi"
+    ],
+    "year": 2025,
+    "status": "queued",
+    "finished": "2025-07-28",
+    "rating": null,
+    "url": null,
+    "notes": "Very technical sci fi \u2014 what does it mean to be human when consciousness can be copied over and over again. Hard to follow but i think worth it."
+  },
+  {
+    "id": "shadow-of-the-wind-2001",
+    "title": "Shadow of the wind",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "fiction"
+    ],
+    "year": 2001,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://www.worldofbooks.com/en-gb/books/carlos-ruiz-zafon/shadow-of-the-wind/9780753819319?gclid=CjwKCAiArbv_BRA8EiwAYGs23McT4VfAi947b1QW2yaKuvNVWbUMYji4Fej7vs-aUy25rvqL8ztdmhoC17cQAvD_BwE#GOR000049646?keyword=",
+    "notes": "rec by Kirk"
+  },
+  {
+    "id": "sula-1973",
+    "title": "Sula",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 1973,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "tech-revolutions-and-financial-capital-2002",
+    "title": "Tech revolutions and financial capital",
+    "author": null,
+    "format": "book",
+    "subjects": [
+      "finance",
+      "tech"
+    ],
+    "year": 2002,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://www.amazon.com/Technological-Revolutions-Financial-Capital-Dynamics/dp/1843763311",
+    "notes": "rec by Coinbase"
+  },
+  {
+    "id": "the-origins-of-efficiency-2025",
+    "title": "The Origins of Efficiency",
+    "author": "Brian Potter",
+    "format": "book",
+    "subjects": [
+      "efficiency",
+      "manufacturing",
+      "progress"
+    ],
+    "year": 2025,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://press.stripe.com/origins-of-efficiency",
+    "notes": "Stripe Press hardcover",
+    "cover_image": "https://images.stripeassets.com/fzn2n1nzq965/6gFoTYPDpQE8jHgcVDlGFG/552ec46590a27e50b03c685068d54223/Stripe_Press-OoE_social.png",
+    "cover_source": "manual",
+    "isbn": "9781953953520"
+  },
+  {
+    "id": "the-orphan-master-s-son-2024",
+    "title": "The Orphan Master\u2019s son",
+    "author": "Adam Johnson",
+    "format": "book",
+    "subjects": [
+      "hisorical-fiction"
+    ],
+    "year": 2024,
+    "status": "queued",
+    "finished": "2024-05-24",
+    "rating": 4,
+    "url": null,
+    "notes": "Fictional book about the world seen by North Koreans. Wild perspective."
+  },
+  {
+    "id": "the-overstory-a-novel-2018",
+    "title": "The Overstory: A Novel",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2018,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "Rec by Katie M"
+  },
+  {
+    "id": "the-return-2016",
+    "title": "The return",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2016,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "the-secret-of-apollo-2002",
+    "title": "The Secret of Apollo",
+    "author": "Stephen B. Johnson",
+    "format": "book",
+    "subjects": [
+      "management"
+    ],
+    "year": 2002,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "Rec by Collison"
+  },
+  {
+    "id": "type-matters-2012",
+    "title": "Type matters",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2012,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": null
+  },
+  {
+    "id": "when-the-going-was-good-2025",
+    "title": "When the going was good",
+    "author": "Graydon Carter",
+    "format": "book",
+    "subjects": [
+      "biography"
+    ],
+    "year": 2025,
+    "status": "queued",
+    "finished": "2025-07-31",
+    "rating": null,
+    "url": null,
+    "notes": "Recommended by Taylor \u2014 Graydon was the editor of Vanity Fair. Makes you want to (sometimes) start a magazine"
+  },
+  {
+    "id": "why-we-age-and-why-we-don-t-have-to-2019",
+    "title": "Why we age and why we don\u2019t have to",
+    "author": null,
+    "format": "book",
+    "subjects": [],
+    "year": 2019,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": null,
+    "notes": "Rec by Keith R"
   }
 ]
