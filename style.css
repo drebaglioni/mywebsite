@@ -958,6 +958,8 @@ body.library-page a {
 
 .cover-card {
     width: min(232px, 92%);
+    display: grid;
+    grid-template-rows: auto 1.22rem;
     filter: drop-shadow(0 7px 9px rgba(0, 0, 0, 0.15));
     transition: transform var(--dur-fast) cubic-bezier(0.16, 1, 0.3, 1), filter var(--dur-fast) ease;
 }
@@ -987,6 +989,16 @@ body.library-page a {
     border: none;
     background: var(--card-base);
     overflow: hidden;
+}
+
+.cover-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 1.22rem;
+    padding: 0.12rem 0.34rem 0.18rem;
+    background: color-mix(in oklab, var(--surface-10) 88%, var(--card-base) 12%);
+    border-top: 1px solid color-mix(in oklab, var(--rule) 86%, transparent 14%);
 }
 
 .cover-image {
@@ -1061,37 +1073,21 @@ body.library-page a {
 }
 
 .cover-rating {
-    position: absolute;
-    left: 0.38rem;
-    bottom: 0.38rem;
-    z-index: 4;
     display: inline-flex;
     align-items: center;
     gap: 0.08rem;
-    padding: 0.16rem 0.22rem;
-    border: 1px solid color-mix(in oklab, var(--rule) 76%, transparent 24%);
-    background: color-mix(in oklab, var(--bg-10) 86%, transparent 14%);
+    padding: 0;
     pointer-events: none;
 }
 
 .cover-rating .star {
-    font-size: 0.53rem;
+    font-size: 0.56rem;
     line-height: 1;
     color: color-mix(in oklab, var(--text-muted) 72%, var(--bg-10) 28%);
 }
 
 .cover-rating .star.is-on {
     color: var(--accent-orange);
-}
-
-.cover-rating.unrated .star {
-    color: color-mix(in oklab, var(--text-muted) 48%, var(--bg-10) 52%);
-}
-
-.cover-item:hover .cover-rating,
-.cover-item:focus-within .cover-rating,
-.cover-item.selected .cover-rating {
-    border-color: color-mix(in oklab, var(--accent-orange-deep) 62%, transparent 38%);
 }
 
 .article-poster {
