@@ -19,8 +19,8 @@
     "isbn": "9781501139154"
   },
   {
-    "id": "how-to-reassess-your-chess-silman-2010",
-    "title": "How to Reassess Your Chess \\| Silman",
+    "id": "how-to-reassess-your-chess-2010",
+    "title": "How to Reassess Your Chess",
     "author": "Jeremy Silman",
     "format": "book",
     "subjects": [
@@ -30,10 +30,11 @@
     "status": "in-progress",
     "finished": null,
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL1806212W",
     "notes": "Chess",
     "cover_image": "https://contents.kyobobook.co.kr/sih/fit-in/458x0/pdt/9781890085131.jpg",
-    "cover_source": "manual"
+    "cover_source": "manual",
+    "isbn": "9781890085131"
   },
   {
     "id": "korea-the-impossible-country-2012",
@@ -85,10 +86,11 @@
     "status": "in-progress",
     "finished": "2023-01-12",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL24772996W",
     "notes": null,
     "cover_image": "https://m.media-amazon.com/images/I/41zZTkNuTWL._AC_UF1000,1000_QL80_.jpg",
-    "cover_source": "manual"
+    "cover_source": "manual",
+    "isbn": "9780199742837"
   },
   {
     "id": "peak-2023",
@@ -213,7 +215,7 @@
     "status": "completed",
     "finished": "2026-03-27",
     "rating": 5,
-    "url": "https://www.joshuafoer.com/moonwalking-with-einstein",
+    "url": "https://openlibrary.org/works/OL15683431W",
     "notes": "Memory-palace training memoir",
     "cover_image": "https://covers.openlibrary.org/b/isbn/9780141032139-M.jpg?default=false",
     "cover_source": "manual",
@@ -419,7 +421,7 @@
     "status": "completed",
     "finished": "2023-10-28",
     "rating": 5,
-    "url": "https://openlibrary.org/works/OL33325414W",
+    "url": "https://openlibrary.org/works/OL20152236W",
     "notes": "Very good book on the history of calculus.",
     "cover_image": "https://covers.openlibrary.org/b/isbn/9780358299288-M.jpg?default=false",
     "cover_source": "manual",
@@ -439,7 +441,7 @@
     "status": "completed",
     "finished": "2023-10-02",
     "rating": 4,
-    "url": "https://www.simonandschuster.com/books/Chip-War/Chris-Miller/9781982172008",
+    "url": "https://openlibrary.org/works/OL27846746W",
     "notes": "Semiconductor geopolitics and the fight for advanced fabs.",
     "cover_image": "https://covers.openlibrary.org/b/isbn/9781982172008-M.jpg?default=false",
     "cover_source": "manual",
@@ -593,7 +595,7 @@
   },
   {
     "id": "globalization-a-very-short-introduction-2021",
-    "title": "Globalization \\| A Very Short Introduction",
+    "title": "Globalization: A Very Short Introduction",
     "author": "Manfred B. Steger",
     "format": "book",
     "subjects": [
@@ -611,7 +613,7 @@
   },
   {
     "id": "city-planning-a-very-short-introduction-2021",
-    "title": "City Planning \\| A Very Short Introduction",
+    "title": "City Planning: A Very Short Introduction",
     "author": "Carl Abbott",
     "format": "book",
     "subjects": [
@@ -621,10 +623,11 @@
     "status": "completed",
     "finished": "2021-03-18",
     "rating": null,
-    "url": null,
+    "url": "https://openlibrary.org/works/OL21665483W",
     "notes": "See Roam",
     "cover_image": "https://m.media-amazon.com/images/I/81+vXVuhpAL._AC_UF1000,1000_QL80_.jpg",
-    "cover_source": "manual"
+    "cover_source": "manual",
+    "isbn": "9780190944346"
   },
   {
     "id": "hamnet-2021",
@@ -718,7 +721,7 @@
   },
   {
     "id": "stormlight-chronicles-words-of-radiance-2020",
-    "title": "Stormlight chronicles: Words of Radiance",
+    "title": "Stormlight Chronicles: Words of Radiance",
     "author": "Brandon Sanderson",
     "format": "book",
     "subjects": [
@@ -764,10 +767,11 @@
     "status": "completed",
     "finished": "2020-02-13",
     "rating": null,
-    "url": "https://www.amazon.com/dp/B076ZHKVQP",
+    "url": "https://openlibrary.org/works/OL19765058W",
     "notes": "rec by Gabe Dillon",
     "cover_image": "https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1525132805i/38633526.jpg",
-    "cover_source": "manual"
+    "cover_source": "manual",
+    "isbn": "9780062694614"
   },
   {
     "id": "why-we-sleep-2020",
@@ -781,7 +785,7 @@
     "status": "completed",
     "finished": "2020-02-01",
     "rating": null,
-    "url": "https://openlibrary.org/works/OL29920830W",
+    "url": "https://openlibrary.org/works/OL20168133W",
     "notes": null,
     "cover_image": "https://covers.openlibrary.org/b/isbn/9781090403681-M.jpg?default=false",
     "cover_source": "manual",
@@ -799,11 +803,11 @@
     "status": "completed",
     "finished": "2020-01-10",
     "rating": null,
-    "url": "https://openlibrary.org/works/OL30894488W",
+    "url": "https://en.wikipedia.org/wiki/The_Name_of_the_Rose",
     "notes": null,
     "cover_image": "https://covers.openlibrary.org/b/isbn/9798590336197-M.jpg?default=false",
     "cover_source": "manual",
-    "isbn": "9798590336197"
+    "isbn": "9780156001311"
   },
   {
     "id": "three-body-problem-death-s-end-2020",
@@ -907,7 +911,7 @@
     "status": "completed",
     "finished": "2019-03-01",
     "rating": null,
-    "url": "https://openlibrary.org/works/OL27731185W",
+    "url": "https://openlibrary.org/works/OL17202418W",
     "notes": null,
     "cover_image": "https://covers.openlibrary.org/b/isbn/9780385353304-M.jpg?default=false",
     "cover_source": "manual",
@@ -943,7 +947,7 @@
     "status": "completed",
     "finished": "2016-05-18",
     "rating": null,
-    "url": "https://openlibrary.org/works/OL32700884W",
+    "url": "https://openlibrary.org/works/OL5730814W",
     "notes": "rec by shane",
     "cover_image": "https://covers.openlibrary.org/b/isbn/9780312330521-M.jpg?default=false",
     "cover_source": "manual",
@@ -1102,10 +1106,10 @@
     "cover_source": "manual"
   },
   {
-    "id": "jonathan-ledgard-believes-imagination-could-save-the-world-the-new-yorker-2015",
-    "title": "Jonathan Ledgard Believes Imagination Could Save the World \\| The New Yorker",
+    "id": "jonathan-ledgard-believes-imagination-could-save-the-world-2015",
+    "title": "Jonathan Ledgard Believes Imagination Could Save the World",
     "author": "Joshua Yaffa",
-    "format": "book",
+    "format": "article",
     "subjects": [],
     "year": 2015,
     "status": "queued",
@@ -1212,7 +1216,7 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": "https://stripe.press/maintenance",
+    "url": "https://openlibrary.org/works/OL38659333W",
     "notes": "Stripe Press Part One",
     "cover_image": "https://www.stripe.press/images/maintenance/maintenance_social_card.jpg",
     "cover_source": "manual",
@@ -1233,22 +1237,6 @@
     "cover_image": "https://covers.openlibrary.org/b/isbn/9781564968937-M.jpg?default=false",
     "cover_source": "manual",
     "isbn": "9781564968937"
-  },
-  {
-    "id": "making-of-a-manager-fb-2019",
-    "title": "Making of a Manager (fb)",
-    "author": "Julie Zhuo",
-    "format": "book",
-    "subjects": [],
-    "year": 2019,
-    "status": "queued",
-    "finished": null,
-    "rating": null,
-    "url": "https://www.penguinrandomhouse.com/books/566552/the-making-of-a-manager-by-julie-zhuo/",
-    "notes": null,
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780735219564-M.jpg?default=false",
-    "cover_source": "manual",
-    "isbn": "9780735219564"
   },
   {
     "id": "natural-language-agent-harnesses-2026",
@@ -1288,7 +1276,7 @@
   },
   {
     "id": "shadow-of-the-wind-2001",
-    "title": "Shadow of the wind",
+    "title": "Shadow of the Wind",
     "author": "Carlos Ruiz Zaf\u00f3n",
     "format": "book",
     "subjects": [
@@ -1298,7 +1286,7 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": "https://www.worldofbooks.com/en-gb/books/carlos-ruiz-zafon/shadow-of-the-wind/9780753819319?gclid=CjwKCAiArbv_BRA8EiwAYGs23McT4VfAi947b1QW2yaKuvNVWbUMYji4Fej7vs-aUy25rvqL8ztdmhoC17cQAvD_BwE#GOR000049646?keyword=",
+    "url": "https://openlibrary.org/works/OL36433603W",
     "notes": "rec by Kirk",
     "cover_image": "https://covers.openlibrary.org/b/isbn/9781439569740-M.jpg?default=false",
     "cover_source": "manual",
@@ -1321,8 +1309,8 @@
     "isbn": "9780099760016"
   },
   {
-    "id": "tech-revolutions-and-financial-capital-2002",
-    "title": "Tech Revolutions and Financial Capital",
+    "id": "technological-revolutions-and-financial-capital-2002",
+    "title": "Technological Revolutions and Financial Capital",
     "author": "Carlota Perez",
     "format": "book",
     "subjects": [
@@ -1333,8 +1321,9 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": "https://www.amazon.com/Technological-Revolutions-Financial-Capital-Dynamics/dp/1843763311",
-    "notes": "rec by Coinbase"
+    "url": "https://openlibrary.org/works/OL224128W",
+    "notes": "rec by Coinbase",
+    "isbn": "9781840649222"
   },
   {
     "id": "the-creative-act-a-way-of-being-2023",
@@ -1349,11 +1338,27 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": "https://www.penguinrandomhouse.com/books/688355/the-creative-act-by-rick-rubin/",
+    "url": "https://openlibrary.org/works/OL27955361W",
     "notes": "Rick Rubin's distilled principles for cultivating creativity.",
     "cover_image": "https://covers.openlibrary.org/b/isbn/9780593652886-M.jpg?default=false",
     "cover_source": "manual",
     "isbn": "9780593652886"
+  },
+  {
+    "id": "the-making-of-a-manager-2019",
+    "title": "The Making of a Manager",
+    "author": "Julie Zhuo",
+    "format": "book",
+    "subjects": [],
+    "year": 2019,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://openlibrary.org/works/OL20159758W",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780735219564-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780735219564"
   },
   {
     "id": "the-origins-of-efficiency-2025",
@@ -1410,8 +1415,8 @@
     "isbn": "9780393356687"
   },
   {
-    "id": "the-return-2016",
-    "title": "The Return",
+    "id": "the-return-fathers-sons-and-the-land-in-between-2016",
+    "title": "The Return: Fathers, Sons and the Land in Between",
     "author": "Hisham Matar",
     "format": "book",
     "subjects": [],
@@ -1419,8 +1424,9 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": "https://openlibrary.org/works/OL17262607W",
-    "notes": null
+    "url": "https://openlibrary.org/works/OL19635270W",
+    "notes": null,
+    "isbn": "0812994825"
   },
   {
     "id": "the-secret-of-apollo-2002",
@@ -1434,7 +1440,7 @@
     "status": "queued",
     "finished": null,
     "rating": null,
-    "url": "https://press.jhu.edu/books/title/2845/secret-apollo",
+    "url": "https://openlibrary.org/works/OL8396705W",
     "notes": "Rec by Collison",
     "cover_image": "https://covers.openlibrary.org/b/isbn/9780801868986-M.jpg?default=false",
     "cover_source": "manual",
