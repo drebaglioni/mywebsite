@@ -997,8 +997,8 @@ body.library-page a {
     justify-content: flex-start;
     min-height: 1.22rem;
     padding: 0.12rem 0.34rem 0.18rem;
-    background: color-mix(in oklab, var(--surface-10) 88%, var(--card-base) 12%);
-    border-top: 1px solid color-mix(in oklab, var(--rule) 86%, transparent 14%);
+    background: transparent;
+    border-top: 0;
 }
 
 .cover-image {
