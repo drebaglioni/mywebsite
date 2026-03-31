@@ -716,7 +716,12 @@ body.library-page a {
     flex-direction: column;
     gap: 1.25rem;
     background: var(--bg-10);
-    overflow: visible;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     contain: none;
     animation: library-panel-rise 500ms cubic-bezier(0.18, 0.88, 0.3, 1) both;
 }
@@ -782,6 +787,10 @@ body.library-page a {
     gap: 0.55rem;
 }
 
+.filter-group-disclosure {
+    gap: 0;
+}
+
 .filter-title {
     display: flex;
     justify-content: space-between;
@@ -796,6 +805,38 @@ body.library-page a {
 
 .filter-title span:last-child {
     color: var(--text-muted);
+}
+
+.filter-disclosure {
+    display: block;
+}
+
+.filter-disclosure > summary.filter-title {
+    list-style: none;
+    cursor: pointer;
+    user-select: none;
+}
+
+.filter-disclosure > summary.filter-title::-webkit-details-marker {
+    display: none;
+}
+
+.filter-disclosure > summary.filter-title::marker {
+    content: "";
+}
+
+.filter-disclosure > summary.filter-title span:last-child::after {
+    content: " +";
+    color: var(--accent-orange);
+    font-weight: 700;
+}
+
+.filter-disclosure[open] > summary.filter-title span:last-child::after {
+    content: " -";
+}
+
+.filter-disclosure > .filter-list {
+    margin-top: 0.5rem;
 }
 
 .filter-list {
@@ -1400,6 +1441,12 @@ body.library-page a {
         border-right: none;
         border-bottom: 3px solid var(--rule);
         padding: 1.2rem;
+        position: static;
+        top: auto;
+        align-self: auto;
+        height: auto;
+        overflow: visible;
+        overscroll-behavior: auto;
         max-height: none;
     }
 

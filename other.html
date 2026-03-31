@@ -24,38 +24,6 @@
                 <input id="library-search" class="search-input" type="search" placeholder="Title, author, notes..." autocomplete="off">
             </section>
 
-            <section class="filter-group" aria-label="Subject filter">
-                <div class="filter-title">
-                    <span>Subject</span>
-                    <span>[SBJ]</span>
-                </div>
-                <div class="filter-list" id="subject-filters"></div>
-            </section>
-
-            <section class="filter-group" aria-label="Year filter">
-                <div class="filter-title">
-                    <span>Year</span>
-                    <span>[YR]</span>
-                </div>
-                <div class="filter-list" id="year-filters"></div>
-            </section>
-
-            <section class="filter-group" aria-label="Format filter">
-                <div class="filter-title">
-                    <span>Format</span>
-                    <span>[FMT]</span>
-                </div>
-                <div class="filter-list" id="format-filters"></div>
-            </section>
-
-            <section class="filter-group" aria-label="Status filter">
-                <div class="filter-title">
-                    <span>Status</span>
-                    <span>[STS]</span>
-                </div>
-                <div class="filter-list" id="status-filters"></div>
-            </section>
-
             <section class="filter-group" aria-label="Sort options">
                 <div class="filter-title">
                     <span>Sort</span>
@@ -66,6 +34,46 @@
                     <option value="rating">Rating high-low</option>
                     <option value="title">Title A-Z</option>
                 </select>
+            </section>
+
+            <section class="filter-group filter-group-disclosure" aria-label="Subject filter">
+                <details class="filter-disclosure">
+                    <summary class="filter-title">
+                        <span>Subject</span>
+                        <span>[SBJ]</span>
+                    </summary>
+                    <div class="filter-list" id="subject-filters"></div>
+                </details>
+            </section>
+
+            <section class="filter-group filter-group-disclosure" aria-label="Year filter">
+                <details class="filter-disclosure">
+                    <summary class="filter-title">
+                        <span>Year</span>
+                        <span>[YR]</span>
+                    </summary>
+                    <div class="filter-list" id="year-filters"></div>
+                </details>
+            </section>
+
+            <section class="filter-group filter-group-disclosure" aria-label="Format filter">
+                <details class="filter-disclosure" open>
+                    <summary class="filter-title">
+                        <span>Format</span>
+                        <span>[FMT]</span>
+                    </summary>
+                    <div class="filter-list" id="format-filters"></div>
+                </details>
+            </section>
+
+            <section class="filter-group filter-group-disclosure" aria-label="Status filter">
+                <details class="filter-disclosure" open>
+                    <summary class="filter-title">
+                        <span>Status</span>
+                        <span>[STS]</span>
+                    </summary>
+                    <div class="filter-list" id="status-filters"></div>
+                </details>
             </section>
 
             <p class="library-sync-note">Data source: <code>data/library.json</code> (synced from Obsidian export)</p>
