@@ -993,23 +993,6 @@
     "isbn": "9780141032139"
   },
   {
-    "id": "apollo-1989",
-    "title": "Apollo",
-    "author": null,
-    "format": "book",
-    "subjects": [
-      "management"
-    ],
-    "year": 1989,
-    "status": "queued",
-    "finished": null,
-    "rating": null,
-    "url": null,
-    "notes": "Rec by Collison",
-    "cover_image": "https://m.media-amazon.com/images/I/810sIXoyKrL._AC_UY218_.jpg",
-    "cover_source": "manual"
-  },
-  {
     "id": "beloved-1987",
     "title": "Beloved",
     "author": "Toni Morrison",
@@ -1383,6 +1366,23 @@
     "cover_image": "https://i.thriftbooks.com/api/imagehandler/75EFBDD6E76FD45F04E85FB1ABD9AF20D137D911.jpeg",
     "cover_source": "manual",
     "isbn": "9780593652886"
+  },
+  {
+    "id": "the-glass-bead-game-1943",
+    "title": "The Glass Bead Game",
+    "author": "Hermann Hesse",
+    "format": "book",
+    "subjects": [
+      "fiction",
+      "philosophy",
+      "literature"
+    ],
+    "year": 1943,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://www.penguinrandomhouse.com/books/77574/the-glass-bead-game-by-hermann-hesse/",
+    "notes": "a.k.a. Magister Ludi; intend to read next."
   },
   {
     "id": "the-making-of-a-manager-2019",
