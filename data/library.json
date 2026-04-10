@@ -149,6 +149,25 @@
     "isbn": "9780385539302"
   },
   {
+    "id": "the-luzhin-defense-1930",
+    "title": "The Luzhin Defense",
+    "author": "Vladimir Nabokov",
+    "format": "book",
+    "subjects": [
+      "chess",
+      "fiction",
+      "psychology"
+    ],
+    "year": 1930,
+    "status": "in-progress",
+    "finished": null,
+    "rating": null,
+    "url": "https://en.wikipedia.org/wiki/The_Defense_(novel)",
+    "notes": "Chess novel about obsession and collapse",
+    "cover_image": "https://m.media-amazon.com/images/I/A1huGOuQWhL._AC_UF1000,1000_QL80_.jpg",
+    "cover_source": "manual"
+  },
+  {
     "id": "war-and-peace-1869",
     "title": "War and Peace",
     "author": "Leo Tolstoy",
