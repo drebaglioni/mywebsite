@@ -57,27 +57,27 @@
         "swatch": "#cfd0cb",
         "print_color": "International Orange",
         "front": "assets/images/swag/nido-feather-gray-front.jpg",
-        "back": null,
+        "back": "assets/images/swag/nido-feather-gray-back.jpg",
         "front_backdrop": "#DAD7D4",
-        "back_backdrop": null
+        "back_backdrop": "#D5D1D2"
       },
       {
         "name": "International Orange",
         "swatch": "#e6531d",
         "print_color": "Midnight Navy",
         "front": "assets/images/swag/nido-international-orange-front.jpg",
-        "back": null,
+        "back": "assets/images/swag/nido-international-orange-back.jpg",
         "front_backdrop": "#F4AD7B",
-        "back_backdrop": null
+        "back_backdrop": "#F6DFD2"
       },
       {
         "name": "Midnight Navy",
         "swatch": "#1a2238",
         "print_color": "Cream",
         "front": "assets/images/swag/nido-midnight-navy-front.jpg",
-        "back": null,
+        "back": "assets/images/swag/nido-midnight-navy-back.jpg",
         "front_backdrop": "#181F30",
-        "back_backdrop": null
+        "back_backdrop": "#BEBCC9"
       }
     ]
   }
