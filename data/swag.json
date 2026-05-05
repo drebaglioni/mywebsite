@@ -1,0 +1,84 @@
+[
+  {
+    "id": "moses",
+    "name": "Moses",
+    "edition": "01",
+    "subtitle": "Mock-Neck Sweater",
+    "caption": "After Moses Rosenthaler — workmanlike, sculptural, never precious.",
+    "material": "Dense, compact, heavyweight knit. Sweatshirt-like substance, 600–650g.",
+    "construction": "Fully fashioned. Milano tube collar. No visible rib seams.",
+    "sizes": ["S", "M", "L", "XL"],
+    "price_usd": null,
+    "buy_url": null,
+    "status": "Sampling",
+    "colorways": [
+      {
+        "name": "Black",
+        "swatch": "#1a2031",
+        "front": "assets/images/swag/moses-black-front.jpg",
+        "back": "assets/images/swag/moses-black-back.jpg",
+        "front_backdrop": "#282E41",
+        "back_backdrop": "#2B313E"
+      },
+      {
+        "name": "Cream",
+        "swatch": "#d4cdc1",
+        "front": "assets/images/swag/moses-cream-front.jpg",
+        "back": "assets/images/swag/moses-cream-back.jpg",
+        "front_backdrop": "#C1BCB7",
+        "back_backdrop": "#BAB6B1"
+      }
+    ]
+  },
+  {
+    "id": "nido",
+    "name": "Nido",
+    "edition": "02",
+    "subtitle": "Cropped Mock-Neck Pullover",
+    "caption": "Brushed French terry, garment-dyed. Built for the studio, tested in the cold.",
+    "material": "Heavyweight brushed back French terry. 60% wool, 40% polyester. 500 GSM.",
+    "construction": "Self-fabric double-layer stand collar with lightweight fusible interlining. YKK #3 reversed coil zip. Centered horizontal screen-printed wordmark on the back.",
+    "sizes": ["S", "M", "L", "XL"],
+    "price_usd": null,
+    "buy_url": null,
+    "status": "Sampling",
+    "colorways": [
+      {
+        "name": "Phthalo Green",
+        "swatch": "#1f4d3a",
+        "print_color": "International Orange",
+        "front": "assets/images/swag/nido-phthalo-green-front.jpg",
+        "back": "assets/images/swag/nido-phthalo-green-back.jpg",
+        "front_backdrop": "#233D31",
+        "back_backdrop": "#D3D6CC"
+      },
+      {
+        "name": "Feather Gray",
+        "swatch": "#cfd0cb",
+        "print_color": "International Orange",
+        "front": "assets/images/swag/nido-feather-gray-front.jpg",
+        "back": null,
+        "front_backdrop": "#DAD7D4",
+        "back_backdrop": null
+      },
+      {
+        "name": "International Orange",
+        "swatch": "#e6531d",
+        "print_color": "Midnight Navy",
+        "front": "assets/images/swag/nido-international-orange-front.jpg",
+        "back": null,
+        "front_backdrop": "#F4AD7B",
+        "back_backdrop": null
+      },
+      {
+        "name": "Midnight Navy",
+        "swatch": "#1a2238",
+        "print_color": "Cream",
+        "front": "assets/images/swag/nido-midnight-navy-front.jpg",
+        "back": null,
+        "front_backdrop": "#181F30",
+        "back_backdrop": null
+      }
+    ]
+  }
+]
