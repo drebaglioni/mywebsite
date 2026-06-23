@@ -993,23 +993,6 @@
     "isbn": "9780141032139"
   },
   {
-    "id": "apollo-1989",
-    "title": "Apollo",
-    "author": null,
-    "format": "book",
-    "subjects": [
-      "management"
-    ],
-    "year": 1989,
-    "status": "queued",
-    "finished": null,
-    "rating": null,
-    "url": null,
-    "notes": "Rec by Collison",
-    "cover_image": "https://m.media-amazon.com/images/I/810sIXoyKrL._AC_UY218_.jpg",
-    "cover_source": "manual"
-  },
-  {
     "id": "beloved-1987",
     "title": "Beloved",
     "author": "Toni Morrison",
