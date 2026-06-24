@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
 
     <style>
@@ -186,6 +187,8 @@
             align-items: center;
             gap: clamp(1.04rem, 1.8vw, 1.86rem);
             padding: clamp(3.2rem, 6.4vh, 3.8rem) clamp(1.04rem, 2.35vw, 2.45rem);
+            position: relative;
+            z-index: 2;
         }
 
         .about-index {
@@ -196,7 +199,19 @@
             gap: 0;
             padding: clamp(0.48rem, 0.78vw, 0.72rem) 0;
             position: relative;
-            z-index: 2;
+            z-index: 3;
+        }
+
+        .about-index::before {
+            content: "";
+            position: absolute;
+            top: 16%;
+            right: -10%;
+            bottom: 16%;
+            left: -8%;
+            z-index: -1;
+            pointer-events: none;
+            background: linear-gradient(90deg, rgba(243, 241, 232, 1) 0%, rgba(243, 241, 232, 0.97) 62%, rgba(243, 241, 232, 0.42) 82%, rgba(243, 241, 232, 0) 100%);
         }
 
         .about-line {
@@ -345,67 +360,52 @@
         }
 
         .about-art {
-            align-self: stretch;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-            z-index: 1;
-            overflow: visible;
-        }
-
-        .about-formula {
-            margin-top: 0.36rem;
-            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
-            font-size: clamp(0.44rem, 0.52vw, 0.54rem);
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: rgba(13, 13, 13, 0.12);
-            text-align: right;
-            padding-right: 0.15rem;
-            user-select: none;
-            position: relative;
-            z-index: 2;
-        }
-
-        .about-field {
-            position: relative;
-            height: min(720px, calc(100vh - 8.8rem));
-            overflow: visible;
-            isolation: isolate;
+            position: fixed;
+            inset: 0;
+            z-index: 0;
             pointer-events: none;
         }
 
-        .shape {
+        .about-formula {
+            position: fixed;
+            right: clamp(1rem, 2.35vw, 2.45rem);
+            bottom: clamp(1.3rem, 3.4vh, 2.4rem);
+            max-width: min(620px, 48vw);
+            margin-top: 0;
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: clamp(0.52rem, 0.66vw, 0.68rem);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(30, 50, 214, 0.32);
+            text-align: right;
+            padding-right: 0.35rem;
+            user-select: none;
+            z-index: 3;
+        }
+
+        .about-field {
             position: absolute;
-            mix-blend-mode: multiply;
-            opacity: 0.95;
-            transform-origin: center center;
-            will-change: transform;
-            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.11);
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            isolation: isolate;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 62% 48%, rgba(30, 50, 214, 0.075) 0%, transparent 54%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(243, 241, 232, 0));
         }
 
-        .shape-circle {
-            border-radius: 50%;
+        .about-attractor-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 1;
+            mix-blend-mode: normal;
+            filter: saturate(0.9) contrast(1.08);
         }
-
-        .shape-capsule {
-            border-radius: 999px;
-        }
-
-        .shape-rect {
-            border-radius: 10px;
-        }
-
-        .shape-thin {
-            border-radius: 4px;
-        }
-
-        .shape.s1 { width: 41%; aspect-ratio: 1 / 1; background: #FF3D00; }
-        .shape.s2 { width: 16%; height: 63%; background: #0037FF; }
-        .shape.s3 { width: 33%; aspect-ratio: 1 / 1; background: #FFE600; }
-        .shape.s4 { width: 27%; height: 19%; background: #00D5FF; }
-        .shape.s5 { width: 17%; height: 43%; background: #FF1D8E; }
 
         @media screen and (max-width: 899px) {
             body.about-vector {
@@ -442,7 +442,10 @@
             }
 
             .about-art {
+                position: relative;
                 order: 2;
+                height: 50vh;
+                min-height: 300px;
             }
 
             .about-line {
@@ -452,19 +455,21 @@
             .about-formula {
                 font-size: 0.48rem;
                 margin-top: 0.22rem;
+                position: relative;
+                right: auto;
+                bottom: auto;
+                max-width: none;
             }
 
             .about-field {
+                position: relative;
+                inset: auto;
+                width: 100%;
                 height: 50vh;
                 min-height: 300px;
                 overflow: hidden;
             }
 
-            .shape.s1 { width: 51%; }
-            .shape.s2 { width: 20%; height: 66%; }
-            .shape.s3 { width: 40%; }
-            .shape.s4 { width: 37%; height: 18%; }
-            .shape.s5 { width: 21%; height: 46%; }
         }
 
         @media (max-width: 768px) {
@@ -540,6 +545,11 @@
                 transition: opacity 120ms linear;
                 transform: none;
             }
+
+            .about-attractor-canvas {
+                opacity: 0.88;
+                filter: saturate(0.9) contrast(0.98);
+            }
         }
     </style>
 </head>
@@ -606,13 +616,9 @@
 
         <section class="about-art" aria-label="Vector-field composition">
             <div class="about-field" aria-hidden="true">
-                <div class="shape shape-circle s1" data-x="-0.34" data-y="-0.18" data-offset="7" data-a="12.8" data-b="8.8" data-w="0.36" data-p="0.3"></div>
-                <div class="shape shape-capsule s2" data-x="0.39" data-y="-0.12" data-offset="-5" data-a="9.6" data-b="13.2" data-w="0.48" data-p="1.5"></div>
-                <div class="shape shape-circle s3" data-x="-0.03" data-y="0.48" data-offset="11" data-a="9.2" data-b="7.6" data-w="0.62" data-p="2.8"></div>
-                <div class="shape shape-rect s4" data-x="0.42" data-y="0.52" data-offset="-2" data-a="10.4" data-b="7.4" data-w="0.42" data-p="0.9"></div>
-                <div class="shape shape-thin s5" data-x="-0.58" data-y="0.36" data-offset="5" data-a="11.8" data-b="14.1" data-w="0.32" data-p="2.1"></div>
+                <canvas class="about-attractor-canvas" id="aboutAttractorCanvas"></canvas>
             </div>
-            <div class="about-formula">r_i(t)=r_0+[a cos(omega t + phi), b sin(omega t + phi)]</div>
+            <div class="about-formula">r=(.28+.82u)(1+.18sin(5theta+phi)+.08cos(9theta-.7phi)) / z=.34sin(3theta+phi)</div>
         </section>
     </main>
 
@@ -624,11 +630,11 @@
         const projectsGateToast = document.getElementById('projectsGateToast');
         const currentUrl = new URL(window.location.href);
         const field = document.querySelector('.about-field');
-        const shapes = field ? Array.from(field.querySelectorAll('.shape')) : [];
+        const aboutAttractorCanvas = document.getElementById('aboutAttractorCanvas');
+        const aboutAttractorCtx = aboutAttractorCanvas ? aboutAttractorCanvas.getContext('2d', { alpha: true }) : null;
         const desktopMotionQuery = window.matchMedia('(min-width: 900px)');
         const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
         const motionOverride = new URLSearchParams(window.location.search).get('motion') === 'on';
-        const orbitSpeedMultiplier = 1.5;
         const placeTokens = Array.from(document.querySelectorAll('.place-token'));
         const placePreview = document.getElementById('aboutPlacePreview');
         const placePreviewImg = document.getElementById('aboutPlacePreviewImg');
@@ -638,10 +644,20 @@
             merthyr: { src: 'assets/images/about/home-merthyr.jpg', label: 'MERTHYR TYDFIL', alt: 'Merthyr Tydfil town view' },
             sf: { src: 'assets/images/about/home-sanfrancisco.jpg', label: 'SAN FRANCISCO', alt: 'San Francisco skyline view' }
         };
-        let animationFrame = null;
-        let orbitEnabled = false;
+        let attractorFrame = null;
+        let attractorEnabled = false;
         let placeHideTimer = null;
         let gateToastTimer = null;
+        const aboutAttractor = {
+            dpr: 1,
+            width: 0,
+            height: 0,
+            targetX: 0,
+            targetY: 0,
+            pointerX: 0,
+            pointerY: 0,
+            staticDrawn: false
+        };
 
         function hideProjectsGateToast() {
             if (!projectsGateToast) {
@@ -717,91 +733,205 @@
             placePreview.setAttribute('aria-hidden', 'false');
         }
 
-        function vector(x, y) {
-            return {
-                vx: (-y) + 0.35 * Math.sin(2 * y),
-                vy: x + 0.35 * Math.cos(2 * x)
-            };
-        }
-
-        function positionShapes() {
-            if (!field || shapes.length === 0) {
+        function resizeAboutAttractor() {
+            if (!aboutAttractorCanvas || !aboutAttractorCtx || !field) {
                 return;
             }
 
-            shapes.forEach((shape) => {
-                const x = Number(shape.dataset.x || 0);
-                const y = Number(shape.dataset.y || 0);
-                const offset = Number(shape.dataset.offset || 0);
-                const { vx, vy } = vector(x, y);
+            const rect = field.getBoundingClientRect();
+            const dpr = Math.min(window.devicePixelRatio || 1, 1.35);
+            const width = Math.max(1, Math.round(rect.width));
+            const height = Math.max(1, Math.round(rect.height));
+            const pixelWidth = Math.round(width * dpr);
+            const pixelHeight = Math.round(height * dpr);
 
-                const angle = (Math.atan2(vy, vx) * 180 / Math.PI) + offset;
-                const magnitude = Math.min(1.95, Math.hypot(vx, vy));
-                const scale = 0.86 + (magnitude * 0.19);
-                const left = ((x + 1) * 50);
-                const top = ((y + 1) * 50);
-
-                shape.style.left = left + '%';
-                shape.style.top = top + '%';
-                shape.dataset.baseAngle = angle.toFixed(4);
-                shape.dataset.baseScale = scale.toFixed(4);
-            });
+            if (aboutAttractorCanvas.width !== pixelWidth || aboutAttractorCanvas.height !== pixelHeight) {
+                aboutAttractorCanvas.width = pixelWidth;
+                aboutAttractorCanvas.height = pixelHeight;
+                aboutAttractorCanvas.style.width = width + 'px';
+                aboutAttractorCanvas.style.height = height + 'px';
+                aboutAttractor.dpr = dpr;
+                aboutAttractor.width = width;
+                aboutAttractor.height = height;
+                aboutAttractor.staticDrawn = false;
+            }
         }
 
-        function renderOrbit(timestamp) {
-            if (!field || shapes.length === 0) {
+        function drawAboutAttractor(timestamp, isStatic = false) {
+            if (!aboutAttractorCanvas || !aboutAttractorCtx || aboutAttractor.width === 0 || aboutAttractor.height === 0) {
                 return;
             }
 
-            const time = timestamp / 1000;
+            const ctx = aboutAttractorCtx;
+            const width = aboutAttractor.width;
+            const height = aboutAttractor.height;
+            const dpr = aboutAttractor.dpr;
+            const time = (timestamp || 0) * 0.001;
+            const drift = isStatic ? 0.9 : time;
 
-            shapes.forEach((shape) => {
-                const angle = Number(shape.dataset.baseAngle || 0);
-                const scale = Number(shape.dataset.baseScale || 1);
-                const a = Number(shape.dataset.a || 0);
-                const b = Number(shape.dataset.b || 0);
-                const omega = Number(shape.dataset.w || 0.1);
-                const phase = Number(shape.dataset.p || 0);
-                const orbitTime = (omega * orbitSpeedMultiplier * time) + phase;
-                const xShift = orbitEnabled ? a * Math.cos(orbitTime) : 0;
-                const yShift = orbitEnabled ? b * Math.sin(orbitTime) : 0;
+            aboutAttractor.pointerX += (aboutAttractor.targetX - aboutAttractor.pointerX) * (isStatic ? 1 : 0.035);
+            aboutAttractor.pointerY += (aboutAttractor.targetY - aboutAttractor.pointerY) * (isStatic ? 1 : 0.035);
 
-                shape.style.transform = `translate3d(-50%, -50%, 0) translate3d(${xShift}px, ${yShift}px, 0) rotate(${angle}deg) scale(${scale})`;
+            const centerX = width * (0.66 + aboutAttractor.pointerX * 0.028);
+            const centerY = height * (0.49 + aboutAttractor.pointerY * 0.024);
+            const radius = Math.min(width, height) * 1.14;
+            const rotation = -0.16 + drift * 0.035 + aboutAttractor.pointerX * 0.1;
+            const cosR = Math.cos(rotation);
+            const sinR = Math.sin(rotation);
+            const grid = Math.max(1.8, Math.min(2.75, Math.min(width, height) * 0.0032));
+            const pixelSize = Math.max(1.15, grid * 0.68);
+            const phase = drift * 0.34;
+            const driftX = Math.sin(drift * 0.11) * 0.14 + aboutAttractor.pointerX * 0.04;
+            const driftY = Math.cos(drift * 0.09) * 0.12 + aboutAttractor.pointerY * 0.04;
+
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            ctx.imageSmoothingEnabled = false;
+            ctx.clearRect(0, 0, width, height);
+            ctx.lineCap = 'butt';
+            ctx.lineJoin = 'miter';
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(0, 0, width, height);
+            ctx.clip();
+
+            function hash2(ix, iy) {
+                let h = (ix * 374761393) ^ (iy * 668265263) ^ 0x6d2b79f5;
+                h = (h ^ (h >>> 13)) >>> 0;
+                h = Math.imul(h, 1274126177) >>> 0;
+                return ((h ^ (h >>> 16)) >>> 0) / 4294967295;
+            }
+
+            function pixelPoint(theta, lane) {
+                const laneT = lane / 96;
+                const localPhase = phase + laneT * Math.PI * 0.9;
+                const shell = (0.18 + laneT * 0.98)
+                    * (1
+                        + 0.19 * Math.sin(5 * theta + localPhase)
+                        + 0.08 * Math.cos(9 * theta - localPhase * 0.72)
+                        + 0.035 * Math.sin(14 * theta + localPhase * 0.34));
+                const curl = 0.075 * Math.sin(3 * theta + localPhase);
+                const x = Math.cos(theta + curl) * shell
+                    + 0.08 * Math.cos(2 * theta - localPhase) * laneT;
+                const y = Math.sin(theta - curl) * shell * (0.83 + laneT * 0.12)
+                    + 0.07 * Math.sin(4 * theta + localPhase) * (1 - laneT * 0.3);
+                const z = 0.32 * Math.sin(3 * theta + localPhase)
+                    + 0.18 * Math.cos(7 * theta - localPhase);
+                const rx = x * cosR - z * sinR;
+                const rz = x * sinR + z * cosR;
+                const lift = y * Math.cos(0.32) - rz * Math.sin(0.32);
+                const depth = 1.08 / (2.5 - rz * 0.18);
+
+                return {
+                    x: centerX + rx * radius * depth * 1.54,
+                    y: centerY + lift * radius * depth * 1.18,
+                    depth,
+                    laneT
+                };
+            }
+
+            const inkBuckets = [[], [], [], [], []];
+            const accentPixels = [];
+            const ghostPixels = [];
+
+            for (let lane = 0; lane <= 96; lane += 1) {
+                const laneT = lane / 96;
+                const steps = 230 + Math.round(laneT * 130);
+                for (let i = 0; i < steps; i += 1) {
+                    const theta = (i / steps) * Math.PI * 2;
+                    const grain = hash2(lane, i);
+                    if (grain < 0.12 && lane % 3 !== 0) {
+                        continue;
+                    }
+
+                    const point = pixelPoint(theta + grain * 0.002, lane);
+                    if (point.x < -grid || point.x > width + grid || point.y < -grid || point.y > height + grid) {
+                        continue;
+                    }
+
+                    const shimmer = Math.sin(drift * 1.2 + lane * 0.41 + i * 0.07);
+                    const size = pixelSize * (0.42 + grain * 0.74 + point.depth * 0.12);
+                    const x = Math.round((point.x + (grain - 0.5) * grid * 0.42) / grid) * grid;
+                    const y = Math.round((point.y + (hash2(i, lane) - 0.5) * grid * 0.42) / grid) * grid;
+
+                    if (lane > 82 && i % 5 === 0 && grain > 0.2) {
+                        accentPixels.push([x, y, size * 1.06]);
+                    } else if (grain > 0.78 || shimmer > 0.84) {
+                        ghostPixels.push([x, y, size * 0.76]);
+                    } else {
+                        const bucket = Math.min(4, Math.floor((point.laneT * 3.8 + point.depth * 1.3 + grain * 0.7) % 5));
+                        inkBuckets[bucket].push([x, y, size]);
+                    }
+                }
+            }
+
+            const inkAlpha = isStatic
+                ? [0.09, 0.13, 0.18, 0.24, 0.31]
+                : [0.102, 0.148, 0.205, 0.272, 0.35];
+            inkBuckets.forEach((pixels, bucket) => {
+                ctx.fillStyle = `rgba(0, 31, 130, ${inkAlpha[bucket]})`;
+                pixels.forEach(([x, y, size]) => {
+                    ctx.fillRect(x, y, size, size);
+                });
             });
 
-            if (orbitEnabled) {
-                animationFrame = window.requestAnimationFrame(renderOrbit);
-            } else {
-                animationFrame = null;
-            }
+            ctx.fillStyle = `rgba(255, 70, 0, ${isStatic ? 0.16 : 0.2})`;
+            accentPixels.forEach(([x, y, size]) => {
+                ctx.fillRect(x, y, size, size);
+            });
+
+            ctx.fillStyle = `rgba(7, 12, 28, ${isStatic ? 0.065 : 0.085})`;
+            ghostPixels.forEach(([x, y, size]) => {
+                ctx.fillRect(x, y, size, size);
+            });
+
+            ctx.restore();
         }
 
-        function shouldOrbit() {
+        function shouldRunAboutAttractor() {
             return desktopMotionQuery.matches && (motionOverride || !reducedMotionQuery.matches) && !document.hidden;
         }
 
-        function updateOrbitState() {
-            const nextState = shouldOrbit();
+        function updateAboutAttractorState() {
+            if (!aboutAttractorCanvas || !aboutAttractorCtx) {
+                return;
+            }
 
-            if (orbitEnabled === nextState) {
-                if (!nextState) {
-                    renderOrbit(0);
+            resizeAboutAttractor();
+            const nextState = shouldRunAboutAttractor();
+
+            if (attractorEnabled === nextState) {
+                if (!nextState && !aboutAttractor.staticDrawn) {
+                    drawAboutAttractor(0, true);
+                    aboutAttractor.staticDrawn = true;
                 }
                 return;
             }
 
-            orbitEnabled = nextState;
-
-            if (animationFrame !== null) {
-                window.cancelAnimationFrame(animationFrame);
-                animationFrame = null;
+            attractorEnabled = nextState;
+            if (attractorFrame !== null) {
+                window.cancelAnimationFrame(attractorFrame);
+                attractorFrame = null;
             }
 
-            if (orbitEnabled) {
-                animationFrame = window.requestAnimationFrame(renderOrbit);
+            if (attractorEnabled) {
+                aboutAttractor.staticDrawn = false;
+                aboutAttractor.lastTimestamp = 0;
+                attractorFrame = window.requestAnimationFrame(renderAboutAttractor);
             } else {
-                renderOrbit(0);
+                drawAboutAttractor(0, true);
+                aboutAttractor.staticDrawn = true;
             }
+        }
+
+        function renderAboutAttractor(timestamp) {
+            if (!attractorEnabled) {
+                attractorFrame = null;
+                return;
+            }
+
+            drawAboutAttractor(timestamp, false);
+            attractorFrame = window.requestAnimationFrame(renderAboutAttractor);
         }
 
         function bindMediaQuery(query, handler) {
@@ -815,16 +945,32 @@
         }
 
         window.addEventListener('resize', () => {
-            positionShapes();
-            updateOrbitState();
+            updateAboutAttractorState();
             hidePlacePreview(false);
         }, { passive: true });
-        document.addEventListener('visibilitychange', updateOrbitState, { passive: true });
+        document.addEventListener('visibilitychange', () => {
+            updateAboutAttractorState();
+        }, { passive: true });
+        document.addEventListener('pointermove', (event) => {
+            if (!field) {
+                return;
+            }
+
+            const rect = field.getBoundingClientRect();
+            if (rect.width === 0 || rect.height === 0) {
+                return;
+            }
+
+            aboutAttractor.targetX = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - 0.5) * 2));
+            aboutAttractor.targetY = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - 0.5) * 2));
+        }, { passive: true });
         bindMediaQuery(desktopMotionQuery, () => {
-            updateOrbitState();
+            updateAboutAttractorState();
             hidePlacePreview(false);
         });
-        bindMediaQuery(reducedMotionQuery, updateOrbitState);
+        bindMediaQuery(reducedMotionQuery, () => {
+            updateAboutAttractorState();
+        });
 
         placeTokens.forEach((token) => {
             const placeKey = token.dataset.place;
@@ -864,8 +1010,7 @@
             window.history.replaceState({}, '', currentUrl.pathname + currentUrl.search + currentUrl.hash);
         }
 
-        positionShapes();
-        updateOrbitState();
+        updateAboutAttractorState();
     </script>
 </body>
 </html>
