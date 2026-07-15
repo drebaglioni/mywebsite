@@ -379,12 +379,13 @@
             z-index: 3;
             display: grid;
             grid-template-rows: auto auto auto auto;
+            gap: 14px;
             align-self: center;
             min-width: 0;
-            background: var(--swag-cream);
-            color: var(--swag-black);
-            border: 1px solid rgba(242, 234, 215, 0.22);
-            box-shadow: 12px 12px 0 color-mix(in oklab, var(--piece-accent) 84%, #000 16%);
+            color: var(--swag-cream);
+            background: transparent;
+            border: 0;
+            box-shadow: none;
         }
 
         .swag-spread:nth-child(even) .swag-spec {
@@ -393,15 +394,49 @@
         }
 
         .swag-spec-header {
-            padding: clamp(18px, 2.4vw, 30px);
-            border-bottom: 2px solid var(--swag-black);
+            position: relative;
+            width: calc(100% + clamp(34px, 4.4vw, 68px));
+            margin-left: calc(clamp(34px, 4.4vw, 68px) * -1);
+            padding: clamp(16px, 2.2vw, 28px);
+            background: var(--swag-cream);
+            color: var(--swag-black);
+            border: 2px solid var(--swag-black);
+            box-shadow: 10px 10px 0 color-mix(in oklab, var(--piece-accent) 86%, #000 14%);
+            clip-path: polygon(
+                0 0,
+                calc(100% - 26px) 0,
+                calc(100% - 26px) 14px,
+                100% 14px,
+                100% 100%,
+                18px 100%,
+                18px calc(100% - 12px),
+                0 calc(100% - 12px)
+            );
+        }
+
+        .swag-spec-header::after {
+            content: "";
+            position: absolute;
+            right: 18px;
+            bottom: 16px;
+            width: 88px;
+            height: 34px;
+            background:
+                linear-gradient(var(--swag-black), var(--swag-black)) 0 0 / 8px 34px no-repeat,
+                linear-gradient(var(--swag-black), var(--swag-black)) 14px 0 / 4px 34px no-repeat,
+                linear-gradient(var(--swag-black), var(--swag-black)) 24px 0 / 12px 34px no-repeat,
+                linear-gradient(var(--swag-black), var(--swag-black)) 44px 0 / 5px 34px no-repeat,
+                linear-gradient(var(--swag-black), var(--swag-black)) 58px 0 / 15px 34px no-repeat,
+                linear-gradient(var(--swag-black), var(--swag-black)) 82px 0 / 6px 34px no-repeat;
+            opacity: 0.18;
+            pointer-events: none;
         }
 
         .swag-kicker {
             display: flex;
             justify-content: space-between;
             gap: 14px;
-            margin: 0 0 clamp(16px, 2vw, 26px);
+            margin: 0 0 clamp(14px, 1.7vw, 22px);
             font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
             font-size: 10px;
             font-weight: 700;
@@ -412,7 +447,7 @@
 
         .swag-name {
             margin: 0;
-            font-size: clamp(48px, 6.35vw, 92px);
+            font-size: clamp(54px, 7.2vw, 112px);
             font-weight: 700;
             letter-spacing: 0;
             line-height: 0.76;
@@ -421,25 +456,34 @@
         }
 
         .swag-subtitle {
+            display: inline-block;
             margin: 14px 0 0;
+            padding: 7px 9px;
             max-width: 22ch;
+            background: var(--swag-black);
             font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
             font-size: 12px;
             font-weight: 700;
             letter-spacing: 0.1em;
             line-height: 1.35;
             text-transform: uppercase;
-            color: color-mix(in oklab, var(--swag-black) 68%, var(--piece-accent) 32%);
+            color: var(--swag-cream);
         }
 
         .swag-caption {
             margin: 0;
-            padding: clamp(18px, 2.4vw, 30px);
-            border-bottom: 2px solid var(--swag-black);
-            font-size: clamp(20px, 2vw, 30px);
-            font-weight: 600;
+            padding: clamp(16px, 2vw, 24px);
+            width: min(100%, 31ch);
+            justify-self: end;
+            background: var(--swag-black);
+            color: var(--swag-cream);
+            border: 2px solid var(--swag-cream);
+            box-shadow: -8px 8px 0 color-mix(in oklab, var(--piece-accent) 76%, #000 24%);
+            font-size: clamp(19px, 1.8vw, 28px);
+            font-weight: 700;
             letter-spacing: 0;
             line-height: 1.02;
+            transform: rotate(-1.2deg) translateX(10px);
         }
 
         .swag-datasheet {
@@ -447,8 +491,13 @@
             display: grid;
             grid-template-columns: minmax(86px, 0.38fr) minmax(0, 1fr);
             align-content: start;
-            border-bottom: 2px solid var(--swag-black);
+            width: min(100%, 440px);
+            background: var(--swag-cream);
+            color: var(--swag-black);
+            border: 2px solid var(--swag-black);
+            box-shadow: 7px 7px 0 rgba(242, 234, 215, 0.24);
             font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            transform: translateX(-16px);
         }
 
         .swag-datasheet dt,
@@ -475,14 +524,21 @@
 
         .swag-controls {
             display: grid;
+            gap: 12px;
             grid-template-columns: minmax(0, 1fr);
         }
 
         .swag-colorways {
             display: grid;
             gap: 12px;
+            width: min(88%, 390px);
+            justify-self: end;
             padding: 14px 16px;
-            border-bottom: 2px solid var(--swag-black);
+            background: var(--swag-cream);
+            color: var(--swag-black);
+            border: 2px solid var(--swag-black);
+            box-shadow: 6px 6px 0 color-mix(in oklab, var(--piece-accent) 84%, #000 16%);
+            transform: rotate(1deg);
         }
 
         .swag-colorways-label {
@@ -543,6 +599,8 @@
         .swag-cta {
             display: grid;
             min-height: 58px;
+            width: min(100%, 430px);
+            justify-self: start;
         }
 
         .swag-buy,
@@ -553,8 +611,8 @@
             gap: 16px;
             min-height: 58px;
             padding: 0 16px;
-            background: var(--swag-black);
-            color: var(--swag-cream);
+            background: var(--piece-accent);
+            color: var(--swag-black);
             font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
             font-size: 11px;
             font-weight: 700;
@@ -567,13 +625,13 @@
         .swag-buy::after,
         .swag-status::after {
             content: "+";
-            color: var(--piece-accent);
+            color: var(--swag-black);
             font-size: 22px;
             line-height: 1;
         }
 
         .swag-buy:hover {
-            background: var(--piece-accent);
+            background: var(--swag-cream);
             color: var(--swag-black);
         }
 
@@ -827,7 +885,28 @@
             .swag-spread:nth-child(even) .swag-spec {
                 grid-row: 3;
                 align-self: stretch;
-                box-shadow: 6px 6px 0 var(--piece-accent);
+                gap: 12px;
+                box-shadow: none;
+            }
+
+            .swag-spec-header {
+                width: auto;
+                margin-left: 0;
+                padding: 18px;
+                box-shadow: 6px 6px 0 color-mix(in oklab, var(--piece-accent) 86%, #000 14%);
+            }
+
+            .swag-spec-header::after {
+                width: 58px;
+                height: 24px;
+                right: 14px;
+                bottom: 12px;
+                background:
+                    linear-gradient(var(--swag-black), var(--swag-black)) 0 0 / 6px 24px no-repeat,
+                    linear-gradient(var(--swag-black), var(--swag-black)) 11px 0 / 3px 24px no-repeat,
+                    linear-gradient(var(--swag-black), var(--swag-black)) 20px 0 / 9px 24px no-repeat,
+                    linear-gradient(var(--swag-black), var(--swag-black)) 36px 0 / 4px 24px no-repeat,
+                    linear-gradient(var(--swag-black), var(--swag-black)) 48px 0 / 10px 24px no-repeat;
             }
 
             .swag-hero img {
@@ -840,13 +919,13 @@
                 font-size: 10px;
             }
 
-            .swag-spec-header {
-                padding: 18px;
-            }
-
             .swag-kicker {
                 margin-bottom: 18px;
                 font-size: 9px;
+            }
+
+            .swag-kicker span:last-child {
+                display: none;
             }
 
             .swag-name {
@@ -858,12 +937,19 @@
             }
 
             .swag-caption {
+                width: auto;
+                justify-self: stretch;
                 padding: 18px;
                 font-size: 24px;
+                transform: none;
+                box-shadow: 6px 6px 0 color-mix(in oklab, var(--piece-accent) 76%, #000 24%);
             }
 
             .swag-datasheet {
                 grid-template-columns: 1fr;
+                width: auto;
+                transform: none;
+                box-shadow: 6px 6px 0 rgba(242, 234, 215, 0.24);
             }
 
             .swag-datasheet dt,
@@ -884,6 +970,13 @@
 
             .swag-swatches {
                 grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
+            }
+
+            .swag-colorways,
+            .swag-cta {
+                width: auto;
+                justify-self: stretch;
+                transform: none;
             }
 
             .swag-closing {
