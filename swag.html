@@ -3,36 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swag — Studio Baglioni</title>
+    <title>Swag / Studio Baglioni</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
     <style>
         html {
-            scroll-snap-type: y proximity;
-            scroll-padding-top: 64px;
             scroll-behavior: smooth;
-        }
-
-        :root {
-            --swag-bg: #EFE7DD;
-            --swag-paper: #EFE7DD;
-            --swag-ink: #2b2622;
-            --swag-rule: rgba(43, 38, 34, 0.10);
-            --swag-mute: rgba(43, 38, 34, 0.50);
+            scroll-snap-type: y proximity;
+            scroll-padding-top: 72px;
         }
 
         body.swag-page {
+            --swag-black: #080806;
+            --swag-ink: #11110d;
+            --swag-cream: #f2ead7;
+            --swag-paper: #e6dcc7;
+            --swag-blue: #1238ff;
+            --swag-orange: #ff4f00;
+            --swag-rule: rgba(8, 8, 6, 0.22);
+            --swag-soft-rule: rgba(242, 234, 215, 0.18);
+
             margin: 0;
-            background: var(--swag-bg);
-            color: var(--swag-ink);
-            font-family: "Newsreader", Georgia, "Times New Roman", serif;
-            font-feature-settings: "ss01" on, "liga" on;
+            background: var(--swag-black);
+            color: var(--swag-cream);
+            font-family: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
-            line-height: 1.45;
+            line-height: 1.05;
+            overflow-x: hidden;
+            cursor: default !important;
+        }
+
+        body.swag-page::before { display: none; }
+
+        body.swag-page a,
+        body.swag-page button {
+            cursor: pointer !important;
         }
 
         body.swag-page .nav-overlay {
@@ -40,69 +49,112 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 64px;
-            display: flex;
+            height: 72px;
+            display: grid;
+            grid-template-columns: minmax(120px, 1fr) auto;
             align-items: center;
-            justify-content: space-between;
-            padding: 0 32px;
-            background: var(--swag-bg);
+            gap: 24px;
+            padding: 0 clamp(18px, 3vw, 42px);
+            background: rgba(8, 8, 6, 0.92);
+            color: var(--swag-cream);
+            border-bottom: 1px solid var(--swag-soft-rule);
+            backdrop-filter: blur(14px);
             z-index: 100;
         }
 
-        body.swag-page .logo-minimal {
-            font-family: "IBM Plex Mono", monospace;
+        body.swag-page .logo-minimal,
+        body.swag-page .nav-links a {
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
             font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.16em;
-            color: var(--swag-ink);
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            line-height: 1;
+            text-transform: uppercase;
             text-decoration: none;
+            color: var(--swag-cream);
+        }
+
+        body.swag-page .logo-minimal {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        body.swag-page .logo-minimal::before {
+            content: "";
+            width: 48px;
+            height: 12px;
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--swag-orange) 0 12px,
+                    transparent 12px 18px,
+                    var(--swag-blue) 18px 30px,
+                    transparent 30px 36px,
+                    var(--swag-cream) 36px 48px
+                );
+            flex: 0 0 auto;
         }
 
         body.swag-page .nav-links {
             display: flex;
-            gap: 26px;
+            align-items: center;
+            justify-content: flex-end;
+            gap: clamp(12px, 2vw, 28px);
+            min-width: 0;
         }
 
         body.swag-page .nav-links a {
-            font-family: "IBM Plex Mono", monospace;
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--swag-ink);
-            text-decoration: none;
             opacity: 0.62;
-            transition: opacity 240ms ease;
+            white-space: nowrap;
+            transition: color 160ms ease, opacity 160ms ease;
         }
 
         body.swag-page .nav-links a:hover,
         body.swag-page .nav-links a:focus-visible {
+            color: var(--swag-orange);
             opacity: 1;
+            outline: none;
         }
 
         body.swag-page .nav-links a[aria-current="page"] {
+            color: var(--swag-orange);
             opacity: 1;
-            text-decoration: underline;
-            text-underline-offset: 5px;
-            text-decoration-thickness: 1px;
         }
 
-        body.swag-page main { padding-top: 0; }
+        body.swag-page main {
+            min-height: 100vh;
+            padding-top: 72px;
+        }
 
-        .swag-collection { display: flex; flex-direction: column; }
+        .swag-collection {
+            display: flex;
+            flex-direction: column;
+        }
 
         .swag-spread {
-            min-height: 100vh;
+            --piece-accent: var(--swag-orange);
+            --piece-backdrop: #1b2133;
+            min-height: calc(100vh - 72px);
             scroll-snap-align: start;
             position: relative;
             display: grid;
-            grid-template-columns: minmax(0, 3fr) minmax(280px, 1fr);
-            gap: clamp(40px, 6vw, 96px);
-            padding: 88px clamp(32px, 6vw, 80px) 64px;
-            align-items: center;
-            box-sizing: border-box;
+            grid-template-columns: minmax(92px, 10vw) minmax(0, 1.04fr) minmax(380px, 0.64fr);
+            gap: clamp(18px, 2.6vw, 44px);
+            align-items: stretch;
+            padding: clamp(18px, 3vw, 42px);
             overflow: hidden;
             isolation: isolate;
+            background:
+                linear-gradient(90deg, rgba(255, 79, 0, 0.16) 0 1px, transparent 1px 100%),
+                linear-gradient(0deg, rgba(242, 234, 215, 0.08) 0 1px, transparent 1px 100%),
+                radial-gradient(circle at 80% 16%, color-mix(in oklab, var(--piece-accent) 38%, transparent) 0%, transparent 34%),
+                var(--swag-black);
+            background-size: 42px 42px, 42px 42px, auto, auto;
+        }
+
+        .swag-spread:nth-child(even) {
+            grid-template-columns: minmax(92px, 10vw) minmax(380px, 0.64fr) minmax(0, 1.04fr);
         }
 
         .swag-stage-canvas {
@@ -110,30 +162,143 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
-            opacity: 1;
+            z-index: 1;
+            opacity: 0.9;
             pointer-events: none;
-            mix-blend-mode: normal;
-            filter: saturate(0.92) contrast(1.18);
+            image-rendering: pixelated;
+            mix-blend-mode: screen;
+        }
+
+        .swag-index-rail {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 0;
+            border-right: 1px solid var(--swag-soft-rule);
+            padding-right: clamp(14px, 1.8vw, 26px);
+        }
+
+        .swag-edition {
+            margin: 0;
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: clamp(22px, 4.6vw, 72px);
+            font-weight: 700;
+            letter-spacing: 0;
+            color: var(--piece-accent);
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+        }
+
+        .swag-system-label {
+            margin: 0;
+            max-width: 10ch;
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            line-height: 1.45;
+            text-transform: uppercase;
+            color: rgba(242, 234, 215, 0.66);
         }
 
         .swag-imagery {
             position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+            z-index: 3;
+            display: grid;
+            grid-template-rows: minmax(0, 1fr) auto;
+            min-width: 0;
+            background:
+                linear-gradient(135deg, color-mix(in oklab, var(--piece-backdrop) 78%, #000 22%), var(--piece-backdrop));
+            box-shadow: inset 0 0 0 1px rgba(242, 234, 215, 0.12);
+            overflow: visible;
+        }
+
+        .swag-imagery::before,
+        .swag-imagery::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            z-index: 6;
+            image-rendering: pixelated;
+        }
+
+        .swag-imagery::before {
+            top: -12px;
+            left: -12px;
+            width: min(190px, 22vw);
+            height: min(210px, 24vw);
+            background:
+                linear-gradient(var(--piece-accent), var(--piece-accent)) 0 0 / 24px 24px no-repeat,
+                linear-gradient(rgba(242, 234, 215, 0.72), rgba(242, 234, 215, 0.72)) 36px 0 / 12px 12px no-repeat,
+                linear-gradient(rgba(242, 234, 215, 0.45), rgba(242, 234, 215, 0.45)) 0 48px / 36px 12px no-repeat,
+                linear-gradient(rgba(18, 56, 255, 0.68), rgba(18, 56, 255, 0.68)) 60px 24px / 18px 18px no-repeat,
+                linear-gradient(rgba(242, 234, 215, 0.34), rgba(242, 234, 215, 0.34)) 24px 84px / 12px 48px no-repeat,
+                linear-gradient(rgba(8, 8, 6, 0.8), rgba(8, 8, 6, 0.8)) 72px 72px / 36px 36px no-repeat;
+        }
+
+        .swag-imagery::after {
+            right: -10px;
+            bottom: 46px;
+            width: min(170px, 20vw);
+            height: min(160px, 18vw);
+            background:
+                linear-gradient(var(--piece-accent), var(--piece-accent)) right bottom / 42px 18px no-repeat,
+                linear-gradient(rgba(242, 234, 215, 0.5), rgba(242, 234, 215, 0.5)) right 42px bottom 30px / 18px 54px no-repeat,
+                linear-gradient(rgba(18, 56, 255, 0.54), rgba(18, 56, 255, 0.54)) right 72px bottom 0 / 30px 30px no-repeat,
+                linear-gradient(rgba(8, 8, 6, 0.84), rgba(8, 8, 6, 0.84)) right 18px bottom 72px / 54px 18px no-repeat;
+        }
+
+        .swag-spread:nth-child(even) .swag-imagery {
+            grid-column: 3;
+            grid-row: 1;
         }
 
         .swag-hero {
             position: relative;
-            aspect-ratio: 4 / 5;
-            max-height: clamp(420px, 78vh, 920px);
-            max-width: 100%;
-            background: var(--hero-bg, var(--swag-paper));
+            min-height: 0;
             overflow: hidden;
-            transition: background-color 360ms cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--piece-backdrop);
+            clip-path: polygon(
+                0 28px,
+                28px 28px,
+                28px 0,
+                calc(100% - 64px) 0,
+                calc(100% - 64px) 16px,
+                100% 16px,
+                100% calc(100% - 86px),
+                calc(100% - 22px) calc(100% - 86px),
+                calc(100% - 22px) 100%,
+                54px 100%,
+                54px calc(100% - 24px),
+                0 calc(100% - 24px)
+            );
+        }
+
+        .swag-hero::before {
+            content: "";
+            position: absolute;
+            inset: clamp(14px, 2vw, 30px);
+            border: 1px solid rgba(242, 234, 215, 0.22);
+            box-shadow:
+                -14px -14px 0 -8px var(--piece-accent),
+                18px -18px 0 -11px rgba(242, 234, 215, 0.72),
+                22px 22px 0 -14px rgba(18, 56, 255, 0.62);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .swag-hero::after {
+            content: "";
+            position: absolute;
+            left: -10%;
+            right: -10%;
+            bottom: -22%;
+            height: 42%;
+            background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.52) 0%, transparent 64%);
+            z-index: 1;
+            pointer-events: none;
         }
 
         .swag-hero img {
@@ -141,306 +306,612 @@
             z-index: 2;
             width: 100%;
             height: 100%;
+            min-height: clamp(480px, 68vh, 780px);
             object-fit: cover;
             display: block;
-            transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), opacity 240ms ease;
+            filter: contrast(1.08) saturate(0.94);
+            transition: transform 560ms cubic-bezier(0.22, 1, 0.36, 1), filter 240ms ease;
         }
 
-        .swag-hero:hover img { transform: scale(1.02); }
+        .swag-hero:hover img {
+            transform: scale(1.018);
+            filter: contrast(1.12) saturate(1);
+        }
 
         .swag-hero.is-empty {
+            min-height: clamp(420px, 68vh, 780px);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--swag-mute);
-            font-family: "IBM Plex Mono", monospace;
-            font-size: 10.5px;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            text-align: center;
             padding: 24px;
-        }
-
-        .swag-hero.is-empty > span {
-            position: relative;
-            z-index: 4;
+            color: rgba(242, 234, 215, 0.76);
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            line-height: 1.45;
+            text-align: center;
+            text-transform: uppercase;
         }
 
         .swag-view-toggle {
-            display: inline-flex;
-            align-items: baseline;
-            gap: 0;
-            font-family: "IBM Plex Mono", monospace;
-            font-size: 10.5px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--swag-mute);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid rgba(242, 234, 215, 0.16);
+            background: rgba(8, 8, 6, 0.84);
         }
 
         .swag-view-toggle button {
-            background: none;
-            border: none;
-            font: inherit;
-            color: inherit;
-            letter-spacing: inherit;
-            text-transform: inherit;
-            padding: 8px 6px;
-            cursor: pointer;
-            transition: color 200ms ease;
+            min-height: 54px;
+            border: 0;
+            border-right: 1px solid rgba(242, 234, 215, 0.14);
+            background: transparent;
+            color: rgba(242, 234, 215, 0.62);
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            transition: background-color 160ms ease, color 160ms ease;
         }
+
+        .swag-view-toggle button:last-child { border-right: 0; }
 
         .swag-view-toggle button[aria-pressed="true"] {
-            color: var(--swag-ink);
-            text-decoration: underline;
-            text-underline-offset: 4px;
-            text-decoration-thickness: 1px;
-        }
-
-        .swag-view-toggle .toggle-divider {
-            color: var(--swag-mute);
-            opacity: 0.5;
-            padding: 0 2px;
+            background: var(--piece-accent);
+            color: var(--swag-black);
         }
 
         .swag-view-toggle button:disabled {
-            opacity: 0.28;
-            cursor: not-allowed;
-            text-decoration: none !important;
+            color: rgba(242, 234, 215, 0.25);
+            cursor: not-allowed !important;
         }
 
-        .swag-view-toggle button:not(:disabled):hover { color: var(--swag-ink); }
+        .swag-view-toggle button:not(:disabled):hover {
+            color: var(--swag-black);
+            background: var(--swag-cream);
+        }
+
+        .toggle-divider { display: none; }
 
         .swag-spec {
             position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-            max-width: 360px;
+            z-index: 3;
+            display: grid;
+            grid-template-rows: auto auto auto auto;
+            align-self: center;
+            min-width: 0;
+            background: var(--swag-cream);
+            color: var(--swag-black);
+            border: 1px solid rgba(242, 234, 215, 0.22);
+            box-shadow: 12px 12px 0 color-mix(in oklab, var(--piece-accent) 84%, #000 16%);
         }
 
-        .swag-edition {
-            font-family: "IBM Plex Mono", monospace;
-            font-size: 10.5px;
-            font-weight: 500;
-            letter-spacing: 0.20em;
+        .swag-spread:nth-child(even) .swag-spec {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .swag-spec-header {
+            padding: clamp(18px, 2.4vw, 30px);
+            border-bottom: 2px solid var(--swag-black);
+        }
+
+        .swag-kicker {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+            margin: 0 0 clamp(16px, 2vw, 26px);
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            line-height: 1.3;
             text-transform: uppercase;
-            color: var(--swag-mute);
-            margin: 0;
         }
 
         .swag-name {
-            font-family: "Newsreader", Georgia, serif;
-            font-weight: 400;
-            font-size: clamp(40px, 5vw, 72px);
-            line-height: 0.96;
-            letter-spacing: -0.02em;
             margin: 0;
+            font-size: clamp(48px, 6.35vw, 92px);
+            font-weight: 700;
+            letter-spacing: 0;
+            line-height: 0.76;
+            text-transform: uppercase;
+            overflow-wrap: anywhere;
         }
 
         .swag-subtitle {
-            font-family: "Newsreader", Georgia, serif;
-            font-style: italic;
-            font-weight: 300;
-            font-size: clamp(15px, 1.3vw, 18px);
-            color: var(--swag-mute);
-            margin: -10px 0 0;
+            margin: 14px 0 0;
+            max-width: 22ch;
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            line-height: 1.35;
+            text-transform: uppercase;
+            color: color-mix(in oklab, var(--swag-black) 68%, var(--piece-accent) 32%);
         }
 
         .swag-caption {
-            font-family: "Newsreader", Georgia, serif;
-            font-style: italic;
-            font-weight: 400;
-            font-size: clamp(17px, 1.45vw, 22px);
-            line-height: 1.4;
-            color: var(--swag-ink);
             margin: 0;
-            max-width: 30ch;
+            padding: clamp(18px, 2.4vw, 30px);
+            border-bottom: 2px solid var(--swag-black);
+            font-size: clamp(20px, 2vw, 30px);
+            font-weight: 600;
+            letter-spacing: 0;
+            line-height: 1.02;
         }
 
         .swag-datasheet {
             margin: 0;
             display: grid;
-            grid-template-columns: max-content 1fr;
-            row-gap: 6px;
-            column-gap: 18px;
-            font-family: "IBM Plex Mono", monospace;
-            font-size: 10.5px;
-            line-height: 1.55;
+            grid-template-columns: minmax(86px, 0.38fr) minmax(0, 1fr);
+            align-content: start;
+            border-bottom: 2px solid var(--swag-black);
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+        }
+
+        .swag-datasheet dt,
+        .swag-datasheet dd {
+            min-height: 52px;
+            margin: 0;
+            padding: 12px 16px;
+            border-top: 1px solid var(--swag-rule);
+            font-size: 10px;
+            line-height: 1.45;
         }
 
         .swag-datasheet dt {
-            font-weight: 500;
-            letter-spacing: 0.16em;
+            font-weight: 700;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--swag-mute);
+            color: color-mix(in oklab, var(--swag-black) 55%, var(--piece-accent) 45%);
         }
 
         .swag-datasheet dd {
-            margin: 0;
-            color: var(--swag-ink);
+            border-left: 1px solid var(--swag-rule);
+            font-weight: 600;
+        }
+
+        .swag-controls {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
         }
 
         .swag-colorways {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            display: grid;
+            gap: 12px;
+            padding: 14px 16px;
+            border-bottom: 2px solid var(--swag-black);
         }
 
         .swag-colorways-label {
-            font-family: "IBM Plex Mono", monospace;
-            font-size: 10.5px;
-            font-weight: 500;
-            letter-spacing: 0.16em;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            line-height: 1.3;
             text-transform: uppercase;
-            color: var(--swag-mute);
         }
 
         .swag-colorways-label strong {
-            color: var(--swag-ink);
-            font-weight: 500;
+            font: inherit;
+            color: var(--piece-accent);
+            text-align: right;
         }
 
         .swag-swatches {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
             gap: 8px;
             margin: 0;
             padding: 0;
             list-style: none;
         }
 
-        .swag-swatches li { display: inline-flex; }
+        .swag-swatches li { min-width: 0; }
 
         .swag-swatch {
-            width: 14px;
-            height: 14px;
-            border-radius: 999px;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            background: var(--dot, #ccc);
-            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
-            transition: transform 200ms ease, box-shadow 200ms ease;
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border: 2px solid var(--swag-black);
+            background: var(--dot, #999);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+            transition: transform 150ms ease, box-shadow 150ms ease;
         }
 
-        .swag-swatch:hover { transform: translateY(-1px); }
+        .swag-swatch::after {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border: 1px solid rgba(8, 8, 6, 0.42);
+        }
+
+        .swag-swatch:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--swag-black);
+        }
 
         .swag-swatch[aria-pressed="true"] {
-            box-shadow: 0 0 0 2px var(--swag-bg), 0 0 0 3px var(--swag-ink);
+            box-shadow: 0 0 0 3px var(--piece-accent);
         }
 
         .swag-cta {
+            display: grid;
+            min-height: 58px;
+        }
+
+        .swag-buy,
+        .swag-status {
             display: flex;
             align-items: center;
-            gap: 14px;
-            margin-top: 4px;
-        }
-
-        .swag-buy {
-            font-family: "Newsreader", Georgia, serif;
-            font-style: italic;
-            font-weight: 400;
-            font-size: 17px;
-            color: var(--swag-ink);
-            text-decoration: underline;
-            text-underline-offset: 4px;
-            text-decoration-thickness: 1px;
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            transition: text-decoration-thickness 180ms ease;
-        }
-
-        .swag-buy:hover { text-decoration-thickness: 2px; }
-
-        .swag-status {
-            font-family: "IBM Plex Mono", monospace;
-            font-size: 10.5px;
-            font-weight: 500;
-            letter-spacing: 0.18em;
+            justify-content: space-between;
+            gap: 16px;
+            min-height: 58px;
+            padding: 0 16px;
+            background: var(--swag-black);
+            color: var(--swag-cream);
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            line-height: 1.3;
+            text-decoration: none;
             text-transform: uppercase;
-            color: var(--swag-mute);
         }
+
+        .swag-buy::after,
+        .swag-status::after {
+            content: "+";
+            color: var(--piece-accent);
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        .swag-buy:hover {
+            background: var(--piece-accent);
+            color: var(--swag-black);
+        }
+
+        .swag-buy:hover::after { color: var(--swag-black); }
 
         .swag-closing {
-            min-height: 100vh;
+            min-height: calc(100vh - 72px);
             scroll-snap-align: start;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 36px;
-            padding: 120px 24px;
-            text-align: center;
-            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+            align-items: end;
+            gap: clamp(24px, 5vw, 80px);
+            padding: clamp(28px, 5vw, 72px);
+            background:
+                linear-gradient(90deg, rgba(255, 79, 0, 0.24) 0 1px, transparent 1px 100%),
+                linear-gradient(0deg, rgba(242, 234, 215, 0.1) 0 1px, transparent 1px 100%),
+                var(--swag-black);
+            background-size: 42px 42px;
+            border-top: 1px solid var(--swag-soft-rule);
         }
 
         .swag-closing-eyebrow {
-            font-family: "IBM Plex Mono", monospace;
-            font-size: 10.5px;
-            font-weight: 500;
-            letter-spacing: 0.22em;
+            margin: 0 0 18px;
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            line-height: 1.4;
             text-transform: uppercase;
-            color: var(--swag-mute);
-            margin: 0;
+            color: var(--swag-orange);
         }
 
         .swag-closing-line {
-            font-family: "Newsreader", Georgia, serif;
-            font-style: italic;
-            font-weight: 300;
-            font-size: clamp(26px, 3.4vw, 48px);
-            line-height: 1.25;
-            max-width: 22ch;
-            color: var(--swag-ink);
             margin: 0;
-            letter-spacing: -0.01em;
+            max-width: 11ch;
+            font-size: clamp(64px, 11vw, 168px);
+            font-weight: 700;
+            letter-spacing: 0;
+            line-height: 0.78;
+            text-transform: uppercase;
         }
 
         .swag-closing-contact {
-            font-family: "IBM Plex Mono", monospace;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            min-height: 76px;
+            padding: 0 20px;
+            border: 2px solid var(--swag-cream);
+            color: var(--swag-cream);
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
             font-size: 11px;
-            letter-spacing: 0.18em;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            line-height: 1.4;
+            text-decoration: none;
             text-transform: uppercase;
-            color: var(--swag-ink);
-            text-decoration: underline;
-            text-underline-offset: 5px;
-            text-decoration-thickness: 1px;
+            word-break: break-word;
         }
 
-        @media (max-width: 860px) {
-            html { scroll-snap-type: none; }
+        .swag-closing-contact:hover {
+            border-color: var(--swag-orange);
+            background: var(--swag-orange);
+            color: var(--swag-black);
+        }
 
-            .swag-spread {
-                grid-template-columns: 1fr;
-                gap: 36px;
-                padding: 96px 24px 56px;
-                min-height: auto;
+        @media (max-width: 1080px) {
+            .swag-spread,
+            .swag-spread:nth-child(even) {
+                grid-template-columns: minmax(64px, 0.16fr) minmax(0, 1fr);
+                gap: 18px;
             }
 
-            .swag-spec { max-width: 100%; }
+            .swag-imagery,
+            .swag-spread:nth-child(even) .swag-imagery,
+            .swag-spec,
+            .swag-spread:nth-child(even) .swag-spec {
+                grid-column: 2;
+            }
 
-            .swag-closing { min-height: auto; padding: 96px 24px; }
+            .swag-imagery,
+            .swag-spread:nth-child(even) .swag-imagery {
+                grid-row: 1;
+            }
+
+            .swag-spec,
+            .swag-spread:nth-child(even) .swag-spec {
+                grid-row: 2;
+            }
+
+            .swag-index-rail {
+                grid-row: 1 / span 2;
+            }
+
+            .swag-hero img {
+                min-height: clamp(440px, 62vh, 720px);
+            }
         }
 
-        @media (max-width: 560px) {
+        @media (max-width: 680px) {
+            html {
+                scroll-snap-type: none;
+                scroll-padding-top: 58px;
+            }
+
             body.swag-page .nav-overlay {
-                padding: 0 18px;
-                height: 56px;
+                height: 58px;
+                grid-template-columns: auto minmax(0, 1fr);
+                gap: 12px;
+                padding: 0 14px;
             }
 
-            body.swag-page .nav-links { gap: 14px; }
+            body.swag-page .logo-minimal,
+            body.swag-page .nav-links a {
+                font-size: 9px;
+                letter-spacing: 0.09em;
+            }
 
-            body.swag-page .nav-links a { font-size: 10.5px; letter-spacing: 0.12em; }
+            body.swag-page .logo-minimal {
+                width: auto;
+                overflow: visible;
+                white-space: nowrap;
+            }
 
-            html { scroll-padding-top: 56px; }
+            body.swag-page .logo-minimal::before {
+                width: 35px;
+                height: 9px;
+                background:
+                    linear-gradient(
+                        90deg,
+                        var(--swag-orange) 0 9px,
+                        transparent 9px 13px,
+                        var(--swag-blue) 13px 22px,
+                        transparent 22px 26px,
+                        var(--swag-cream) 26px 35px
+                    );
+            }
+
+            body.swag-page .nav-links {
+                justify-content: flex-end;
+                gap: 9px;
+            }
+
+            body.swag-page .nav-links a {
+                display: none;
+            }
+
+            body.swag-page .nav-links::after {
+                content: "04 SWAG";
+                position: fixed;
+                top: 25px;
+                left: 118px;
+                color: var(--swag-orange);
+                font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+                font-size: 9px;
+                font-weight: 700;
+                letter-spacing: 0.09em;
+                line-height: 1;
+                text-transform: uppercase;
+            }
+
+            body.swag-page main { padding-top: 58px; }
+
+            .swag-spread,
+            .swag-spread:nth-child(even) {
+                min-height: auto;
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding: 14px;
+                background-size: 28px 28px, 28px 28px, auto, auto;
+            }
+
+            .swag-index-rail {
+                grid-column: 1;
+                grid-row: 1;
+                min-height: 54px;
+                display: grid;
+                grid-template-columns: auto 1fr;
+                align-items: center;
+                gap: 18px;
+                border-right: 0;
+                border-bottom: 1px solid var(--swag-soft-rule);
+                padding: 0 0 14px;
+            }
+
+            .swag-edition {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 34px;
+            }
+
+            .swag-system-label {
+                display: none;
+            }
+
+            .swag-imagery,
+            .swag-spread:nth-child(even) .swag-imagery,
+            .swag-spec,
+            .swag-spread:nth-child(even) .swag-spec {
+                grid-column: 1;
+            }
+
+            .swag-imagery,
+            .swag-spread:nth-child(even) .swag-imagery {
+                grid-row: 2;
+                overflow: hidden;
+            }
+
+            .swag-imagery::before {
+                top: -6px;
+                left: -6px;
+                width: 108px;
+                height: 120px;
+                background:
+                    linear-gradient(var(--piece-accent), var(--piece-accent)) 0 0 / 18px 18px no-repeat,
+                    linear-gradient(rgba(242, 234, 215, 0.64), rgba(242, 234, 215, 0.64)) 28px 0 / 10px 10px no-repeat,
+                    linear-gradient(rgba(18, 56, 255, 0.58), rgba(18, 56, 255, 0.58)) 44px 20px / 14px 14px no-repeat,
+                    linear-gradient(rgba(242, 234, 215, 0.32), rgba(242, 234, 215, 0.32)) 0 42px / 34px 10px no-repeat;
+            }
+
+            .swag-imagery::after {
+                right: -4px;
+                bottom: 44px;
+                width: 92px;
+                height: 92px;
+                background:
+                    linear-gradient(var(--piece-accent), var(--piece-accent)) right bottom / 28px 12px no-repeat,
+                    linear-gradient(rgba(242, 234, 215, 0.42), rgba(242, 234, 215, 0.42)) right 32px bottom 22px / 12px 34px no-repeat,
+                    linear-gradient(rgba(18, 56, 255, 0.42), rgba(18, 56, 255, 0.42)) right 48px bottom 0 / 18px 18px no-repeat;
+            }
+
+            .swag-hero {
+                clip-path: polygon(
+                    0 18px,
+                    18px 18px,
+                    18px 0,
+                    calc(100% - 38px) 0,
+                    calc(100% - 38px) 10px,
+                    100% 10px,
+                    100% calc(100% - 42px),
+                    calc(100% - 14px) calc(100% - 42px),
+                    calc(100% - 14px) 100%,
+                    34px 100%,
+                    34px calc(100% - 14px),
+                    0 calc(100% - 14px)
+                );
+            }
+
+            .swag-spec,
+            .swag-spread:nth-child(even) .swag-spec {
+                grid-row: 3;
+                align-self: stretch;
+                box-shadow: 6px 6px 0 var(--piece-accent);
+            }
+
+            .swag-hero img {
+                min-height: 0;
+                height: min(68vh, 500px);
+            }
+
+            .swag-view-toggle button {
+                min-height: 48px;
+                font-size: 10px;
+            }
+
+            .swag-spec-header {
+                padding: 18px;
+            }
+
+            .swag-kicker {
+                margin-bottom: 18px;
+                font-size: 9px;
+            }
+
+            .swag-name {
+                font-size: clamp(56px, 19vw, 86px);
+            }
+
+            .swag-subtitle {
+                font-size: 10px;
+            }
+
+            .swag-caption {
+                padding: 18px;
+                font-size: 24px;
+            }
+
+            .swag-datasheet {
+                grid-template-columns: 1fr;
+            }
+
+            .swag-datasheet dt,
+            .swag-datasheet dd {
+                min-height: 0;
+                padding: 12px 14px;
+            }
+
+            .swag-datasheet dt {
+                border-top: 1px solid var(--swag-rule);
+            }
+
+            .swag-datasheet dd {
+                border-left: 0;
+                border-top: 0;
+                padding-top: 0;
+            }
+
+            .swag-swatches {
+                grid-template-columns: repeat(auto-fit, minmax(36px, 1fr));
+            }
+
+            .swag-closing {
+                min-height: auto;
+                grid-template-columns: 1fr;
+                align-items: start;
+                padding: 80px 18px;
+                background-size: 28px 28px;
+            }
+
+            .swag-closing-line {
+                max-width: 9ch;
+                font-size: clamp(58px, 22vw, 104px);
+            }
+        }
+
+        @media (max-width: 430px) {
+            body.swag-page .nav-links a {
+                font-size: 8px;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; scroll-snap-type: none; }
+            html {
+                scroll-behavior: auto;
+                scroll-snap-type: none;
+            }
 
-            .swag-hero,
             .swag-hero img,
             .swag-swatch,
             .swag-buy,
@@ -448,11 +919,12 @@
                 transition: none;
             }
 
-            .swag-hero:hover img { transform: none; }
+            .swag-hero:hover img {
+                transform: none;
+            }
 
             .swag-stage-canvas {
-                opacity: 0.44;
-                filter: saturate(0.8) contrast(0.98);
+                opacity: 0.38;
             }
         }
     </style>
@@ -472,40 +944,53 @@
         <section class="swag-collection" id="swag-collection" aria-live="polite"></section>
 
         <section class="swag-closing">
-            <p class="swag-closing-eyebrow">Studio Baglioni — Berkeley</p>
-            <p class="swag-closing-line">Sampling closes summer '26. Write to the studio to inquire ahead of release.</p>
-            <a class="swag-closing-contact" href="mailto:aristotlecheckmate@gmail.com">aristotlecheckmate@gmail.com ↗</a>
+            <div>
+                <p class="swag-closing-eyebrow">Studio Baglioni / Berkeley</p>
+                <p class="swag-closing-line">Sampling closes summer 26.</p>
+            </div>
+            <a class="swag-closing-contact" href="mailto:aristotlecheckmate@gmail.com">aristotlecheckmate@gmail.com</a>
         </section>
     </main>
 
     <template id="swag-spread-template">
         <article class="swag-spread">
             <canvas class="swag-stage-canvas" data-stage-canvas aria-hidden="true"></canvas>
+            <aside class="swag-index-rail" aria-hidden="true">
+                <p class="swag-edition" data-edition></p>
+                <p class="swag-system-label">Pixel knit field</p>
+            </aside>
             <div class="swag-imagery">
                 <div class="swag-hero" data-hero>
                     <img alt="" data-hero-img>
                 </div>
                 <div class="swag-view-toggle" role="group" aria-label="View">
                     <button type="button" data-view="front" aria-pressed="true">Front</button>
-                    <span class="toggle-divider" aria-hidden="true">·</span>
+                    <span class="toggle-divider" aria-hidden="true">/</span>
                     <button type="button" data-view="back" aria-pressed="false">Back</button>
                 </div>
             </div>
             <div class="swag-spec">
-                <p class="swag-edition" data-edition></p>
-                <h2 class="swag-name" data-name></h2>
-                <p class="swag-subtitle" data-subtitle></p>
+                <header class="swag-spec-header">
+                    <p class="swag-kicker">
+                        <span data-status-label></span>
+                        <span data-edition-small></span>
+                    </p>
+                    <h2 class="swag-name" data-name></h2>
+                    <p class="swag-subtitle" data-subtitle></p>
+                </header>
                 <p class="swag-caption" data-caption></p>
                 <dl class="swag-datasheet">
                     <dt>Material</dt><dd data-material></dd>
                     <dt>Build</dt><dd data-construction></dd>
                     <dt>Sizes</dt><dd data-sizes></dd>
                 </dl>
-                <div class="swag-colorways">
-                    <div class="swag-colorways-label">Colorway · <strong data-active-colorway></strong></div>
-                    <ul class="swag-swatches" data-swatches role="listbox" aria-label="Choose colorway"></ul>
+                <div class="swag-controls">
+                    <div class="swag-colorways">
+                        <div class="swag-colorways-label">Colorway <strong data-active-colorway></strong></div>
+                        <ul class="swag-swatches" data-swatches role="listbox" aria-label="Choose colorway"></ul>
+                    </div>
+                    <div class="swag-cta" data-cta></div>
                 </div>
-                <div class="swag-cta" data-cta></div>
             </div>
         </article>
     </template>

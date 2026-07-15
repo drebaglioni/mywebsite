@@ -64,45 +64,43 @@
         const width = entry.width;
         const height = entry.height;
         const dpr = entry.dpr;
-        const time = isStatic ? entry.seed * 0.01 : timestamp * 0.001;
+        const time = isStatic ? entry.seed * 0.013 : timestamp * 0.001;
         const accent = parseHexColor(entry.canvas.dataset.mathAccent);
-        let ink = parseHexColor(entry.canvas.dataset.mathInk || '#2b2622');
+        let ink = parseHexColor(entry.canvas.dataset.mathInk || '#f2ead7');
         const inkLuminance = (ink.r * 0.299) + (ink.g * 0.587) + (ink.b * 0.114);
-        if (inkLuminance > 170) {
-            ink = { r: 43, g: 38, b: 34 };
+        if (inkLuminance < 80) {
+            ink = { r: 242, g: 234, b: 215 };
         }
         const spreadRect = entry.spread.getBoundingClientRect();
         const heroRect = entry.hero.getBoundingClientRect();
         const specRect = entry.spec.getBoundingClientRect();
-        const specIsRightColumn = specRect.left > heroRect.right;
-        const clipRight = specIsRightColumn
-            ? Math.max(0, Math.min(width, specRect.left - spreadRect.left - 34))
-            : width;
         const heroCenterX = heroRect.left - spreadRect.left + heroRect.width * 0.5;
         const heroCenterY = heroRect.top - spreadRect.top + heroRect.height * 0.5;
-        const cx = heroCenterX + Math.sin(time * 0.08 + entry.seed) * heroRect.width * 0.028;
-        const cy = heroCenterY + Math.cos(time * 0.07 + entry.seed * 0.7) * heroRect.height * 0.024;
+        const specCenterX = specRect.left - spreadRect.left + specRect.width * 0.5;
+        const specCenterY = specRect.top - spreadRect.top + specRect.height * 0.5;
+        const cx = heroCenterX + Math.sin(time * 0.18 + entry.seed) * heroRect.width * 0.04;
+        const cy = heroCenterY + Math.cos(time * 0.14 + entry.seed * 0.7) * heroRect.height * 0.035;
         const heroLeft = heroRect.left - spreadRect.left;
         const heroTop = heroRect.top - spreadRect.top;
         const heroRight = heroLeft + heroRect.width;
         const heroBottom = heroTop + heroRect.height;
-        const minDimension = Math.min(heroRect.width, heroRect.height);
-        const maxRadius = minDimension * 1.18;
-        const grid = Math.max(1.55, Math.min(2.25, minDimension * 0.0038));
-        const pixelSize = Math.max(1, grid * 0.5);
-        const phase = time * 0.36 + entry.seed * 0.021;
-        const driftX = Math.sin(time * 0.13 + entry.seed) * 0.16;
-        const driftY = Math.cos(time * 0.11 + entry.seed * 0.73) * 0.13;
+        const specLeft = specRect.left - spreadRect.left;
+        const specTop = specRect.top - spreadRect.top;
+        const specRight = specLeft + specRect.width;
+        const specBottom = specTop + specRect.height;
+        const minDimension = Math.min(width, height);
+        const maxRadius = Math.max(heroRect.width, heroRect.height) * 0.82;
+        const grid = Math.max(5, Math.min(10, minDimension * 0.009));
+        const pixelSize = Math.max(3, grid * 0.86);
+        const phase = time * 0.72 + entry.seed * 0.029;
+        const driftX = Math.sin(time * 0.21 + entry.seed) * 0.24;
+        const driftY = Math.cos(time * 0.17 + entry.seed * 0.73) * 0.2;
 
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.imageSmoothingEnabled = false;
         ctx.clearRect(0, 0, width, height);
         ctx.lineCap = 'butt';
         ctx.lineJoin = 'miter';
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(0, 0, clipRight, height);
-        ctx.clip();
 
         function hash2(ix, iy) {
             let h = (ix * 374761393) ^ (iy * 668265263) ^ (entry.seed * 362437);
@@ -111,98 +109,103 @@
             return ((h ^ (h >>> 16)) >>> 0) / 4294967295;
         }
 
-        function insideHeroHole(x, y) {
-            const padX = -grid * 1.5;
-            const padY = -grid * 1.5;
-            return x > heroLeft - padX
-                && x < heroRight + padX
-                && y > heroTop - padY
-                && y < heroBottom + padY;
+        function insideRect(x, y, left, top, right, bottom, pad = 0) {
+            return x > left - pad && x < right + pad && y > top - pad && y < bottom + pad;
         }
 
-        const startX = Math.max(0, Math.floor((heroLeft - maxRadius * 1.75) / grid) * grid);
-        const endX = Math.min(clipRight, Math.ceil((heroRight + maxRadius * 1.58) / grid) * grid);
-        const startY = Math.max(0, Math.floor((heroTop - maxRadius * 1.36) / grid) * grid);
-        const endY = Math.min(height, Math.ceil((heroBottom + maxRadius * 1.36) / grid) * grid);
-        const inkBuckets = [[], [], [], [], []];
-        const accentPixels = [];
-        const ghostPixels = [];
+        const creamPixels = [[], [], []];
+        const accentPixels = [[], []];
+        const bluePixels = [];
 
-        for (let y = startY; y <= endY; y += grid) {
+        for (let y = -grid; y <= height + grid; y += grid) {
             const ny = (y - cy) / maxRadius;
-            for (let x = startX; x <= endX; x += grid) {
-                if (insideHeroHole(x, y)) {
-                    continue;
-                }
-
+            for (let x = -grid; x <= width + grid; x += grid) {
                 const nx = (x - cx) / maxRadius;
-                const ellipse = Math.sqrt((nx * nx) / 1.42 + (ny * ny) / 0.86);
-                if (ellipse > 1.86 || ellipse < 0.04) {
-                    continue;
-                }
-
-                const angle = Math.atan2(ny * 1.08, nx * 0.92);
+                const sx = (x - specCenterX) / Math.max(specRect.width, 1);
+                const sy = (y - specCenterY) / Math.max(specRect.height, 1);
+                const ellipse = Math.sqrt((nx * nx) / 1.22 + (ny * ny) / 0.72);
+                const angle = Math.atan2(ny * 1.24, nx * 0.82);
                 const orbit = ellipse
-                    + 0.16 * Math.sin(angle * 5 + phase)
-                    + 0.09 * Math.cos(angle * 9 - phase * 0.7);
-                const field = Math.sin((nx + driftX) * 18.5 + phase)
-                    * Math.cos((ny - driftY) * 15.2 - phase * 0.86)
-                    + Math.sin((nx * 0.74 + ny * 1.1) * 20.5 + phase * 1.18)
-                    + Math.cos((orbit * 23.0) - phase * 1.35);
+                    + 0.18 * Math.sin(angle * 6 + phase)
+                    + 0.11 * Math.cos(angle * 10 - phase * 0.82);
+                const field = Math.sin((nx + driftX) * 16.5 + phase)
+                    + Math.cos((ny - driftY) * 18.2 - phase * 0.72)
+                    + Math.sin((nx * 0.82 + ny * 1.28) * 26.5 + phase * 1.12)
+                    + Math.cos((sx - sy) * 18.0 + phase * 0.62);
                 const band = Math.abs(field);
+                const ring = Math.abs(orbit - 0.88);
+                const diagonal = Math.abs(Math.sin((x + y) / (grid * 5.5) + phase));
                 const grain = hash2(Math.round(x / grid), Math.round(y / grid));
-                const edge = Math.abs(orbit - 1.0);
-                const envelope = Math.max(0, 1 - Math.abs(ellipse - 0.98) / 0.78);
-                const isSurface = band < 1.02 + grain * 0.22;
-                const isRim = edge < 0.09 + grain * 0.024;
-                const isGhost = (band < 1.72 && grain > 0.18 && envelope > 0.05)
-                    || (grain > 0.46 && envelope > 0.12);
+                const nearHero = ellipse < 1.85 && ellipse > 0.16;
+                const nearSpec = insideRect(x, y, specLeft, specTop, specRight, specBottom, grid * 18);
+                const underProduct = insideRect(x, y, heroLeft, heroTop, heroRight, heroBottom, -grid * 2);
 
-                if (!isSurface && !isRim && !isGhost) {
+                if (underProduct && grain < 0.88) {
                     continue;
                 }
 
-                const jitterX = (grain - 0.5) * grid * 0.48;
-                const jitterY = (hash2(Math.round(y / grid), Math.round(x / grid)) - 0.5) * grid * 0.48;
+                if (!nearHero && !nearSpec && diagonal > 0.2) {
+                    continue;
+                }
+
+                const jitterX = (grain - 0.5) * grid * 0.18;
+                const jitterY = (hash2(Math.round(y / grid), Math.round(x / grid)) - 0.5) * grid * 0.18;
                 const px = x + jitterX;
                 const py = y + jitterY;
-                const size = pixelSize * (0.45 + grain * 0.78);
+                const size = pixelSize * (0.72 + grain * 0.72);
 
-                if (isRim && grain > 0.34) {
-                    accentPixels.push([px, py, size * 1.12]);
+                if ((ring < 0.055 + grain * 0.02 || band < 0.38) && nearHero) {
+                    accentPixels[grain > 0.48 ? 1 : 0].push([px, py, size * 1.1]);
                     continue;
                 }
 
-                if (isGhost) {
-                    ghostPixels.push([px, py, size * 0.72]);
+                if (nearSpec && diagonal < 0.13 && grain > 0.34) {
+                    bluePixels.push([px, py, size * 0.74]);
                     continue;
                 }
 
-                const bucket = Math.min(4, Math.floor((1 - Math.min(1, band / 0.86)) * 5));
-                inkBuckets[bucket].push([px, py, size]);
+                if ((band < 1.18 + grain * 0.36 && nearHero) || (nearSpec && grain > 0.72)) {
+                    const bucket = Math.min(2, Math.floor((1 - Math.min(1, band / 2.4)) * 3));
+                    creamPixels[bucket].push([px, py, size * (nearSpec ? 0.6 : 0.82)]);
+                }
             }
         }
 
-        const inkAlpha = isStatic
-            ? [0.075, 0.11, 0.155, 0.205, 0.27]
-            : [0.084, 0.124, 0.174, 0.23, 0.3];
-        inkBuckets.forEach((pixels, bucket) => {
-            ctx.fillStyle = `rgba(${ink.r}, ${ink.g}, ${ink.b}, ${inkAlpha[bucket]})`;
+        const creamAlpha = isStatic ? [0.08, 0.13, 0.2] : [0.1, 0.16, 0.24];
+        creamPixels.forEach((pixels, bucket) => {
+            ctx.fillStyle = `rgba(${ink.r}, ${ink.g}, ${ink.b}, ${creamAlpha[bucket]})`;
             pixels.forEach(([x, y, size]) => {
                 ctx.fillRect(x, y, size, size);
             });
         });
 
-        ctx.fillStyle = `rgba(${accent.r}, ${accent.g}, ${accent.b}, ${isStatic ? 0.18 : 0.23})`;
-        accentPixels.forEach(([x, y, size]) => {
+        accentPixels.forEach((pixels, bucket) => {
+            ctx.fillStyle = `rgba(${accent.r}, ${accent.g}, ${accent.b}, ${isStatic ? 0.36 + bucket * 0.12 : 0.44 + bucket * 0.14})`;
+            pixels.forEach(([x, y, size]) => {
+                ctx.fillRect(x, y, size, size);
+            });
+        });
+
+        ctx.fillStyle = `rgba(18, 56, 255, ${isStatic ? 0.18 : 0.26})`;
+        bluePixels.forEach(([x, y, size]) => {
             ctx.fillRect(x, y, size, size);
         });
 
-        ctx.fillStyle = `rgba(${ink.r}, ${ink.g}, ${ink.b}, ${isStatic ? 0.07 : 0.092})`;
-        ghostPixels.forEach(([x, y, size]) => {
-            ctx.fillRect(x, y, size, size);
-        });
-        ctx.restore();
+        ctx.strokeStyle = `rgba(${accent.r}, ${accent.g}, ${accent.b}, ${isStatic ? 0.42 : 0.56})`;
+        ctx.lineWidth = Math.max(2, grid * 0.35);
+        ctx.strokeRect(
+            Math.round(heroLeft - grid * 2),
+            Math.round(heroTop - grid * 2),
+            Math.round(heroRect.width + grid * 4),
+            Math.round(heroRect.height + grid * 4)
+        );
+
+        ctx.fillStyle = `rgba(${ink.r}, ${ink.g}, ${ink.b}, 0.44)`;
+        for (let i = 0; i < 6; i += 1) {
+            const x = Math.round((heroCenterX * 0.2 + specCenterX * 0.8) + i * grid * 2.2);
+            const y = Math.round(heroTop + grid * (2 + i));
+            ctx.fillRect(x, y, grid, grid);
+        }
     };
 
     const shouldAnimateMath = () => (
@@ -316,8 +319,11 @@
     const renderItem = (item, total, index) => {
         const node = template.content.firstElementChild.cloneNode(true);
 
-        const editionLabel = `${item.edition} / ${String(total).padStart(2, '0')}`;
+        const editionLabel = String(item.edition || index + 1).padStart(2, '0');
+        const editionSmallLabel = `Object ${editionLabel} / ${String(total).padStart(2, '0')}`;
         node.querySelector('[data-edition]').textContent = editionLabel;
+        node.querySelector('[data-edition-small]').textContent = editionSmallLabel;
+        node.querySelector('[data-status-label]').textContent = item.status || 'Sampling';
         node.querySelector('[data-name]').textContent = item.name;
         node.querySelector('[data-subtitle]').textContent = item.subtitle || '';
         node.querySelector('[data-caption]').textContent = item.caption || '';
@@ -348,12 +354,19 @@
 
             if (backdrop) {
                 heroFrame.style.setProperty('--hero-bg', backdrop);
+                node.style.setProperty('--piece-backdrop', backdrop);
             } else {
                 heroFrame.style.removeProperty('--hero-bg');
+                node.style.removeProperty('--piece-backdrop');
+            }
+            if (cw.swatch) {
+                node.style.setProperty('--piece-accent', cw.swatch);
+            } else {
+                node.style.removeProperty('--piece-accent');
             }
             if (stageMath) {
                 stageMath.dataset.mathAccent = cw.swatch || backdrop || '#2b2622';
-                stageMath.dataset.mathInk = '#2b2622';
+                stageMath.dataset.mathInk = '#f2ead7';
                 const matchingEntry = mathEntries.find((entry) => entry.canvas === stageMath);
                 if (matchingEntry) {
                     matchingEntry.needsStaticDraw = true;
@@ -401,6 +414,7 @@
             btn.style.setProperty('--dot', cw.swatch || '#999');
             btn.setAttribute('aria-label', `Show ${cw.name}`);
             btn.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+            btn.setAttribute('role', 'option');
             btn.title = cw.print_color ? `${cw.name} · ${cw.print_color} print` : cw.name;
             btn.addEventListener('click', () => {
                 state.colorIdx = i;
@@ -432,7 +446,7 @@
         } else {
             const status = document.createElement('span');
             status.className = 'swag-status';
-            status.textContent = item.status || 'Not yet for sale';
+            status.textContent = item.status ? `${item.status} / Not yet for sale` : 'Not yet for sale';
             cta.appendChild(status);
         }
 
