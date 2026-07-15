@@ -487,39 +487,86 @@
         }
 
         .swag-datasheet {
+            position: relative;
             margin: 0;
             display: grid;
-            grid-template-columns: minmax(86px, 0.38fr) minmax(0, 1fr);
+            grid-template-columns: 96px minmax(0, 1fr);
+            gap: 4px;
             align-content: start;
             width: min(100%, 440px);
-            background: var(--swag-cream);
-            color: var(--swag-black);
-            border: 2px solid var(--swag-black);
-            box-shadow: 7px 7px 0 rgba(242, 234, 215, 0.24);
+            padding: 12px;
+            background: var(--swag-black);
+            color: var(--swag-cream);
+            border: 2px solid var(--swag-cream);
+            box-shadow: 7px 7px 0 color-mix(in oklab, var(--piece-accent) 74%, #000 26%);
             font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
             transform: translateX(-16px);
         }
 
+        .swag-datasheet::before {
+            content: "TECHNICAL DOSSIER";
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            min-height: 28px;
+            padding: 0 8px;
+            background: var(--piece-accent);
+            color: var(--swag-black);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .swag-datasheet::after {
+            content: "";
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 78px;
+            height: 16px;
+            background:
+                linear-gradient(var(--swag-black), var(--swag-black)) 0 0 / 4px 16px no-repeat,
+                linear-gradient(var(--swag-black), var(--swag-black)) 9px 0 / 8px 16px no-repeat,
+                linear-gradient(var(--swag-black), var(--swag-black)) 24px 0 / 3px 16px no-repeat,
+                linear-gradient(var(--swag-black), var(--swag-black)) 34px 0 / 11px 16px no-repeat,
+                linear-gradient(var(--swag-black), var(--swag-black)) 52px 0 / 5px 16px no-repeat,
+                linear-gradient(var(--swag-black), var(--swag-black)) 66px 0 / 12px 16px no-repeat;
+            opacity: 0.72;
+            pointer-events: none;
+        }
+
         .swag-datasheet dt,
         .swag-datasheet dd {
-            min-height: 52px;
+            min-height: 48px;
             margin: 0;
-            padding: 12px 16px;
-            border-top: 1px solid var(--swag-rule);
+            padding: 11px 12px;
             font-size: 10px;
-            line-height: 1.45;
+            line-height: 1.35;
         }
 
         .swag-datasheet dt {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--swag-cream);
+            color: var(--swag-black);
             font-weight: 700;
             letter-spacing: 0.12em;
+            text-align: center;
             text-transform: uppercase;
-            color: color-mix(in oklab, var(--swag-black) 55%, var(--piece-accent) 45%);
         }
 
         .swag-datasheet dd {
-            border-left: 1px solid var(--swag-rule);
-            font-weight: 600;
+            display: block;
+            min-width: 0;
+            background: rgba(242, 234, 215, 0.1);
+            border: 1px solid rgba(242, 234, 215, 0.18);
+            color: var(--swag-cream);
+            font-weight: 700;
+            overflow-wrap: anywhere;
+            word-break: normal;
         }
 
         .swag-controls {
@@ -833,6 +880,9 @@
             .swag-spec,
             .swag-spread:nth-child(even) .swag-spec {
                 grid-column: 1;
+                min-width: 0;
+                max-width: 100%;
+                box-sizing: border-box;
             }
 
             .swag-imagery,
@@ -939,6 +989,8 @@
             .swag-caption {
                 width: auto;
                 justify-self: stretch;
+                max-width: 100%;
+                box-sizing: border-box;
                 padding: 18px;
                 font-size: 24px;
                 transform: none;
@@ -948,24 +1000,52 @@
             .swag-datasheet {
                 grid-template-columns: 1fr;
                 width: auto;
+                max-width: 100%;
+                box-sizing: border-box;
                 transform: none;
-                box-shadow: 6px 6px 0 rgba(242, 234, 215, 0.24);
+                padding: 10px;
+                box-shadow: 6px 6px 0 color-mix(in oklab, var(--piece-accent) 74%, #000 26%);
+            }
+
+            .swag-datasheet::before {
+                min-height: 26px;
+                padding-right: 88px;
+                font-size: 9px;
+                letter-spacing: 0.12em;
+            }
+
+            .swag-datasheet::after {
+                top: 15px;
+                right: 15px;
+                width: 62px;
+                height: 14px;
+                background:
+                    linear-gradient(var(--swag-black), var(--swag-black)) 0 0 / 4px 14px no-repeat,
+                    linear-gradient(var(--swag-black), var(--swag-black)) 8px 0 / 6px 14px no-repeat,
+                    linear-gradient(var(--swag-black), var(--swag-black)) 21px 0 / 3px 14px no-repeat,
+                    linear-gradient(var(--swag-black), var(--swag-black)) 30px 0 / 9px 14px no-repeat,
+                    linear-gradient(var(--swag-black), var(--swag-black)) 46px 0 / 4px 14px no-repeat,
+                    linear-gradient(var(--swag-black), var(--swag-black)) 56px 0 / 6px 14px no-repeat;
             }
 
             .swag-datasheet dt,
             .swag-datasheet dd {
-                min-height: 0;
-                padding: 12px 14px;
+                min-height: 52px;
+                padding: 10px;
             }
 
             .swag-datasheet dt {
-                border-top: 1px solid var(--swag-rule);
+                font-size: 9px;
+                min-height: 34px;
+                justify-content: flex-start;
+                padding-left: 12px;
             }
 
             .swag-datasheet dd {
-                border-left: 0;
-                border-top: 0;
-                padding-top: 0;
+                font-size: 9px;
+                min-height: auto;
+                padding: 12px;
+                white-space: normal;
             }
 
             .swag-swatches {
@@ -976,6 +1056,8 @@
             .swag-cta {
                 width: auto;
                 justify-self: stretch;
+                max-width: 100%;
+                box-sizing: border-box;
                 transform: none;
             }
 
