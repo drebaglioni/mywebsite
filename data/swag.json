@@ -80,5 +80,29 @@
         "back_backdrop": "#BEBCC9"
       }
     ]
+  },
+  {
+    "id": "octo",
+    "name": "Octo",
+    "edition": "03",
+    "subtitle": "Psyche Field Hood",
+    "caption": "A black hooded shell traced with white octopus-field lines across the body, sleeves, and hood.",
+    "material": "Lightweight technical shell in black with high-contrast white field graphics.",
+    "construction": "Full-zip hooded jacket. Elastic cuffs and hem. Front and back graphic linework following the hood, sleeves, and body.",
+    "sizes": ["S", "M", "L", "XL"],
+    "price_usd": null,
+    "buy_url": null,
+    "status": "Sampling",
+    "colorways": [
+      {
+        "name": "Black",
+        "swatch": "#101010",
+        "print_color": "White",
+        "front": "assets/images/swag/octo-black-front.jpg",
+        "back": "assets/images/swag/octo-black-back.jpg",
+        "front_backdrop": "#F2F2F0",
+        "back_backdrop": "#F2F2F0"
+      }
+    ]
   }
 ]
