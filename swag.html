@@ -207,11 +207,12 @@
             position: relative;
             z-index: 3;
             display: grid;
-            grid-template-rows: minmax(0, 1fr) auto;
+            grid-template-rows: auto auto;
+            align-self: center;
             min-width: 0;
             background:
-                linear-gradient(135deg, color-mix(in oklab, var(--piece-backdrop) 78%, #000 22%), var(--piece-backdrop));
-            box-shadow: inset 0 0 0 1px rgba(242, 234, 215, 0.12);
+                linear-gradient(135deg, #d8d6ce 0%, #f0eee8 100%);
+            box-shadow: inset 0 0 0 1px rgba(242, 234, 215, 0.18);
             overflow: visible;
         }
 
@@ -257,9 +258,13 @@
 
         .swag-hero {
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             min-height: 0;
+            padding: clamp(16px, 2.2vw, 34px);
             overflow: hidden;
-            background: var(--piece-backdrop);
+            background: #e7e5de;
             clip-path: polygon(
                 0 28px,
                 28px 28px,
@@ -304,10 +309,13 @@
         .swag-hero img {
             position: relative;
             z-index: 2;
-            width: 100%;
-            height: 100%;
-            min-height: clamp(480px, 68vh, 780px);
-            object-fit: cover;
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            min-height: 0;
+            max-height: clamp(420px, 58vh, 660px);
+            object-fit: contain;
+            background: #f2f2f0;
             display: block;
             filter: contrast(1.08) saturate(0.94);
             transition: transform 560ms cubic-bezier(0.22, 1, 0.36, 1), filter 240ms ease;
@@ -337,29 +345,28 @@
         .swag-view-toggle {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            border-top: 1px solid rgba(242, 234, 215, 0.16);
-            background: rgba(8, 8, 6, 0.84);
+            border-top: 1px solid rgba(242, 234, 215, 0.12);
+            background: rgba(8, 8, 6, 0.68);
         }
 
         .swag-view-toggle button {
-            min-height: 54px;
+            min-height: 46px;
             border: 0;
             border-right: 1px solid rgba(242, 234, 215, 0.14);
             background: transparent;
-            color: rgba(242, 234, 215, 0.62);
+            color: rgba(242, 234, 215, 0.88);
             font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
-            letter-spacing: 0.18em;
+            letter-spacing: 0.16em;
             text-transform: uppercase;
             transition: background-color 160ms ease, color 160ms ease;
         }
 
         .swag-view-toggle button:last-child { border-right: 0; }
 
-        .swag-view-toggle button[aria-pressed="true"] {
-            background: var(--piece-accent);
-            color: var(--swag-black);
+        .swag-view-toggle button:not([aria-pressed="true"]) {
+            background: rgba(242, 234, 215, 0.08);
         }
 
         .swag-view-toggle button:disabled {
@@ -370,6 +377,12 @@
         .swag-view-toggle button:not(:disabled):hover {
             color: var(--swag-black);
             background: var(--swag-cream);
+        }
+
+        .swag-view-toggle button[aria-pressed="true"] {
+            background: #101010;
+            color: var(--swag-cream);
+            box-shadow: inset 0 0 0 1px rgba(242, 234, 215, 0.54);
         }
 
         .toggle-divider { display: none; }
@@ -915,6 +928,7 @@
             }
 
             .swag-hero {
+                padding: 14px;
                 clip-path: polygon(
                     0 18px,
                     18px 18px,
@@ -961,11 +975,12 @@
 
             .swag-hero img {
                 min-height: 0;
-                height: min(68vh, 500px);
+                height: auto;
+                max-height: min(58vh, 440px);
             }
 
             .swag-view-toggle button {
-                min-height: 48px;
+                min-height: 46px;
                 font-size: 10px;
             }
 
