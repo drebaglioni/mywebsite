@@ -12,14 +12,9 @@
         <div class="logo-minimal">HOME</div>
         <div class="nav-links">
             <a href="about.html">01 About</a>
-            <a href="projects.html" class="projects-gated-link" data-projects-gated="true" aria-disabled="true">02 Projects</a>
+            <a href="projects.html">02 Projects</a>
             <a href="other.html">03 Library</a>
             <a href="swag.html">04 Swag</a>
-        </div>
-        <div class="projects-gate-toast" id="projectsGateToast" role="status" aria-live="polite" aria-hidden="true">
-            <div class="projects-gate-title">PROJECTS ARE IN THE WORKSHOP</div>
-            <div class="projects-gate-copy">Still prototyping. Try the library in the meantime.</div>
-            <a href="other.html" class="projects-gate-cta">GO TO LIBRARY</a>
         </div>
     </nav>
 
@@ -48,10 +43,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         const mediaReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        const gateToastAutoDismissMs = 2600;
-        const blockedLinkAnimationMs = 260;
-        const projectsGatedLink = document.querySelector('.projects-gated-link');
-        const projectsGateToast = document.getElementById('projectsGateToast');
         const currentUrl = new URL(window.location.href);
         const SHAPE_MODE_DEFAULT = '6';
         const shapeParam = currentUrl.searchParams.get('shape');
@@ -59,7 +50,6 @@
         const quantumCanvasContainer = document.getElementById('quantumCanvasContainer');
         const typeAnchor = document.querySelector('.type-anchor');
 
-        let gateToastTimer = null;
         const quantumState = {
             initialized: false,
             active: false,
@@ -81,31 +71,6 @@
             parallaxX: 0,
             parallaxY: 0
         };
-
-        function hideProjectsGateToast() {
-            if (!projectsGateToast) {
-                return;
-            }
-            projectsGateToast.classList.remove('is-visible');
-            projectsGateToast.setAttribute('aria-hidden', 'true');
-        }
-
-        function showProjectsGateToast() {
-            if (!projectsGateToast) {
-                return;
-            }
-
-            if (gateToastTimer !== null) {
-                window.clearTimeout(gateToastTimer);
-            }
-
-            projectsGateToast.classList.add('is-visible');
-            projectsGateToast.setAttribute('aria-hidden', 'false');
-            gateToastTimer = window.setTimeout(() => {
-                hideProjectsGateToast();
-                gateToastTimer = null;
-            }, gateToastAutoDismissMs);
-        }
 
         function resetTypeParallax() {
             quantumState.parallaxX = 0;
@@ -535,28 +500,6 @@
             mediaReducedMotion.addEventListener('change', updateMotionState);
         } else if (typeof mediaReducedMotion.addListener === 'function') {
             mediaReducedMotion.addListener(updateMotionState);
-        }
-
-        if (projectsGatedLink) {
-            projectsGatedLink.addEventListener('click', (event) => {
-                event.preventDefault();
-                showProjectsGateToast();
-
-                if (!mediaReducedMotion.matches) {
-                    projectsGatedLink.classList.remove('is-blocked-hit');
-                    void projectsGatedLink.offsetWidth;
-                    projectsGatedLink.classList.add('is-blocked-hit');
-                    window.setTimeout(() => {
-                        projectsGatedLink.classList.remove('is-blocked-hit');
-                    }, blockedLinkAnimationMs);
-                }
-            });
-        }
-
-        if (currentUrl.searchParams.get('projects') === 'locked') {
-            showProjectsGateToast();
-            currentUrl.searchParams.delete('projects');
-            window.history.replaceState({}, '', currentUrl.pathname + currentUrl.search + currentUrl.hash);
         }
 
         updateMotionState();

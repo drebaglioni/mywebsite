@@ -1,131 +1,553 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="projects-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selected Works</title>
+    <title>Projects</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
-    <script>
-        window.location.replace("index.html?projects=locked");
-    </script>
-    <noscript>
-        <meta http-equiv="refresh" content="0;url=index.html?projects=locked">
-    </noscript>
-    
     <style>
-        .orange-circle { background-color: #222222 !important; opacity: 0.8; }
-        .blue-block { background-color: #0047AB !important; opacity: 0.8; }
-        
-        /* PROJECT LINKS: Bold & Interactive */
-        .project-link {
-            font-size: 4rem; /* Massive */
-            font-weight: 900;
-            color: #1A1A1A; /* Readable Black */
-            line-height: 1.1;
-            border-bottom: 4px solid transparent; /* Invisible underline for spacing */
-            transition: all 0.2s ease;
+        html.projects-root,
+        html.projects-root body.projects-specimen {
+            height: auto;
+            min-height: 100%;
         }
 
-        .project-link:hover {
-            color: #0047AB; /* Blue Hover */
-            border-bottom: 4px solid #0047AB; /* Heavy underline on hover */
-            transform: translateX(20px);
+        body.projects-specimen {
+            --paper: #f4ebcd;
+            --paper-dark: #e4d7b0;
+            --blue: #06459e;
+            --blue-ink: #052c73;
+            --blue-soft: rgba(6, 69, 158, 0.18);
+            --blue-faint: rgba(6, 69, 158, 0.08);
+
+            min-height: 100%;
+            background: var(--paper);
+            color: var(--blue);
+            overflow: hidden;
+            cursor: default !important;
         }
 
-        .project-meta {
-            font-size: 1rem; 
-            letter-spacing: 0.2em; 
+        body.projects-specimen::before {
+            display: none;
+        }
+
+        body.projects-specimen a {
+            cursor: pointer !important;
+        }
+
+        .specimen-sheet {
+            min-height: 100vh;
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            background:
+                linear-gradient(90deg, var(--blue-faint) 1px, transparent 1px),
+                linear-gradient(var(--blue-faint) 1px, transparent 1px),
+                radial-gradient(circle at 46% 43%, rgba(6, 69, 158, 0.12) 0 1px, transparent 1.25px) 0 0 / 8px 8px,
+                var(--paper);
+            background-size: 4.8vw 4.8vw, 4.8vw 4.8vw, 8px 8px, auto;
+        }
+
+        .specimen-sheet::before,
+        .specimen-sheet::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .specimen-sheet::before {
+            inset: 18px;
+            border: 1px solid rgba(6, 69, 158, 0.18);
+        }
+
+        .specimen-sheet::after {
+            display: none;
+        }
+
+        .pixel-field {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            opacity: 0.44;
+            pointer-events: none;
+            mix-blend-mode: multiply;
+            mask-image: radial-gradient(ellipse at 50% 48%, transparent 0 20%, rgba(0, 0, 0, 0.32) 29%, #000 46%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 48%, transparent 0 20%, rgba(0, 0, 0, 0.32) 29%, #000 46%);
+        }
+
+        .site-nav {
+            position: relative;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            height: 48px;
+            padding: 0 30px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 11px;
             font-weight: 700;
-            color: #555;
-            margin-bottom: 0.5rem;
+            letter-spacing: 0.04em;
+            text-transform: lowercase;
+        }
+
+        .site-nav a {
+            color: var(--blue);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-size: inherit;
+            line-height: 1;
+            text-transform: lowercase;
+        }
+
+        .site-nav a:hover,
+        .site-nav a:focus-visible,
+        .site-nav a[aria-current="page"] {
+            background: var(--blue);
+            color: var(--paper);
+            outline: none;
+        }
+
+        .figure-field {
+            position: relative;
+            z-index: 5;
+            min-height: calc(100vh - 48px);
+        }
+
+        .subject {
+            position: absolute;
+            z-index: 8;
+            left: 50%;
+            top: 51%;
+            width: min(30vw, 390px);
+            transform: translate(-50%, -50%);
+            opacity: 0.94;
+            filter: grayscale(1) sepia(1) saturate(8) hue-rotate(178deg) brightness(0.68) contrast(1.9);
+            mix-blend-mode: multiply;
+            pointer-events: none;
+        }
+
+        .fold-fragment {
+            position: absolute;
+            z-index: 5;
+            width: min(31vw, 450px);
+            opacity: 0.48;
+            filter: grayscale(1) sepia(1) saturate(9) hue-rotate(179deg) brightness(0.82) contrast(1.65);
+            mix-blend-mode: multiply;
+            pointer-events: none;
+            transform-origin: 42% 46%;
+        }
+
+        .fold-fragment.fragment-a {
+            left: 4vw;
+            top: 21vh;
+            transform: rotate(-8deg);
+        }
+
+        .fold-fragment.fragment-b {
+            right: 4vw;
+            bottom: 12vh;
+            transform: scaleX(-1) rotate(6deg);
+            opacity: 0.42;
+        }
+
+        .diagram-lines {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            mask-image: radial-gradient(ellipse at 50% 50%, transparent 0 23%, rgba(0, 0, 0, 0.18) 32%, #000 52%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 50%, transparent 0 23%, rgba(0, 0, 0, 0.18) 32%, #000 52%);
+        }
+
+        .diagram-lines path,
+        .diagram-lines circle {
+            fill: none;
+            stroke: var(--blue);
+            stroke-width: 1.2;
+            vector-effect: non-scaling-stroke;
+        }
+
+        .diagram-lines .parametric {
+            opacity: 0.25;
+        }
+
+        .diagram-lines .primary-curve {
+            opacity: 0.42;
+            stroke-width: 1.4;
+        }
+
+        .diagram-lines .soft-curve {
+            opacity: 0.16;
+        }
+
+        .project-node {
+            position: absolute;
+            z-index: 12;
             display: block;
+            width: max-content;
+            max-width: calc(100vw - 56px);
+            color: var(--blue);
+            text-decoration: none;
+            isolation: isolate;
+        }
+
+        .project-node.vault {
+            left: 6vw;
+            top: 16vh;
+        }
+
+        .project-node.library {
+            right: 7vw;
+            top: 21vh;
+        }
+
+        .project-node.swag {
+            left: 15vw;
+            bottom: 11vh;
+        }
+
+        .node-label {
+            display: inline-block;
+            margin: 0 0 8px 0.35rem;
+            padding: 3px 6px 4px;
+            background: var(--paper);
+            border: 1px solid var(--blue);
+            font-family: "Courier New", Courier, monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: lowercase;
+        }
+
+        .node-title {
+            position: relative;
+            display: block;
+            padding: 0.01em 0.13em 0.08em;
+            font-family: "Avenir Next Condensed", "Helvetica Neue", "Arial Narrow", Arial, sans-serif;
+            font-size: clamp(3.4rem, 7vw, 7rem);
+            font-weight: 900;
+            line-height: 0.88;
+            letter-spacing: 0.015em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .node-title::before {
+            content: "";
+            position: absolute;
+            inset: 0.06em -0.02em 0.03em -0.02em;
+            z-index: -1;
+            background: rgba(244, 235, 205, 0.94);
+            border: 1px solid rgba(6, 69, 158, 0.36);
+            transform: rotate(var(--label-tilt, -1deg));
+        }
+
+        .project-node:hover,
+        .project-node:focus-visible,
+        .project-node.is-active {
+            outline: none;
+        }
+
+        .project-node:hover .node-label,
+        .project-node:focus-visible .node-label,
+        .project-node.is-active .node-label {
+            background: var(--blue);
+            color: var(--paper);
+        }
+
+        .project-node:hover .node-title,
+        .project-node:focus-visible .node-title,
+        .project-node.is-active .node-title {
+            color: var(--paper);
+        }
+
+        .project-node:hover .node-title::before,
+        .project-node:focus-visible .node-title::before,
+        .project-node.is-active .node-title::before {
+            background: var(--blue);
+            border-color: var(--blue);
+        }
+
+        .project-node:hover .node-title,
+        .project-node:focus-visible .node-title,
+        .project-node.is-active .node-title {
+            text-decoration: underline;
+            text-decoration-thickness: 0.06em;
+            text-underline-offset: 0.1em;
+        }
+
+        .project-node.vault {
+            --label-tilt: -1.5deg;
+        }
+
+        .project-node.library {
+            --label-tilt: 1.25deg;
+        }
+
+        .project-node.swag {
+            --label-tilt: -0.7deg;
+        }
+
+        @media (max-width: 900px) {
+            body.projects-specimen {
+                overflow: auto;
+            }
+
+            .specimen-sheet {
+                min-height: 100svh;
+            }
+
+            .site-nav {
+                display: flex;
+                height: 44px;
+                width: 100%;
+                padding: 0 10px;
+                gap: clamp(18px, 9vw, 42px);
+                font-size: 7px;
+                justify-content: flex-start;
+            }
+
+            .figure-field {
+                min-height: calc(100svh - 44px);
+            }
+
+            .subject {
+                left: 55vw;
+                top: 50vh;
+                bottom: auto;
+                width: min(56vw, 245px);
+                transform: translate(-50%, -48%);
+                opacity: 0.58;
+            }
+
+            .fold-fragment {
+                width: 69vw;
+                opacity: 0.28;
+            }
+
+            .fold-fragment.fragment-a {
+                left: -18vw;
+                top: 22vh;
+                transform: rotate(-9deg);
+            }
+
+            .fold-fragment.fragment-b {
+                right: -26vw;
+                bottom: 14vh;
+                transform: scaleX(-1) rotate(7deg);
+            }
+
+            .project-node {
+                width: max-content;
+                max-width: calc(100vw - 32px);
+            }
+
+            .project-node.vault {
+                left: 7vw;
+                top: 14vh;
+            }
+
+            .project-node.library {
+                left: 19vw;
+                right: auto;
+                top: 38vh;
+            }
+
+            .project-node.swag {
+                left: 7vw;
+                bottom: 14vh;
+            }
+
+            .node-label {
+                font-size: 9px;
+                margin-bottom: 6px;
+            }
+
+            .node-title {
+                font-size: clamp(2.6rem, 12.4vw, 4rem);
+                line-height: 0.92;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pixel-field {
+                opacity: 0.48;
+            }
         }
     </style>
 </head>
-<body>
+<body class="projects-specimen">
+    <main class="specimen-sheet">
+        <canvas class="pixel-field" id="pixelField" aria-hidden="true"></canvas>
 
-    <main class="bauhaus-grid">
+        <nav class="site-nav" aria-label="Primary">
+            <a href="index.html">home</a>
+            <a href="about.html">about</a>
+            <a href="projects.html" aria-current="page">projects</a>
+            <a href="other.html">library</a>
+            <a href="swag.html">swag</a>
+        </nav>
 
-        <div class="guide-line"></div>
-        
-        <div class="shape-entry-orange">
-            <div class="orange-circle"></div>
-        </div>
+        <section class="figure-field" aria-label="Projects">
+            <img class="fold-fragment fragment-a" src="assets/images/projects/folded-mask.png" alt="">
+            <img class="fold-fragment fragment-b" src="assets/images/projects/folded-mask.png" alt="">
+            <img class="subject" src="assets/images/projects/dark-figure.png" alt="">
 
-        <div class="shape-entry-blue">
-            <div class="blue-block"></div>
-        </div>
+            <svg class="diagram-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <path class="primary-curve" id="primaryCurve"></path>
+                <path class="parametric soft-curve" id="secondaryCurve"></path>
+                <path class="parametric soft-curve" id="tertiaryCurve"></path>
+            </svg>
 
-        <header class="identity" style="z-index: 50;">
-            <h1>
-                <a href="index.html" style="font-size: 6rem; line-height: 1; margin-left: -0.5rem;">←</a>
-            </h1>
-        </header>
+            <a class="project-node vault is-active" data-project="vault" href="https://vault.drebaglioni.com" target="_blank" rel="noopener noreferrer">
+                <span class="node-label">vault.drebaglioni.com</span><br>
+                <span class="node-title">The Vault</span>
+            </a>
 
-        <section class="primary-nav" style="display: block; padding-top: 2rem;">
-            
-            <ul style="list-style: none; display: flex; flex-direction: column; gap: 4rem;">
-                
-                <li>
-                    <span class="project-meta">01. WEB APP</span>
-                    <a href="https://vault.drebaglioni.com" target="_blank" class="nav-item project-link">
-                        THE VAULT ↗
-                    </a>
-                </li>
+            <a class="project-node library" data-project="library" href="other.html">
+                <span class="node-label">other.html</span><br>
+                <span class="node-title">Library</span>
+            </a>
 
-                <li>
-                    <span class="project-meta">02. BRANDING</span>
-                    <a href="#" class="nav-item project-link">
-                        NIKE CONCEPT
-                    </a>
-                </li>
-
-                <li>
-                    <span class="project-meta">03. ARCHITECTURE</span>
-                    <a href="#" class="nav-item project-link">
-                        BRUTALIST ARCH
-                    </a>
-                </li>
-
-            </ul>
-
+            <a class="project-node swag" data-project="swag" href="swag.html">
+                <span class="node-label">swag.html</span><br>
+                <span class="node-title">Swag</span>
+            </a>
         </section>
-
     </main>
 
     <script>
-        const frictionBlue = 0.05; 
-        const frictionOrange = 0.08;
-        let targetX = 0; let targetY = 0;
-        let currentX_Blue = 0; let currentY_Blue = 0;
-        let currentX_Orange = 0; let currentY_Orange = 0;
+        const nodes = Array.from(document.querySelectorAll(".project-node"));
+        const canvas = document.getElementById("pixelField");
+        const ctx = canvas.getContext("2d");
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const primaryCurve = document.getElementById("primaryCurve");
+        const secondaryCurve = document.getElementById("secondaryCurve");
+        const tertiaryCurve = document.getElementById("tertiaryCurve");
 
-        document.addEventListener('mousemove', (e) => {
-            if (window.innerWidth > 768) {
-                targetX = (e.clientX / window.innerWidth - 0.5) * 2;
-                targetY = (e.clientY / window.innerHeight - 0.5) * 2;
+        const projectState = {
+            vault: { x: 0.18, y: 0.2, phase: 0 },
+            library: { x: 0.52, y: 0.43, phase: Math.PI * 0.62 },
+            swag: { x: 0.25, y: 0.77, phase: Math.PI * 1.14 }
+        };
+
+        const pixelState = {
+            active: "vault",
+            width: 0,
+            height: 0,
+            dpr: 1,
+            frame: 0,
+            points: []
+        };
+
+        function resizeCanvas() {
+            pixelState.dpr = Math.min(window.devicePixelRatio || 1, 2);
+            pixelState.width = window.innerWidth;
+            pixelState.height = window.innerHeight;
+            canvas.width = Math.floor(pixelState.width * pixelState.dpr);
+            canvas.height = Math.floor(pixelState.height * pixelState.dpr);
+            canvas.style.width = `${pixelState.width}px`;
+            canvas.style.height = `${pixelState.height}px`;
+            ctx.setTransform(pixelState.dpr, 0, 0, pixelState.dpr, 0, 0);
+            buildPoints();
+        }
+
+        function buildPoints() {
+            const count = Math.floor(Math.min(1180, Math.max(520, pixelState.width * pixelState.height / 1800)));
+            pixelState.points = [];
+
+            for (let i = 0; i < count; i += 1) {
+                const t = i / count;
+                const theta = t * Math.PI * 2;
+                const band = (i % 5) - 2;
+                const lissajousX = Math.sin(3 * theta + Math.PI / 5) * 0.31;
+                const lissajousY = Math.sin(2 * theta) * 0.22;
+                pixelState.points.push({
+                    x: 0.5 + lissajousX + band * 0.012,
+                    y: 0.5 + lissajousY - band * 0.009,
+                    s: 1 + (i % 3),
+                    p: theta,
+                    v: 0.45 + (i % 13) * 0.045
+                });
             }
+        }
+
+        function buildParametricPath(cx, cy, rx, ry, phase = 0, loops = 1, steps = 180) {
+            let path = "";
+            for (let i = 0; i <= steps; i += 1) {
+                const t = (i / steps) * Math.PI * 2 * loops;
+                const x = cx + Math.sin(3 * t + phase) * rx;
+                const y = cy + Math.sin(2 * t) * ry;
+                path += `${i === 0 ? "M" : "L"} ${x.toFixed(2)} ${y.toFixed(2)} `;
+            }
+            return path.trim();
+        }
+
+        function drawDiagramPaths() {
+            primaryCurve.setAttribute("d", buildParametricPath(50, 50, 37, 22, Math.PI / 5, 1.08, 280));
+            secondaryCurve.setAttribute("d", buildParametricPath(50, 50, 31, 17, Math.PI * 0.62, 1.08, 280));
+            tertiaryCurve.setAttribute("d", buildParametricPath(50, 50, 43, 27, Math.PI * 1.14, 1.08, 280));
+        }
+
+        function drawPixels() {
+            ctx.clearRect(0, 0, pixelState.width, pixelState.height);
+            ctx.fillStyle = "#06459e";
+
+            const target = projectState[pixelState.active] || projectState.vault;
+            const time = reducedMotion.matches ? 0 : pixelState.frame * 0.02;
+
+            pixelState.points.forEach((point, index) => {
+                const phaseWave = Math.sin(point.p * 3 + target.phase + time * point.v);
+                const pullX = (target.x - point.x) * 0.08;
+                const pullY = (target.y - point.y) * 0.08;
+                const jitterX = phaseWave * 0.012;
+                const jitterY = Math.cos(point.p * 2 + target.phase + time * 0.7) * 0.014;
+                const x = (point.x + pullX + jitterX) * pixelState.width;
+                const y = (point.y + pullY + jitterY) * pixelState.height;
+                const snap = index % 7 === 0 ? 8 : 4;
+                const px = Math.round(x / snap) * snap;
+                const py = Math.round(y / snap) * snap;
+
+                if (index % 11 === 0) {
+                    ctx.fillRect(px, py, point.s * 5, point.s);
+                } else {
+                    ctx.fillRect(px, py, point.s, point.s);
+                }
+            });
+
+            pixelState.frame += 1;
+            window.requestAnimationFrame(drawPixels);
+        }
+
+        function setActive(projectKey) {
+            const project = projectState[projectKey];
+            if (!project) {
+                return;
+            }
+
+            pixelState.active = projectKey;
+            nodes.forEach((node) => {
+                node.classList.toggle("is-active", node.dataset.project === projectKey);
+            });
+        }
+
+        nodes.forEach((node) => {
+            node.addEventListener("mouseenter", () => setActive(node.dataset.project));
+            node.addEventListener("focus", () => setActive(node.dataset.project));
         });
 
-        function animate() {
-            const blueX = targetX * -30; const blueY = targetY * -30;
-            currentX_Blue += (blueX - currentX_Blue) * frictionBlue;
-            currentY_Blue += (blueY - currentY_Blue) * frictionBlue;
-
-            const orangeX = targetX * 60; const orangeY = targetY * 60;
-            currentX_Orange += (orangeX - currentX_Orange) * frictionOrange;
-            currentY_Orange += (orangeY - currentY_Orange) * frictionOrange;
-
-            const blue = document.querySelector('.blue-block');
-            const orange = document.querySelector('.orange-circle');
-
-            if (blue) blue.style.transform = `translate(${currentX_Blue}px, ${currentY_Blue}px)`;
-            if (orange) orange.style.transform = `translate(-50%, -50%) translate(${currentX_Orange}px, ${currentY_Orange}px)`;
-
-            requestAnimationFrame(animate);
-        }
-        animate();
+        window.addEventListener("resize", resizeCanvas, { passive: true });
+        drawDiagramPaths();
+        resizeCanvas();
+        drawPixels();
     </script>
 </body>
 </html>
