@@ -209,6 +209,11 @@
             top: 21vh;
         }
 
+        .project-node.mind {
+            right: 13vw;
+            bottom: 13vh;
+        }
+
         .project-node.swag {
             left: 15vw;
             bottom: 11vh;
@@ -292,6 +297,14 @@
             --label-tilt: 1.25deg;
         }
 
+        .project-node.mind {
+            --label-tilt: -0.35deg;
+        }
+
+        .project-node.mind .node-title {
+            font-size: clamp(3rem, 5.8vw, 6.35rem);
+        }
+
         .project-node.swag {
             --label-tilt: -0.7deg;
         }
@@ -356,14 +369,20 @@
             }
 
             .project-node.library {
-                left: 19vw;
+                left: 18vw;
                 right: auto;
-                top: 38vh;
+                top: 34vh;
+            }
+
+            .project-node.mind {
+                left: 7vw;
+                right: auto;
+                bottom: 29vh;
             }
 
             .project-node.swag {
-                left: 7vw;
-                bottom: 14vh;
+                left: 22vw;
+                bottom: 10vh;
             }
 
             .node-label {
@@ -374,6 +393,10 @@
             .node-title {
                 font-size: clamp(2.6rem, 12.4vw, 4rem);
                 line-height: 0.92;
+            }
+
+            .project-node.mind .node-title {
+                font-size: clamp(2rem, 9.7vw, 3.35rem);
             }
         }
 
@@ -417,6 +440,11 @@
                 <span class="node-title">Library</span>
             </a>
 
+            <a class="project-node mind" data-project="mind" href="https://mind.drebaglioni.com" target="_blank" rel="noopener noreferrer">
+                <span class="node-label">mind.drebaglioni.com</span><br>
+                <span class="node-title">My Actual Mind</span>
+            </a>
+
             <a class="project-node swag" data-project="swag" href="swag.html">
                 <span class="node-label">swag.html</span><br>
                 <span class="node-title">Swag</span>
@@ -436,6 +464,7 @@
         const projectState = {
             vault: { x: 0.18, y: 0.2, phase: 0 },
             library: { x: 0.52, y: 0.43, phase: Math.PI * 0.62 },
+            mind: { x: 0.72, y: 0.72, phase: Math.PI * 1.58 },
             swag: { x: 0.25, y: 0.77, phase: Math.PI * 1.14 }
         };
 
