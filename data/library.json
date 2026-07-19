@@ -1369,6 +1369,46 @@
     "isbn": "9780061054815"
   },
   {
+    "id": "strange-buildings-2026",
+    "title": "Strange Buildings",
+    "author": "Uketsu",
+    "format": "book",
+    "subjects": [
+      "fiction",
+      "horror",
+      "mystery"
+    ],
+    "year": 2026,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://openlibrary.org/works/OL44983691W",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780063514096-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780063514096"
+  },
+  {
+    "id": "strange-houses-2025",
+    "title": "Strange Houses",
+    "author": "Uketsu",
+    "format": "book",
+    "subjects": [
+      "fiction",
+      "horror",
+      "mystery"
+    ],
+    "year": 2025,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://openlibrary.org/works/OL42427055W",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780063433168-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780063433168"
+  },
+  {
     "id": "strange-pictures-2025",
     "title": "Strange Pictures",
     "author": "Uketsu",
