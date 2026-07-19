@@ -46,6 +46,7 @@
             --about-blue-soft: rgba(158, 173, 255, 0.54);
             --about-orange: #ff7048;
             --about-cyan: #8bd7c8;
+            --about-pressure: 0;
         }
 
         body.about-vector .nav-overlay {
@@ -113,6 +114,86 @@
             pointer-events: none;
         }
 
+        body.about-vector .projects-gated-link {
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.28em;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            body.about-vector .projects-gated-link {
+                cursor: not-allowed !important;
+            }
+        }
+
+        body.about-vector .projects-gated-link.is-blocked-hit {
+            animation: projectsBlockedHit 260ms cubic-bezier(0.2, 0.8, 0.2, 1) 1;
+        }
+
+        body.about-vector .projects-gate-toast {
+            position: fixed;
+            top: 86px;
+            right: 40px;
+            width: min(360px, calc(100vw - 80px));
+            border: 1px solid var(--about-blue);
+            background: rgba(21, 19, 16, 0.94);
+            color: var(--about-ink);
+            padding: 10px 12px;
+            opacity: 0;
+            transform: translateY(-8px);
+            pointer-events: none;
+            transition: opacity 180ms ease, transform 180ms ease;
+            z-index: 270;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.34);
+        }
+
+        body.about-vector .projects-gate-toast.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        body.about-vector .projects-gate-title {
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--about-blue);
+            margin-bottom: 6px;
+        }
+
+        body.about-vector .projects-gate-copy {
+            font-family: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.28;
+            margin-bottom: 8px;
+        }
+
+        body.about-vector .projects-gate-cta {
+            display: inline-block;
+            font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--about-blue);
+            text-decoration: none;
+            border: 1px solid var(--about-blue);
+            padding: 5px 7px;
+            transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+        }
+
+        body.about-vector .projects-gate-cta:hover,
+        body.about-vector .projects-gate-cta:focus-visible {
+            background: var(--about-blue);
+            border-color: var(--about-blue);
+            color: var(--about-paper);
+            outline: none;
+        }
+
         .about-shell {
             width: min(1540px, 100%);
             height: 100vh;
@@ -151,10 +232,31 @@
             min-height: var(--row-height);
             padding: clamp(0.55rem, 1.25vh, 0.95rem) 0 clamp(0.68rem, 1.45vh, 1.05rem);
             border-top: 1px solid rgba(241, 232, 211, 0.19);
+            opacity: 1;
+            transition:
+                opacity 180ms ease,
+                border-color 180ms ease,
+                transform 180ms ease,
+                filter 180ms ease;
         }
 
         .about-line:last-of-type {
             border-bottom: 1px solid rgba(241, 232, 211, 0.19);
+        }
+
+        .about-index.has-active .about-line:not(.is-active) {
+            opacity: 0.42;
+            filter: saturate(0.55);
+        }
+
+        .about-line.is-active {
+            border-color: rgba(255, 112, 72, 0.58);
+            transform: translateX(clamp(4px, 0.55vw, 9px));
+            filter: saturate(1.28);
+        }
+
+        .about-line.is-active + .about-line {
+            border-top-color: rgba(255, 112, 72, 0.4);
         }
 
         .about-key {
@@ -169,6 +271,13 @@
             opacity: 0.78;
             align-self: start;
             padding-top: 0.34em;
+            transition: color 160ms ease, opacity 160ms ease, text-shadow 160ms ease;
+        }
+
+        .about-line.is-active .about-key {
+            color: var(--about-orange);
+            opacity: 1;
+            text-shadow: 0 0 18px rgba(255, 112, 72, 0.34);
         }
 
         .about-value {
@@ -182,6 +291,15 @@
             text-shadow:
                 0 0 24px rgba(158, 173, 255, 0.14),
                 0 0 1px rgba(241, 232, 211, 0.5);
+            transition: color 160ms ease, text-shadow 160ms ease, transform 160ms ease;
+        }
+
+        .about-line.is-active .about-value {
+            color: #fff7df;
+            text-shadow:
+                0 0 28px rgba(255, 112, 72, 0.18),
+                0 0 18px rgba(139, 215, 200, 0.18),
+                0 0 1px rgba(255, 247, 223, 0.72);
         }
 
         .about-value-home,
@@ -202,6 +320,12 @@
             letter-spacing: 0;
             color: var(--about-orange);
             transform: translateY(-0.04em);
+            transition: color 160ms ease, opacity 160ms ease, text-shadow 160ms ease;
+        }
+
+        .about-line.is-active .about-sep,
+        .about-formula-sep {
+            text-shadow: 0 0 16px rgba(255, 112, 72, 0.44);
         }
 
         .about-formula-sep {
@@ -301,6 +425,18 @@
             height: 100%;
             object-fit: cover;
             filter: grayscale(0.22) saturate(0.95) contrast(1.16) brightness(0.78) blur(0.7px);
+            transition: filter 320ms ease, transform 420ms ease;
+            transform: scale(1.012);
+        }
+
+        body.about-place-active .about-place-preview {
+            opacity: 0.68;
+            transform: translateX(0) scale(1.018);
+        }
+
+        body.about-place-active .about-place-preview img {
+            filter: grayscale(0.05) saturate(1.28) contrast(1.24) brightness(0.96) blur(0.28px);
+            transform: scale(1.04);
         }
 
         .about-place-preview figcaption {
@@ -340,6 +476,15 @@
             padding-right: 0;
             user-select: none;
             z-index: 3;
+            text-shadow: 0 0 18px rgba(139, 215, 200, 0.2);
+            transition: color 180ms ease, opacity 180ms ease, text-shadow 180ms ease;
+        }
+
+        body.about-active .about-formula {
+            color: rgba(139, 215, 200, 0.82);
+            text-shadow:
+                0 0 24px rgba(139, 215, 200, 0.34),
+                0 0 18px rgba(255, 112, 72, 0.12);
         }
 
         .about-field {
@@ -356,6 +501,55 @@
                 linear-gradient(90deg, rgba(21, 19, 16, 0.2), rgba(21, 19, 16, 0));
         }
 
+        .about-field::before,
+        .about-field::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 220ms ease;
+        }
+
+        .about-field::before {
+            background:
+                repeating-linear-gradient(
+                    180deg,
+                    rgba(241, 232, 211, 0.06) 0,
+                    rgba(241, 232, 211, 0.06) 1px,
+                    transparent 1px,
+                    transparent 7px
+                );
+            mix-blend-mode: screen;
+        }
+
+        .about-field::after {
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent 0%,
+                    rgba(139, 215, 200, 0.11) 43%,
+                    rgba(255, 112, 72, 0.16) 50%,
+                    rgba(158, 173, 255, 0.1) 56%,
+                    transparent 100%
+                );
+            transform: translateX(calc(-28vw + var(--about-pressure) * 52vw));
+            mix-blend-mode: screen;
+        }
+
+        body.about-active {
+            --about-pressure: 1;
+        }
+
+        body.about-active .about-field::before {
+            opacity: 0.58;
+        }
+
+        body.about-active .about-field::after {
+            opacity: 0.82;
+        }
+
         .about-attractor-canvas {
             position: absolute;
             inset: 0;
@@ -365,6 +559,12 @@
             opacity: 0.88;
             mix-blend-mode: screen;
             filter: saturate(1.05) contrast(1.08);
+            transition: opacity 200ms ease, filter 200ms ease;
+        }
+
+        body.about-active .about-attractor-canvas {
+            opacity: 1;
+            filter: saturate(1.32) contrast(1.24);
         }
 
         @media screen and (max-width: 899px) {
@@ -443,6 +643,15 @@
                 overflow: hidden;
             }
 
+            .about-index.has-active .about-line:not(.is-active) {
+                opacity: 1;
+                filter: none;
+            }
+
+            .about-line.is-active {
+                transform: none;
+            }
+
         }
 
         @media (max-width: 768px) {
@@ -484,6 +693,25 @@
                 background: rgba(241, 232, 211, 0.05);
             }
 
+            body.about-vector .projects-gate-toast {
+                top: auto;
+                right: 12px;
+                left: 12px;
+                bottom: calc(74px + env(safe-area-inset-bottom));
+                width: auto;
+                padding: 9px 10px;
+            }
+
+            body.about-vector .projects-gate-title {
+                font-size: 9px;
+                margin-bottom: 5px;
+            }
+
+            body.about-vector .projects-gate-copy {
+                font-size: 11px;
+                margin-bottom: 8px;
+            }
+
             .about-shell {
                 padding-bottom: calc(6.8rem + env(safe-area-inset-bottom));
             }
@@ -504,6 +732,17 @@
                 transform: none;
             }
 
+            .about-line,
+            .about-key,
+            .about-value,
+            .about-sep,
+            .about-formula,
+            .about-attractor-canvas,
+            .about-field::before,
+            .about-field::after {
+                transition: none;
+            }
+
             .about-attractor-canvas {
                 opacity: 0.88;
                 filter: saturate(0.9) contrast(0.98);
@@ -516,9 +755,14 @@
         <a class="logo-minimal" href="index.html">HOME</a>
         <div class="nav-links">
             <a href="about.html" aria-current="page">01 About</a>
-            <a href="projects.html">02 Projects</a>
+            <a href="projects.html" class="projects-gated-link" data-projects-gated="true" aria-disabled="true">02 Projects</a>
             <a href="other.html">03 Library</a>
             <a href="swag.html">04 Swag</a>
+        </div>
+        <div class="projects-gate-toast" id="projectsGateToast" role="status" aria-live="polite" aria-hidden="true">
+            <div class="projects-gate-title">PROJECTS ARE IN THE WORKSHOP</div>
+            <div class="projects-gate-copy">Still prototyping. Try the library in the meantime.</div>
+            <a href="other.html" class="projects-gate-cta">GO TO LIBRARY</a>
         </div>
     </nav>
     <main class="about-shell">
@@ -582,12 +826,20 @@
     </main>
 
     <script>
+        const mediaReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const gateToastAutoDismissMs = 2600;
+        const blockedLinkAnimationMs = 260;
+        const projectsGatedLink = document.querySelector('.projects-gated-link');
+        const projectsGateToast = document.getElementById('projectsGateToast');
+        const currentUrl = new URL(window.location.href);
         const field = document.querySelector('.about-field');
         const aboutAttractorCanvas = document.getElementById('aboutAttractorCanvas');
         const aboutAttractorCtx = aboutAttractorCanvas ? aboutAttractorCanvas.getContext('2d', { alpha: true }) : null;
         const desktopMotionQuery = window.matchMedia('(min-width: 900px)');
         const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
         const motionOverride = new URLSearchParams(window.location.search).get('motion') === 'on';
+        const aboutIndex = document.querySelector('.about-index');
+        const aboutLines = Array.from(document.querySelectorAll('.about-line'));
         const placeTokens = Array.from(document.querySelectorAll('.place-token'));
         const placePreview = document.getElementById('aboutPlacePreview');
         const placePreviewImg = document.getElementById('aboutPlacePreviewImg');
@@ -600,6 +852,7 @@
         let attractorFrame = null;
         let attractorEnabled = false;
         let placeHideTimer = null;
+        let gateToastTimer = null;
         const aboutAttractor = {
             dpr: 1,
             width: 0,
@@ -608,8 +861,35 @@
             targetY: 0,
             pointerX: 0,
             pointerY: 0,
+            targetIntensity: 0,
+            intensity: 0,
             staticDrawn: false
         };
+
+        function hideProjectsGateToast() {
+            if (!projectsGateToast) {
+                return;
+            }
+            projectsGateToast.classList.remove('is-visible');
+            projectsGateToast.setAttribute('aria-hidden', 'true');
+        }
+
+        function showProjectsGateToast() {
+            if (!projectsGateToast) {
+                return;
+            }
+
+            if (gateToastTimer !== null) {
+                window.clearTimeout(gateToastTimer);
+            }
+
+            projectsGateToast.classList.add('is-visible');
+            projectsGateToast.setAttribute('aria-hidden', 'false');
+            gateToastTimer = window.setTimeout(() => {
+                hideProjectsGateToast();
+                gateToastTimer = null;
+            }, gateToastAutoDismissMs);
+        }
 
         function canShowPlacePreview() {
             return desktopMotionQuery.matches;
@@ -623,6 +903,7 @@
             const hide = () => {
                 placePreview.classList.remove('is-visible');
                 placePreview.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('about-place-active');
             };
 
             if (placeHideTimer !== null) {
@@ -658,6 +939,21 @@
             placePreviewLabel.textContent = place.label;
             placePreview.classList.add('is-visible');
             placePreview.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('about-place-active');
+        }
+
+        function setActiveAboutLine(line) {
+            if (!aboutIndex) {
+                return;
+            }
+
+            aboutLines.forEach((candidate) => {
+                candidate.classList.toggle('is-active', candidate === line);
+            });
+
+            aboutIndex.classList.toggle('has-active', Boolean(line));
+            document.body.classList.toggle('about-active', Boolean(line));
+            aboutAttractor.targetIntensity = line ? 1 : 0;
         }
 
         function resizeAboutAttractor() {
@@ -698,16 +994,18 @@
 
             aboutAttractor.pointerX += (aboutAttractor.targetX - aboutAttractor.pointerX) * (isStatic ? 1 : 0.035);
             aboutAttractor.pointerY += (aboutAttractor.targetY - aboutAttractor.pointerY) * (isStatic ? 1 : 0.035);
+            aboutAttractor.intensity += (aboutAttractor.targetIntensity - aboutAttractor.intensity) * (isStatic ? 1 : 0.08);
+            const pressure = aboutAttractor.intensity;
 
-            const centerX = width * (0.68 + aboutAttractor.pointerX * 0.024);
-            const centerY = height * (0.5 + aboutAttractor.pointerY * 0.02);
-            const radius = Math.min(width, height) * 1.22;
-            const rotation = -0.18 + drift * 0.026 + aboutAttractor.pointerX * 0.08;
+            const centerX = width * (0.68 + aboutAttractor.pointerX * (0.024 + pressure * 0.02));
+            const centerY = height * (0.5 + aboutAttractor.pointerY * (0.02 + pressure * 0.018));
+            const radius = Math.min(width, height) * (1.22 + pressure * 0.1);
+            const rotation = -0.18 + drift * (0.026 + pressure * 0.028) + aboutAttractor.pointerX * (0.08 + pressure * 0.08);
             const cosR = Math.cos(rotation);
             const sinR = Math.sin(rotation);
-            const grid = Math.max(1.6, Math.min(2.6, Math.min(width, height) * 0.003));
-            const pixelSize = Math.max(1.12, grid * 0.72);
-            const phase = drift * 0.26;
+            const grid = Math.max(1.32, Math.min(2.5, Math.min(width, height) * (0.003 - pressure * 0.00045)));
+            const pixelSize = Math.max(1.08, grid * (0.72 + pressure * 0.14));
+            const phase = drift * (0.26 + pressure * 0.2);
             const driftX = Math.sin(drift * 0.11) * 0.14 + aboutAttractor.pointerX * 0.04;
             const driftY = Math.cos(drift * 0.09) * 0.12 + aboutAttractor.pointerY * 0.04;
 
@@ -762,32 +1060,33 @@
             const accentPixels = [];
             const ghostPixels = [];
 
-            for (let lane = 0; lane <= 106; lane += 1) {
+            const laneMax = 106 + Math.round(pressure * 22);
+            for (let lane = 0; lane <= laneMax; lane += 1) {
                 const laneT = lane / 96;
-                const steps = 240 + Math.round(Math.min(1.1, laneT) * 150);
+                const steps = 240 + Math.round(Math.min(1.1, laneT) * (150 + pressure * 54));
                 for (let i = 0; i < steps; i += 1) {
                     const theta = (i / steps) * Math.PI * 2;
                     const grain = hash2(lane, i);
-                    if (grain < 0.1 && lane % 3 !== 0) {
+                    if (grain < 0.1 - pressure * 0.045 && lane % 3 !== 0) {
                         continue;
                     }
 
-                    const point = pixelPoint(theta + grain * 0.002, lane);
+                    const point = pixelPoint(theta + grain * (0.002 + pressure * 0.006), lane);
                     if (point.x < -grid || point.x > width + grid || point.y < -grid || point.y > height + grid) {
                         continue;
                     }
 
-                    const shimmer = Math.sin(drift * 1.2 + lane * 0.41 + i * 0.07);
-                    const size = pixelSize * (0.42 + grain * 0.74 + point.depth * 0.12);
-                    const x = Math.round((point.x + (grain - 0.5) * grid * 0.42) / grid) * grid;
-                    const y = Math.round((point.y + (hash2(i, lane) - 0.5) * grid * 0.42) / grid) * grid;
+                    const shimmer = Math.sin(drift * (1.2 + pressure * 1.4) + lane * 0.41 + i * 0.07);
+                    const size = pixelSize * (0.42 + grain * (0.74 + pressure * 0.22) + point.depth * 0.12);
+                    const x = Math.round((point.x + (grain - 0.5) * grid * (0.42 + pressure * 0.8)) / grid) * grid;
+                    const y = Math.round((point.y + (hash2(i, lane) - 0.5) * grid * (0.42 + pressure * 0.8)) / grid) * grid;
 
-                    if (lane > 84 && i % 9 === 0 && grain > 0.28) {
-                        accentPixels.push([x, y, size * 0.98]);
-                    } else if (grain > 0.78 || shimmer > 0.82) {
-                        ghostPixels.push([x, y, size * 0.8]);
-                    } else if (lane % 5 === 0 && grain > 0.44) {
-                        trailPixels.push([x + grid * 1.15, y + grid * 0.4, size * 0.72]);
+                    if (lane > 84 && i % (pressure > 0.5 ? 6 : 9) === 0 && grain > 0.28 - pressure * 0.1) {
+                        accentPixels.push([x, y, size * (0.98 + pressure * 0.24)]);
+                    } else if (grain > 0.78 - pressure * 0.07 || shimmer > 0.82 - pressure * 0.12) {
+                        ghostPixels.push([x, y, size * (0.8 + pressure * 0.12)]);
+                    } else if (lane % (pressure > 0.5 ? 4 : 5) === 0 && grain > 0.44 - pressure * 0.12) {
+                        trailPixels.push([x + grid * (1.15 + pressure * 1.2), y + grid * 0.4, size * (0.72 + pressure * 0.2)]);
                     } else {
                         const bucket = Math.min(4, Math.floor((point.laneT * 3.8 + point.depth * 1.3 + grain * 0.7) % 5));
                         inkBuckets[bucket].push([x, y, size]);
@@ -796,8 +1095,8 @@
             }
 
             const inkAlpha = isStatic
-                ? [0.15, 0.21, 0.28, 0.36, 0.46]
-                : [0.17, 0.24, 0.32, 0.41, 0.52];
+                ? [0.15, 0.21, 0.28, 0.36, 0.46].map((alpha) => alpha + pressure * 0.1)
+                : [0.17, 0.24, 0.32, 0.41, 0.52].map((alpha) => alpha + pressure * 0.12);
             inkBuckets.forEach((pixels, bucket) => {
                 ctx.fillStyle = `rgba(158, 173, 255, ${inkAlpha[bucket]})`;
                 pixels.forEach(([x, y, size]) => {
@@ -805,17 +1104,17 @@
                 });
             });
 
-            ctx.fillStyle = `rgba(139, 215, 200, ${isStatic ? 0.08 : 0.11})`;
+            ctx.fillStyle = `rgba(139, 215, 200, ${(isStatic ? 0.08 : 0.11) + pressure * 0.08})`;
             trailPixels.forEach(([x, y, size]) => {
                 ctx.fillRect(x, y, size * 1.65, size);
             });
 
-            ctx.fillStyle = `rgba(255, 112, 72, ${isStatic ? 0.18 : 0.24})`;
+            ctx.fillStyle = `rgba(255, 112, 72, ${(isStatic ? 0.18 : 0.24) + pressure * 0.16})`;
             accentPixels.forEach(([x, y, size]) => {
                 ctx.fillRect(x, y, size, size);
             });
 
-            ctx.fillStyle = `rgba(241, 232, 211, ${isStatic ? 0.055 : 0.075})`;
+            ctx.fillStyle = `rgba(241, 232, 211, ${(isStatic ? 0.055 : 0.075) + pressure * 0.055})`;
             ghostPixels.forEach(([x, y, size]) => {
                 ctx.fillRect(x, y, size, size);
             });
@@ -907,6 +1206,23 @@
             updateAboutAttractorState();
         });
 
+        aboutLines.forEach((line) => {
+            line.addEventListener('mouseenter', () => {
+                setActiveAboutLine(line);
+            });
+            line.addEventListener('mouseleave', () => {
+                setActiveAboutLine(null);
+            });
+            line.addEventListener('focusin', () => {
+                setActiveAboutLine(line);
+            });
+            line.addEventListener('focusout', (event) => {
+                if (!line.contains(event.relatedTarget)) {
+                    setActiveAboutLine(null);
+                }
+            });
+        });
+
         placeTokens.forEach((token) => {
             const placeKey = token.dataset.place;
             token.addEventListener('mouseenter', () => {
@@ -922,6 +1238,28 @@
                 hidePlacePreview(false);
             });
         });
+
+        if (projectsGatedLink) {
+            projectsGatedLink.addEventListener('click', (event) => {
+                event.preventDefault();
+                showProjectsGateToast();
+
+                if (!mediaReducedMotion.matches) {
+                    projectsGatedLink.classList.remove('is-blocked-hit');
+                    void projectsGatedLink.offsetWidth;
+                    projectsGatedLink.classList.add('is-blocked-hit');
+                    window.setTimeout(() => {
+                        projectsGatedLink.classList.remove('is-blocked-hit');
+                    }, blockedLinkAnimationMs);
+                }
+            });
+        }
+
+        if (currentUrl.searchParams.get('projects') === 'locked') {
+            showProjectsGateToast();
+            currentUrl.searchParams.delete('projects');
+            window.history.replaceState({}, '', currentUrl.pathname + currentUrl.search + currentUrl.hash);
+        }
 
         updateAboutAttractorState();
     </script>
