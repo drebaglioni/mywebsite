@@ -14,12 +14,16 @@
         }
 
         body.projects-specimen {
-            --paper: #f4ebcd;
-            --paper-dark: #e4d7b0;
-            --blue: #06459e;
-            --blue-ink: #052c73;
-            --blue-soft: rgba(6, 69, 158, 0.18);
-            --blue-faint: rgba(6, 69, 158, 0.08);
+            --paper: #fffdf5;
+            --paper-dark: #f0dfaa;
+            --blue: #0047ff;
+            --blue-ink: #001b8f;
+            --blue-soft: rgba(0, 71, 255, 0.2);
+            --blue-faint: rgba(0, 71, 255, 0.085);
+            --signal-red: #ff321f;
+            --signal-rose: #ff8b99;
+            --signal-cyan: #00d8ff;
+            --signal-ink: #0b0b10;
 
             min-height: 100%;
             background: var(--paper);
@@ -44,7 +48,7 @@
             background:
                 linear-gradient(90deg, var(--blue-faint) 1px, transparent 1px),
                 linear-gradient(var(--blue-faint) 1px, transparent 1px),
-                radial-gradient(circle at 46% 43%, rgba(6, 69, 158, 0.12) 0 1px, transparent 1.25px) 0 0 / 8px 8px,
+                radial-gradient(circle at 46% 43%, rgba(0, 71, 255, 0.13) 0 1px, transparent 1.25px) 0 0 / 8px 8px,
                 var(--paper);
             background-size: 4.8vw 4.8vw, 4.8vw 4.8vw, 8px 8px, auto;
         }
@@ -59,7 +63,7 @@
 
         .specimen-sheet::before {
             inset: 18px;
-            border: 1px solid rgba(6, 69, 158, 0.18);
+            border: 1px solid rgba(0, 71, 255, 0.22);
         }
 
         .specimen-sheet::after {
@@ -72,11 +76,11 @@
             z-index: 2;
             width: 100%;
             height: 100%;
-            opacity: 0.44;
+            opacity: 0.62;
             pointer-events: none;
             mix-blend-mode: multiply;
-            mask-image: radial-gradient(ellipse at 50% 48%, transparent 0 20%, rgba(0, 0, 0, 0.32) 29%, #000 46%);
-            -webkit-mask-image: radial-gradient(ellipse at 50% 48%, transparent 0 20%, rgba(0, 0, 0, 0.32) 29%, #000 46%);
+            mask-image: radial-gradient(ellipse at 50% 48%, transparent 0 13%, rgba(0, 0, 0, 0.58) 24%, #000 42%);
+            -webkit-mask-image: radial-gradient(ellipse at 50% 48%, transparent 0 13%, rgba(0, 0, 0, 0.58) 24%, #000 42%);
         }
 
         .site-nav {
@@ -136,7 +140,7 @@
             position: absolute;
             z-index: 5;
             width: min(31vw, 450px);
-            opacity: 0.48;
+            opacity: 0.36;
             filter: grayscale(1) sepia(1) saturate(9) hue-rotate(179deg) brightness(0.82) contrast(1.65);
             mix-blend-mode: multiply;
             pointer-events: none;
@@ -153,7 +157,7 @@
             right: 4vw;
             bottom: 12vh;
             transform: scaleX(-1) rotate(6deg);
-            opacity: 0.42;
+            opacity: 0.32;
         }
 
         .diagram-lines {
@@ -173,6 +177,7 @@
             stroke: var(--blue);
             stroke-width: 1.2;
             vector-effect: non-scaling-stroke;
+            transition: opacity 180ms ease, stroke 180ms ease, stroke-width 180ms ease;
         }
 
         .diagram-lines .parametric {
@@ -188,6 +193,301 @@
             opacity: 0.16;
         }
 
+        .figure-field.has-hover .diagram-lines .primary-curve {
+            opacity: 0.72;
+            stroke: var(--signal-red);
+            stroke-width: 2;
+        }
+
+        .figure-field.has-hover .diagram-lines .soft-curve {
+            opacity: 0.28;
+        }
+
+        .greiman-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            mix-blend-mode: multiply;
+        }
+
+        .foldout-spine {
+            position: absolute;
+            left: 2vw;
+            right: 2vw;
+            top: 49.5%;
+            height: clamp(82px, 12vw, 164px);
+            transform: translateY(-50%) rotate(-1.2deg);
+            border-top: 1px solid rgba(6, 69, 158, 0.24);
+            border-bottom: 1px solid rgba(6, 69, 158, 0.18);
+            background:
+                repeating-linear-gradient(90deg, rgba(6, 69, 158, 0.14) 0 1px, transparent 1px 13px),
+                repeating-linear-gradient(0deg, rgba(6, 69, 158, 0.1) 0 1px, transparent 1px 9px);
+            opacity: 0.42;
+        }
+
+        .foldout-spine::before,
+        .foldout-spine::after {
+            content: "";
+            position: absolute;
+            top: -14px;
+            bottom: -14px;
+            width: 1px;
+            background: rgba(6, 69, 158, 0.24);
+        }
+
+        .foldout-spine::before {
+            left: 33.333%;
+        }
+
+        .foldout-spine::after {
+            left: 66.666%;
+        }
+
+        .video-raster {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: min(52vw, 760px);
+            height: min(46vh, 430px);
+            transform: translate(-50%, -50%) rotate(1.6deg);
+            opacity: 0.5;
+            background:
+                radial-gradient(circle at 44% 35%, rgba(6, 69, 158, 0.34) 0 2px, transparent 2.5px) 0 0 / 12px 12px,
+                radial-gradient(circle at 58% 62%, rgba(223, 154, 160, 0.32) 0 2px, transparent 2.5px) 3px 5px / 17px 17px,
+                linear-gradient(90deg, transparent 0 47%, rgba(0, 153, 170, 0.2) 47% 49%, transparent 49%),
+                linear-gradient(rgba(6, 69, 158, 0.12) 1px, transparent 1px);
+            background-blend-mode: multiply;
+            mask-image: radial-gradient(ellipse at center, #000 0 54%, rgba(0, 0, 0, 0.4) 68%, transparent 82%);
+            -webkit-mask-image: radial-gradient(ellipse at center, #000 0 54%, rgba(0, 0, 0, 0.4) 68%, transparent 82%);
+        }
+
+        .video-raster::before {
+            content: "";
+            position: absolute;
+            inset: 7% 14%;
+            border: 1px solid rgba(255, 61, 51, 0.42);
+            transform: rotate(-3deg);
+        }
+
+        .active-sheet {
+            position: absolute;
+            z-index: 14;
+            left: var(--preview-left, 50vw);
+            top: var(--preview-top, 50vh);
+            width: min(43vw, 650px);
+            height: min(43vh, 430px);
+            border: 3px solid var(--blue);
+            background: var(--paper);
+            color: var(--blue);
+            box-shadow: 14px 14px 0 rgba(255, 50, 31, 0.28), 28px 28px 0 rgba(0, 71, 255, 0.14);
+            overflow: hidden;
+            isolation: isolate;
+            pointer-events: none;
+            transform: translate(-50%, -50%) rotate(var(--sheet-tilt, -2deg)) scale(0.84);
+            opacity: 0;
+            transition:
+                opacity 180ms ease,
+                transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1),
+                filter 220ms ease;
+            filter: blur(1.5px) contrast(0.9);
+        }
+
+        .figure-field.has-hover .active-sheet {
+            opacity: 0.98;
+            transform: translate(-50%, -50%) rotate(var(--sheet-tilt, -2deg)) scale(1);
+            filter: blur(0) contrast(1);
+        }
+
+        .active-sheet::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                var(--artifact-tint, linear-gradient(90deg, rgba(255, 253, 245, 0.04), rgba(0, 216, 255, 0.18))),
+                var(--artifact-image, linear-gradient(135deg, rgba(6, 74, 160, 0.24), rgba(237, 63, 43, 0.18))),
+                var(--artifact-mask, linear-gradient(transparent, transparent)),
+                repeating-linear-gradient(90deg, rgba(6, 74, 160, 0.22) 0 1px, transparent 1px 12px),
+                repeating-linear-gradient(0deg, rgba(22, 16, 13, 0.18) 0 1px, transparent 1px 9px);
+            background-position: center, var(--artifact-position, center), center, center, center;
+            background-size: cover, var(--artifact-media-size, cover), var(--artifact-mask-size, cover), auto, auto;
+            background-repeat: no-repeat, var(--artifact-repeat, no-repeat), no-repeat, repeat, repeat;
+            filter: grayscale(var(--artifact-gray, 1)) sepia(var(--artifact-sepia, 1)) saturate(var(--artifact-saturation, 6)) hue-rotate(var(--artifact-hue, 170deg)) contrast(var(--artifact-contrast, 1.52));
+            opacity: var(--artifact-opacity, 0.92);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .active-sheet::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, transparent 0 39%, rgba(255, 50, 31, 0.42) 39% 40%, transparent 40%),
+                repeating-linear-gradient(0deg, transparent 0 11px, rgba(22, 16, 13, 0.11) 11px 12px);
+            mix-blend-mode: multiply;
+            opacity: var(--artifact-overlay-opacity, 0.32);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .sheet-row,
+        .sheet-meta {
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 160ms ease 70ms, transform 210ms ease 70ms;
+        }
+
+        .figure-field.has-hover .sheet-row,
+        .figure-field.has-hover .sheet-meta {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .sheet-row {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: flex-start;
+            gap: 0;
+            padding: 16px 18px 0;
+        }
+
+        .sheet-index {
+            color: var(--signal-red);
+            font-family: "Courier New", Courier, monospace;
+            font-size: clamp(1.25rem, 2vw, 1.9rem);
+            font-weight: 900;
+            line-height: 0.82;
+        }
+
+        .sheet-title {
+            display: none;
+        }
+
+        .sheet-meta {
+            position: absolute;
+            z-index: 1;
+            display: block;
+            width: max-content;
+            max-width: calc(100% - 36px);
+            left: 18px;
+            bottom: 18px;
+            padding: 4px 6px;
+            background: var(--signal-ink);
+            color: var(--paper);
+            font-family: "Courier New", Courier, monospace;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+
+        .sheet-rule {
+            display: none;
+        }
+
+        .figure-field[data-active="vault"] {
+            --preview-left: 49vw;
+            --preview-top: 52vh;
+            --sheet-tilt: -2.6deg;
+            --artifact-gray: 0;
+            --artifact-sepia: 0;
+            --artifact-saturation: 0.98;
+            --artifact-hue: 0deg;
+            --artifact-contrast: 1.12;
+            --artifact-opacity: 0.98;
+            --artifact-overlay-opacity: 0.14;
+            --artifact-tint: linear-gradient(90deg, rgba(255, 253, 245, 0.02), rgba(0, 216, 255, 0.08));
+            --artifact-image: url("assets/images/projects/preview-vault.png");
+            --artifact-media-size: 148% auto;
+            --artifact-position: center;
+            --artifact-mask:
+                linear-gradient(90deg, transparent 0 58%, rgba(255, 50, 31, 0.24) 58% 58.8%, transparent 58.8%),
+                linear-gradient(135deg, rgba(255, 253, 245, 0.05), rgba(0, 216, 255, 0.11));
+        }
+
+        .figure-field[data-active="library"] {
+            --preview-left: 45vw;
+            --preview-top: 53vh;
+            --sheet-tilt: 2.6deg;
+            --artifact-gray: 0;
+            --artifact-sepia: 0;
+            --artifact-saturation: 0.98;
+            --artifact-hue: 0deg;
+            --artifact-contrast: 1.12;
+            --artifact-opacity: 0.98;
+            --artifact-overlay-opacity: 0.13;
+            --artifact-tint: linear-gradient(90deg, rgba(255, 253, 245, 0.02), rgba(0, 216, 255, 0.08));
+            --artifact-image: url("assets/images/projects/preview-library.png");
+            --artifact-media-size: 112% auto;
+            --artifact-position: center;
+            --artifact-mask:
+                linear-gradient(90deg, transparent 0 45%, rgba(255, 50, 31, 0.34) 45% 46.2%, transparent 46.2%),
+                linear-gradient(135deg, rgba(255, 253, 245, 0.06), rgba(0, 216, 255, 0.16));
+        }
+
+        .figure-field[data-active="mind"] {
+            --preview-left: 50vw;
+            --preview-top: 51vh;
+            --sheet-tilt: -1.4deg;
+            --artifact-gray: 0;
+            --artifact-sepia: 0;
+            --artifact-saturation: 1;
+            --artifact-hue: 0deg;
+            --artifact-contrast: 1.1;
+            --artifact-opacity: 0.98;
+            --artifact-overlay-opacity: 0.14;
+            --artifact-tint: linear-gradient(90deg, rgba(255, 253, 245, 0.02), rgba(0, 216, 255, 0.08));
+            --artifact-image: url("assets/images/projects/preview-mind.png");
+            --artifact-media-size: 112% auto;
+            --artifact-position: center 43%;
+            --artifact-mask:
+                linear-gradient(90deg, transparent 0 46%, rgba(255, 50, 31, 0.24) 46% 46.9%, transparent 46.9%),
+                linear-gradient(135deg, rgba(0, 216, 255, 0.11), rgba(255, 253, 245, 0.04));
+        }
+
+        .figure-field[data-active="swag"] {
+            --preview-left: 50vw;
+            --preview-top: 50vh;
+            --sheet-tilt: 2deg;
+            --artifact-gray: 0;
+            --artifact-sepia: 0;
+            --artifact-saturation: 1;
+            --artifact-hue: 0deg;
+            --artifact-contrast: 1.1;
+            --artifact-opacity: 0.98;
+            --artifact-overlay-opacity: 0.12;
+            --artifact-tint: linear-gradient(135deg, rgba(255, 253, 245, 0.02), rgba(0, 216, 255, 0.09));
+            --artifact-image: url("assets/images/projects/preview-swag.png");
+            --artifact-media-size: 108% auto;
+            --artifact-position: center;
+            --artifact-mask:
+                linear-gradient(90deg, transparent 0 63%, rgba(255, 50, 31, 0.32) 63% 64%, transparent 64%),
+                linear-gradient(135deg, rgba(0, 216, 255, 0.16), rgba(255, 253, 245, 0.08));
+        }
+
+        .figure-field[data-active="half"] {
+            --preview-left: 50vw;
+            --preview-top: 43vh;
+            --sheet-tilt: -2.2deg;
+            --artifact-gray: 0;
+            --artifact-sepia: 0;
+            --artifact-saturation: 1.04;
+            --artifact-hue: 0deg;
+            --artifact-contrast: 1.12;
+            --artifact-opacity: 0.98;
+            --artifact-overlay-opacity: 0.12;
+            --artifact-tint: linear-gradient(135deg, rgba(255, 253, 245, 0.02), rgba(0, 216, 255, 0.1));
+            --artifact-image: url("assets/images/projects/preview-half.png");
+            --artifact-media-size: 114% auto;
+            --artifact-position: center 44%;
+            --artifact-mask:
+                linear-gradient(0deg, transparent 0 52%, rgba(22, 16, 13, 0.18) 52% 53%, transparent 53%),
+                linear-gradient(90deg, transparent 0 50%, rgba(255, 50, 31, 0.34) 50% 51%, transparent 51%);
+        }
+
         .project-node {
             position: absolute;
             z-index: 12;
@@ -197,26 +497,34 @@
             color: var(--blue);
             text-decoration: none;
             isolation: isolate;
+            transition: opacity 170ms ease, filter 170ms ease;
         }
 
         .project-node.vault {
             left: 6vw;
-            top: 16vh;
+            top: 13vh;
         }
 
         .project-node.library {
             right: 7vw;
-            top: 21vh;
+            top: 16vh;
         }
 
         .project-node.mind {
-            right: 13vw;
-            bottom: 13vh;
+            right: 7vw;
+            bottom: 8vh;
         }
 
         .project-node.swag {
-            left: 15vw;
-            bottom: 11vh;
+            left: 7vw;
+            bottom: 8vh;
+        }
+
+        .project-node.half {
+            left: 50%;
+            top: 62vh;
+            bottom: auto;
+            transform: translateX(-50%);
         }
 
         .node-label {
@@ -243,6 +551,7 @@
             letter-spacing: 0.015em;
             text-transform: uppercase;
             white-space: nowrap;
+            transition: color 150ms ease, transform 190ms cubic-bezier(0.2, 0.8, 0.2, 1), text-shadow 190ms ease;
         }
 
         .node-title::before {
@@ -250,8 +559,8 @@
             position: absolute;
             inset: 0.06em -0.02em 0.03em -0.02em;
             z-index: -1;
-            background: rgba(244, 235, 205, 0.94);
-            border: 1px solid rgba(6, 69, 158, 0.36);
+            background: rgba(255, 253, 245, 0.96);
+            border: 1px solid rgba(0, 71, 255, 0.42);
             transform: rotate(var(--label-tilt, -1deg));
         }
 
@@ -259,6 +568,18 @@
         .project-node:focus-visible,
         .project-node.is-active {
             outline: none;
+        }
+
+        .figure-field.has-hover .project-node:not(.is-active) {
+            z-index: 3;
+            opacity: 0.1;
+            filter: blur(0.4px) contrast(0.7);
+        }
+
+        .figure-field.has-hover .project-node.is-active {
+            z-index: 16;
+            opacity: 1;
+            filter: none;
         }
 
         .project-node:hover .node-label,
@@ -287,6 +608,8 @@
             text-decoration: underline;
             text-decoration-thickness: 0.06em;
             text-underline-offset: 0.1em;
+            transform: translate(-5px, -5px) scale(1.035);
+            text-shadow: 10px 10px 0 rgba(255, 50, 31, 0.28);
         }
 
         .project-node.vault {
@@ -302,11 +625,20 @@
         }
 
         .project-node.mind .node-title {
-            font-size: clamp(3rem, 5.8vw, 6.35rem);
+            font-size: clamp(2.65rem, 4.8vw, 5.25rem);
+            word-spacing: 0.06em;
         }
 
         .project-node.swag {
             --label-tilt: -0.7deg;
+        }
+
+        .project-node.half {
+            --label-tilt: 1deg;
+        }
+
+        .project-node.half .node-title {
+            font-size: clamp(2.85rem, 5vw, 5.6rem);
         }
 
         @media (max-width: 900px) {
@@ -329,7 +661,7 @@
             }
 
             .figure-field {
-                min-height: calc(100svh - 44px);
+                min-height: calc(118svh - 44px);
             }
 
             .subject {
@@ -358,6 +690,52 @@
                 transform: scaleX(-1) rotate(7deg);
             }
 
+            .foldout-spine {
+                left: -28vw;
+                right: -30vw;
+                top: 51%;
+                height: 55vh;
+                transform: translateY(-50%) rotate(-7deg);
+                opacity: 0.34;
+            }
+
+            .video-raster {
+                left: 55vw;
+                top: 51vh;
+                width: 86vw;
+                height: 48vh;
+                opacity: 0.34;
+                transform: translate(-50%, -50%) rotate(3deg);
+            }
+
+            .active-sheet {
+                left: 52vw;
+                top: 52vh;
+                width: min(86vw, 360px);
+                height: 42vh;
+                box-shadow: 10px 13px 0 rgba(22, 16, 13, 0.12);
+            }
+
+            .sheet-row {
+                display: none;
+            }
+
+            .sheet-index {
+                font-size: 1rem;
+            }
+
+            .sheet-title {
+                font-size: 2.6rem;
+            }
+
+            .sheet-meta {
+                display: none;
+            }
+
+            .sheet-rule {
+                display: none;
+            }
+
             .project-node {
                 width: max-content;
                 max-width: calc(100vw - 32px);
@@ -365,24 +743,34 @@
 
             .project-node.vault {
                 left: 7vw;
-                top: 14vh;
+                top: 10vh;
             }
 
             .project-node.library {
-                left: 18vw;
+                left: 22vw;
                 right: auto;
-                top: 34vh;
+                top: 28vh;
             }
 
             .project-node.mind {
-                left: 7vw;
+                left: 6vw;
                 right: auto;
-                bottom: 29vh;
+                bottom: auto;
+                top: 49vh;
             }
 
             .project-node.swag {
-                left: 22vw;
-                bottom: 10vh;
+                left: 10vw;
+                bottom: auto;
+                top: 82vh;
+            }
+
+            .project-node.half {
+                left: 72vw;
+                top: auto;
+                bottom: auto;
+                top: 64vh;
+                transform: translateX(-50%);
             }
 
             .node-label {
@@ -398,11 +786,19 @@
             .project-node.mind .node-title {
                 font-size: clamp(2rem, 9.7vw, 3.35rem);
             }
+
+            .project-node.half .node-title {
+                font-size: clamp(2rem, 9.5vw, 3.35rem);
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
             .pixel-field {
                 opacity: 0.48;
+            }
+
+            .active-sheet {
+                transition: none;
             }
         }
     </style>
@@ -419,7 +815,12 @@
             <a href="swag.html">swag</a>
         </nav>
 
-        <section class="figure-field" aria-label="Projects">
+        <section class="figure-field" data-active="vault" aria-label="Projects">
+            <div class="greiman-layer" aria-hidden="true">
+                <div class="foldout-spine"></div>
+                <div class="video-raster"></div>
+            </div>
+
             <img class="fold-fragment fragment-a" src="assets/images/projects/folded-mask.png" alt="">
             <img class="fold-fragment fragment-b" src="assets/images/projects/folded-mask.png" alt="">
             <img class="subject" src="assets/images/projects/dark-figure.png" alt="">
@@ -430,7 +831,16 @@
                 <path class="parametric soft-curve" id="tertiaryCurve"></path>
             </svg>
 
-            <a class="project-node vault is-active" data-project="vault" href="https://vault.drebaglioni.com" target="_blank" rel="noopener noreferrer">
+            <div class="active-sheet" id="activeSheet" aria-hidden="true">
+                <div class="sheet-row">
+                    <span class="sheet-index" id="sheetIndex">01</span>
+                    <span class="sheet-title" id="sheetTitle">The Vault</span>
+                </div>
+                <span class="sheet-meta" id="sheetMeta">private archive / vault.drebaglioni.com</span>
+                <span class="sheet-rule"></span>
+            </div>
+
+            <a class="project-node vault" data-project="vault" href="https://vault.drebaglioni.com" target="_blank" rel="noopener noreferrer">
                 <span class="node-label">vault.drebaglioni.com</span><br>
                 <span class="node-title">The Vault</span>
             </a>
@@ -449,23 +859,33 @@
                 <span class="node-label">swag.html</span><br>
                 <span class="node-title">Swag</span>
             </a>
+
+            <a class="project-node half" data-project="half" href="https://sf-half-course-atlas.a-baglioni.chatgpt.site" target="_blank" rel="noopener noreferrer" aria-label="Open SF Half project">
+                <span class="node-label">course atlas</span><br>
+                <span class="node-title">SF Half</span>
+            </a>
         </section>
     </main>
 
     <script>
         const nodes = Array.from(document.querySelectorAll(".project-node"));
+        const figureField = document.querySelector(".figure-field");
         const canvas = document.getElementById("pixelField");
         const ctx = canvas.getContext("2d");
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
         const primaryCurve = document.getElementById("primaryCurve");
         const secondaryCurve = document.getElementById("secondaryCurve");
         const tertiaryCurve = document.getElementById("tertiaryCurve");
+        const sheetIndex = document.getElementById("sheetIndex");
+        const sheetTitle = document.getElementById("sheetTitle");
+        const sheetMeta = document.getElementById("sheetMeta");
 
         const projectState = {
-            vault: { x: 0.18, y: 0.2, phase: 0 },
-            library: { x: 0.52, y: 0.43, phase: Math.PI * 0.62 },
-            mind: { x: 0.72, y: 0.72, phase: Math.PI * 1.58 },
-            swag: { x: 0.25, y: 0.77, phase: Math.PI * 1.14 }
+            vault: { x: 0.18, y: 0.18, phase: 0, index: "01", title: "The Vault", meta: "private archive / vault.drebaglioni.com" },
+            library: { x: 0.82, y: 0.2, phase: Math.PI * 0.62, index: "02", title: "Library", meta: "reading index / other.html" },
+            mind: { x: 0.82, y: 0.78, phase: Math.PI * 1.58, index: "03", title: "My Actual Mind", meta: "private search / mind.drebaglioni.com" },
+            swag: { x: 0.2, y: 0.78, phase: Math.PI * 1.14, index: "04", title: "Swag", meta: "object study / swag.html" },
+            half: { x: 0.5, y: 0.74, phase: Math.PI * 1.86, index: "05", title: "SF Half", meta: "course atlas / sf-half-course-atlas" }
         };
 
         const pixelState = {
@@ -474,6 +894,8 @@
             height: 0,
             dpr: 1,
             frame: 0,
+            pulse: 0,
+            hovering: false,
             points: []
         };
 
@@ -490,7 +912,7 @@
         }
 
         function buildPoints() {
-            const count = Math.floor(Math.min(1180, Math.max(520, pixelState.width * pixelState.height / 1800)));
+            const count = Math.floor(Math.min(3400, Math.max(1100, pixelState.width * pixelState.height / 720)));
             pixelState.points = [];
 
             for (let i = 0; i < count; i += 1) {
@@ -520,38 +942,52 @@
             return path.trim();
         }
 
-        function drawDiagramPaths() {
-            primaryCurve.setAttribute("d", buildParametricPath(50, 50, 37, 22, Math.PI / 5, 1.08, 280));
-            secondaryCurve.setAttribute("d", buildParametricPath(50, 50, 31, 17, Math.PI * 0.62, 1.08, 280));
-            tertiaryCurve.setAttribute("d", buildParametricPath(50, 50, 43, 27, Math.PI * 1.14, 1.08, 280));
+        function drawDiagramPaths(projectKey = pixelState.active) {
+            const project = projectState[projectKey] || projectState.vault;
+            const dx = (project.x - 0.5) * 16;
+            const dy = (project.y - 0.5) * 12;
+            primaryCurve.setAttribute("d", buildParametricPath(50 + dx, 50 + dy, 37, 22, project.phase + Math.PI / 5, 1.08, 280));
+            secondaryCurve.setAttribute("d", buildParametricPath(50 + dx * 0.42, 50 + dy * 0.42, 31, 17, project.phase + Math.PI * 0.62, 1.08, 280));
+            tertiaryCurve.setAttribute("d", buildParametricPath(50 - dx * 0.3, 50 - dy * 0.3, 43, 27, project.phase + Math.PI * 1.14, 1.08, 280));
         }
 
         function drawPixels() {
             ctx.clearRect(0, 0, pixelState.width, pixelState.height);
-            ctx.fillStyle = "#06459e";
 
             const target = projectState[pixelState.active] || projectState.vault;
             const time = reducedMotion.matches ? 0 : pixelState.frame * 0.02;
+            const pulse = reducedMotion.matches ? 0 : pixelState.pulse;
+            const hoverBoost = pixelState.hovering && !reducedMotion.matches ? 1 : 0;
+            const pull = 0.06 + hoverBoost * 0.22 + pulse * 0.18;
+            const jitter = 0.82 + hoverBoost * 1.4 + pulse * 1.6;
 
             pixelState.points.forEach((point, index) => {
                 const phaseWave = Math.sin(point.p * 3 + target.phase + time * point.v);
-                const pullX = (target.x - point.x) * 0.08;
-                const pullY = (target.y - point.y) * 0.08;
-                const jitterX = phaseWave * 0.012;
-                const jitterY = Math.cos(point.p * 2 + target.phase + time * 0.7) * 0.014;
+                const pullX = (target.x - point.x) * pull;
+                const pullY = (target.y - point.y) * pull;
+                const jitterX = phaseWave * 0.014 * jitter;
+                const jitterY = Math.cos(point.p * 2 + target.phase + time * 0.7) * 0.016 * jitter;
                 const x = (point.x + pullX + jitterX) * pixelState.width;
                 const y = (point.y + pullY + jitterY) * pixelState.height;
-                const snap = index % 7 === 0 ? 8 : 4;
+                const snap = hoverBoost && index % 3 === 0 ? 3 : index % 7 === 0 ? 8 : 4;
                 const px = Math.round(x / snap) * snap;
                 const py = Math.round(y / snap) * snap;
+                ctx.fillStyle = index % 29 === 0 && hoverBoost
+                    ? "#ff3d33"
+                    : index % 37 === 0 && hoverBoost
+                        ? "#13b9d6"
+                        : "#06459e";
 
-                if (index % 11 === 0) {
-                    ctx.fillRect(px, py, point.s * 5, point.s);
+                if (hoverBoost && index % 11 === 0) {
+                    ctx.fillRect(px, py, point.s * (8 + pulse * 10), Math.max(1, point.s + 1));
+                } else if (hoverBoost && index % 17 === 0) {
+                    ctx.fillRect(px - 9, py, point.s * 12, Math.max(1, point.s - 1));
                 } else {
                     ctx.fillRect(px, py, point.s, point.s);
                 }
             });
 
+            pixelState.pulse *= 0.9;
             pixelState.frame += 1;
             window.requestAnimationFrame(drawPixels);
         }
@@ -563,14 +999,36 @@
             }
 
             pixelState.active = projectKey;
+            pixelState.pulse = reducedMotion.matches ? 0 : 1;
+            pixelState.hovering = true;
+            figureField.dataset.active = projectKey;
+            figureField.classList.add("has-hover");
+            sheetIndex.textContent = project.index;
+            sheetTitle.textContent = project.title;
+            sheetMeta.textContent = project.meta;
+            drawDiagramPaths(projectKey);
             nodes.forEach((node) => {
                 node.classList.toggle("is-active", node.dataset.project === projectKey);
             });
         }
 
+        function clearActive() {
+            pixelState.hovering = false;
+            figureField.classList.remove("has-hover");
+            nodes.forEach((node) => node.classList.remove("is-active"));
+        }
+
         nodes.forEach((node) => {
             node.addEventListener("mouseenter", () => setActive(node.dataset.project));
             node.addEventListener("focus", () => setActive(node.dataset.project));
+            node.addEventListener("mouseleave", clearActive);
+            node.addEventListener("blur", () => {
+                window.setTimeout(() => {
+                    if (!document.activeElement || !document.activeElement.classList.contains("project-node")) {
+                        clearActive();
+                    }
+                }, 0);
+            });
         });
 
         window.addEventListener("resize", resizeCanvas, { passive: true });
