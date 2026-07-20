@@ -241,6 +241,25 @@
     "isbn": "9780316229265"
   },
   {
+    "id": "is-human-data-enough-2025",
+    "title": "Is Human Data Enough?",
+    "author": "Google DeepMind: The Podcast",
+    "format": "podcast",
+    "subjects": [
+      "ai",
+      "reinforcement-learning",
+      "podcast"
+    ],
+    "year": 2025,
+    "status": "completed",
+    "finished": "2026-4-30",
+    "rating": 2,
+    "url": "https://www.youtube.com/watch?v=zzXyPGEtseI&list=PLqYmG7hTraZBiUr6_Qf8YTS2Oqy3OGZEj&index=2",
+    "notes": "David Silver on the 'era of experience' in RL",
+    "cover_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9pYaB6m8pbUm7hUV-z4_DW6f3hP34NIj36A&s",
+    "cover_source": "manual"
+  },
+  {
     "id": "strange-buildings-2026",
     "title": "Strange Buildings",
     "author": "Uketsu",
@@ -299,6 +318,42 @@
     "cover_image": "https://m.media-amazon.com/images/I/81I56FbOHbL._SY385_.jpg",
     "cover_source": "manual",
     "isbn": "9780063433083"
+  },
+  {
+    "id": "core-views-on-ai-safety-2023",
+    "title": "Core Views on AI Safety",
+    "author": "Anthropic",
+    "format": "article",
+    "subjects": [
+      "ai",
+      "ai-safety",
+      "alignment",
+      "anthropic"
+    ],
+    "year": 2023,
+    "status": "completed",
+    "finished": "2026-05-01",
+    "rating": 2,
+    "url": "https://www.anthropic.com/news/core-views-on-ai-safety",
+    "notes": "Anthropic worldview on rapid AI progress, alignment risk, and empirically grounded safety research"
+  },
+  {
+    "id": "a-small-number-of-samples-can-poison-llms-of-any-size-2026",
+    "title": "A small number of samples can poison LLMs of any size",
+    "author": "Anthropic",
+    "format": "article",
+    "subjects": [
+      "ai",
+      "ai-safety",
+      "data-poisoning",
+      "research"
+    ],
+    "year": 2026,
+    "status": "completed",
+    "finished": "2026-05-01",
+    "rating": 2,
+    "url": "https://www.anthropic.com/research/small-samples-poison",
+    "notes": "Joint study w/ UK AISI & Turing Institute: 250 malicious docs can backdoor LLMs of any size \u2014 absolute count matters, not percentage of training data"
   },
   {
     "id": "world-models-computing-the-uncomputable-2026",
@@ -388,10 +443,47 @@
     "finished": "2025-12-03",
     "rating": 3,
     "url": "https://openlibrary.org/works/OL36433603W",
-    "notes": "Based in Barcelona, fantasy book about authors and books and adventure; rec by Kirk",
+    "notes": "Based in Barcelona, fantasy book about authors and books and adventure; rec by David",
     "cover_image": "https://m.media-amazon.com/images/I/913DdP7RflL._AC_UF1000,1000_QL80_.jpg",
     "cover_source": "manual",
     "isbn": "9781439569740"
+  },
+  {
+    "id": "when-the-going-was-good-2025",
+    "title": "When the Going Was Good",
+    "author": "Graydon Carter",
+    "format": "book",
+    "subjects": [
+      "biography"
+    ],
+    "year": 2025,
+    "status": "completed",
+    "finished": "2025-07-31",
+    "rating": 2,
+    "url": "https://openlibrary.org/works/OL42403663W",
+    "notes": "Recommended by Taylor \u2014 Graydon was the editor of Vanity Fair. Makes you want to (sometimes) start a magazine",
+    "cover_image": "https://m.media-amazon.com/images/I/714o1jrx4XL._AC_UF1000,1000_QL80_.jpg",
+    "cover_source": "manual",
+    "isbn": "9780593655900"
+  },
+  {
+    "id": "permutation-city-2025",
+    "title": "Permutation City",
+    "author": "Greg Egan",
+    "format": "book",
+    "subjects": [
+      "philosophy",
+      "sci-fi"
+    ],
+    "year": 2025,
+    "status": "completed",
+    "finished": "2025-07-28",
+    "rating": 4,
+    "url": "https://openlibrary.org/works/OL115336W",
+    "notes": "Very technical sci fi \u2014 what does it mean to be human when consciousness can be copied over and over again. Hard to follow but i think worth it.",
+    "cover_image": "https://m.media-amazon.com/images/I/71NKAer2BML._AC_UF1000,1000_QL80_.jpg",
+    "cover_source": "manual",
+    "isbn": "9780061054815"
   },
   {
     "id": "library-at-mt-char-2025",
@@ -467,6 +559,25 @@
     "cover_image": "https://covers.openlibrary.org/b/isbn/9780316452496-M.jpg?default=false",
     "cover_source": "manual",
     "isbn": "9780316452496"
+  },
+  {
+    "id": "the-orphan-master-s-son-2024",
+    "title": "The Orphan Master\u2019s Son",
+    "author": "Adam Johnson",
+    "format": "book",
+    "subjects": [
+      "hisorical-fiction",
+      "historical-fiction"
+    ],
+    "year": 2024,
+    "status": "completed",
+    "finished": "2024-05-24",
+    "rating": 4,
+    "url": "https://openlibrary.org/works/OL16419990W",
+    "notes": "Fictional book about the world seen by North Koreans. Wild perspective.",
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780552778251-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780552778251"
   },
   {
     "id": "the-strange-library-2024",
@@ -1072,24 +1183,6 @@
     "isbn": "9780141032139"
   },
   {
-    "id": "a-small-number-of-samples-can-poison-llms-of-any-size-2026",
-    "title": "A small number of samples can poison LLMs of any size",
-    "author": "Anthropic",
-    "format": "article",
-    "subjects": [
-      "ai",
-      "ai-safety",
-      "data-poisoning",
-      "research"
-    ],
-    "year": 2026,
-    "status": "queued",
-    "finished": null,
-    "rating": null,
-    "url": "https://www.anthropic.com/research/small-samples-poison",
-    "notes": "Joint study w/ UK AISI & Turing Institute: 250 malicious docs can backdoor LLMs of any size \u2014 absolute count matters, not percentage of training data"
-  },
-  {
     "id": "beloved-1987",
     "title": "Beloved",
     "author": "Toni Morrison",
@@ -1138,24 +1231,6 @@
     "cover_image": "https://covers.openlibrary.org/b/isbn/9780385352116-M.jpg?default=false",
     "cover_source": "manual",
     "isbn": "9780385352116"
-  },
-  {
-    "id": "core-views-on-ai-safety-2023",
-    "title": "Core Views on AI Safety",
-    "author": "Anthropic",
-    "format": "article",
-    "subjects": [
-      "ai",
-      "ai-safety",
-      "alignment",
-      "anthropic"
-    ],
-    "year": 2023,
-    "status": "queued",
-    "finished": null,
-    "rating": null,
-    "url": "https://www.anthropic.com/news/core-views-on-ai-safety",
-    "notes": "Anthropic worldview on rapid AI progress, alignment risk, and empirically grounded safety research"
   },
   {
     "id": "emissary-2018",
@@ -1239,25 +1314,6 @@
     "cover_image": "https://covers.openlibrary.org/b/isbn/9780385494786-M.jpg?default=false",
     "cover_source": "manual",
     "isbn": "9780385494786"
-  },
-  {
-    "id": "is-human-data-enough-2025",
-    "title": "Is Human Data Enough?",
-    "author": "Google DeepMind: The Podcast",
-    "format": "podcast",
-    "subjects": [
-      "ai",
-      "reinforcement-learning",
-      "podcast"
-    ],
-    "year": 2025,
-    "status": "queued",
-    "finished": null,
-    "rating": 2,
-    "url": "https://www.youtube.com/watch?v=zzXyPGEtseI&list=PLqYmG7hTraZBiUr6_Qf8YTS2Oqy3OGZEj&index=2",
-    "notes": "David Silver on the 'era of experience' in RL",
-    "cover_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9pYaB6m8pbUm7hUV-z4_DW6f3hP34NIj36A&s",
-    "cover_source": "manual"
   },
   {
     "id": "jonathan-ledgard-believes-imagination-could-save-the-world-2015",
@@ -1410,23 +1466,22 @@
     "notes": "ArXiv cs.CL preprint introducing natural-language agent harnesses and the Intelligent Harness Runtime."
   },
   {
-    "id": "permutation-city-2025",
-    "title": "Permutation City",
-    "author": "Greg Egan",
+    "id": "stormlight-chronicles-wind-and-truth-2024",
+    "title": "Stormlight Chronicles: Wind and Truth",
+    "author": "Brandon Sanderson",
     "format": "book",
     "subjects": [
-      "philosophy",
-      "sci-fi"
+      "fiction"
     ],
-    "year": 2025,
+    "year": 2024,
     "status": "queued",
-    "finished": "2025-07-28",
-    "rating": 4,
-    "url": "https://openlibrary.org/works/OL115336W",
-    "notes": "Very technical sci fi \u2014 what does it mean to be human when consciousness can be copied over and over again. Hard to follow but i think worth it.",
-    "cover_image": "https://m.media-amazon.com/images/I/71NKAer2BML._AC_UF1000,1000_QL80_.jpg",
+    "finished": null,
+    "rating": null,
+    "url": "https://openlibrary.org/works/OL37577930W",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9781250319180-M.jpg?default=false",
     "cover_source": "manual",
-    "isbn": "9780061054815"
+    "isbn": "9781250319180"
   },
   {
     "id": "sula-1973",
@@ -1536,25 +1591,6 @@
     "isbn": "9781953953520"
   },
   {
-    "id": "the-orphan-master-s-son-2024",
-    "title": "The Orphan Master\u2019s Son",
-    "author": "Adam Johnson",
-    "format": "book",
-    "subjects": [
-      "hisorical-fiction",
-      "historical-fiction"
-    ],
-    "year": 2024,
-    "status": "queued",
-    "finished": "2024-05-24",
-    "rating": 4,
-    "url": "https://openlibrary.org/works/OL16419990W",
-    "notes": "Fictional book about the world seen by North Koreans. Wild perspective.",
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780552778251-M.jpg?default=false",
-    "cover_source": "manual",
-    "isbn": "9780552778251"
-  },
-  {
     "id": "the-overstory-a-novel-2018",
     "title": "The Overstory: A Novel",
     "author": "Richard Powers",
@@ -1605,6 +1641,24 @@
     "isbn": "9780801868986"
   },
   {
+    "id": "the-world-a-family-history-of-humanity-2023",
+    "title": "The World: A Family History of Humanity",
+    "author": "Simon Sebag Montefiore",
+    "format": "book",
+    "subjects": [
+      "history"
+    ],
+    "year": 2023,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://openlibrary.org/works/OL34341039W",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780525659549-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780525659549"
+  },
+  {
     "id": "type-matters-2012",
     "title": "Type Matters",
     "author": "Jim Williams",
@@ -1619,24 +1673,6 @@
     "cover_image": "https://covers.openlibrary.org/b/isbn/9781858945675-M.jpg?default=false",
     "cover_source": "manual",
     "isbn": "9781858945675"
-  },
-  {
-    "id": "when-the-going-was-good-2025",
-    "title": "When the Going Was Good",
-    "author": "Graydon Carter",
-    "format": "book",
-    "subjects": [
-      "biography"
-    ],
-    "year": 2025,
-    "status": "queued",
-    "finished": "2025-07-31",
-    "rating": 2,
-    "url": "https://openlibrary.org/works/OL42403663W",
-    "notes": "Recommended by Taylor \u2014 Graydon was the editor of Vanity Fair. Makes you want to (sometimes) start a magazine",
-    "cover_image": "https://m.media-amazon.com/images/I/714o1jrx4XL._AC_UF1000,1000_QL80_.jpg",
-    "cover_source": "manual",
-    "isbn": "9780593655900"
   },
   {
     "id": "why-we-age-and-why-we-don-t-have-to-2019",
