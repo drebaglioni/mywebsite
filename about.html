@@ -6,10 +6,14 @@
     <title>About</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="assets/images/about/home-sanfrancisco.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/about-collage-light/about-collage-001.jpg">
+    <link rel="preload" as="image" href="assets/about-collage-light/about-collage-002.jpg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;700&display=swap">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;700&display=swap');
-
         html {
             background: #050505;
         }
@@ -118,6 +122,119 @@
             background-position: 0 0, 3px 5px;
             background-size: 8px 8px, 11px 11px;
             mix-blend-mode: overlay;
+        }
+
+        .edge-pan-cues {
+            position: fixed;
+            inset: 0;
+            z-index: 760;
+            pointer-events: none;
+            opacity: 0.56;
+            transition: opacity 180ms ease;
+        }
+
+        .edge-cue {
+            position: absolute;
+            display: block;
+            width: clamp(32px, 4vw, 54px);
+            height: clamp(86px, 15vh, 164px);
+            background:
+                radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.74) 0 1px, transparent 1.8px),
+                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.09) 0 1px, transparent 1px 7px),
+                linear-gradient(135deg, rgba(255, 248, 223, 0.98), rgba(230, 255, 0, 0.84));
+            box-shadow:
+                0 1px 0 rgba(255, 255, 255, 0.64) inset,
+                5px 6px 0 rgba(5, 5, 5, 0.72),
+                0 0 0 1px rgba(5, 5, 5, 0.3);
+            clip-path: polygon(0 8%, 86% 0, 100% 20%, 88% 42%, 100% 64%, 82% 100%, 0 92%);
+            transform-origin: center;
+            transition: opacity 160ms ease, transform 160ms ease, background 160ms ease;
+        }
+
+        .edge-cue::after {
+            content: "";
+            position: absolute;
+            inset: 50% auto auto 50%;
+            width: 16px;
+            height: 16px;
+            border: solid #050505;
+            border-width: 0 4px 4px 0;
+            transform: translate(-64%, -50%) rotate(135deg);
+            opacity: 0.96;
+        }
+
+        .edge-cue-left {
+            left: 0;
+            top: 50%;
+            transform: translate(-34%, -50%) rotate(-2deg);
+        }
+
+        .edge-cue-right {
+            right: 0;
+            top: 50%;
+            transform: translate(34%, -50%) rotate(2deg) scaleX(-1);
+        }
+
+        .edge-cue-top,
+        .edge-cue-bottom {
+            left: 50%;
+            width: clamp(84px, 14vw, 156px);
+            height: clamp(28px, 3.8vw, 46px);
+        }
+
+        .edge-cue-top {
+            top: 0;
+            transform: translate(-50%, -32%) rotate(1.5deg);
+        }
+
+        .edge-cue-bottom {
+            bottom: 0;
+            transform: translate(-50%, 32%) rotate(-1.5deg) scaleY(-1);
+        }
+
+        .edge-cue-top::after,
+        .edge-cue-bottom::after {
+            transform: translate(-50%, -68%) rotate(45deg);
+        }
+
+        body.is-edge-zone .edge-pan-cues {
+            opacity: 0.78;
+        }
+
+        body.is-edge-left .edge-cue-left {
+            opacity: 1;
+            transform: translate(-32%, -50%) rotate(-4deg);
+            background:
+                radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.78) 0 1px, transparent 1.8px),
+                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.1) 0 1px, transparent 1px 7px),
+                linear-gradient(135deg, #e6ff00, #fff8df);
+        }
+
+        body.is-edge-right .edge-cue-right {
+            opacity: 1;
+            transform: translate(32%, -50%) rotate(4deg) scaleX(-1);
+            background:
+                radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.78) 0 1px, transparent 1.8px),
+                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.1) 0 1px, transparent 1px 7px),
+                linear-gradient(135deg, #e6ff00, #fff8df);
+        }
+
+        body.is-edge-top .edge-cue-top {
+            opacity: 1;
+            transform: translate(-50%, -28%) rotate(3deg);
+            background:
+                radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.78) 0 1px, transparent 1.8px),
+                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.1) 0 1px, transparent 1px 7px),
+                linear-gradient(135deg, #e6ff00, #fff8df);
+        }
+
+        body.is-edge-bottom .edge-cue-bottom {
+            opacity: 1;
+            transform: translate(-50%, 28%) rotate(-3deg) scaleY(-1);
+            background:
+                radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.78) 0 1px, transparent 1.8px),
+                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.1) 0 1px, transparent 1px 7px),
+                linear-gradient(135deg, #e6ff00, #fff8df);
         }
 
         .about-collage-tile {
@@ -693,6 +810,16 @@
                     0 12px 24px rgba(5, 5, 5, 0.38);
             }
 
+            .edge-pan-cues {
+                opacity: 0.5;
+            }
+
+            .edge-cue-left,
+            .edge-cue-right {
+                width: 30px;
+                height: 110px;
+            }
+
             .psychedelic-field {
                 inset: -5vh -40vw;
                 width: 180vw;
@@ -792,6 +919,8 @@
         @media (prefers-reduced-motion: reduce) {
             .psychedelic-field,
             .image-orbit::before,
+            .edge-pan-cues,
+            .edge-cue,
             .index-item,
             .about-image {
                 transition: none;
@@ -803,6 +932,12 @@
 <body class="about-vector">
     <div class="field-backdrop" aria-hidden="true"></div>
     <div class="about-collage-field" id="aboutCollage" aria-hidden="true"></div>
+    <div class="edge-pan-cues" aria-hidden="true">
+        <span class="edge-cue edge-cue-left"></span>
+        <span class="edge-cue edge-cue-right"></span>
+        <span class="edge-cue edge-cue-top"></span>
+        <span class="edge-cue edge-cue-bottom"></span>
+    </div>
     <svg class="psychedelic-field" viewBox="0 0 1400 900" preserveAspectRatio="none" aria-hidden="true">
         <defs>
             <filter id="roughPrint">
@@ -1125,11 +1260,8 @@
         const collageImageCount = 81;
         const isSmallViewport = window.matchMedia('(max-width: 760px)').matches;
         const collageTileCount = isSmallViewport ? 116 : 196;
-        const initialCollageTileCount = isSmallViewport ? 48 : 64;
-        const initialCollageSourceCount = isSmallViewport ? 14 : 18;
-        const pointerMotion = isSmallViewport
-            ? { collageX: -76, collageY: -68, fieldX: -7, fieldY: -6 }
-            : { collageX: -116, collageY: -88, fieldX: -10, fieldY: -8 };
+        const initialCollageTileCount = isSmallViewport ? 30 : 44;
+        const initialCollageSourceCount = isSmallViewport ? 10 : 12;
         const desktopCoverageTiles = [
             [-31, -14, 48, -8], [4, -12, 48, 6], [39, -15, 50, -4], [74, -12, 48, 8], [109, -14, 50, -7],
             [-33, 9, 50, 7], [3, 10, 52, -5], [40, 8, 54, 4], [77, 10, 52, -8], [113, 9, 50, 6],
@@ -1149,7 +1281,7 @@
         ];
         const coverageTiles = isSmallViewport ? mobileCoverageTiles : desktopCoverageTiles;
         const collageSources = Array.from({ length: collageImageCount }, (_, index) => (
-            `assets/about-collage/about-collage-${String(index + 1).padStart(3, '0')}.webp`
+            `assets/about-collage-light/about-collage-${String(index + 1).padStart(3, '0')}.jpg`
         ));
         const collageClips = [
             'polygon(0 4%, 7% 0, 21% 3%, 36% 0, 54% 4%, 74% 1%, 100% 6%, 96% 28%, 100% 48%, 94% 72%, 98% 96%, 78% 100%, 60% 96%, 42% 100%, 22% 95%, 4% 100%, 0 78%, 3% 56%, 0 34%)',
@@ -1297,7 +1429,14 @@
             const random = seededRandom(0xAB0110);
             aboutCollage.replaceChildren();
             appendCollageTiles(0, initialCollageTileCount, random);
-            scheduleCollageRemainder(initialCollageTileCount, random);
+
+            const loadRemainder = () => scheduleCollageRemainder(initialCollageTileCount, random);
+            if (document.readyState === 'complete') {
+                loadRemainder();
+                return;
+            }
+
+            window.addEventListener('load', loadRemainder, { once: true });
         }
 
         const visuals = {
@@ -1340,9 +1479,11 @@
         };
 
         let activeVisualKey = null;
-        let pointerFrame = 0;
-        let pointerX = 0;
-        let pointerY = 0;
+        let edgeFrame = 0;
+        let edgeDriveX = 0;
+        let edgeDriveY = 0;
+        let panX = 0;
+        let panY = 0;
 
         function warmVisualImages() {
             Object.values(visuals).forEach((visual) => {
@@ -1399,16 +1540,80 @@
             item.addEventListener('pointerdown', activate, { passive: true });
         });
 
-        function applyPointerMotion() {
-            pointerFrame = 0;
+        function clamp(value, min, max) {
+            return Math.min(max, Math.max(min, value));
+        }
+
+        function getPanBounds() {
+            return {
+                x: Math.min(window.innerWidth * (isSmallViewport ? 0.3 : 0.26), isSmallViewport ? 180 : 320),
+                y: Math.min(window.innerHeight * (isSmallViewport ? 0.24 : 0.22), isSmallViewport ? 170 : 240)
+            };
+        }
+
+        function renderCollagePan() {
+            const bounds = getPanBounds();
+            panX = clamp(panX + edgeDriveX * 10.5, -bounds.x, bounds.x);
+            panY = clamp(panY + edgeDriveY * 8.5, -bounds.y, bounds.y);
 
             if (aboutCollage) {
-                aboutCollage.style.transform = `translate3d(${(pointerX * pointerMotion.collageX).toFixed(1)}px, ${(pointerY * pointerMotion.collageY).toFixed(1)}px, 0)`;
+                aboutCollage.style.transform = `translate3d(${panX.toFixed(1)}px, ${panY.toFixed(1)}px, 0)`;
+            }
+            if (psychedelicField) {
+                psychedelicField.style.transform = `translate3d(${(panX * 0.08).toFixed(1)}px, ${(panY * 0.08).toFixed(1)}px, 0)`;
             }
 
-            if (psychedelicField) {
-                psychedelicField.style.transform = `translate3d(${(pointerX * pointerMotion.fieldX).toFixed(1)}px, ${(pointerY * pointerMotion.fieldY).toFixed(1)}px, 0)`;
+            if (edgeDriveX || edgeDriveY) {
+                edgeFrame = window.requestAnimationFrame(renderCollagePan);
+                return;
             }
+
+            edgeFrame = 0;
+        }
+
+        function scheduleEdgePan() {
+            if (!edgeFrame) {
+                edgeFrame = window.requestAnimationFrame(renderCollagePan);
+            }
+        }
+
+        function setEdgeCueState(left, right, top, bottom) {
+            document.body.classList.toggle('is-edge-left', Boolean(left));
+            document.body.classList.toggle('is-edge-right', Boolean(right));
+            document.body.classList.toggle('is-edge-top', Boolean(top));
+            document.body.classList.toggle('is-edge-bottom', Boolean(bottom));
+            document.body.classList.toggle('is-edge-zone', Boolean(left || right || top || bottom));
+        }
+
+        function clearEdgeDrive() {
+            edgeDriveX = 0;
+            edgeDriveY = 0;
+            setEdgeCueState(0, 0, 0, 0);
+        }
+
+        function updateEdgeDrive(event) {
+            const edgeX = window.innerWidth * (isSmallViewport ? 0.18 : 0.14);
+            const edgeY = window.innerHeight * (isSmallViewport ? 0.18 : 0.14);
+            const left = event.clientX < edgeX ? 1 - event.clientX / edgeX : 0;
+            const right = event.clientX > window.innerWidth - edgeX
+                ? (event.clientX - (window.innerWidth - edgeX)) / edgeX
+                : 0;
+            const top = event.clientY < edgeY ? 1 - event.clientY / edgeY : 0;
+            const bottom = event.clientY > window.innerHeight - edgeY
+                ? (event.clientY - (window.innerHeight - edgeY)) / edgeY
+                : 0;
+            const wasMoving = Boolean(edgeDriveX || edgeDriveY);
+            const nextDriveX = left - right;
+            const nextDriveY = top - bottom;
+
+            if (!wasMoving && !nextDriveX && !nextDriveY) {
+                return;
+            }
+
+            edgeDriveX = nextDriveX;
+            edgeDriveY = nextDriveY;
+            setEdgeCueState(left, right, top, bottom);
+            scheduleEdgePan();
         }
 
         document.addEventListener('pointermove', (event) => {
@@ -1416,11 +1621,23 @@
                 return;
             }
 
-            pointerX = (event.clientX / window.innerWidth - 0.5) * 2;
-            pointerY = (event.clientY / window.innerHeight - 0.5) * 2;
+            updateEdgeDrive(event);
+        }, { passive: true });
 
-            if (!pointerFrame) {
-                pointerFrame = window.requestAnimationFrame(applyPointerMotion);
+        document.addEventListener('pointerleave', clearEdgeDrive, { passive: true });
+
+        window.addEventListener('blur', clearEdgeDrive);
+
+        window.addEventListener('resize', () => {
+            const bounds = getPanBounds();
+            panX = clamp(panX, -bounds.x, bounds.x);
+            panY = clamp(panY, -bounds.y, bounds.y);
+
+            if (aboutCollage) {
+                aboutCollage.style.transform = `translate3d(${panX.toFixed(1)}px, ${panY.toFixed(1)}px, 0)`;
+            }
+            if (psychedelicField) {
+                psychedelicField.style.transform = `translate3d(${(panX * 0.08).toFixed(1)}px, ${(panY * 0.08).toFixed(1)}px, 0)`;
             }
         }, { passive: true });
 
