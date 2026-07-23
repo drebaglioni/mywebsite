@@ -1,0 +1,595 @@
+[
+  {
+    "file": "assets/about-collage/about-collage-001.webp",
+    "title": "On Seeing Through and Unseeing: The Hacker Mindset",
+    "kind": "link",
+    "sourceLabel": "gwern.net",
+    "bytes": 36242
+  },
+  {
+    "file": "assets/about-collage/about-collage-002.webp",
+    "title": "Eadweard Muybridge Motion Study of a Running Cat",
+    "kind": "image",
+    "sourceLabel": "substack.com",
+    "bytes": 39070
+  },
+  {
+    "file": "assets/about-collage/about-collage-003.webp",
+    "title": "Poolside Scene in the Style of David Hockney",
+    "kind": "image",
+    "sourceLabel": "substack.com",
+    "bytes": 67500
+  },
+  {
+    "file": "assets/about-collage/about-collage-004.webp",
+    "title": "Sketchbook Page with Ink Drawings",
+    "kind": "image",
+    "sourceLabel": "substack.com",
+    "bytes": 73952
+  },
+  {
+    "file": "assets/about-collage/about-collage-005.webp",
+    "title": "Korean Palace Garden with Tiger Ice Skating Scene",
+    "kind": "image",
+    "sourceLabel": "substack.com",
+    "bytes": 140892
+  },
+  {
+    "file": "assets/about-collage/about-collage-006.webp",
+    "title": "Blue City Rooftop Pool",
+    "kind": "image",
+    "sourceLabel": "substack.com",
+    "bytes": 144510
+  },
+  {
+    "file": "assets/about-collage/about-collage-007.webp",
+    "title": "Blue and Grey Two-Tone Oversized Sweatshirt",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 128312,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-008.webp",
+    "title": "Eclectic Home Library with Bold Art and Houndstooth Seating",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 231072,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-009.webp",
+    "title": "Why Nous Portal? - Marketing/Feature Overview Page",
+    "kind": "image",
+    "sourceLabel": "saved item",
+    "bytes": 47268
+  },
+  {
+    "file": "assets/about-collage/about-collage-010.webp",
+    "title": "Interactive Architectural Design Explorations",
+    "kind": "link",
+    "sourceLabel": "x.com",
+    "bytes": 49426,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-011.webp",
+    "title": "Humanity's Last Machine",
+    "kind": "link",
+    "sourceLabel": "humanityslastmachine.com",
+    "bytes": 63520
+  },
+  {
+    "file": "assets/about-collage/about-collage-012.webp",
+    "title": "Gallery — A few of my favorite things",
+    "kind": "link",
+    "sourceLabel": "naturalselection.so",
+    "bytes": 33022
+  },
+  {
+    "file": "assets/about-collage/about-collage-013.webp",
+    "title": "Shape of Minds",
+    "kind": "link",
+    "sourceLabel": "evebouffard.com",
+    "bytes": 17074
+  },
+  {
+    "file": "assets/about-collage/about-collage-014.webp",
+    "title": "Red's Journey #06 – I Swear I Saw Something Under the Truck!",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 57220,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-015.webp",
+    "title": "Unique Hoodies I've Found!",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 21930,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-016.webp",
+    "title": "Football Icons: Illustrated Portraits of Spain & Argentina",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 14088,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-017.webp",
+    "title": "Who Are You Today?",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 4824
+  },
+  {
+    "file": "assets/about-collage/about-collage-018.webp",
+    "title": "April Greiman. DOES IT MAKE SENSE? Design Quarterly #133 (Design for special issue of Design Quarterly, no. 133). 1986 | MoMA",
+    "kind": "link",
+    "sourceLabel": "moma.org",
+    "bytes": 37326
+  },
+  {
+    "file": "assets/about-collage/about-collage-019.webp",
+    "title": "Most Interesting Design Studios to Watch",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 62954
+  },
+  {
+    "file": "assets/about-collage/about-collage-020.webp",
+    "title": "Surreal Depictions of Workplace Burnout",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 57220
+  },
+  {
+    "file": "assets/about-collage/about-collage-021.webp",
+    "title": "Discovering Niche Art Styles: Gen X Soft Club",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 21930
+  },
+  {
+    "file": "assets/about-collage/about-collage-022.webp",
+    "title": "Creative Portfolios to Inspire You",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 14088
+  },
+  {
+    "file": "assets/about-collage/about-collage-023.webp",
+    "title": "GitHub: Your New Design Asset Library",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 34508
+  },
+  {
+    "file": "assets/about-collage/about-collage-024.webp",
+    "title": "10 Niche Graphic Design Styles to Try",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 28680
+  },
+  {
+    "file": "assets/about-collage/about-collage-025.webp",
+    "title": "Custom Kid's Drawing Embroidery",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 35226
+  },
+  {
+    "file": "assets/about-collage/about-collage-026.webp",
+    "title": "The Teenage Girl Who Changed Photography: Hiromix",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 35730
+  },
+  {
+    "file": "assets/about-collage/about-collage-027.webp",
+    "title": "The Last Human Chess Match Played in St. Petersburg, 1924",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 5154,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-028.webp",
+    "title": "Reworked Nike x PSG Collection",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 69798,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-029.webp",
+    "title": "Instagram",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 22984
+  },
+  {
+    "file": "assets/about-collage/about-collage-030.webp",
+    "title": "Living With Giorgio Armani In Tuscany",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 79188,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-031.webp",
+    "title": "Colorful Art Studio: Prints, Products & Process",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 50094,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-032.webp",
+    "title": "instagram reel",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 71802,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-033.webp",
+    "title": "Introduction to Chinese Dreamcore",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 32286
+  },
+  {
+    "file": "assets/about-collage/about-collage-034.webp",
+    "title": "4-Day Mini Guide to Friuli Venezia Giulia: Sport, Nature & Culture",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 81010,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-035.webp",
+    "title": "Denzel Dumfries' Farewell to Inter Milan",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 31316
+  },
+  {
+    "file": "assets/about-collage/about-collage-036.webp",
+    "title": "The Centuries-Old Japanese Stitching Technique of Sashiko",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 205578,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-037.webp",
+    "title": "Egypt National Football Team Match Highlights",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 60596,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-038.webp",
+    "title": "The Uncrowned King: Paolo Maldini's Azzurri Legacy",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 182582,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-039.webp",
+    "title": "Inter Milan Goalkeeper Celebrates Serie A Title",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 371494,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-040.webp",
+    "title": "instagram reel",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 224458,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-041.webp",
+    "title": "DIY High Tech Running Top",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 52302
+  },
+  {
+    "file": "assets/about-collage/about-collage-042.webp",
+    "title": "Travis Scott x Nike Korea World Cup Merch Release",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 89018,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-043.webp",
+    "title": "Korean Flags Over the Years",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 70188,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-044.webp",
+    "title": "Recreating 'Rush Hour' and Going Crazy in Sydney",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 18820
+  },
+  {
+    "file": "assets/about-collage/about-collage-045.webp",
+    "title": "Pokémon Fan Art Trio – Arcanine, Flareon & Ninetales",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 70718,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-046.webp",
+    "title": "Pokémon Fan Art Trio: Gengar, Jirachi & Pichu",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 48512,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-047.webp",
+    "title": "Gengar Fan Art Collection",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 107938,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-048.webp",
+    "title": "Ghost & Spooky Pokémon in Moody Urban Environments",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 285286,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-049.webp",
+    "title": "Wishes of Children: Wealth vs. Survival",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 4050
+  },
+  {
+    "file": "assets/about-collage/about-collage-050.webp",
+    "title": "Abandoned Italian Village Transformed into a Stunning Cave Hotel",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 35154,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-051.webp",
+    "title": "Custom Coffee Table Book of Daughter's Art",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 39846
+  },
+  {
+    "file": "assets/about-collage/about-collage-052.webp",
+    "title": "90s Armani Tailoring: The Standard Trends Still Chase",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 211672,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-053.webp",
+    "title": "Ronaldo Nazário: The Greatest of All Time",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 172674,
+    "fallback": true
+  },
+  {
+    "file": "assets/about-collage/about-collage-054.webp",
+    "title": "Brazil vs Italy Football Match Action",
+    "kind": "image",
+    "sourceLabel": "saved item",
+    "bytes": 36688
+  },
+  {
+    "file": "assets/about-collage/about-collage-055.webp",
+    "title": "San Siro Fans Chanting 'Sarà perché ti amo'",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 55724
+  },
+  {
+    "file": "assets/about-collage/about-collage-056.webp",
+    "title": "Instagram Reels - Jake Taylor Running Influencer",
+    "kind": "image",
+    "sourceLabel": "saved item",
+    "bytes": 26822
+  },
+  {
+    "file": "assets/about-collage/about-collage-057.webp",
+    "title": "Made to Stand Out",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 41208
+  },
+  {
+    "file": "assets/about-collage/about-collage-058.webp",
+    "title": "Uncovering Obscure Aesthetics: The Great Schema",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 51930
+  },
+  {
+    "file": "assets/about-collage/about-collage-059.webp",
+    "title": "Sportswear Laser Perforation by Argus Laser",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 41772
+  },
+  {
+    "file": "assets/about-collage/about-collage-060.webp",
+    "title": "Vibrant Abstract Maternity Painting Process",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 43254
+  },
+  {
+    "file": "assets/about-collage/about-collage-061.webp",
+    "title": "Two Months of Sketchbooking in Colombia",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 114378
+  },
+  {
+    "file": "assets/about-collage/about-collage-062.webp",
+    "title": "Apkhazeti Ensemble: Georgian Dance Fusion",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 52386
+  },
+  {
+    "file": "assets/about-collage/about-collage-063.webp",
+    "title": "RCOS Spring/Summer 2026 Collection",
+    "kind": "image",
+    "sourceLabel": "saved item",
+    "bytes": 79732
+  },
+  {
+    "file": "assets/about-collage/about-collage-064.webp",
+    "title": "IMG_8597.jpeg",
+    "kind": "image",
+    "sourceLabel": "saved item",
+    "bytes": 134922
+  },
+  {
+    "file": "assets/about-collage/about-collage-065.webp",
+    "title": "IMG_8596.jpeg",
+    "kind": "image",
+    "sourceLabel": "saved item",
+    "bytes": 70692
+  },
+  {
+    "file": "assets/about-collage/about-collage-066.webp",
+    "title": "District Vision",
+    "kind": "link",
+    "sourceLabel": "districtvision.com",
+    "bytes": 13196
+  },
+  {
+    "file": "assets/about-collage/about-collage-067.webp",
+    "title": "Denim trousers",
+    "kind": "link",
+    "sourceLabel": "acnestudios.com",
+    "bytes": 31666
+  },
+  {
+    "file": "assets/about-collage/about-collage-068.webp",
+    "title": "Eclectic Antique Interior with Ornate Chairs",
+    "kind": "image",
+    "sourceLabel": "substack.com",
+    "bytes": 70188
+  },
+  {
+    "file": "assets/about-collage/about-collage-069.webp",
+    "title": "Sunlit Living Room with Garden View",
+    "kind": "image",
+    "sourceLabel": "saved item",
+    "bytes": 162502
+  },
+  {
+    "file": "assets/about-collage/about-collage-070.webp",
+    "title": "Things I Painted in Japan (Part 3)",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 42044
+  },
+  {
+    "file": "assets/about-collage/about-collage-071.webp",
+    "title": "Monthly Drawing Season 12 Sketchbook Tour",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 26626
+  },
+  {
+    "file": "assets/about-collage/about-collage-072.webp",
+    "title": "Day 24: Drawing a Whimsical Fisherman",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 57396
+  },
+  {
+    "file": "assets/about-collage/about-collage-073.webp",
+    "title": "Urban Sketching Tutorial: Coastal Scene with Pen and Watercolor",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 114068
+  },
+  {
+    "file": "assets/about-collage/about-collage-074.webp",
+    "title": "Inter Milan Championship Celebration at Piazza del Duomo",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 68516
+  },
+  {
+    "file": "assets/about-collage/about-collage-075.webp",
+    "title": "Pokémon in Traditional Japanese Art Style",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 21054
+  },
+  {
+    "file": "assets/about-collage/about-collage-076.webp",
+    "title": "Average Furlan Guy on Instagram: \"6 maggio 1976 – 6 maggio 2026.\n\nPoche parole così da lasciare ad ognuno di noi la propria riflessione.\n\nPar no dismenteâ.\"",
+    "kind": "link",
+    "sourceLabel": "instagram.com",
+    "bytes": 65096
+  },
+  {
+    "file": "assets/about-collage/about-collage-077.webp",
+    "title": "It is the end of the world and I am here to take you home",
+    "kind": "link",
+    "sourceLabel": "open.substack.com",
+    "bytes": 75246
+  },
+  {
+    "file": "assets/about-collage/about-collage-078.webp",
+    "title": "instagram reel",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 64276
+  },
+  {
+    "file": "assets/about-collage/about-collage-079.webp",
+    "title": "Inter Milan Scudetto Celebration",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 89134
+  },
+  {
+    "file": "assets/about-collage/about-collage-080.webp",
+    "title": "Inter Milan fans celebrate Scudetto at Piazza del Duomo",
+    "kind": "reel",
+    "sourceLabel": "instagram.com",
+    "bytes": 38156
+  },
+  {
+    "file": "assets/about-collage/about-collage-081.webp",
+    "title": "La Gazzetta dello Sport | Notizie sportive e risultati live di oggi",
+    "kind": "link",
+    "sourceLabel": "gazzetta.it",
+    "bytes": 48138
+  }
+]
