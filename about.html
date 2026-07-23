@@ -27,17 +27,15 @@
             --blood: #c00000;
             --plum: #111111;
             --active: #e6ff00;
-            --mx: 0;
-            --my: 0;
 
             min-height: 100%;
             overflow-x: hidden;
             background:
                 repeating-linear-gradient(96deg, rgba(255, 42, 0, 0.32) 0 4px, transparent 4px 14px),
                 repeating-linear-gradient(27deg, rgba(230, 255, 0, 0.2) 0 2px, transparent 2px 9px),
-                repeating-radial-gradient(circle at calc(78% - var(--mx) * 3%) calc(30% + var(--my) * 4%), rgba(241, 234, 210, 0.22) 0 2px, transparent 2px 7px),
-                radial-gradient(circle at calc(10% + var(--mx) * 5%) calc(18% + var(--my) * 4%), #ff2a00 0 3vw, transparent 3.1vw),
-                radial-gradient(circle at calc(82% - var(--mx) * 4%) calc(84% - var(--my) * 4%), #e6ff00 0 3.4vw, transparent 3.5vw),
+                repeating-radial-gradient(circle at 78% 30%, rgba(241, 234, 210, 0.22) 0 2px, transparent 2px 7px),
+                radial-gradient(circle at 10% 18%, #ff2a00 0 3vw, transparent 3.1vw),
+                radial-gradient(circle at 82% 84%, #e6ff00 0 3.4vw, transparent 3.5vw),
                 #050505;
             color: var(--ink);
             cursor: default !important;
@@ -61,7 +59,8 @@
             width: 116vw;
             height: 116vh;
             pointer-events: none;
-            transform: translate3d(calc(var(--mx) * -10px), calc(var(--my) * -8px), 0);
+            transform: translate3d(0, 0, 0);
+            will-change: transform;
         }
 
         .field-backdrop {
@@ -89,7 +88,8 @@
             pointer-events: none;
             overflow: hidden;
             opacity: 0.95;
-            transform: translate3d(calc(var(--mx) * -116px), calc(var(--my) * -88px), 0);
+            transform: translate3d(0, 0, 0);
+            will-change: transform;
         }
 
         .about-collage-field::before,
@@ -305,7 +305,7 @@
                 0 1px 0 rgba(255, 255, 255, 0.68) inset,
                 4px 5px 0 rgba(5, 5, 5, 0.66);
             transform: rotate(var(--nav-rotate, 1deg));
-            transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease, opacity 150ms ease;
+            transition: transform 150ms ease, color 150ms ease, opacity 150ms ease;
         }
 
         .nav-links a:nth-child(2n) {
@@ -456,7 +456,7 @@
                 0 -1px 0 rgba(5, 5, 5, 0.2) inset,
                 7px 8px 0 rgba(5, 5, 5, 0.74);
             transform: rotate(var(--item-rotate, -1deg));
-            transition: color 160ms ease, opacity 160ms ease, transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+            transition: color 160ms ease, opacity 160ms ease, transform 160ms ease;
         }
 
         .index-item::after {
@@ -573,7 +573,7 @@
             background-size: 12px 12px, 16px 16px, auto, auto;
             clip-path: polygon(4% 2%, 22% 0, 39% 4%, 58% 1%, 80% 5%, 96% 0, 100% 20%, 94% 39%, 100% 58%, 92% 84%, 98% 100%, 73% 96%, 52% 100%, 31% 95%, 8% 100%, 0 82%, 4% 58%, 0 36%);
             filter: saturate(1.04) contrast(1.04);
-            transform: translate3d(calc(var(--mx) * 15px), calc(var(--my) * 12px), 0) rotate(-5deg);
+            transform: translate3d(0, 0, 0) rotate(-5deg);
             opacity: 0.9;
             box-shadow:
                 0 1px 0 rgba(255, 255, 255, 0.72) inset,
@@ -655,11 +655,7 @@
                 0 0 0 1px rgba(5, 5, 5, 0.28),
                 0 4px 14px rgba(5, 5, 5, 0.28);
             filter: saturate(1.12) contrast(1.06) brightness(1.08);
-            transition: opacity 180ms ease, transform 240ms ease, filter 220ms ease;
-        }
-
-        .image-frame.is-pulsing .about-image {
-            animation: imagePulse 260ms steps(2, end);
+            transition: opacity 160ms ease, transform 200ms ease;
         }
 
         .image-frame.is-contained {
@@ -675,11 +671,6 @@
             transform: none;
         }
 
-        @keyframes imagePulse {
-            0%, 100% { filter: saturate(1.07) contrast(1.04); }
-            50% { filter: saturate(1.42) contrast(1.16); }
-        }
-
         @media (max-width: 980px) {
             body.about-vector {
                 overflow-y: auto;
@@ -692,7 +683,7 @@
                 height: calc(100% + 48vh);
                 min-height: 148vh;
                 opacity: 0.86;
-                transform: translate3d(calc(var(--mx) * -76px), calc(var(--my) * -68px), 0);
+                transform: translate3d(0, 0, 0);
             }
 
             .about-collage-tile {
@@ -805,10 +796,6 @@
             .about-image {
                 transition: none;
                 transform: none;
-            }
-
-            .image-frame.is-pulsing .about-image {
-                animation: none;
             }
         }
     </style>
@@ -1122,7 +1109,7 @@
 
         <aside class="image-orbit" aria-label="Active image">
             <figure class="image-frame" id="imageFrame">
-                <img class="about-image" id="aboutImage" src="assets/images/about/home-sanfrancisco.jpg" alt="San Francisco skyline view">
+                <img class="about-image" id="aboutImage" src="assets/images/about/home-sanfrancisco.jpg" alt="San Francisco skyline view" decoding="async" fetchpriority="high">
             </figure>
         </aside>
     </main>
@@ -1132,13 +1119,17 @@
         const aboutIndex = document.getElementById('aboutIndex');
         const imageFrame = document.getElementById('imageFrame');
         const aboutImage = document.getElementById('aboutImage');
+        const psychedelicField = document.querySelector('.psychedelic-field');
         const visualItems = Array.from(document.querySelectorAll('[data-visual]'));
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         const collageImageCount = 81;
         const isSmallViewport = window.matchMedia('(max-width: 760px)').matches;
         const collageTileCount = isSmallViewport ? 116 : 196;
-        const initialCollageTileCount = isSmallViewport ? 72 : 112;
-        const initialCollageSourceCount = isSmallViewport ? 16 : 24;
+        const initialCollageTileCount = isSmallViewport ? 48 : 64;
+        const initialCollageSourceCount = isSmallViewport ? 14 : 18;
+        const pointerMotion = isSmallViewport
+            ? { collageX: -76, collageY: -68, fieldX: -7, fieldY: -6 }
+            : { collageX: -116, collageY: -88, fieldX: -10, fieldY: -8 };
         const desktopCoverageTiles = [
             [-31, -14, 48, -8], [4, -12, 48, 6], [39, -15, 50, -4], [74, -12, 48, 8], [109, -14, 50, -7],
             [-33, 9, 50, 7], [3, 10, 52, -5], [40, 8, 54, 4], [77, 10, 52, -8], [113, 9, 50, 6],
@@ -1272,7 +1263,7 @@
 
         function scheduleCollageRemainder(startIndex, random) {
             let cursor = startIndex;
-            const chunkSize = isSmallViewport ? 24 : 34;
+            const chunkSize = isSmallViewport ? 16 : 22;
             const appendChunk = () => {
                 const nextCursor = Math.min(collageTileCount, cursor + chunkSize);
                 appendCollageTiles(cursor, nextCursor, random);
@@ -1291,11 +1282,11 @@
             };
 
             if ('requestIdleCallback' in window) {
-                window.requestIdleCallback(appendChunk, { timeout: 1400 });
+                window.requestIdleCallback(appendChunk, { timeout: 1200 });
                 return;
             }
 
-            window.setTimeout(appendChunk, 260);
+            window.setTimeout(appendChunk, 180);
         }
 
         function buildAboutCollage() {
@@ -1318,7 +1309,7 @@
                 scale: 1
             },
             artegna: {
-                src: 'assets/images/about/home-artegna.jpg',
+                src: 'assets/images/about/home-artegna-about.jpg',
                 alt: 'Artegna town view',
                 accent: '#ff4b16',
                 position: 'center',
@@ -1340,7 +1331,7 @@
                 fit: 'contain'
             },
             frontier: {
-                src: 'assets/images/projects/preview-mind.png',
+                src: 'assets/images/projects/preview-mind-about.jpg',
                 alt: 'Private search project preview',
                 accent: '#e6ff00',
                 position: 'center',
@@ -1348,23 +1339,48 @@
             }
         };
 
-        function pulseImage() {
-            if (reducedMotion.matches) {
-                return;
-            }
+        let activeVisualKey = null;
+        let pointerFrame = 0;
+        let pointerX = 0;
+        let pointerY = 0;
 
-            imageFrame.classList.remove('is-pulsing');
-            window.requestAnimationFrame(() => {
-                imageFrame.classList.add('is-pulsing');
-                window.setTimeout(() => imageFrame.classList.remove('is-pulsing'), 280);
+        function warmVisualImages() {
+            Object.values(visuals).forEach((visual) => {
+                if (!visual.src || visual.src === aboutImage.getAttribute('src')) {
+                    return;
+                }
+
+                const image = new Image();
+                image.decoding = 'async';
+                image.src = visual.src;
+
+                if (image.decode) {
+                    image.decode().catch(() => {});
+                }
             });
         }
 
-        function setVisual(key, shouldPulse = true) {
-            const visual = visuals[key] || visuals.sf;
+        function scheduleVisualWarmup() {
+            if ('requestIdleCallback' in window) {
+                window.requestIdleCallback(warmVisualImages, { timeout: 2200 });
+                return;
+            }
+
+            window.setTimeout(warmVisualImages, 700);
+        }
+
+        function setVisual(key) {
+            const visualKey = visuals[key] ? key : 'sf';
+
+            if (activeVisualKey === visualKey) {
+                return;
+            }
+
+            const visual = visuals[visualKey];
+            activeVisualKey = visualKey;
 
             visualItems.forEach((item) => {
-                item.classList.toggle('is-active', item.dataset.visual === key);
+                item.classList.toggle('is-active', item.dataset.visual === visualKey);
             });
 
             aboutIndex.classList.add('has-active');
@@ -1374,33 +1390,44 @@
             aboutImage.style.setProperty('--image-position', visual.position || 'center');
             aboutImage.style.setProperty('--image-scale', visual.scale || 1);
             imageFrame.classList.toggle('is-contained', visual.fit === 'contain');
-
-            if (shouldPulse) {
-                pulseImage();
-            }
         }
 
         visualItems.forEach((item) => {
             const activate = () => setVisual(item.dataset.visual);
-            item.addEventListener('mouseenter', activate);
+            item.addEventListener('pointerenter', activate, { passive: true });
             item.addEventListener('focus', activate);
             item.addEventListener('pointerdown', activate, { passive: true });
         });
+
+        function applyPointerMotion() {
+            pointerFrame = 0;
+
+            if (aboutCollage) {
+                aboutCollage.style.transform = `translate3d(${(pointerX * pointerMotion.collageX).toFixed(1)}px, ${(pointerY * pointerMotion.collageY).toFixed(1)}px, 0)`;
+            }
+
+            if (psychedelicField) {
+                psychedelicField.style.transform = `translate3d(${(pointerX * pointerMotion.fieldX).toFixed(1)}px, ${(pointerY * pointerMotion.fieldY).toFixed(1)}px, 0)`;
+            }
+        }
 
         document.addEventListener('pointermove', (event) => {
             if (reducedMotion.matches) {
                 return;
             }
 
-            const mx = (event.clientX / window.innerWidth - 0.5) * 2;
-            const my = (event.clientY / window.innerHeight - 0.5) * 2;
-            document.body.style.setProperty('--mx', mx.toFixed(3));
-            document.body.style.setProperty('--my', my.toFixed(3));
+            pointerX = (event.clientX / window.innerWidth - 0.5) * 2;
+            pointerY = (event.clientY / window.innerHeight - 0.5) * 2;
+
+            if (!pointerFrame) {
+                pointerFrame = window.requestAnimationFrame(applyPointerMotion);
+            }
         }, { passive: true });
 
         const requestedVisual = new URLSearchParams(window.location.search).get('visual');
         buildAboutCollage();
-        setVisual(visuals[requestedVisual] ? requestedVisual : 'sf', false);
+        setVisual(visuals[requestedVisual] ? requestedVisual : 'sf');
+        scheduleVisualWarmup();
     </script>
 </body>
 </html>
