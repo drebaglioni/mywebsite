@@ -259,25 +259,6 @@
     "isbn": "9780316229265"
   },
   {
-    "id": "is-human-data-enough-2025",
-    "title": "Is Human Data Enough?",
-    "author": "Google DeepMind: The Podcast",
-    "format": "podcast",
-    "subjects": [
-      "ai",
-      "reinforcement-learning",
-      "podcast"
-    ],
-    "year": 2025,
-    "status": "completed",
-    "finished": "2026-4-30",
-    "rating": 2,
-    "url": "https://www.youtube.com/watch?v=zzXyPGEtseI&list=PLqYmG7hTraZBiUr6_Qf8YTS2Oqy3OGZEj&index=2",
-    "notes": "David Silver on the 'era of experience' in RL",
-    "cover_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9pYaB6m8pbUm7hUV-z4_DW6f3hP34NIj36A&s",
-    "cover_source": "manual"
-  },
-  {
     "id": "why-american-ambulance-rides-are-so-expensive-2026",
     "title": "Why American ambulance rides are so expensive",
     "author": "David Oks",
@@ -424,6 +405,25 @@
     "rating": 2,
     "url": "https://www.anthropic.com/research/small-samples-poison",
     "notes": "Joint study w/ UK AISI & Turing Institute: 250 malicious docs can backdoor LLMs of any size \u2014 absolute count matters, not percentage of training data"
+  },
+  {
+    "id": "is-human-data-enough-2025",
+    "title": "Is Human Data Enough?",
+    "author": "Google DeepMind: The Podcast",
+    "format": "podcast",
+    "subjects": [
+      "ai",
+      "reinforcement-learning",
+      "podcast"
+    ],
+    "year": 2025,
+    "status": "completed",
+    "finished": "2026-04-30",
+    "rating": 2,
+    "url": "https://www.youtube.com/watch?v=zzXyPGEtseI&list=PLqYmG7hTraZBiUr6_Qf8YTS2Oqy3OGZEj&index=2",
+    "notes": "David Silver on the 'era of experience' in RL",
+    "cover_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9pYaB6m8pbUm7hUV-z4_DW6f3hP34NIj36A&s",
+    "cover_source": "manual"
   },
   {
     "id": "world-models-computing-the-uncomputable-2026",
