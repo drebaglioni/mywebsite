@@ -168,6 +168,24 @@
     "cover_source": "manual"
   },
   {
+    "id": "the-world-a-family-history-of-humanity-2023",
+    "title": "The World: A Family History of Humanity",
+    "author": "Simon Sebag Montefiore",
+    "format": "book",
+    "subjects": [
+      "history"
+    ],
+    "year": 2023,
+    "status": "in-progress",
+    "finished": null,
+    "rating": null,
+    "url": "https://openlibrary.org/works/OL34341039W",
+    "notes": null,
+    "cover_image": "https://covers.openlibrary.org/b/isbn/9780525659549-M.jpg?default=false",
+    "cover_source": "manual",
+    "isbn": "9780525659549"
+  },
+  {
     "id": "war-and-peace-1869",
     "title": "War and Peace",
     "author": "Leo Tolstoy",
@@ -258,6 +276,58 @@
     "notes": "David Silver on the 'era of experience' in RL",
     "cover_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9pYaB6m8pbUm7hUV-z4_DW6f3hP34NIj36A&s",
     "cover_source": "manual"
+  },
+  {
+    "id": "why-american-ambulance-rides-are-so-expensive-2026",
+    "title": "Why American ambulance rides are so expensive",
+    "author": "David Oks",
+    "format": "article",
+    "subjects": [],
+    "year": 2026,
+    "status": "completed",
+    "finished": "2026-07-23",
+    "rating": 4,
+    "url": "https://davidoks.blog/p/why-american-ambulance-rides-are",
+    "notes": "The unfortunately botched economics of emergency care"
+  },
+  {
+    "id": "please-use-ai-2026",
+    "title": "Please Use AI",
+    "author": "Shawn Smucker",
+    "format": "article",
+    "subjects": [],
+    "year": 2026,
+    "status": "completed",
+    "finished": "2026-07-23",
+    "rating": 5,
+    "url": "https://shawnsmucker.substack.com/p/please-use-ai",
+    "notes": "Be sure to use AI when making"
+  },
+  {
+    "id": "it-is-the-end-of-the-world-and-i-am-here-to-take-you-home-2026",
+    "title": "It is the end of the world and I am here to take you home",
+    "author": "Natalie Cargill",
+    "format": "article",
+    "subjects": [],
+    "year": 2026,
+    "status": "completed",
+    "finished": "2026-07-23",
+    "rating": 5,
+    "url": "https://nataliercargill.substack.com/p/it-is-the-end-of-the-world-and-i",
+    "notes": null
+  },
+  {
+    "id": "how-to-walk-through-walls-2026",
+    "title": "How to walk through walls",
+    "author": "Henrik Karlsson",
+    "format": "article",
+    "subjects": [],
+    "year": 2026,
+    "status": "completed",
+    "finished": "2026-07-23",
+    "rating": 5,
+    "url": "https://www.henrikkarlsson.xyz/p/hacker-mindset",
+    "notes": "On hacker mindset"
   },
   {
     "id": "strange-buildings-2026",
@@ -1183,6 +1253,24 @@
     "isbn": "9780141032139"
   },
   {
+    "id": "a-toolkit-for-gathering-2025",
+    "title": "A Toolkit for Gathering",
+    "author": "Rachel Berger, Meg Bisineer, Sara Dean, Janette Kim",
+    "format": "book",
+    "subjects": [
+      "design",
+      "facilitation",
+      "gatherings"
+    ],
+    "year": 2025,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://draw-down.com/products/a-toolkit-for-gathering-1",
+    "notes": "Workshop / gathering design book from the same reel",
+    "isbn": "9781733474450"
+  },
+  {
     "id": "beloved-1987",
     "title": "Beloved",
     "author": "Toni Morrison",
@@ -1466,6 +1554,41 @@
     "notes": "ArXiv cs.CL preprint introducing natural-language agent harnesses and the Intelligent Harness Runtime."
   },
   {
+    "id": "research-for-people-who-think-they-would-rather-create-2021",
+    "title": "Research for People Who Think They Would Rather Create",
+    "author": "Dirk Vis, Florian Cramer",
+    "format": "book",
+    "subjects": [
+      "design",
+      "research"
+    ],
+    "year": 2021,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://openlibrary.org/books/OL34138735M/Research_for_People_Who_Think_They_Would_Rather_Create",
+    "notes": "Saved from the @designteamofone practical-for-creatives reel",
+    "isbn": "9789493148437"
+  },
+  {
+    "id": "steve-a-framework-for-ai-and-identity-design-2024",
+    "title": "Steve: A Framework for AI and Identity Design",
+    "author": "Melani De Luca",
+    "format": "book",
+    "subjects": [
+      "ai",
+      "design",
+      "identity"
+    ],
+    "year": 2024,
+    "status": "queued",
+    "finished": null,
+    "rating": null,
+    "url": "https://draw-down.com/products/steve-a-framework-for-ai-and-identity-design",
+    "notes": "Interview-based design title surfaced in the same reel",
+    "isbn": "9789083404172"
+  },
+  {
     "id": "stormlight-chronicles-wind-and-truth-2024",
     "title": "Stormlight Chronicles: Wind and Truth",
     "author": "Brandon Sanderson",
@@ -1639,24 +1762,6 @@
     "cover_image": "https://covers.openlibrary.org/b/isbn/9780801868986-M.jpg?default=false",
     "cover_source": "manual",
     "isbn": "9780801868986"
-  },
-  {
-    "id": "the-world-a-family-history-of-humanity-2023",
-    "title": "The World: A Family History of Humanity",
-    "author": "Simon Sebag Montefiore",
-    "format": "book",
-    "subjects": [
-      "history"
-    ],
-    "year": 2023,
-    "status": "queued",
-    "finished": null,
-    "rating": null,
-    "url": "https://openlibrary.org/works/OL34341039W",
-    "notes": null,
-    "cover_image": "https://covers.openlibrary.org/b/isbn/9780525659549-M.jpg?default=false",
-    "cover_source": "manual",
-    "isbn": "9780525659549"
   },
   {
     "id": "type-matters-2012",
