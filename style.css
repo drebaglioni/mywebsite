@@ -556,16 +556,16 @@ body.homepage .system-specs {
    7. LIBRARY PAGE
    ========================================= */
 body.library-page {
-    --bg-00: #f5f7f7;
+    --bg-00: #e4eef5;
     --bg-10: rgba(253, 254, 252, 0.8);
-    --bg-20: rgba(242, 246, 246, 0.76);
+    --bg-20: rgba(232, 239, 242, 0.76);
     --surface-10: rgba(255, 255, 253, 0.78);
     --rule: rgba(18, 24, 28, 0.16);
     --rule-strong: rgba(18, 24, 28, 0.38);
     --text-strong: #101419;
     --text-muted: #33404a;
     --ui-accent: #f05a2a;
-    --silver-shadow: rgba(12, 20, 26, 0.14);
+    --silver-shadow: rgba(6, 12, 18, 0.2);
     --foil-y: 0px;
     --foil-x: 0px;
     --accent-orange: #ff4f00;
@@ -576,7 +576,7 @@ body.library-page {
     --card-ink-muted: #5f5448;
     --lift-y: -4px;
     --dur-fast: 160ms;
-    background: #d7dde0;
+    background: #afbec8;
     background-attachment: fixed;
     color: var(--text-strong);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -590,8 +590,8 @@ body.library-page::before {
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.12;
-    mix-blend-mode: soft-light;
+    opacity: 0.18;
+    mix-blend-mode: overlay;
     background-image:
         url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='foil'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23foil)' opacity='0.9'/%3E%3C/svg%3E");
 }
@@ -608,7 +608,7 @@ body.library-page a {
     min-height: 100vh;
     display: grid;
     grid-template-columns: 300px 1fr 340px;
-    background: #d2d8db;
+    background: #afbec8;
     position: relative;
     z-index: 1;
     overflow: hidden;
@@ -621,44 +621,52 @@ body.library-page a {
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    background: #d2d8db;
+    background: #afbec8;
 }
 
 .library-layout::before {
     content: "";
     position: fixed;
-    inset: -18vh -14vw;
+    inset: -24vh -18vw;
     z-index: 0;
     pointer-events: none;
     opacity: 1;
     background:
-        conic-gradient(from 225deg at calc(50% + var(--foil-x)) calc(42% + var(--foil-y)),
+        radial-gradient(ellipse at 18% 18%, rgba(255, 255, 255, 0.96) 0 7%, rgba(255, 255, 255, 0.08) 18%, transparent 30%),
+        radial-gradient(ellipse at 76% 68%, rgba(4, 9, 15, 0.5) 0 9%, rgba(4, 9, 15, 0.16) 22%, transparent 40%),
+        conic-gradient(from 218deg at calc(50% + var(--foil-x)) calc(42% + var(--foil-y)),
             #ffffff 0deg,
-            #f7f9f9 24deg,
-            #8b9398 48deg,
-            #ffffff 72deg,
-            #c9d0d3 100deg,
-            #30383e 128deg,
-            #fdfefe 164deg,
-            #707b82 204deg,
-            #ffffff 244deg,
-            #b3bcc1 288deg,
+            #98c7f0 18deg,
+            #2b333a 38deg,
+            #fefefe 58deg,
+            #5d89ad 82deg,
+            #080c10 112deg,
+            #ffffff 142deg,
+            #c2ccd2 170deg,
+            #111820 205deg,
+            #f9fbfc 230deg,
+            #315a77 266deg,
+            #ffffff 306deg,
+            #d59b62 334deg,
             #ffffff 360deg),
         linear-gradient(112deg,
             #ffffff 0%,
-            #d9dfe2 13%,
-            #5f686e 25%,
-            #ffffff 37%,
-            #c3cbd0 48%,
-            #2f373d 58%,
-            #ffffff 70%,
-            #8f989e 82%,
-            #ffffff 100%);
-    background-size: 150% 150%, 100% 100%;
+            #9fc9ec 10%,
+            #1f2830 21%,
+            #ffffff 31%,
+            #9ca8b1 42%,
+            #0a1016 53%,
+            #ffffff 63%,
+            #56636c 75%,
+            #fdfefe 88%,
+            #242c33 100%);
+    background-size: 120% 120%, 145% 145%, 170% 170%, 100% 100%;
     background-position:
+        calc(50% - var(--foil-x)) calc(50% + var(--foil-y)),
+        calc(50% + var(--foil-x)) calc(50% - var(--foil-y)),
         calc(50% + var(--foil-x)) calc(50% + var(--foil-y)),
         calc(50% + var(--foil-x)) calc(50% + var(--foil-y));
-    filter: saturate(0) contrast(1.36) brightness(1.08);
+    filter: saturate(0.68) contrast(1.76) brightness(1.03);
     transform: translate3d(0, 0, 0);
 }
 
@@ -668,11 +676,11 @@ body.library-page a {
     inset: -24vh -20vw;
     z-index: 0;
     pointer-events: none;
-    opacity: 0.48;
+    opacity: 0.62;
     background:
-        radial-gradient(ellipse at 44% calc(46% + var(--foil-y)), rgba(255, 255, 255, 0.92) 0 6%, rgba(255, 255, 255, 0.18) 17%, rgba(255, 255, 255, 0) 33%),
-        linear-gradient(112deg, rgba(255, 255, 255, 0) 0 20%, rgba(255, 255, 255, 0.98) 34%, rgba(42, 52, 60, 0.34) 49%, rgba(255, 255, 255, 0.92) 64%, rgba(255, 255, 255, 0) 82% 100%);
-    background-size: 150% 150%, 140% 140%;
+        radial-gradient(ellipse at 44% calc(46% + var(--foil-y)), rgba(255, 255, 255, 0.98) 0 5%, rgba(255, 255, 255, 0.2) 15%, rgba(255, 255, 255, 0) 32%),
+        linear-gradient(112deg, rgba(255, 255, 255, 0) 0 16%, rgba(255, 255, 255, 1) 29%, rgba(7, 12, 18, 0.62) 43%, rgba(255, 255, 255, 0.96) 58%, rgba(74, 127, 173, 0.34) 68%, rgba(213, 145, 77, 0.18) 74%, rgba(255, 255, 255, 0) 82% 100%);
+    background-size: 130% 130%, 150% 150%;
     background-position:
         calc(50% - var(--foil-x)) calc(50% + var(--foil-y)),
         calc(50% + var(--foil-x)) calc(50% + var(--foil-y));
