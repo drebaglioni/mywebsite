@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Andrea’s Video Library</title>
+    <meta name="description" content="Andrea Baglioni’s collection of films and video.">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <style>
+        @font-face {
+            font-family: "Bungee";
+            src: url("assets/fonts/Bungee-Regular.ttf") format("truetype");
+            font-display: swap;
+        }
+
+        :root {
+            color-scheme: dark;
+            --cream: #eee5d2;
+            --muted: #9a968d;
+            --orange: #f1532c;
+            --green: #a5d5a8;
+            --blue: #123d7a;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { min-height: 100%; }
+
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            color: var(--cream);
+            background: #090908;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+        }
+
+        button,
+        input,
+        select,
+        a {
+            font: 700 10px/1.2 "SFMono-Regular", Consolas, monospace;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+        }
+
+        button { cursor: pointer; }
+
+        .cinema-nav {
+            position: fixed;
+            inset: 0 0 auto;
+            z-index: 80;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 0 18px;
+            color: #ddd7cb;
+            background: rgba(8, 8, 7, .84);
+            border-bottom: 1px solid rgba(255,255,255,.15);
+            backdrop-filter: blur(12px);
+        }
+
+        .cinema-nav a {
+            color: inherit;
+            text-decoration: none;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .cinema-nav-links {
+            display: flex;
+            align-items: center;
+            gap: clamp(12px, 2.2vw, 30px);
+        }
+
+        .cinema-nav a:hover,
+        .cinema-nav a:focus-visible,
+        .cinema-nav a[aria-current="page"] {
+            color: #f4d33f;
+        }
+
+        .room {
+            min-height: 100vh;
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(330px, 500px);
+            align-items: end;
+            gap: clamp(28px, 6vw, 100px);
+            padding: clamp(100px, 12vh, 150px) clamp(22px, 6vw, 90px) clamp(36px, 8vh, 80px);
+            isolation: isolate;
+            overflow: hidden;
+        }
+
+        .room::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -3;
+            background: linear-gradient(90deg, rgba(3,3,2,.4) 0%, rgba(3,3,2,.06) 48%, rgba(3,3,2,.2) 100%);
+        }
+
+        .room-poster {
+            position: absolute;
+            inset: 0;
+            z-index: -4;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: blur(3px) saturate(.82) brightness(1.08);
+            transform: scale(1.018);
+        }
+
+        .room::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 15% 83%, rgba(204,47,22,.1), transparent 26%),
+                linear-gradient(180deg, rgba(0,0,0,.03), rgba(0,0,0,.15));
+        }
+
+        h1 {
+            margin: 0;
+            max-width: 11ch;
+            color: #f4d33f;
+            font-family: "Bungee", "Arial Black", sans-serif;
+            font-size: clamp(50px, 7.6vw, 112px);
+            font-weight: 400;
+            line-height: .86;
+            letter-spacing: -.035em;
+            text-transform: uppercase;
+            text-shadow: clamp(3px, .4vw, 6px) clamp(3px, .4vw, 6px) 0 var(--blue);
+        }
+
+        .collection {
+            align-self: end;
+            padding: 24px;
+            border: 1px solid rgba(255,255,255,.2);
+            background: rgba(13,12,10,.76);
+            box-shadow: 0 30px 90px rgba(0,0,0,.55);
+            backdrop-filter: blur(15px);
+        }
+
+        .collection-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            margin-bottom: 18px;
+            color: #aaa59b;
+            font: 9px/1.3 "SFMono-Regular", Consolas, monospace;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+        }
+
+        .shelf-tools {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 130px;
+            gap: 8px;
+            margin: -6px 0 14px;
+        }
+
+        .shelf-tools[hidden] { display: none; }
+
+        .shelf-tools input,
+        .shelf-tools select {
+            min-width: 0;
+            height: 38px;
+            padding: 0 10px;
+            color: var(--cream);
+            border: 1px solid rgba(255,255,255,.3);
+            border-radius: 0;
+            background: rgba(0,0,0,.42);
+        }
+
+        .shelf-tools input:focus-visible,
+        .shelf-tools select:focus-visible {
+            border-color: #f4d33f;
+        }
+
+        .tapes {
+            display: grid;
+            gap: 10px;
+            max-height: min(54vh, 520px);
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        .tape {
+            display: grid;
+            grid-template-columns: 64px minmax(0,1fr) auto;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            min-height: 86px;
+            padding: 10px 12px 10px 10px;
+            color: #16130f;
+            text-align: left;
+            border: 0;
+            background: #d4c5a9;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,.32);
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .tape:hover,
+        .tape:focus-visible,
+        .tape.selected {
+            transform: translateX(-12px);
+            background: #f0d99f;
+            outline: 2px solid #fff2c7;
+        }
+
+        .tape img {
+            width: 64px;
+            height: 64px;
+            object-fit: cover;
+            filter: saturate(.72) contrast(1.05);
+        }
+
+        .tape strong {
+            display: block;
+            overflow: hidden;
+            font: 400 17px/1.05 "Bungee", "Arial Black", sans-serif;
+            letter-spacing: -.025em;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .tape small {
+            display: block;
+            margin-top: 6px;
+            color: #716654;
+            font: 8px/1.3 "SFMono-Regular", Consolas, monospace;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .tape-number {
+            align-self: stretch;
+            display: grid;
+            place-items: center;
+            min-width: 42px;
+            border-left: 1px solid rgba(0,0,0,.25);
+            color: #806e52;
+            font: 20px/1 "SFMono-Regular", Consolas, monospace;
+        }
+
+        .shelf-empty {
+            padding: 28px 14px;
+            color: var(--muted);
+            border: 1px solid rgba(255,255,255,.16);
+            text-align: center;
+            font: 10px/1.5 "SFMono-Regular", Consolas, monospace;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        .load {
+            width: 100%;
+            min-height: 52px;
+            margin-top: 14px;
+            border: 1px solid rgba(255,255,255,.45);
+            color: #111;
+            background: var(--cream);
+        }
+
+        .load:not(:disabled):hover { background: var(--orange); }
+        .load:disabled { opacity: .35; cursor: not-allowed; }
+
+        .experience {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            visibility: hidden;
+            opacity: 0;
+            background: #000;
+            transition: opacity .55s ease, visibility 0s linear .55s;
+        }
+
+        .experience.active {
+            visibility: visible;
+            opacity: 1;
+            transition-delay: 0s;
+        }
+
+        .shot,
+        .program {
+            position: absolute;
+            inset: 0;
+            visibility: hidden;
+            opacity: 0;
+            overflow: hidden;
+            transition: opacity .26s ease, visibility 0s linear .26s;
+        }
+
+        .shot.active,
+        .program.active {
+            visibility: visible;
+            opacity: 1;
+            transition-delay: 0s;
+        }
+
+        .shot video {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .shot-insert video { object-position: center 49%; }
+
+        .shot::after,
+        .program::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 6;
+            pointer-events: none;
+            background:
+                repeating-linear-gradient(0deg, transparent 0 3px, rgba(255,255,255,.035) 3px 4px),
+                radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,.34) 100%);
+            mix-blend-mode: screen;
+        }
+
+        .shot-label {
+            position: absolute;
+            z-index: 9;
+            left: 24px;
+            bottom: 24px;
+            padding: 9px 11px;
+            color: rgba(255,255,255,.76);
+            background: rgba(0,0,0,.56);
+            font: 9px/1.2 "SFMono-Regular", Consolas, monospace;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+        }
+
+        .program { background: #030303; }
+
+        .crt-scene {
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            width: min(100vw, 177.68vh);
+            aspect-ratio: 1672 / 941;
+            transform: translate(-50%, -50%);
+        }
+
+        .program.active .crt-scene {
+            animation: room-settle .7s ease-out both;
+        }
+
+        @keyframes room-settle {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(1.015); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .crt-room {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .tv-screen {
+            position: absolute;
+            z-index: 3;
+            left: 28.55%;
+            top: 10.05%;
+            width: 47.12%;
+            height: 60.55%;
+            overflow: hidden;
+            border-radius: 7% / 9%;
+            background: #090909;
+            box-shadow: inset 0 0 22px rgba(0,0,0,.7);
+            transform: translateZ(0);
+        }
+
+        .tv-static,
+        .program-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .tv-static {
+            z-index: 1;
+            filter: grayscale(1) contrast(1.3) brightness(.6);
+            opacity: 1;
+            transition: opacity .16s linear;
+        }
+
+        .program-image {
+            z-index: 2;
+            filter: saturate(.74) contrast(1.08) brightness(.78);
+            opacity: 0;
+            transform: scale(1.015);
+        }
+
+        .program.picture-ready .tv-static { opacity: 0; }
+
+        .program.picture-ready .program-image {
+            animation: picture-lock .46s steps(3, end) both;
+        }
+
+        @keyframes picture-lock {
+            0% { opacity: 0; filter: saturate(0) contrast(1.6) brightness(1.45); transform: translateY(2%) scale(1.015); }
+            45% { opacity: .62; transform: translateY(-1%) scale(1.015); }
+            100% { opacity: 1; filter: saturate(.74) contrast(1.08) brightness(.78); transform: translateY(0) scale(1.015); }
+        }
+
+        .tv-screen::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            background:
+                repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 2px, rgba(0,0,0,.13) 2px 4px),
+                linear-gradient(115deg, rgba(255,255,255,.12), transparent 20% 75%, rgba(255,255,255,.035)),
+                radial-gradient(ellipse at center, transparent 48%, rgba(0,0,0,.42) 100%);
+            mix-blend-mode: multiply;
+        }
+
+        .screen-play {
+            position: absolute;
+            z-index: 6;
+            inset: 0;
+            width: 100%;
+            border: 0;
+            color: rgba(255,255,255,.86);
+            background: radial-gradient(circle, rgba(0,0,0,.12), rgba(0,0,0,.4));
+            text-shadow: 0 1px 12px #000;
+        }
+
+        .screen-play span {
+            display: grid;
+            place-items: center;
+            width: clamp(34px, 3.6vw, 54px);
+            height: clamp(34px, 3.6vw, 54px);
+            margin: auto;
+            padding-left: 3px;
+            border: 1px solid rgba(255,255,255,.76);
+            border-radius: 50%;
+            background: rgba(0,0,0,.45);
+        }
+
+        .screen-play:hover span,
+        .screen-play:focus-visible span {
+            color: #111;
+            background: var(--cream);
+        }
+
+        .program::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background:
+                linear-gradient(90deg, rgba(0,0,0,.28), transparent 24% 88%, rgba(0,0,0,.34)),
+                radial-gradient(ellipse at 58% 50%, transparent 38%, rgba(0,0,0,.28) 100%);
+            pointer-events: none;
+        }
+
+        .program-copy {
+            position: absolute;
+            z-index: 10;
+            top: 50%;
+            left: clamp(14px, 2vw, 32px);
+            width: min(19vw, 260px);
+            padding: clamp(14px, 1.5vw, 22px);
+            border: 1px solid rgba(255,255,255,.17);
+            background: rgba(8,8,7,.76);
+            box-shadow: 0 24px 70px rgba(0,0,0,.42);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transform: translateY(calc(-50% + 8px));
+            transition: opacity .3s ease, transform .3s ease;
+        }
+
+        .program.picture-ready .program-copy {
+            opacity: 1;
+            transform: translateY(-50%);
+        }
+
+        .program-kicker {
+            color: var(--green);
+            font: 11px/1.3 "SFMono-Regular", Consolas, monospace;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+        }
+
+        .program h2 {
+            margin: 13px 0 15px;
+            color: #f4d33f;
+            font-family: "Bungee", "Arial Black", sans-serif;
+            font-size: clamp(22px, 2.9vw, 42px);
+            font-weight: 400;
+            line-height: .9;
+            letter-spacing: -.035em;
+            text-transform: uppercase;
+            text-shadow: 3px 3px 0 var(--blue);
+        }
+
+        .program-meta {
+            color: #d4cec3;
+            font: 11px/1.6 "SFMono-Regular", Consolas, monospace;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .program-note {
+            max-width: 48ch;
+            margin: 18px 0 20px;
+            color: #d0c9bd;
+            font-size: 16px;
+            line-height: 1.45;
+        }
+
+        .program-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .play,
+        .eject,
+        .trailer-close {
+            min-height: 48px;
+            padding: 0 16px;
+            border: 1px solid rgba(255,255,255,.7);
+            color: #fff;
+            background: rgba(0,0,0,.62);
+        }
+
+        .play:hover,
+        .eject:hover,
+        .trailer-close:hover {
+            color: #111;
+            background: var(--cream);
+        }
+
+        .trailer {
+            position: absolute;
+            inset: 0;
+            z-index: 8;
+            display: none;
+            background: #000;
+        }
+
+        .trailer.active { display: block; }
+        .trailer iframe { width: 100%; height: 100%; border: 0; }
+        .trailer-close[hidden] { display: none; }
+
+        .replay,
+        .skip {
+            position: absolute;
+            z-index: 70;
+            top: 56px;
+            min-height: 40px;
+            padding: 0 12px;
+            border: 1px solid rgba(255,255,255,.38);
+            color: #fff;
+            background: rgba(0,0,0,.6);
+        }
+
+        .replay {
+            left: 18px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .2s ease;
+        }
+
+        .skip { right: 18px; }
+        .experience.ready .replay { opacity: 1; pointer-events: auto; }
+        .experience.ready .skip { display: none; }
+
+        @media (max-width: 900px) {
+            .cinema-nav {
+                align-items: flex-start;
+                padding-top: 12px;
+                padding-bottom: 12px;
+            }
+
+            .cinema-nav-links {
+                max-width: 72vw;
+                justify-content: flex-end;
+                flex-wrap: wrap;
+                gap: 8px 14px;
+            }
+
+            .room {
+                grid-template-columns: 1fr;
+                align-items: end;
+                padding-top: 135px;
+            }
+
+            .collection { width: min(100%, 520px); }
+            .room-poster { object-position: center; }
+
+            .program {
+                overflow-y: auto;
+                padding: 68px 0 28px;
+            }
+
+            .crt-scene {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 100%;
+                margin-top: 2vh;
+                transform: none;
+            }
+
+            .program.active .crt-scene { animation: none; }
+
+            .program-copy {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: calc(100% - 36px);
+                margin: 18px;
+                opacity: 1;
+                transform: none;
+            }
+
+            .program h2 { font-size: clamp(42px, 14vw, 72px); }
+        }
+
+        @media (max-width: 560px) {
+            h1 { font-size: clamp(44px, 15vw, 70px); }
+            .collection { padding: 16px; }
+            .tape { grid-template-columns: 52px minmax(0, 1fr) 34px; gap: 10px; }
+            .tape img { width: 52px; height: 64px; }
+            .tape strong { font-size: 14px; }
+            .tape-number { min-width: 34px; font-size: 16px; }
+            .shelf-tools { grid-template-columns: 1fr; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .experience,
+            .program,
+            .program-copy,
+            .tv-static { transition: none; }
+            .program.active .crt-scene { animation: none; }
+            .program.picture-ready .program-image { animation: none; opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="cinema-nav" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <div class="cinema-nav-links">
+            <a href="about.html">About</a>
+            <a href="projects.html">Projects</a>
+            <a href="other.html">Library</a>
+            <a href="cinema.html" aria-current="page">Cinema</a>
+            <a href="swag.html">Swag</a>
+        </div>
+    </nav>
+
+    <main class="room">
+        <img class="room-poster" src="assets/images/cinema/crt-room.png" alt="" aria-hidden="true">
+
+        <section>
+            <h1>Andrea’s Video Library</h1>
+        </section>
+
+        <section class="collection" aria-label="Choose a movie">
+            <div class="collection-head">
+                <span>Tonight’s shelf</span>
+                <span id="shelf-count">Loading…</span>
+            </div>
+
+            <div class="shelf-tools" id="shelf-tools" hidden>
+                <input id="cinema-search" type="search" placeholder="Search tapes" aria-label="Search video library">
+                <select id="cinema-format" aria-label="Filter by format">
+                    <option value="">All formats</option>
+                </select>
+            </div>
+
+            <div class="tapes" id="tapes" aria-live="polite"></div>
+            <button class="load" id="load" type="button" disabled>Select a tape</button>
+        </section>
+    </main>
+
+    <section class="experience" id="experience" aria-live="polite" aria-label="Movie loading sequence">
+        <button class="replay" id="replay" type="button">↻ Replay ritual</button>
+        <button class="skip" id="skip" type="button">Skip intro →</button>
+
+        <div class="shot shot-insert" id="shot-insert">
+            <video src="assets/video/cinema/vhs-insert.mp4" data-start="1.2" data-rate="1.45" muted playsinline preload="metadata"></video>
+            <span class="shot-label">SP · Load <span id="loading-title">the tape</span></span>
+        </div>
+
+        <div class="program" id="program">
+            <div class="crt-scene">
+                <img class="crt-room" src="assets/images/cinema/crt-room.png" alt="">
+                <div class="tv-screen">
+                    <video class="tv-static" id="tv-static" src="assets/video/cinema/tv-static.mp4" muted loop playsinline preload="auto" aria-hidden="true"></video>
+                    <img class="program-image" id="program-image" src="" alt="">
+                    <button class="screen-play" id="screen-play" type="button" aria-label="Play official trailer inside the television" hidden><span>▶</span></button>
+                    <div class="trailer" id="trailer"></div>
+                </div>
+            </div>
+
+            <div class="program-copy">
+                <div class="program-kicker">Now playing · Andrea’s Cinema</div>
+                <h2 id="program-title"></h2>
+                <div class="program-meta" id="program-meta"></div>
+                <p class="program-note" id="program-note"></p>
+                <div class="program-actions">
+                    <button class="play" id="play" type="button">▶ Play official trailer</button>
+                    <button class="trailer-close" id="trailer-close" type="button" hidden>Close trailer</button>
+                    <button class="eject" id="eject" type="button">■ Return to shelf</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const state = {
+            items: [],
+            selected: null,
+            query: "",
+            format: "",
+            runToken: 0,
+            pictureTimer: null
+        };
+
+        const refs = {
+            experience: document.getElementById("experience"),
+            insert: document.getElementById("shot-insert"),
+            program: document.getElementById("program"),
+            tvStatic: document.getElementById("tv-static"),
+            trailer: document.getElementById("trailer"),
+            trailerClose: document.getElementById("trailer-close"),
+            screenPlay: document.getElementById("screen-play"),
+            load: document.getElementById("load"),
+            tapes: document.getElementById("tapes"),
+            count: document.getElementById("shelf-count"),
+            tools: document.getElementById("shelf-tools"),
+            search: document.getElementById("cinema-search"),
+            format: document.getElementById("cinema-format")
+        };
+
+        function escapeHtml(value) {
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function ratingStars(rating) {
+            const value = Math.max(0, Math.min(5, Number(rating) || 0));
+            return "★".repeat(value) + "☆".repeat(5 - value);
+        }
+
+        function itemNote(item) {
+            return item.notes || item.summary || "No notes yet.";
+        }
+
+        function filteredItems() {
+            const query = state.query.trim().toLowerCase();
+            return state.items.filter((item) => {
+                const matchesFormat = !state.format || item.format === state.format;
+                const haystack = [
+                    item.title,
+                    item.creator,
+                    item.summary,
+                    item.notes,
+                    ...(Array.isArray(item.tags) ? item.tags : [])
+                ].join(" ").toLowerCase();
+                return matchesFormat && (!query || haystack.includes(query));
+            });
+        }
+
+        function selectItem(itemId) {
+            state.selected = state.items.find((item) => item.id === itemId) || null;
+            document.querySelectorAll(".tape").forEach((tape) => {
+                tape.classList.toggle("selected", tape.dataset.item === itemId);
+                tape.setAttribute("aria-pressed", tape.dataset.item === itemId ? "true" : "false");
+            });
+            refs.load.disabled = !state.selected;
+            refs.load.textContent = state.selected ? `Load ${state.selected.title}` : "Select a tape";
+        }
+
+        function renderShelf() {
+            const items = filteredItems();
+            refs.count.textContent = `${items.length} ${items.length === 1 ? "tape" : "tapes"} · SP`;
+
+            if (!items.length) {
+                refs.tapes.innerHTML = '<div class="shelf-empty">No tapes match this search.</div>';
+                selectItem("");
+                return;
+            }
+
+            if (state.selected && !items.some((item) => item.id === state.selected.id)) {
+                selectItem("");
+            }
+
+            refs.tapes.innerHTML = items.map((item, index) => `
+                <button class="tape${state.selected?.id === item.id ? " selected" : ""}" type="button" data-item="${escapeHtml(item.id)}" aria-pressed="${state.selected?.id === item.id ? "true" : "false"}">
+                    <img src="${escapeHtml(item.poster || "assets/images/cinema/crt-room.png")}" alt="" loading="lazy">
+                    <span>
+                        <strong>${escapeHtml(item.title)}</strong>
+                        <small>${escapeHtml(item.creator)}${item.year ? ` · ${escapeHtml(item.year)}` : ""}</small>
+                    </span>
+                    <span class="tape-number">${String(index + 1).padStart(2, "0")}</span>
+                </button>
+            `).join("");
+
+            refs.tapes.querySelectorAll(".tape").forEach((button) => {
+                button.addEventListener("click", () => selectItem(button.dataset.item));
+            });
+        }
+
+        async function loadCinema() {
+            try {
+                const response = await fetch("data/cinema.json", { cache: "no-store" });
+                if (!response.ok) {
+                    throw new Error(`Cinema data returned ${response.status}`);
+                }
+                const data = await response.json();
+                if (!Array.isArray(data)) {
+                    throw new Error("Cinema data must be an array");
+                }
+                state.items = data.filter((item) => item && item.id && item.title);
+
+                const formats = [...new Set(state.items.map((item) => item.format).filter(Boolean))].sort();
+                refs.format.insertAdjacentHTML("beforeend", formats.map((format) => `<option value="${escapeHtml(format)}">${escapeHtml(format)}</option>`).join(""));
+                refs.tools.hidden = state.items.length <= 4;
+                renderShelf();
+            } catch (error) {
+                refs.count.textContent = "Archive unavailable";
+                refs.tapes.innerHTML = '<div class="shelf-empty">The video archive could not be loaded.</div>';
+                console.error(error);
+            }
+        }
+
+        function stopAllVideos() {
+            document.querySelectorAll(".shot video, .tv-static").forEach((video) => {
+                video.pause();
+                video.currentTime = 0;
+                video.playbackRate = 1;
+            });
+        }
+
+        function showOnly(element) {
+            [refs.insert, refs.program].forEach((panel) => panel.classList.toggle("active", panel === element));
+        }
+
+        function showProgram(token = state.runToken, instant = false) {
+            if (!state.selected) return;
+            clearTimeout(state.pictureTimer);
+
+            const programImage = state.selected.still || state.selected.poster || "assets/images/cinema/crt-room.png";
+            const hasTrailer = Boolean(state.selected.trailer);
+            document.getElementById("program-image").src = programImage;
+            document.getElementById("program-image").alt = `Still from ${state.selected.title}`;
+            document.getElementById("program-title").textContent = state.selected.title;
+            document.getElementById("program-meta").textContent = [
+                state.selected.creator,
+                state.selected.year,
+                state.selected.format,
+                ratingStars(state.selected.rating)
+            ].filter(Boolean).join(" · ");
+            document.getElementById("program-note").textContent = itemNote(state.selected);
+            document.getElementById("play").hidden = !hasTrailer;
+
+            refs.screenPlay.hidden = true;
+            refs.trailerClose.hidden = true;
+            refs.program.classList.remove("picture-ready");
+            showOnly(refs.program);
+
+            if (instant) {
+                refs.program.classList.add("picture-ready");
+                refs.screenPlay.hidden = !hasTrailer;
+                refs.experience.classList.add("ready");
+                return;
+            }
+
+            refs.tvStatic.currentTime = 0;
+            refs.tvStatic.play().catch(() => {});
+            state.pictureTimer = setTimeout(() => {
+                if (token !== state.runToken) return;
+                refs.tvStatic.pause();
+                refs.program.classList.add("picture-ready");
+                refs.screenPlay.hidden = !hasTrailer;
+                refs.experience.classList.add("ready");
+            }, 1250);
+        }
+
+        function playInsert(token) {
+            if (token !== state.runToken) return;
+            showOnly(refs.insert);
+
+            const video = refs.insert.querySelector("video");
+            video.currentTime = Number(video.dataset.start || 0);
+            video.playbackRate = Number(video.dataset.rate || 1);
+            video.onended = () => showProgram(token);
+            video.onerror = () => showProgram(token);
+            video.play().catch(() => showProgram(token));
+        }
+
+        function beginRitual() {
+            if (!state.selected) return;
+
+            state.runToken += 1;
+            clearTimeout(state.pictureTimer);
+            refs.trailer.classList.remove("active");
+            refs.trailer.querySelector("iframe")?.remove();
+            refs.trailerClose.hidden = true;
+            stopAllVideos();
+            refs.experience.classList.add("active");
+            refs.experience.classList.remove("ready");
+            document.getElementById("loading-title").textContent = state.selected.title;
+
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                showProgram(state.runToken, true);
+                return;
+            }
+            playInsert(state.runToken);
+        }
+
+        function playTrailer() {
+            if (!state.selected?.trailer) return;
+            refs.trailer.querySelector("iframe")?.remove();
+            const iframe = document.createElement("iframe");
+            iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(state.selected.trailer)}?autoplay=1&rel=0`;
+            iframe.title = `Official trailer for ${state.selected.title}`;
+            iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+            iframe.allowFullscreen = true;
+            refs.trailer.appendChild(iframe);
+            refs.trailer.classList.add("active");
+            refs.screenPlay.hidden = true;
+            refs.trailerClose.hidden = false;
+        }
+
+        refs.load.addEventListener("click", beginRitual);
+        document.getElementById("replay").addEventListener("click", beginRitual);
+        document.getElementById("skip").addEventListener("click", () => {
+            state.runToken += 1;
+            clearTimeout(state.pictureTimer);
+            stopAllVideos();
+            showProgram(state.runToken, true);
+        });
+        document.getElementById("eject").addEventListener("click", () => {
+            state.runToken += 1;
+            clearTimeout(state.pictureTimer);
+            stopAllVideos();
+            refs.experience.classList.remove("active", "ready");
+            refs.program.classList.remove("picture-ready");
+            refs.trailer.classList.remove("active");
+            refs.trailer.querySelector("iframe")?.remove();
+            refs.trailerClose.hidden = true;
+        });
+        document.getElementById("play").addEventListener("click", playTrailer);
+        refs.screenPlay.addEventListener("click", playTrailer);
+        refs.trailerClose.addEventListener("click", () => {
+            refs.trailer.classList.remove("active");
+            refs.trailer.querySelector("iframe")?.remove();
+            refs.screenPlay.hidden = false;
+            refs.trailerClose.hidden = true;
+        });
+        refs.search.addEventListener("input", (event) => {
+            state.query = event.target.value;
+            renderShelf();
+        });
+        refs.format.addEventListener("change", (event) => {
+            state.format = event.target.value;
+            renderShelf();
+        });
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && refs.experience.classList.contains("active")) {
+                document.getElementById("eject").click();
+            }
+        });
+
+        loadCinema();
+    </script>
+</body>
+</html>

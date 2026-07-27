@@ -1,0 +1,15 @@
+{
+  "the-odyssey": {
+    "year": 2026,
+    "poster": "assets/images/cinema/odyssey-poster.jpg",
+    "still": "assets/images/cinema/odyssey-still.png",
+    "trailer": "9Q6r0ax5CKE",
+    "accent": "#d16833"
+  },
+  "avatar": {
+    "poster": "assets/images/cinema/avatar-poster.jpg",
+    "still": "assets/images/cinema/avatar-still.jpg",
+    "trailer": "5PSNL1qE6VY",
+    "accent": "#1cb8d0"
+  }
+}
