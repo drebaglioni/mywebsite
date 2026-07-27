@@ -1,0 +1,44 @@
+[
+  {
+    "id": "the-odyssey",
+    "title": "The Odyssey",
+    "creator": "Christopher Nolan",
+    "year": 2026,
+    "format": "movie",
+    "status": "completed",
+    "rating": 5,
+    "created": "2026-07-24",
+    "last_reviewed": "2026-07-24",
+    "tags": [
+      "cinema",
+      "movie"
+    ],
+    "summary": "First entry in the cinema archive. Logged as a five-star Christopher Nolan film.",
+    "notes": "",
+    "poster": "assets/images/cinema/odyssey-poster.jpg",
+    "still": "assets/images/cinema/odyssey-still.png",
+    "trailer": "9Q6r0ax5CKE",
+    "accent": "#d16833"
+  },
+  {
+    "id": "avatar",
+    "title": "Avatar",
+    "creator": "James Cameron",
+    "year": 2009,
+    "format": "movie",
+    "status": "completed",
+    "rating": 5,
+    "created": "2026-07-24",
+    "last_reviewed": "2026-07-24",
+    "tags": [
+      "cinema",
+      "movie"
+    ],
+    "summary": "Logged in the cinema archive as the first Avatar movie with a five-star rating.",
+    "notes": "First movie.",
+    "poster": "assets/images/cinema/avatar-poster.jpg",
+    "still": "assets/images/cinema/avatar-still.jpg",
+    "trailer": "5PSNL1qE6VY",
+    "accent": "#1cb8d0"
+  }
+]
