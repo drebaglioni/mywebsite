@@ -428,6 +428,26 @@
                 linear-gradient(135deg, rgba(255, 253, 245, 0.06), rgba(0, 216, 255, 0.16));
         }
 
+        .figure-field[data-active="cinema"] {
+            --preview-left: 50vw;
+            --preview-top: 50vh;
+            --sheet-tilt: -0.8deg;
+            --artifact-gray: 0;
+            --artifact-sepia: 0;
+            --artifact-saturation: 0.9;
+            --artifact-hue: 0deg;
+            --artifact-contrast: 1.08;
+            --artifact-opacity: 0.98;
+            --artifact-overlay-opacity: 0.12;
+            --artifact-tint: linear-gradient(135deg, rgba(255, 253, 245, 0.02), rgba(0, 216, 255, 0.08));
+            --artifact-image: url("assets/images/projects/preview-cinema.jpg");
+            --artifact-media-size: cover;
+            --artifact-position: center 52%;
+            --artifact-mask:
+                linear-gradient(90deg, transparent 0 57%, rgba(255, 50, 31, 0.28) 57% 58%, transparent 58%),
+                linear-gradient(135deg, rgba(0, 216, 255, 0.09), rgba(255, 253, 245, 0.04));
+        }
+
         .figure-field[data-active="mind"] {
             --preview-left: 50vw;
             --preview-top: 51vh;
@@ -508,6 +528,13 @@
         .project-node.library {
             right: 7vw;
             top: 16vh;
+        }
+
+        .project-node.cinema {
+            left: auto;
+            right: 5vw;
+            top: 38vh;
+            transform: none;
         }
 
         .project-node.mind {
@@ -618,6 +645,10 @@
 
         .project-node.library {
             --label-tilt: 1.25deg;
+        }
+
+        .project-node.cinema {
+            --label-tilt: -0.8deg;
         }
 
         .project-node.mind {
@@ -749,27 +780,34 @@
             .project-node.library {
                 left: 22vw;
                 right: auto;
-                top: 28vh;
+                top: 25vh;
+            }
+
+            .project-node.cinema {
+                left: auto;
+                right: 6vw;
+                top: 41vh;
+                transform: none;
             }
 
             .project-node.mind {
-                left: 6vw;
+                left: 19vw;
                 right: auto;
                 bottom: auto;
-                top: 49vh;
+                top: 57vh;
             }
 
             .project-node.swag {
                 left: 10vw;
                 bottom: auto;
-                top: 82vh;
+                top: 91vh;
             }
 
             .project-node.half {
-                left: 72vw;
+                left: 68vw;
                 top: auto;
                 bottom: auto;
-                top: 64vh;
+                top: 74vh;
                 transform: translateX(-50%);
             }
 
@@ -851,6 +889,11 @@
                 <span class="node-title">Library</span>
             </a>
 
+            <a class="project-node cinema" data-project="cinema" href="cinema.html">
+                <span class="node-label">cinema.html</span><br>
+                <span class="node-title">Cinema</span>
+            </a>
+
             <a class="project-node mind" data-project="mind" href="https://mind.drebaglioni.com" target="_blank" rel="noopener noreferrer">
                 <span class="node-label">mind.drebaglioni.com</span><br>
                 <span class="node-title">My Actual Mind</span>
@@ -884,9 +927,10 @@
         const projectState = {
             vault: { x: 0.18, y: 0.18, phase: 0, index: "01", title: "The Vault", meta: "private archive / vault.drebaglioni.com" },
             library: { x: 0.82, y: 0.2, phase: Math.PI * 0.62, index: "02", title: "Library", meta: "reading index / other.html" },
-            mind: { x: 0.82, y: 0.78, phase: Math.PI * 1.58, index: "03", title: "My Actual Mind", meta: "private search / mind.drebaglioni.com" },
-            swag: { x: 0.2, y: 0.78, phase: Math.PI * 1.14, index: "04", title: "Swag", meta: "object study / swag.html" },
-            half: { x: 0.5, y: 0.74, phase: Math.PI * 1.86, index: "05", title: "SF Half", meta: "course atlas / sf-half-course-atlas" }
+            cinema: { x: 0.8, y: 0.43, phase: Math.PI * 0.9, index: "03", title: "Cinema", meta: "video library / cinema.html" },
+            mind: { x: 0.82, y: 0.78, phase: Math.PI * 1.58, index: "04", title: "My Actual Mind", meta: "private search / mind.drebaglioni.com" },
+            swag: { x: 0.2, y: 0.78, phase: Math.PI * 1.14, index: "05", title: "Swag", meta: "object study / swag.html" },
+            half: { x: 0.5, y: 0.74, phase: Math.PI * 1.86, index: "06", title: "SF Half", meta: "course atlas / sf-half-course-atlas" }
         };
 
         const pixelState = {
