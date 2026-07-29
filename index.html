@@ -70,7 +70,17 @@
             currentX: 0,
             currentY: 0,
             parallaxX: 0,
-            parallaxY: 0
+            parallaxY: 0,
+            dragging: false,
+            dragPointerId: null,
+            dragStartClientX: 0,
+            dragStartClientY: 0,
+            dragStartOffsetX: 0,
+            dragStartOffsetY: 0,
+            dragOffsetX: 0,
+            dragOffsetY: 0,
+            dragTargetOffsetX: 0,
+            dragTargetOffsetY: 0
         };
 
         function resetTypeParallax() {
@@ -79,6 +89,112 @@
             if (typeAnchor) {
                 typeAnchor.style.transform = '';
             }
+        }
+
+        function clamp(value, min, max) {
+            return Math.max(min, Math.min(max, value));
+        }
+
+        function getQuantumWorldUnitsPerPixel() {
+            if (!quantumState.camera || !quantumState.pointCloud || !window.THREE) {
+                return { x: 0, y: 0 };
+            }
+
+            const THREE = window.THREE;
+            const cloudPosition = new THREE.Vector3();
+            quantumState.pointCloud.getWorldPosition(cloudPosition);
+            const distance = quantumState.camera.position.distanceTo(cloudPosition);
+            const visibleHeight = 2 * Math.tan(THREE.MathUtils.degToRad(quantumState.camera.fov) / 2) * distance;
+            const visibleWidth = visibleHeight * quantumState.camera.aspect;
+
+            return {
+                x: visibleWidth / window.innerWidth,
+                y: visibleHeight / window.innerHeight
+            };
+        }
+
+        function isPointerOverQuantumObject(event) {
+            if (!quantumState.active || !quantumState.pointCloud || !quantumState.camera || !window.THREE) {
+                return false;
+            }
+
+            const THREE = window.THREE;
+            const pointCloud = quantumState.pointCloud;
+            const geometry = pointCloud.geometry;
+            if (!geometry.boundingSphere) {
+                geometry.computeBoundingSphere();
+            }
+
+            pointCloud.updateMatrixWorld();
+            const worldScale = new THREE.Vector3();
+            pointCloud.getWorldScale(worldScale);
+
+            const sphereCenter = geometry.boundingSphere.center.clone().applyMatrix4(pointCloud.matrixWorld);
+            const projectedCenter = sphereCenter.clone().project(quantumState.camera);
+            if (projectedCenter.z < -1 || projectedCenter.z > 1) {
+                return false;
+            }
+
+            const centerX = (projectedCenter.x * 0.5 + 0.5) * window.innerWidth;
+            const centerY = (-projectedCenter.y * 0.5 + 0.5) * window.innerHeight;
+            const radius = geometry.boundingSphere.radius * Math.max(worldScale.x, worldScale.y, worldScale.z);
+            const distance = quantumState.camera.position.distanceTo(sphereCenter);
+            const visibleHeight = 2 * Math.tan(THREE.MathUtils.degToRad(quantumState.camera.fov) / 2) * distance;
+            const projectedRadius = Math.max(96, (radius / visibleHeight) * window.innerHeight);
+            const radiusX = projectedRadius * 0.72;
+            const radiusY = projectedRadius * 0.58;
+            const dx = event.clientX - centerX;
+            const dy = event.clientY - centerY;
+
+            return ((dx * dx) / (radiusX * radiusX) + (dy * dy) / (radiusY * radiusY)) <= 1;
+        }
+
+        function updateQuantumDragHover(event) {
+            if (quantumState.dragging) {
+                document.body.classList.add('is-quantum-grabbable');
+                return;
+            }
+
+            document.body.classList.toggle('is-quantum-grabbable', isPointerOverQuantumObject(event));
+        }
+
+        function beginQuantumDrag(event) {
+            if (!isPointerOverQuantumObject(event)) {
+                return;
+            }
+
+            quantumState.dragging = true;
+            quantumState.dragPointerId = event.pointerId;
+            quantumState.dragStartClientX = event.clientX;
+            quantumState.dragStartClientY = event.clientY;
+            quantumState.dragStartOffsetX = quantumState.dragTargetOffsetX;
+            quantumState.dragStartOffsetY = quantumState.dragTargetOffsetY;
+            document.body.classList.add('is-quantum-dragging', 'is-quantum-grabbable');
+            quantumCanvasContainer.setPointerCapture(event.pointerId);
+            event.preventDefault();
+        }
+
+        function updateQuantumDrag(event) {
+            if (!quantumState.dragging || event.pointerId !== quantumState.dragPointerId) {
+                return;
+            }
+
+            const unitsPerPixel = getQuantumWorldUnitsPerPixel();
+            const deltaX = (event.clientX - quantumState.dragStartClientX) * unitsPerPixel.x;
+            const deltaY = (quantumState.dragStartClientY - event.clientY) * unitsPerPixel.y;
+            quantumState.dragTargetOffsetX = clamp(quantumState.dragStartOffsetX + deltaX, -5.8, 5.8);
+            quantumState.dragTargetOffsetY = clamp(quantumState.dragStartOffsetY + deltaY, -3.8, 3.8);
+        }
+
+        function endQuantumDrag(event) {
+            if (!quantumState.dragging || event.pointerId !== quantumState.dragPointerId) {
+                return;
+            }
+
+            quantumState.dragging = false;
+            quantumState.dragPointerId = null;
+            document.body.classList.remove('is-quantum-dragging');
+            document.body.classList.toggle('is-quantum-grabbable', isPointerOverQuantumObject(event));
         }
 
         function buildShape6GyroidFragment(THREE) {
@@ -422,6 +538,9 @@
             const introProgress = Math.min(1, introElapsed / 1.2);
             quantumState.currentX += (quantumState.targetX - quantumState.currentX) * 0.03;
             quantumState.currentY += (quantumState.targetY - quantumState.currentY) * 0.03;
+            const dragEase = quantumState.dragging ? 0.36 : 0.12;
+            quantumState.dragOffsetX += (quantumState.dragTargetOffsetX - quantumState.dragOffsetX) * dragEase;
+            quantumState.dragOffsetY += (quantumState.dragTargetOffsetY - quantumState.dragOffsetY) * dragEase;
 
             if (quantumState.pointCloud && quantumState.cloudMaterial) {
                 const rotYTarget = 0.36 + quantumState.currentX * 0.52;
@@ -430,8 +549,8 @@
                 quantumState.pointCloud.rotation.y += (rotYTarget - quantumState.pointCloud.rotation.y) * 0.048;
                 quantumState.pointCloud.rotation.x += (rotXTarget - quantumState.pointCloud.rotation.x) * 0.048;
                 quantumState.pointCloud.rotation.z += 0.0009;
-                quantumState.pointCloud.position.x = quantumState.baseCloudX + quantumState.currentX * 0.46;
-                quantumState.pointCloud.position.y = quantumState.baseCloudY + quantumState.currentY * 0.24;
+                quantumState.pointCloud.position.x = quantumState.baseCloudX + quantumState.currentX * 0.46 + quantumState.dragOffsetX;
+                quantumState.pointCloud.position.y = quantumState.baseCloudY + quantumState.currentY * 0.24 + quantumState.dragOffsetY;
                 quantumState.pointCloud.position.z = quantumState.baseCloudZ;
                 quantumState.cloudMaterial.uniforms.uTime.value = timestamp * 0.001;
                 quantumState.cloudMaterial.uniforms.uIntro.value = introProgress;
@@ -474,6 +593,13 @@
                 quantumState.targetY = 0;
                 quantumState.currentX = 0;
                 quantumState.currentY = 0;
+                quantumState.dragging = false;
+                quantumState.dragPointerId = null;
+                quantumState.dragOffsetX = 0;
+                quantumState.dragOffsetY = 0;
+                quantumState.dragTargetOffsetX = 0;
+                quantumState.dragTargetOffsetY = 0;
+                document.body.classList.remove('is-quantum-dragging', 'is-quantum-grabbable');
                 resetTypeParallax();
                 return;
             }
@@ -489,7 +615,27 @@
             }
             quantumState.targetX = (event.clientX / window.innerWidth - 0.5) * 2;
             quantumState.targetY = (event.clientY / window.innerHeight - 0.5) * 2;
+            updateQuantumDrag(event);
+            updateQuantumDragHover(event);
         }, { passive: true });
+
+        if (quantumCanvasContainer) {
+            quantumCanvasContainer.addEventListener('pointerdown', beginQuantumDrag);
+            quantumCanvasContainer.addEventListener('pointerup', endQuantumDrag);
+            quantumCanvasContainer.addEventListener('pointercancel', endQuantumDrag);
+            quantumCanvasContainer.addEventListener('lostpointercapture', (event) => {
+                if (quantumState.dragging && event.pointerId === quantumState.dragPointerId) {
+                    quantumState.dragging = false;
+                    quantumState.dragPointerId = null;
+                    document.body.classList.remove('is-quantum-dragging');
+                }
+            });
+            quantumCanvasContainer.addEventListener('pointerleave', () => {
+                if (!quantumState.dragging) {
+                    document.body.classList.remove('is-quantum-grabbable');
+                }
+            }, { passive: true });
+        }
 
         document.addEventListener('visibilitychange', updateMotionState);
         window.addEventListener('resize', () => {
