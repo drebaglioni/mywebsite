@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="image" href="assets/images/about/home-sanfrancisco.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/images/about/home-artegna-about.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/images/about/home-princeton.jpg">
     <link rel="preload" as="image" href="assets/about-collage-light/about-collage-001.jpg">
     <link rel="preload" as="image" href="assets/about-collage-light/about-collage-002.jpg">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;700&display=swap">
@@ -1194,35 +1195,37 @@
             <div class="index-group">
                 <div class="index-label">Places</div>
                 <div class="index-items">
-                    <button class="index-item is-visual is-active" type="button" data-visual="sf">San Francisco</button>
-                    <span class="index-sep">/</span>
-                    <button class="index-item is-visual" type="button" data-visual="artegna">Artegna</button>
+                    <button class="index-item is-visual is-active" type="button" data-visual="artegna">Artegna</button>
                     <span class="index-sep">/</span>
                     <button class="index-item is-visual" type="button" data-visual="merthyr">Merthyr Tydfil</button>
+                    <span class="index-sep">/</span>
+                    <button class="index-item is-visual" type="button" data-visual="princeton">Princeton</button>
+                    <span class="index-sep">/</span>
+                    <button class="index-item is-visual" type="button" data-visual="sf">San Francisco</button>
                 </div>
             </div>
 
             <div class="index-group">
                 <div class="index-label">Work</div>
                 <div class="index-items">
-                    <span class="index-item is-static">Princeton</span>
-                    <span class="index-sep">/</span>
                     <span class="index-item is-static">Square</span>
                     <span class="index-sep">/</span>
                     <span class="index-item is-static">Algolia</span>
                     <span class="index-sep">/</span>
                     <span class="index-item is-static">Solana</span>
+                    <span class="index-sep">/</span>
+                    <span class="index-item is-static">Footwork</span>
                 </div>
             </div>
 
             <div class="index-group">
-                <div class="index-label">Now</div>
+                <div class="index-label">Learning</div>
                 <div class="index-items">
                     <span class="index-item is-static">Korean</span>
                     <span class="index-sep">/</span>
                     <button class="index-item is-visual" type="button" data-visual="chess">Chess</button>
                     <span class="index-sep">/</span>
-                    <button class="index-item is-visual" type="button" data-visual="frontier">Frontier tech</button>
+                    <span class="index-item is-static">Design</span>
                 </div>
             </div>
 
@@ -1245,7 +1248,7 @@
 
         <aside class="image-orbit" aria-label="Active image">
             <figure class="image-frame" id="imageFrame">
-                <img class="about-image" id="aboutImage" src="assets/images/about/home-sanfrancisco.jpg" alt="San Francisco skyline view" decoding="async" fetchpriority="high">
+                <img class="about-image" id="aboutImage" src="assets/images/about/home-artegna-about.jpg" alt="Artegna town view" decoding="async" fetchpriority="high">
             </figure>
         </aside>
     </main>
@@ -1462,6 +1465,13 @@
                 position: 'center',
                 scale: 1.03
             },
+            princeton: {
+                src: 'assets/images/about/home-princeton.jpg',
+                alt: 'Nassau Hall at Princeton University',
+                accent: '#ff8f00',
+                position: 'center',
+                scale: 1
+            },
             chess: {
                 src: 'assets/images/about/chess-knight.svg',
                 alt: 'Chess knight illustration',
@@ -1469,13 +1479,6 @@
                 position: 'center',
                 scale: 1,
                 fit: 'contain'
-            },
-            frontier: {
-                src: 'assets/images/projects/preview-mind-about.jpg',
-                alt: 'Private search project preview',
-                accent: '#e6ff00',
-                position: 'center',
-                scale: 1
             }
         };
 
@@ -1644,7 +1647,7 @@
 
         const requestedVisual = new URLSearchParams(window.location.search).get('visual');
         buildAboutCollage();
-        setVisual(visuals[requestedVisual] ? requestedVisual : 'sf');
+        setVisual(visuals[requestedVisual] ? requestedVisual : 'artegna');
         scheduleVisualWarmup();
     </script>
 </body>
