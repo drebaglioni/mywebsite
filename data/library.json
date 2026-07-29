@@ -269,7 +269,9 @@
     "finished": "2026-07-23",
     "rating": 4,
     "url": "https://davidoks.blog/p/why-american-ambulance-rides-are",
-    "notes": "The unfortunately botched economics of emergency care"
+    "notes": "The unfortunately botched economics of emergency care",
+    "cover_image": "https://substackcdn.com/image/fetch/$s_!w5ke!,f_auto,q_auto:best,fl_progressive:steep/https%3A%2F%2Fdavidoks.substack.com%2Fapi%2Fv1%2Fpost_preview%2F206339592%2Ftwitter.jpg%3Fversion%3D4",
+    "cover_source": "manual"
   },
   {
     "id": "please-use-ai-2026",
@@ -282,7 +284,9 @@
     "finished": "2026-07-23",
     "rating": 5,
     "url": "https://shawnsmucker.substack.com/p/please-use-ai",
-    "notes": "Be sure to use AI when making"
+    "notes": "Be sure to use AI when making",
+    "cover_image": "https://substackcdn.com/image/fetch/$s_!py4T!,f_auto,q_auto:best,fl_progressive:steep/https%3A%2F%2Fshawnsmucker.substack.com%2Fapi%2Fv1%2Fpost_preview%2F196249275%2Ftwitter.jpg%3Fversion%3D4",
+    "cover_source": "manual"
   },
   {
     "id": "it-is-the-end-of-the-world-and-i-am-here-to-take-you-home-2026",
@@ -295,7 +299,9 @@
     "finished": "2026-07-23",
     "rating": 5,
     "url": "https://nataliercargill.substack.com/p/it-is-the-end-of-the-world-and-i",
-    "notes": null
+    "notes": null,
+    "cover_image": "https://substackcdn.com/image/fetch/$s_!dtIM!,f_auto,q_auto:best,fl_progressive:steep/https%3A%2F%2Fnataliercargill.substack.com%2Fapi%2Fv1%2Fpost_preview%2F195824969%2Ftwitter.jpg%3Fversion%3D4",
+    "cover_source": "manual"
   },
   {
     "id": "how-to-walk-through-walls-2026",
@@ -308,7 +314,9 @@
     "finished": "2026-07-23",
     "rating": 5,
     "url": "https://www.henrikkarlsson.xyz/p/hacker-mindset",
-    "notes": "On hacker mindset"
+    "notes": "On hacker mindset",
+    "cover_image": "https://substackcdn.com/image/fetch/$s_!jUq7!,f_auto,q_auto:best,fl_progressive:steep/https%3A%2F%2Fescapingflatland.substack.com%2Fapi%2Fv1%2Fpost_preview%2F193438542%2Ftwitter.jpg%3Fversion%3D4",
+    "cover_source": "manual"
   },
   {
     "id": "strange-buildings-2026",
@@ -386,7 +394,9 @@
     "finished": "2026-05-01",
     "rating": 2,
     "url": "https://www.anthropic.com/news/core-views-on-ai-safety",
-    "notes": "Anthropic worldview on rapid AI progress, alignment risk, and empirically grounded safety research"
+    "notes": "Anthropic worldview on rapid AI progress, alignment risk, and empirically grounded safety research",
+    "cover_image": "https://cdn.sanity.io/images/4zrzovbb/website/3c9bf89d6c75815dd5835e1cb8ce0bca0ead0d8d-1200x630.jpg",
+    "cover_source": "manual"
   },
   {
     "id": "a-small-number-of-samples-can-poison-llms-of-any-size-2026",
@@ -404,7 +414,9 @@
     "finished": "2026-05-01",
     "rating": 2,
     "url": "https://www.anthropic.com/research/small-samples-poison",
-    "notes": "Joint study w/ UK AISI & Turing Institute: 250 malicious docs can backdoor LLMs of any size \u2014 absolute count matters, not percentage of training data"
+    "notes": "Joint study w/ UK AISI & Turing Institute: 250 malicious docs can backdoor LLMs of any size \u2014 absolute count matters, not percentage of training data",
+    "cover_image": "https://www.anthropic.com/api/opengraph-illustration?name=Hand%20Puzzle&backgroundColor=heather",
+    "cover_source": "manual"
   },
   {
     "id": "is-human-data-enough-2025",
@@ -440,7 +452,9 @@
     "finished": "2026-03-23",
     "rating": 3,
     "url": "https://www.notboring.co/p/world-models",
-    "notes": "Guide to action-conditioned embodied models"
+    "notes": "Guide to action-conditioned embodied models",
+    "cover_image": "https://substackcdn.com/image/fetch/$s_!Sx9V!,f_auto,q_auto:best,fl_progressive:steep/https%3A%2F%2Fnotboring.substack.com%2Fapi%2Fv1%2Fpost_preview%2F191268033%2Ftwitter.jpg%3Fversion%3D4",
+    "cover_source": "manual"
   },
   {
     "id": "being-john-rawls-2026",
