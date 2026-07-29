@@ -623,7 +623,7 @@ body.library-page a {
     background: #afbec8;
     position: relative;
     z-index: 1;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .foil-canvas {
