@@ -1366,23 +1366,22 @@ body.foil-canvas-ready .library-layout::after {
 
 .library-detail {
     grid-column: 3;
-    border-left: 1px solid rgba(255, 255, 255, 0.78);
-    padding: 2.5rem 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    padding: 1.55rem 1.35rem;
     background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(12px) saturate(1.02);
     box-shadow:
-        inset 1px 0 0 rgba(255, 255, 255, 0.94),
+        inset 0 1px 0 rgba(255, 255, 255, 0.94),
         -18px 0 48px var(--silver-shadow);
     overflow-y: auto;
     overscroll-behavior: contain;
     contain: none;
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
+    top: 1.5rem;
+    right: 1.5rem;
     width: 340px;
-    height: 100vh;
-    max-height: none;
+    height: auto;
+    max-height: calc(100vh - 3rem);
     animation: library-panel-rise 620ms cubic-bezier(0.18, 0.88, 0.3, 1) both;
     animation-delay: 100ms;
 }
