@@ -315,10 +315,22 @@ body.homepage #quantumCanvasContainer {
     opacity: 0;
     transition: opacity 720ms ease;
     mix-blend-mode: normal;
+    pointer-events: none;
+    touch-action: none;
 }
 
 body.homepage.is-quantum-active #quantumCanvasContainer {
     opacity: 1;
+    pointer-events: auto;
+}
+
+body.homepage.is-quantum-grabbable #quantumCanvasContainer {
+    cursor: grab;
+}
+
+body.homepage.is-quantum-dragging,
+body.homepage.is-quantum-dragging #quantumCanvasContainer {
+    cursor: grabbing !important;
 }
 
 body.homepage #quantumCanvasContainer canvas {
