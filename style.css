@@ -705,7 +705,7 @@ body.foil-canvas-ready .library-layout::after {
     display: none;
 }
 
-.library-layout > :not(.foil-canvas) {
+.library-layout > :not(.foil-canvas):not(.library-detail) {
     position: relative;
     z-index: 1;
 }
@@ -1387,6 +1387,11 @@ body.foil-canvas-ready .library-layout::after {
     animation-delay: 100ms;
 }
 
+.library-layout > .library-detail {
+    position: fixed;
+    z-index: 2;
+}
+
 .library-detail::before {
     display: none;
 }
@@ -1487,7 +1492,7 @@ body.foil-canvas-ready .library-layout::after {
 
 @media screen and (max-width: 1180px) {
     .library-layout {
-        grid-template-columns: 280px 1fr;
+        grid-template-columns: 280px minmax(0, 1fr) 340px;
     }
 
     .cover-grid {
@@ -1495,21 +1500,6 @@ body.foil-canvas-ready .library-layout::after {
         gap: 0.22rem;
     }
 
-    .library-detail {
-        grid-column: 1 / -1;
-        border-left: none;
-        border-top: 1px solid var(--rule);
-        padding: 1.2rem 1.4rem;
-        position: relative;
-        top: auto;
-        right: auto;
-        bottom: auto;
-        width: auto;
-        height: auto;
-        max-height: none;
-        overflow: visible;
-        overscroll-behavior: auto;
-    }
 }
 
 @media screen and (max-width: 860px) {
@@ -1552,6 +1542,20 @@ body.foil-canvas-ready .library-layout::after {
 
     .library-detail {
         padding: 1.2rem;
+        border-left: none;
+        border-top: 1px solid var(--rule);
+    }
+
+    .library-layout > .library-detail {
+        position: relative;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        width: auto;
+        height: auto;
+        max-height: none;
+        overflow: visible;
+        overscroll-behavior: auto;
     }
 }
 
