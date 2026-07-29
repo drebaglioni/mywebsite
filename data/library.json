@@ -19,6 +19,23 @@
     "isbn": "9781501139154"
   },
   {
+    "id": "foundation-s-edge-1982",
+    "title": "Foundation's Edge",
+    "author": "Isaac Asimov",
+    "format": "book",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 1982,
+    "status": "in-progress",
+    "finished": null,
+    "rating": null,
+    "url": "https://openlibrary.org/works/OL46302W",
+    "notes": "Currently reading Foundation series, book 4",
+    "cover_image": "https://covers.openlibrary.org/b/id/6700720-M.jpg?default=false",
+    "cover_source": "manual"
+  },
+  {
     "id": "how-to-reassess-your-chess-2010",
     "title": "How to Reassess Your Chess",
     "author": "Jeremy Silman",
@@ -259,6 +276,36 @@
     "isbn": "9780316229265"
   },
   {
+    "id": "nobody-is-coming-to-make-your-life-interesting-2026",
+    "title": "Nobody Is Coming to Make Your Life Interesting.",
+    "author": "Hayes Carrera",
+    "format": "article",
+    "subjects": [],
+    "year": 2026,
+    "status": "completed",
+    "finished": "2026-07-29",
+    "rating": 3,
+    "url": "https://hayescarrera.substack.com/p/nobody-is-coming-to-make-your-life",
+    "notes": "It has nothing to do with your habits.",
+    "cover_image": "https://substackcdn.com/image/fetch/$s_!wFjm!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0401a981-1131-457b-b7a0-577ae749bc92_736x909.jpeg",
+    "cover_source": "manual"
+  },
+  {
+    "id": "how-to-become-a-disgustingly-good-conversationalist-2026",
+    "title": "How to Become a Disgustingly Good Conversationalist",
+    "author": "Grace Moser",
+    "format": "article",
+    "subjects": [],
+    "year": 2026,
+    "status": "completed",
+    "finished": "2026-07-29",
+    "rating": 2,
+    "url": "https://gracemmoser.substack.com/p/how-to-become-a-disgustingly-good",
+    "notes": "The unfair social advantage of knowing how to talk to anyone.",
+    "cover_image": "https://substackcdn.com/image/fetch/$s_!1Zzg!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F37338e92-ec29-4511-ae0a-c4e202d051b7_1200x872.png",
+    "cover_source": "manual"
+  },
+  {
     "id": "why-american-ambulance-rides-are-so-expensive-2026",
     "title": "Why American ambulance rides are so expensive",
     "author": "David Oks",
@@ -438,6 +485,23 @@
     "cover_source": "manual"
   },
   {
+    "id": "second-foundation-1953",
+    "title": "Second Foundation",
+    "author": "Isaac Asimov",
+    "format": "book",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 1953,
+    "status": "completed",
+    "finished": "2026-04-15",
+    "rating": 2,
+    "url": "https://openlibrary.org/works/OL46309W",
+    "notes": "Original Foundation series, book 3",
+    "cover_image": "https://covers.openlibrary.org/b/id/9261324-M.jpg?default=false",
+    "cover_source": "manual"
+  },
+  {
     "id": "world-models-computing-the-uncomputable-2026",
     "title": "World Models: Computing the Uncomputable",
     "author": "Packy McCormick, Pim De Witte",
@@ -514,6 +578,23 @@
     "isbn": "9780393635829"
   },
   {
+    "id": "foundation-and-empire-1952",
+    "title": "Foundation and Empire",
+    "author": "Isaac Asimov",
+    "format": "book",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 1952,
+    "status": "completed",
+    "finished": "2026-01-15",
+    "rating": 4,
+    "url": "https://openlibrary.org/works/OL46224W",
+    "notes": "Original Foundation series, book 2",
+    "cover_image": "https://covers.openlibrary.org/b/id/9300695-M.jpg?default=false",
+    "cover_source": "manual"
+  },
+  {
     "id": "the-shadow-of-the-wind-2001",
     "title": "The Shadow of the Wind",
     "author": "Carlos Ruiz Zaf\u00f3n",
@@ -531,6 +612,23 @@
     "cover_image": "https://m.media-amazon.com/images/I/913DdP7RflL._AC_UF1000,1000_QL80_.jpg",
     "cover_source": "manual",
     "isbn": "9781439569740"
+  },
+  {
+    "id": "foundation-1951",
+    "title": "Foundation",
+    "author": "Isaac Asimov",
+    "format": "book",
+    "subjects": [
+      "sci-fi"
+    ],
+    "year": 1951,
+    "status": "completed",
+    "finished": "2025-10-15",
+    "rating": 5,
+    "url": "https://openlibrary.org/works/OL46125W",
+    "notes": "Original Foundation series, book 1",
+    "cover_image": "https://covers.openlibrary.org/b/id/14612610-M.jpg?default=false",
+    "cover_source": "manual"
   },
   {
     "id": "when-the-going-was-good-2025",
@@ -1282,6 +1380,8 @@
     "rating": null,
     "url": "https://draw-down.com/products/a-toolkit-for-gathering-1",
     "notes": "Workshop / gathering design book from the same reel",
+    "cover_image": "https://draw-down.com/cdn/shop/files/AToolkitforGathering_DD_720x.jpg?v=1747243121",
+    "cover_source": "manual",
     "isbn": "9781733474450"
   },
   {
@@ -1565,7 +1665,9 @@
     "finished": null,
     "rating": null,
     "url": "https://arxiv.org/abs/2603.25723",
-    "notes": "ArXiv cs.CL preprint introducing natural-language agent harnesses and the Intelligent Harness Runtime."
+    "notes": "ArXiv cs.CL preprint introducing natural-language agent harnesses and the Intelligent Harness Runtime.",
+    "cover_image": "https://static.arxiv.org/icons/twitter/arxiv-logo-twitter-square.png",
+    "cover_source": "manual"
   },
   {
     "id": "research-for-people-who-think-they-would-rather-create-2021",
@@ -1582,6 +1684,8 @@
     "rating": null,
     "url": "https://openlibrary.org/books/OL34138735M/Research_for_People_Who_Think_They_Would_Rather_Create",
     "notes": "Saved from the @designteamofone practical-for-creatives reel",
+    "cover_image": "https://www.onomatopee.net/wp-content/uploads/2023/10/researchonomatopeedirkvis112front.jpg",
+    "cover_source": "manual",
     "isbn": "9789493148437"
   },
   {
@@ -1600,6 +1704,8 @@
     "rating": null,
     "url": "https://draw-down.com/products/steve-a-framework-for-ai-and-identity-design",
     "notes": "Interview-based design title surfaced in the same reel",
+    "cover_image": "https://draw-down.com/cdn/shop/files/Steve_1296x.jpg?v=1737755597",
+    "cover_source": "manual",
     "isbn": "9789083404172"
   },
   {
@@ -1689,7 +1795,9 @@
     "finished": null,
     "rating": null,
     "url": "https://www.penguinrandomhouse.com/books/77574/the-glass-bead-game-by-hermann-hesse/",
-    "notes": "a.k.a. Magister Ludi; intend to read next."
+    "notes": "a.k.a. Magister Ludi; intend to read next.",
+    "cover_image": "https://cdn.penguin.co.uk/dam-assets/books/9781529918243/9781529918243-jacket-medium.jpg",
+    "cover_source": "manual"
   },
   {
     "id": "the-making-of-a-manager-2019",
