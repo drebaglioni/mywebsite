@@ -8,10 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="image" href="assets/images/about/home-artegna-about.jpg" fetchpriority="high">
-    <link rel="preload" as="image" href="assets/images/about/home-princeton.jpg">
-    <link rel="preload" as="image" href="assets/about-collage-light/about-collage-001.jpg">
-    <link rel="preload" as="image" href="assets/about-collage-light/about-collage-002.jpg">
+    <link rel="preload" as="image" href="assets/images/about/optimized/980-home-artegna-about.jpg" fetchpriority="high">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;700&display=swap">
 
     <style>
@@ -29,6 +26,8 @@
             --lake: #0057ff;
             --acid: #e6ff00;
             --paper: #f1ead2;
+            --paper-photo-hero: url("assets/images/about/paper/torn-paper-720.png");
+            --paper-photo-chip: url("assets/images/about/paper/torn-paper-520.png");
             --blood: #c00000;
             --plum: #111111;
             --active: #e6ff00;
@@ -140,11 +139,8 @@
             width: clamp(32px, 4vw, 54px);
             height: clamp(86px, 15vh, 164px);
             background:
-                radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.74) 0 1px, transparent 1.8px),
-                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.09) 0 1px, transparent 1px 7px),
-                linear-gradient(135deg, rgba(255, 248, 223, 0.98), rgba(230, 255, 0, 0.84));
+                linear-gradient(135deg, rgba(255, 248, 223, 0.98), rgba(230, 255, 0, 0.82));
             box-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.64) inset,
                 5px 6px 0 rgba(5, 5, 5, 0.72),
                 0 0 0 1px rgba(5, 5, 5, 0.3);
             clip-path: polygon(0 8%, 86% 0, 100% 20%, 88% 42%, 100% 64%, 82% 100%, 0 92%);
@@ -205,37 +201,33 @@
         body.is-edge-left .edge-cue-left {
             opacity: 1;
             transform: translate(-32%, -50%) rotate(-4deg);
-            background:
-                radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.78) 0 1px, transparent 1.8px),
-                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.1) 0 1px, transparent 1px 7px),
-                linear-gradient(135deg, #e6ff00, #fff8df);
+            box-shadow:
+                5px 6px 0 #e6ff00,
+                9px 10px 0 rgba(5, 5, 5, 0.72);
         }
 
         body.is-edge-right .edge-cue-right {
             opacity: 1;
             transform: translate(32%, -50%) rotate(4deg) scaleX(-1);
-            background:
-                radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.78) 0 1px, transparent 1.8px),
-                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.1) 0 1px, transparent 1px 7px),
-                linear-gradient(135deg, #e6ff00, #fff8df);
+            box-shadow:
+                5px 6px 0 #e6ff00,
+                9px 10px 0 rgba(5, 5, 5, 0.72);
         }
 
         body.is-edge-top .edge-cue-top {
             opacity: 1;
             transform: translate(-50%, -28%) rotate(3deg);
-            background:
-                radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.78) 0 1px, transparent 1.8px),
-                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.1) 0 1px, transparent 1px 7px),
-                linear-gradient(135deg, #e6ff00, #fff8df);
+            box-shadow:
+                5px 6px 0 #e6ff00,
+                9px 10px 0 rgba(5, 5, 5, 0.72);
         }
 
         body.is-edge-bottom .edge-cue-bottom {
             opacity: 1;
             transform: translate(-50%, 28%) rotate(-3deg) scaleY(-1);
-            background:
-                radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.78) 0 1px, transparent 1.8px),
-                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.1) 0 1px, transparent 1px 7px),
-                linear-gradient(135deg, #e6ff00, #fff8df);
+            box-shadow:
+                5px 6px 0 #e6ff00,
+                9px 10px 0 rgba(5, 5, 5, 0.72);
         }
 
         .about-collage-tile {
@@ -250,6 +242,7 @@
             --clip: polygon(0 0, 100% 0, 100% 100%, 0 100%);
             --inner-clip: polygon(2% 1%, 99% 3%, 97% 98%, 1% 96%);
             --paper-pad: clamp(6px, 0.72vw, 13px);
+            --paper-shadow: rgba(5, 5, 5, 0.34);
 
             position: absolute;
             left: var(--x);
@@ -261,25 +254,18 @@
             margin: 0;
             padding: var(--paper-pad);
             opacity: var(--o);
-            background:
-                radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.8) 0 1px, transparent 1.7px),
-                radial-gradient(circle at 72% 66%, rgba(5, 5, 5, 0.12) 0 1px, transparent 1.9px),
-                repeating-linear-gradient(97deg, rgba(5, 5, 5, 0.08) 0 1px, transparent 1px 8px),
-                linear-gradient(135deg, #fff9e6, #e9ddbd 72%, #fff6dc);
-            background-size: 9px 9px, 13px 13px, auto, auto;
+            background: var(--paper-photo-chip) center / 100% 100% no-repeat;
             border: 0;
             box-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.72) inset,
-                0 -1px 0 rgba(5, 5, 5, 0.22) inset,
-                0 11px 19px rgba(5, 5, 5, 0.34),
+                0 11px 19px var(--paper-shadow),
                 0 28px 54px rgba(5, 5, 5, 0.22);
-            clip-path: var(--clip);
+            clip-path: none;
             transform: translate(-50%, -50%) rotate(var(--r)) scale(var(--sx), var(--sy));
             transform-origin: center;
             mix-blend-mode: normal;
             filter: none;
-            overflow: hidden;
-            contain: layout paint style;
+            overflow: visible;
+            contain: layout style;
             backface-visibility: hidden;
         }
 
@@ -294,11 +280,7 @@
         }
 
         .about-collage-tile.is-paper {
-            background:
-                radial-gradient(circle at 12% 18%, rgba(255, 255, 255, 0.86) 0 1px, transparent 1.7px),
-                repeating-linear-gradient(84deg, rgba(5, 5, 5, 0.09) 0 1px, transparent 1px 7px),
-                linear-gradient(135deg, rgba(255, 252, 232, 0.98), rgba(230, 255, 0, 0.26)),
-                var(--paper);
+            background-image: var(--paper-photo-chip);
         }
 
         .about-collage-tile.is-taped {
@@ -338,20 +320,21 @@
 
         .about-collage-tile::before {
             z-index: 2;
-            opacity: 0.58;
+            opacity: 0.28;
             background:
-                linear-gradient(90deg, rgba(255, 255, 255, 0.56) 0 9px, transparent 9px calc(100% - 8px), rgba(5, 5, 5, 0.08) calc(100% - 8px) 100%),
-                linear-gradient(0deg, rgba(5, 5, 5, 0.1) 0 7px, transparent 7px calc(100% - 10px), rgba(255, 255, 255, 0.42) calc(100% - 10px) 100%),
-                repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.34) 0 1px, transparent 1px 6px);
+                linear-gradient(90deg, rgba(255, 255, 255, 0.34) 0 8px, transparent 8px calc(100% - 10px), rgba(65, 44, 20, 0.22) calc(100% - 10px) 100%),
+                linear-gradient(0deg, rgba(70, 48, 22, 0.2) 0 8px, transparent 8px calc(100% - 10px), rgba(255, 255, 255, 0.28) calc(100% - 10px) 100%);
             mix-blend-mode: soft-light;
         }
 
         .about-collage-tile::after {
             z-index: 3;
-            opacity: 0.2;
+            opacity: 0.28;
             background:
-                repeating-linear-gradient(94deg, rgba(5, 5, 5, 0.22) 0 1px, transparent 1px 8px),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent 52%);
+                radial-gradient(circle at 4% 12%, rgba(255, 255, 255, 0.72) 0 1px, transparent 1.9px),
+                radial-gradient(circle at 96% 84%, rgba(69, 48, 21, 0.32) 0 1px, transparent 2px),
+                repeating-linear-gradient(94deg, rgba(5, 5, 5, 0.18) 0 1px, transparent 1px 8px),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.34), transparent 52%);
             mix-blend-mode: overlay;
         }
 
@@ -386,14 +369,10 @@
         .logo-minimal {
             padding: 0.58rem 0.72rem 0.54rem;
             position: relative;
-            background:
-                radial-gradient(circle at 18% 30%, rgba(255, 255, 255, 0.78) 0 1px, transparent 1.8px),
-                repeating-linear-gradient(99deg, rgba(5, 5, 5, 0.08) 0 1px, transparent 1px 7px),
-                linear-gradient(135deg, #fff8df, #e8dcc2);
+            background: var(--paper-photo-chip) center / 100% 100% no-repeat;
             border-radius: 0;
-            clip-path: polygon(3% 0, 100% 8%, 94% 100%, 0 86%);
+            clip-path: none;
             box-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.72) inset,
                 6px 7px 0 rgba(5, 5, 5, 0.78),
                 10px 11px 0 rgba(255, 42, 0, 0.82);
             transform: rotate(-2deg);
@@ -414,16 +393,11 @@
             border-radius: 0;
             opacity: 0.92;
             position: relative;
-            background:
-                radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.74) 0 1px, transparent 1.8px),
-                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.08) 0 1px, transparent 1px 8px),
-                linear-gradient(135deg, #fff8df, #e6d7b8);
-            clip-path: polygon(0 7%, 92% 0, 100% 80%, 8% 100%);
-            box-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.68) inset,
-                4px 5px 0 rgba(5, 5, 5, 0.66);
+            background: var(--paper-photo-chip) center / 100% 100% no-repeat;
+            clip-path: none;
+            box-shadow: 4px 5px 0 rgba(5, 5, 5, 0.66);
             transform: rotate(var(--nav-rotate, 1deg));
-            transition: transform 150ms ease, color 150ms ease, opacity 150ms ease;
+            transition: transform 150ms ease, color 150ms ease, opacity 150ms ease, box-shadow 150ms ease;
         }
 
         .nav-links a:nth-child(2n) {
@@ -437,16 +411,11 @@
         .nav-links a:hover,
         .nav-links a:focus-visible,
         .nav-links a[aria-current="page"] {
-            background:
-                radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.78) 0 1px, transparent 1.8px),
-                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.09) 0 1px, transparent 1px 8px),
-                linear-gradient(135deg, var(--active), #fff9df);
             color: #050505;
             opacity: 1;
             outline: none;
             transform: translate(-2px, -2px) rotate(var(--nav-rotate, 1deg));
             box-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.74) inset,
                 5px 6px 0 var(--hot),
                 9px 10px 0 rgba(5, 5, 5, 0.74);
         }
@@ -485,23 +454,7 @@
         }
 
         .about-index::after {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            left: clamp(-0.4rem, 1.5vw, 1rem);
-            top: -2.4vh;
-            width: min(44vw, 690px);
-            height: min(82vh, 760px);
-            background:
-                radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.36) 0 1px, transparent 1.8px),
-                repeating-linear-gradient(94deg, rgba(5, 5, 5, 0.1) 0 1px, transparent 1px 9px),
-                linear-gradient(96deg, rgba(255, 248, 222, 0.42) 0 55%, rgba(241, 234, 210, 0.18) 72%, transparent 100%);
-            background-size: 12px 12px, auto, auto;
-            clip-path: polygon(2% 0, 90% 4%, 82% 17%, 98% 31%, 86% 49%, 100% 65%, 80% 82%, 92% 100%, 0 96%, 4% 74%, 0 51%, 5% 25%);
-            filter: contrast(1.04);
-            transform: rotate(-1.2deg);
-            box-shadow: 18px 26px 46px rgba(5, 5, 5, 0.32);
-            pointer-events: none;
+            display: none;
         }
 
         .index-group {
@@ -522,10 +475,8 @@
             width: max-content;
             padding: 0.42em 0.56em;
             color: #050505;
-            background:
-                repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.12) 0 1px, transparent 1px 6px),
-                linear-gradient(135deg, var(--active), #fff9e6);
-            clip-path: polygon(0 8%, 94% 0, 100% 72%, 88% 100%, 7% 94%);
+            background: var(--paper-photo-chip) center / 100% 100% no-repeat;
+            clip-path: none;
             text-transform: uppercase;
             text-shadow: none;
             box-shadow: 5px 5px 0 rgba(5, 5, 5, 0.78);
@@ -548,13 +499,9 @@
             padding: 0.08em 0.16em 0.13em;
             position: relative;
             display: inline-block;
-            overflow: hidden;
-            background:
-                radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.74) 0 1px, transparent 1.7px),
-                radial-gradient(circle at 84% 62%, rgba(5, 5, 5, 0.1) 0 1px, transparent 1.8px),
-                repeating-linear-gradient(101deg, rgba(5, 5, 5, 0.08) 0 1px, transparent 1px 8px),
-                linear-gradient(135deg, #fff7dc 0 64%, #e6d8b8 100%);
-            background-size: 10px 10px, 13px 13px, auto, auto;
+            overflow: visible;
+            isolation: isolate;
+            background: transparent;
             color: #050505;
             font-family: "Anton", "Arial Narrow", "Arial Black", system-ui, sans-serif;
             font-size: clamp(1.48rem, 3.56vw, 4.8rem);
@@ -568,25 +515,26 @@
             text-shadow:
                 0.015em 0.018em 0 rgba(255, 42, 0, 0.42),
                 0.035em 0.036em 0 rgba(5, 5, 5, 0.2);
-            clip-path: polygon(1% 0, 99% 4%, 96% 95%, 7% 100%, 0 73%);
-            box-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.74) inset,
-                0 -1px 0 rgba(5, 5, 5, 0.2) inset,
-                7px 8px 0 rgba(5, 5, 5, 0.74);
+            clip-path: none;
+            box-shadow: none;
+            filter: none;
             transform: rotate(var(--item-rotate, -1deg));
             transition: color 160ms ease, opacity 160ms ease, transform 160ms ease;
         }
 
-        .index-item::after {
+        .index-item::before {
             content: "";
             position: absolute;
-            inset: 0;
-            opacity: 0.28;
+            z-index: -1;
+            inset: -0.08em -0.13em -0.05em;
+            background: var(--paper-photo-chip) center / 100% 100% no-repeat;
+            box-shadow: 0.12em 0.13em 0 rgba(5, 5, 5, 0.66);
+            transform: rotate(calc(var(--item-rotate, -1deg) * -0.35));
             pointer-events: none;
-            background:
-                repeating-linear-gradient(91deg, rgba(5, 5, 5, 0.18) 0 1px, transparent 1px 7px),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.24), transparent 54%);
-            mix-blend-mode: overlay;
+        }
+
+        .index-item::after {
+            display: none;
         }
 
         .index-items .index-item:nth-child(4n + 1) {
@@ -597,19 +545,11 @@
         .index-items .index-item:nth-child(4n + 3) {
             --item-rotate: 1.6deg;
             color: #c00000;
-            background:
-                radial-gradient(circle at 18% 28%, rgba(255, 255, 255, 0.68) 0 1px, transparent 1.7px),
-                repeating-linear-gradient(104deg, rgba(5, 5, 5, 0.08) 0 1px, transparent 1px 8px),
-                linear-gradient(135deg, #fff8e3 0 70%, #f1cbbb 100%);
         }
 
         .index-items .index-item:nth-child(4n + 5) {
             --item-rotate: 2.2deg;
             color: #003fbd;
-            background:
-                radial-gradient(circle at 80% 18%, rgba(255, 255, 255, 0.72) 0 1px, transparent 1.7px),
-                repeating-linear-gradient(92deg, rgba(5, 5, 5, 0.08) 0 1px, transparent 1px 8px),
-                linear-gradient(135deg, #fff8df 0 68%, #cddcff 100%);
         }
 
         .index-item.is-static {
@@ -630,9 +570,10 @@
             color: #050505;
             line-height: 1;
             padding: 0.08em 0.24em;
-            background: rgba(230, 255, 0, 0.88);
-            clip-path: polygon(0 14%, 100% 0, 86% 100%, 8% 88%);
-            box-shadow: 3px 4px 0 rgba(5, 5, 5, 0.74);
+            background: transparent;
+            clip-path: none;
+            box-shadow: none;
+            text-shadow: 2px 2px 0 rgba(230, 255, 0, 0.86);
             transform: rotate(8deg);
         }
 
@@ -646,22 +587,23 @@
         .index-item[href]:hover,
         .index-item[href]:focus-visible {
             color: #050505;
-            background:
-                radial-gradient(circle at 16% 20%, rgba(255, 255, 255, 0.8) 0 1px, transparent 1.7px),
-                repeating-linear-gradient(101deg, rgba(5, 5, 5, 0.1) 0 1px, transparent 1px 7px),
-                linear-gradient(135deg, #e6ff00 0 54%, #fff9dc 100%);
             opacity: 1;
             outline: none;
             transform: translate(-0.04em, -0.07em) rotate(calc(var(--item-rotate, -1deg) - 1deg)) scale(1.04);
-            box-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.74) inset,
-                0 -1px 0 rgba(5, 5, 5, 0.22) inset,
-                8px 9px 0 var(--hot),
-                13px 14px 0 rgba(5, 5, 5, 0.78);
             text-shadow:
                 0.014em 0.017em 0 rgba(255, 42, 0, 0.45),
                 0.032em 0.034em 0 rgba(5, 5, 5, 0.2);
             text-decoration-color: var(--active);
+        }
+
+        .index-item.is-visual:hover::before,
+        .index-item.is-visual:focus-visible::before,
+        .index-item.is-active::before,
+        .index-item[href]:hover::before,
+        .index-item[href]:focus-visible::before {
+            box-shadow:
+                0.12em 0.13em 0 var(--hot),
+                0.2em 0.22em 0 rgba(5, 5, 5, 0.76);
         }
 
         .image-orbit {
@@ -681,33 +623,11 @@
         }
 
         .image-orbit::before {
-            width: min(68vw, 940px);
-            height: min(70vw, 940px);
-            background:
-                radial-gradient(circle at 16% 22%, rgba(255, 255, 255, 0.72) 0 1px, transparent 1.9px),
-                radial-gradient(circle at 82% 70%, rgba(5, 5, 5, 0.1) 0 1px, transparent 2px),
-                repeating-linear-gradient(98deg, rgba(5, 5, 5, 0.08) 0 1px, transparent 1px 9px),
-                linear-gradient(135deg, rgba(255, 248, 224, 0.95), rgba(229, 216, 188, 0.86) 68%, rgba(255, 249, 228, 0.74));
-            background-size: 12px 12px, 16px 16px, auto, auto;
-            clip-path: polygon(4% 2%, 22% 0, 39% 4%, 58% 1%, 80% 5%, 96% 0, 100% 20%, 94% 39%, 100% 58%, 92% 84%, 98% 100%, 73% 96%, 52% 100%, 31% 95%, 8% 100%, 0 82%, 4% 58%, 0 36%);
-            filter: saturate(1.04) contrast(1.04);
-            transform: translate3d(0, 0, 0) rotate(-5deg);
-            opacity: 0.9;
-            box-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.72) inset,
-                22px 30px 64px rgba(5, 5, 5, 0.34);
+            display: none;
         }
 
         .image-orbit::after {
-            width: min(43vw, 560px);
-            height: min(43vw, 560px);
-            background:
-                linear-gradient(99deg, transparent 0 9%, rgba(230, 255, 0, 0.62) 9% 23%, transparent 23% 100%),
-                linear-gradient(-8deg, transparent 0 62%, rgba(255, 248, 222, 0.72) 62% 80%, transparent 80% 100%),
-                repeating-linear-gradient(112deg, rgba(5, 5, 5, 0.12) 0 1px, transparent 1px 8px);
-            mix-blend-mode: normal;
-            transform: translate(10%, -8%) rotate(13deg);
-            opacity: 0.74;
+            display: none;
         }
 
         .image-frame {
@@ -716,34 +636,19 @@
             aspect-ratio: 1.03;
             display: grid;
             padding: clamp(0.86rem, 1.35vw, 1.32rem);
-            background:
-                radial-gradient(circle at 16% 24%, rgba(255, 255, 255, 0.8) 0 1px, transparent 1.9px),
-                radial-gradient(circle at 74% 70%, rgba(5, 5, 5, 0.1) 0 1px, transparent 2px),
-                repeating-linear-gradient(97deg, rgba(5, 5, 5, 0.08) 0 1px, transparent 1px 9px),
-                linear-gradient(135deg, #fff8df, #e5d7b8);
-            background-size: 11px 11px, 15px 15px, auto, auto;
-            clip-path: polygon(3% 0, 20% 4%, 42% 1%, 62% 5%, 86% 0, 100% 15%, 94% 39%, 100% 64%, 92% 90%, 74% 100%, 52% 95%, 30% 100%, 0 92%, 7% 65%, 0 36%);
+            background: var(--paper-photo-hero) center / 100% 100% no-repeat;
+            clip-path: none;
             box-shadow:
-                0 1px 0 rgba(255, 255, 255, 0.72) inset,
-                0 -1px 0 rgba(5, 5, 5, 0.2) inset,
                 13px 16px 0 rgba(5, 5, 5, 0.78),
                 22px 28px 0 rgba(255, 42, 0, 0.72),
                 0 28px 70px rgba(5, 5, 5, 0.34);
+            filter: none;
             transform: rotate(-1.5deg);
             overflow: visible;
         }
 
         .image-frame::before {
-            content: "";
-            position: absolute;
-            inset: -1.2rem -0.9rem;
-            z-index: -1;
-            background:
-                linear-gradient(96deg, transparent 0 10%, rgba(230, 255, 0, 0.72) 10% 30%, transparent 30% 100%),
-                linear-gradient(-12deg, transparent 0 66%, rgba(255, 248, 222, 0.78) 66% 84%, transparent 84% 100%),
-                repeating-linear-gradient(88deg, rgba(5, 5, 5, 0.08) 0 1px, transparent 1px 8px);
-            clip-path: polygon(4% 8%, 100% 0, 94% 92%, 0 100%);
-            transform: rotate(-4deg) scale(1.03);
+            display: none;
         }
 
         .image-frame::after {
@@ -752,12 +657,12 @@
             inset: clamp(0.86rem, 1.35vw, 1.32rem);
             z-index: 2;
             pointer-events: none;
-            opacity: 0.24;
+            opacity: 0.22;
             background:
-                repeating-linear-gradient(94deg, rgba(5, 5, 5, 0.22) 0 1px, transparent 1px 8px),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.36), transparent 54%);
+                repeating-linear-gradient(94deg, rgba(5, 5, 5, 0.18) 0 1px, transparent 1px 8px),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.34), transparent 54%);
             mix-blend-mode: overlay;
-            clip-path: polygon(2% 2%, 98% 4%, 96% 96%, 8% 99%, 0 72%);
+            clip-path: polygon(2% 2%, 14% 0, 31% 3%, 49% 1%, 67% 4%, 98% 3%, 96% 21%, 99% 44%, 96% 70%, 99% 96%, 78% 99%, 54% 96%, 32% 100%, 8% 98%, 0 72%, 4% 46%, 1% 24%);
         }
 
         .about-image {
@@ -768,7 +673,7 @@
             object-position: var(--image-position, center);
             transform: scale(var(--image-scale, 1));
             background: #050505;
-            clip-path: polygon(2% 2%, 98% 4%, 96% 96%, 8% 99%, 0 72%);
+            clip-path: polygon(2% 2%, 14% 0, 31% 3%, 49% 1%, 67% 4%, 98% 3%, 96% 21%, 99% 44%, 96% 70%, 99% 96%, 78% 99%, 54% 96%, 32% 100%, 8% 98%, 0 72%, 4% 46%, 1% 24%);
             box-shadow:
                 0 0 0 1px rgba(5, 5, 5, 0.28),
                 0 4px 14px rgba(5, 5, 5, 0.28);
@@ -777,14 +682,12 @@
         }
 
         .image-frame.is-contained {
-            background:
-                repeating-linear-gradient(97deg, rgba(5, 5, 5, 0.08) 0 1px, transparent 1px 9px),
-                linear-gradient(135deg, #fff8df, #e5d7b8);
+            background: var(--paper-photo-hero) center / 100% 100% no-repeat;
         }
 
         .image-frame.is-contained .about-image {
             object-fit: contain;
-            padding: clamp(2rem, 4vw, 4.4rem);
+            padding: clamp(0.8rem, 1.8vw, 1.6rem);
             background: #fff8df;
             transform: none;
         }
@@ -809,6 +712,7 @@
                 box-shadow:
                     0 0 0 3px rgba(241, 234, 210, 0.45),
                     0 12px 24px rgba(5, 5, 5, 0.38);
+                filter: none;
             }
 
             .edge-pan-cues {
@@ -847,14 +751,7 @@
             }
 
             .about-index::after {
-                left: 1rem;
-                top: -1.2rem;
-                width: min(100vw, 560px);
-                height: 56vh;
-                background:
-                    radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.34) 0 1px, transparent 1.8px),
-                    repeating-linear-gradient(94deg, rgba(5, 5, 5, 0.1) 0 1px, transparent 1px 9px),
-                    linear-gradient(96deg, rgba(255, 248, 222, 0.42) 0 70%, rgba(241, 234, 210, 0.18) 88%, transparent 100%);
+                display: none;
             }
 
             .index-group {
@@ -910,10 +807,7 @@
                 text-align: center;
                 padding: 8px 4px;
                 font-size: 10px;
-                background:
-                    radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.74) 0 1px, transparent 1.8px),
-                    repeating-linear-gradient(96deg, rgba(5, 5, 5, 0.08) 0 1px, transparent 1px 8px),
-                    linear-gradient(135deg, #fff8df, #e6d7b8);
+                background: var(--paper-photo-chip) center / 100% 100% no-repeat;
             }
         }
 
@@ -1248,7 +1142,7 @@
 
         <aside class="image-orbit" aria-label="Active image">
             <figure class="image-frame" id="imageFrame">
-                <img class="about-image" id="aboutImage" src="assets/images/about/home-artegna-about.jpg" alt="Artegna town view" decoding="async" fetchpriority="high">
+                <img class="about-image" id="aboutImage" src="assets/images/about/optimized/980-home-artegna-about.jpg" alt="Artegna town view" width="980" height="734" decoding="async" fetchpriority="high">
             </figure>
         </aside>
     </main>
@@ -1263,9 +1157,9 @@
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         const collageImageCount = 81;
         const isSmallViewport = window.matchMedia('(max-width: 760px)').matches;
-        const collageTileCount = isSmallViewport ? 116 : 196;
-        const initialCollageTileCount = isSmallViewport ? 30 : 44;
-        const initialCollageSourceCount = isSmallViewport ? 10 : 12;
+        const collageTileCount = isSmallViewport ? 48 : 72;
+        const initialCollageTileCount = isSmallViewport ? 8 : 12;
+        const initialCollageSourceCount = isSmallViewport ? 6 : 8;
         const desktopCoverageTiles = [
             [-31, -14, 48, -8], [4, -12, 48, 6], [39, -15, 50, -4], [74, -12, 48, 8], [109, -14, 50, -7],
             [-33, 9, 50, 7], [3, 10, 52, -5], [40, 8, 54, 4], [77, 10, 52, -8], [113, 9, 50, 6],
@@ -1377,13 +1271,11 @@
             const sourceIndex = index < initialCollageTileCount
                 ? index % initialCollageSourceCount
                 : index % collageSources.length;
-            image.src = collageSources[sourceIndex];
             image.alt = '';
             image.decoding = 'async';
-            image.loading = index < 12 ? 'eager' : 'lazy';
-            if (index < 8) {
-                image.fetchPriority = 'high';
-            }
+            image.loading = index < 4 ? 'eager' : 'lazy';
+            image.fetchPriority = 'low';
+            image.src = collageSources[sourceIndex];
 
             figure.appendChild(image);
             return figure;
@@ -1399,7 +1291,7 @@
 
         function scheduleCollageRemainder(startIndex, random) {
             let cursor = startIndex;
-            const chunkSize = isSmallViewport ? 16 : 22;
+            const chunkSize = isSmallViewport ? 8 : 12;
             const appendChunk = () => {
                 const nextCursor = Math.min(collageTileCount, cursor + chunkSize);
                 appendCollageTiles(cursor, nextCursor, random);
@@ -1410,19 +1302,19 @@
                 }
 
                 if ('requestIdleCallback' in window) {
-                    window.requestIdleCallback(appendChunk, { timeout: 1800 });
+                    window.requestIdleCallback(appendChunk, { timeout: 2800 });
                     return;
                 }
 
-                window.setTimeout(appendChunk, 180);
+                window.setTimeout(appendChunk, 260);
             };
 
             if ('requestIdleCallback' in window) {
-                window.requestIdleCallback(appendChunk, { timeout: 1200 });
+                window.requestIdleCallback(appendChunk, { timeout: 2200 });
                 return;
             }
 
-            window.setTimeout(appendChunk, 180);
+            window.setTimeout(appendChunk, 320);
         }
 
         function buildAboutCollage() {
@@ -1445,14 +1337,14 @@
 
         const visuals = {
             sf: {
-                src: 'assets/images/about/home-sanfrancisco.jpg',
+                src: 'assets/images/about/optimized/980-home-sanfrancisco.jpg',
                 alt: 'San Francisco skyline view',
                 accent: '#e6ff00',
                 position: 'center',
                 scale: 1
             },
             artegna: {
-                src: 'assets/images/about/home-artegna-about.jpg',
+                src: 'assets/images/about/optimized/980-home-artegna-about.jpg',
                 alt: 'Artegna town view',
                 accent: '#ff4b16',
                 position: 'center',
@@ -1466,7 +1358,7 @@
                 scale: 1.03
             },
             princeton: {
-                src: 'assets/images/about/home-princeton.jpg',
+                src: 'assets/images/about/optimized/980-home-princeton.jpg',
                 alt: 'Nassau Hall at Princeton University',
                 accent: '#ff8f00',
                 position: 'center',
@@ -1488,6 +1380,8 @@
         let edgeDriveY = 0;
         let panX = 0;
         let panY = 0;
+        let edgeCueKey = '';
+        let pendingVisualToken = 0;
 
         function warmVisualImages() {
             Object.values(visuals).forEach((visual) => {
@@ -1506,24 +1400,24 @@
         }
 
         function scheduleVisualWarmup() {
-            if ('requestIdleCallback' in window) {
-                window.requestIdleCallback(warmVisualImages, { timeout: 2200 });
+            const enqueueWarmup = () => {
+                if ('requestIdleCallback' in window) {
+                    window.requestIdleCallback(warmVisualImages, { timeout: 5200 });
+                    return;
+                }
+
+                window.setTimeout(warmVisualImages, 1800);
+            };
+
+            if (document.readyState === 'complete') {
+                enqueueWarmup();
                 return;
             }
 
-            window.setTimeout(warmVisualImages, 700);
+            window.addEventListener('load', enqueueWarmup, { once: true });
         }
 
-        function setVisual(key) {
-            const visualKey = visuals[key] ? key : 'sf';
-
-            if (activeVisualKey === visualKey) {
-                return;
-            }
-
-            const visual = visuals[visualKey];
-            activeVisualKey = visualKey;
-
+        function applyVisual(visualKey, visual) {
             visualItems.forEach((item) => {
                 item.classList.toggle('is-active', item.dataset.visual === visualKey);
             });
@@ -1535,6 +1429,42 @@
             aboutImage.style.setProperty('--image-position', visual.position || 'center');
             aboutImage.style.setProperty('--image-scale', visual.scale || 1);
             imageFrame.classList.toggle('is-contained', visual.fit === 'contain');
+        }
+
+        function setVisual(key) {
+            const visualKey = visuals[key] ? key : 'sf';
+
+            if (activeVisualKey === visualKey) {
+                return;
+            }
+
+            const visual = visuals[visualKey];
+            const token = pendingVisualToken + 1;
+            pendingVisualToken = token;
+            activeVisualKey = visualKey;
+
+            if (visual.src === aboutImage.getAttribute('src')) {
+                applyVisual(visualKey, visual);
+                return;
+            }
+
+            const nextImage = new Image();
+            nextImage.decoding = 'async';
+            nextImage.src = visual.src;
+
+            const commit = () => {
+                if (pendingVisualToken === token) {
+                    applyVisual(visualKey, visual);
+                }
+            };
+
+            if (nextImage.decode) {
+                nextImage.decode().then(commit).catch(commit);
+                return;
+            }
+
+            nextImage.onload = commit;
+            nextImage.onerror = commit;
         }
 
         visualItems.forEach((item) => {
@@ -1582,6 +1512,12 @@
         }
 
         function setEdgeCueState(left, right, top, bottom) {
+            const key = `${Boolean(left)}:${Boolean(right)}:${Boolean(top)}:${Boolean(bottom)}`;
+            if (edgeCueKey === key) {
+                return;
+            }
+
+            edgeCueKey = key;
             document.body.classList.toggle('is-edge-left', Boolean(left));
             document.body.classList.toggle('is-edge-right', Boolean(right));
             document.body.classList.toggle('is-edge-top', Boolean(top));
@@ -1646,8 +1582,10 @@
         }, { passive: true });
 
         const requestedVisual = new URLSearchParams(window.location.search).get('visual');
-        buildAboutCollage();
         setVisual(visuals[requestedVisual] ? requestedVisual : 'artegna');
+        window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(buildAboutCollage);
+        });
         scheduleVisualWarmup();
     </script>
 </body>
