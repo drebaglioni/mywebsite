@@ -651,7 +651,7 @@
                 const fallbackSubjectAttr = escapeAttr(item._ui.subjectDisplay);
                 const coverUrl = normalizeText(item._ui.coverUrl);
                 const hasCover = Boolean(coverUrl);
-                const useArticlePoster = item.format === 'article';
+                const useArticlePoster = item.format === 'article' && !hasCover;
                 const posterVariant = 'poster-v' + String(hashCode(item.id + '-poster') % 3);
                 const shouldDefer = index >= 10;
                 const loadingStrategy = shouldDefer ? 'lazy' : 'eager';
