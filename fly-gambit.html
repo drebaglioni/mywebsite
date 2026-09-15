@@ -1,0 +1,1022 @@
+<!doctype html>
+<html lang="en" class="gambit-root">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f2ead5">
+    <title>Fly's Gambit — Neural Board Study</title>
+    <style>
+        :root {
+            --paper: #f2ead5;
+            --paper-deep: #ded1b3;
+            --ink: #082f83;
+            --signal: #ff351f;
+            --cyan: #00afc4;
+            --violet: #8e2de2;
+            --dark: #17130f;
+            --line: rgba(8, 47, 131, 0.58);
+            --mono: "Courier New", Courier, monospace;
+            --sans: Arial, Helvetica, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+            margin: 0;
+        }
+
+        body {
+            overflow-x: hidden;
+            color: var(--ink);
+            background:
+                linear-gradient(90deg, rgba(8, 47, 131, 0.045) 1px, transparent 1px) 0 0 / 24px 24px,
+                linear-gradient(rgba(8, 47, 131, 0.045) 1px, transparent 1px) 0 0 / 24px 24px,
+                var(--paper);
+            font-family: var(--sans);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            z-index: -3;
+            inset: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(circle at 76% 11%, rgba(255, 53, 31, 0.24), transparent 24%),
+                radial-gradient(circle at 9% 72%, rgba(0, 175, 196, 0.2), transparent 28%);
+            mix-blend-mode: multiply;
+        }
+
+        a,
+        button {
+            color: inherit;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .site-nav {
+            position: relative;
+            z-index: 20;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 20px;
+            padding: 18px 22px 0;
+            font: 700 11px/1 var(--mono);
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+        }
+
+        .site-nav a {
+            text-decoration-thickness: 1px;
+            text-underline-offset: 4px;
+        }
+
+        .poster {
+            position: relative;
+            isolation: isolate;
+            width: min(1500px, 100%);
+            min-height: calc(100vh - 38px);
+            margin: 0 auto;
+            padding: 18px 22px 30px;
+        }
+
+        .poster::before {
+            content: "";
+            position: absolute;
+            z-index: -2;
+            top: 7%;
+            right: -8%;
+            width: 44%;
+            height: 44%;
+            background: repeating-linear-gradient(
+                132deg,
+                rgba(142, 45, 226, 0.15) 0 9px,
+                transparent 9px 18px
+            );
+            clip-path: polygon(0 9%, 100% 0, 84% 100%, 7% 79%);
+        }
+
+        .masthead {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(210px, 31ch);
+            gap: 28px;
+            align-items: end;
+            padding: 12px 0 22px;
+            border-bottom: 3px solid var(--ink);
+        }
+
+        .title-wrap {
+            position: relative;
+        }
+
+        .kicker {
+            display: block;
+            margin: 0 0 7px 4px;
+            font: 700 11px/1 var(--mono);
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: 100%;
+            margin: 0;
+            color: var(--signal);
+            font-size: clamp(68px, 11vw, 176px);
+            font-weight: 900;
+            letter-spacing: -0.085em;
+            line-height: 0.7;
+            text-transform: uppercase;
+        }
+
+        h1 span {
+            display: inline-block;
+            color: var(--ink);
+            transform: translateY(0.08em);
+        }
+
+        .mast-note {
+            margin: 0;
+            padding: 9px 0 3px;
+            font: 700 clamp(12px, 1.1vw, 16px)/1.22 var(--mono);
+            letter-spacing: -0.025em;
+            text-transform: uppercase;
+        }
+
+        .mast-note strong {
+            color: var(--signal);
+        }
+
+        .lab {
+            display: grid;
+            grid-template-columns: minmax(360px, 1.25fr) minmax(280px, 0.62fr);
+            gap: clamp(22px, 4vw, 64px);
+            align-items: start;
+            padding-top: 26px;
+        }
+
+        .board-column {
+            position: relative;
+            min-width: 0;
+        }
+
+        .board-caption {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin: 0 0 8px;
+            font: 700 10px/1 var(--mono);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .board-caption span:last-child {
+            color: var(--signal);
+        }
+
+        .board-stage {
+            position: relative;
+            width: min(100%, 760px);
+            aspect-ratio: 1;
+            border: 3px solid var(--ink);
+            background: var(--paper);
+            box-shadow: 16px 16px 0 rgba(8, 47, 131, 0.15);
+        }
+
+        .board-stage::after {
+            content: "68 → 48 → 8";
+            position: absolute;
+            z-index: 8;
+            right: -11px;
+            bottom: 10%;
+            padding: 4px 7px;
+            color: var(--paper);
+            background: var(--signal);
+            font: 700 10px/1 var(--mono);
+            letter-spacing: 0.1em;
+            transform: rotate(90deg) translateX(100%);
+            transform-origin: right bottom;
+        }
+
+        .board-grid {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+        }
+
+        .square {
+            position: relative;
+            min-width: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 0;
+            border-right: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            background: rgba(242, 234, 213, 0.9);
+            cursor: crosshair;
+        }
+
+        .square:nth-child(16n + 2),
+        .square:nth-child(16n + 4),
+        .square:nth-child(16n + 6),
+        .square:nth-child(16n + 8),
+        .square:nth-child(16n + 9),
+        .square:nth-child(16n + 11),
+        .square:nth-child(16n + 13),
+        .square:nth-child(16n + 15) {
+            background: rgba(8, 47, 131, 0.12);
+        }
+
+        .square:hover,
+        .square:focus-visible {
+            z-index: 2;
+            outline: 3px solid var(--cyan);
+            outline-offset: -3px;
+        }
+
+        .square.is-target::before {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            inset: 14%;
+            border: clamp(3px, 0.55vw, 7px) solid var(--signal);
+            border-radius: 50%;
+            animation: targetPulse 1.15s steps(2, end) infinite;
+        }
+
+        .square-name {
+            position: absolute;
+            left: 5px;
+            bottom: 4px;
+            color: rgba(8, 47, 131, 0.66);
+            font: 700 clamp(7px, 0.7vw, 10px)/1 var(--mono);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .piece {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            color: var(--dark);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(24px, 5.6vw, 76px);
+            line-height: 1;
+            filter: drop-shadow(2px 2px 0 rgba(255, 53, 31, 0.24));
+            pointer-events: none;
+        }
+
+        .piece.is-white {
+            color: var(--paper);
+            -webkit-text-stroke: 1.5px var(--ink);
+            filter: drop-shadow(2px 2px 0 rgba(8, 47, 131, 0.3));
+        }
+
+        .trail-canvas {
+            position: absolute;
+            z-index: 3;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            mix-blend-mode: multiply;
+        }
+
+        .fly {
+            --x: 0;
+            --y: 7;
+            --angle: 0deg;
+            position: absolute;
+            z-index: 6;
+            left: calc((var(--x) + 0.5) * 12.5%);
+            top: calc((var(--y) + 0.5) * 12.5%);
+            width: 11%;
+            aspect-ratio: 8 / 9;
+            pointer-events: none;
+            transform: translate(-50%, -50%) rotate(var(--angle));
+            transition: left 290ms cubic-bezier(0.2, 0.78, 0.24, 1), top 290ms cubic-bezier(0.2, 0.78, 0.24, 1), transform 180ms ease;
+            filter: drop-shadow(2px 3px 0 rgba(255, 53, 31, 0.34)) drop-shadow(0 5px 5px rgba(23, 19, 15, 0.2));
+        }
+
+        .fly svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            shape-rendering: geometricPrecision;
+        }
+
+        .fly-wing {
+            transform-box: fill-box;
+        }
+
+        .fly-wing-left {
+            transform-origin: right center;
+        }
+
+        .fly-wing-right {
+            transform-origin: left center;
+        }
+
+        .fly-wing-membrane {
+            fill: url(#wing-glass);
+            stroke: var(--ink);
+            stroke-width: 2.4;
+            stroke-linejoin: round;
+        }
+
+        .fly-wing-vein {
+            fill: none;
+            stroke: rgba(23, 19, 15, 0.72);
+            stroke-width: 1.35;
+            stroke-linecap: round;
+        }
+
+        .fly-leg {
+            fill: none;
+            stroke: var(--ink);
+            stroke-width: 3.4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .fly-leg-joint {
+            fill: var(--paper);
+            stroke: var(--ink);
+            stroke-width: 2;
+        }
+
+        .fly-abdomen {
+            fill: url(#abdomen-shell);
+            stroke: var(--paper);
+            stroke-width: 2.2;
+        }
+
+        .fly-abdomen-band,
+        .fly-body-detail {
+            fill: none;
+            stroke: var(--signal);
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            opacity: 0.9;
+        }
+
+        .fly-thorax,
+        .fly-head {
+            fill: url(#thorax-shell);
+            stroke: var(--paper);
+            stroke-width: 2.1;
+        }
+
+        .fly-eye {
+            fill: url(#eye-facet);
+            stroke: var(--ink);
+            stroke-width: 1.8;
+        }
+
+        .fly-eye-facet,
+        .fly-bristle,
+        .fly-antenna {
+            fill: none;
+            stroke: var(--paper);
+            stroke-width: 1.2;
+            stroke-linecap: round;
+            opacity: 0.82;
+        }
+
+        .fly-antenna {
+            stroke: var(--ink);
+            stroke-width: 2;
+            opacity: 1;
+        }
+
+        .is-running .fly-wing-left {
+            animation: wingLeft 95ms ease-in-out infinite alternate;
+        }
+
+        .is-running .fly-wing-right {
+            animation: wingRight 95ms ease-in-out infinite alternate;
+        }
+
+        .is-running .fly-abdomen-group {
+            animation: abdomenPulse 190ms ease-in-out infinite alternate;
+            transform-box: fill-box;
+            transform-origin: center top;
+        }
+
+        .board-stamp {
+            position: absolute;
+            z-index: 7;
+            top: 19%;
+            left: -18px;
+            width: 84px;
+            padding: 7px;
+            color: var(--paper);
+            background: var(--ink);
+            font: 700 9px/1.12 var(--mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transform: rotate(-8deg);
+        }
+
+        .console {
+            position: relative;
+            min-width: 0;
+            border-top: 9px solid var(--signal);
+        }
+
+        .console::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: 34%;
+            right: -12%;
+            width: 76%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 24px solid rgba(0, 175, 196, 0.18);
+        }
+
+        .console-section {
+            padding: 14px 0 16px;
+            border-bottom: 1px solid var(--ink);
+        }
+
+        .section-label {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+            font: 700 10px/1 var(--mono);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .live-dot {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--signal);
+        }
+
+        .live-dot::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .status-line {
+            min-height: 2.1em;
+            margin: 0;
+            font-size: clamp(21px, 2.5vw, 40px);
+            font-weight: 900;
+            letter-spacing: -0.055em;
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .status-line em {
+            color: var(--signal);
+            font-style: normal;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1px;
+            background: var(--ink);
+            border: 1px solid var(--ink);
+        }
+
+        .metric {
+            min-height: 68px;
+            padding: 8px;
+            background: var(--paper);
+        }
+
+        .metric-value {
+            display: block;
+            color: var(--signal);
+            font-size: clamp(22px, 2.4vw, 38px);
+            font-weight: 900;
+            letter-spacing: -0.055em;
+            line-height: 0.9;
+        }
+
+        .metric-name {
+            display: block;
+            margin-top: 7px;
+            font: 700 8px/1.1 var(--mono);
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .policy-bars {
+            display: grid;
+            gap: 4px;
+        }
+
+        .policy-row {
+            display: grid;
+            grid-template-columns: 24px 1fr 42px;
+            gap: 7px;
+            align-items: center;
+            font: 700 9px/1 var(--mono);
+        }
+
+        .policy-track {
+            height: 7px;
+            background: rgba(8, 47, 131, 0.12);
+        }
+
+        .policy-fill {
+            width: calc(var(--probability, 0) * 100%);
+            height: 100%;
+            background: var(--ink);
+            transform-origin: left center;
+            transition: width 170ms ease, background 170ms ease;
+        }
+
+        .policy-row.is-choice .policy-fill {
+            background: var(--signal);
+        }
+
+        .sensor-wrap {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 14px;
+            align-items: start;
+        }
+
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            width: 100px;
+            aspect-ratio: 1;
+            border: 1px solid var(--ink);
+        }
+
+        .sensor-cell {
+            background: var(--paper);
+            border: 1px solid rgba(8, 47, 131, 0.19);
+        }
+
+        .sensor-cell.is-edge {
+            background: var(--ink);
+        }
+
+        .sensor-cell.is-piece {
+            background: var(--signal);
+        }
+
+        .sensor-cell.is-self {
+            background: var(--cyan);
+        }
+
+        .sensor-copy {
+            margin: 0;
+            font: 700 10px/1.33 var(--mono);
+            text-transform: uppercase;
+        }
+
+        .bridge {
+            display: grid;
+            gap: 5px;
+        }
+
+        .bridge-step {
+            position: relative;
+            padding: 6px 8px;
+            border: 1px solid var(--ink);
+            background: rgba(242, 234, 213, 0.84);
+            font: 700 9px/1.1 var(--mono);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .bridge-step:not(:last-child)::after {
+            content: "↓";
+            position: absolute;
+            z-index: 2;
+            right: 7px;
+            bottom: -12px;
+            color: var(--signal);
+            font-size: 15px;
+        }
+
+        .bridge-step.future {
+            color: rgba(8, 47, 131, 0.68);
+            border-style: dashed;
+        }
+
+        .bridge-step.verified {
+            color: var(--paper);
+            background: var(--ink);
+        }
+
+        .bridge-proof {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1px;
+            margin-top: 9px;
+            background: var(--ink);
+            border: 1px solid var(--ink);
+        }
+
+        .bridge-result {
+            min-width: 0;
+            padding: 8px;
+            background: var(--paper);
+        }
+
+        .bridge-result strong {
+            display: block;
+            overflow: hidden;
+            color: var(--signal);
+            font: 900 clamp(15px, 1.7vw, 25px)/0.95 var(--sans);
+            letter-spacing: -0.04em;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .bridge-result span,
+        .bridge-record {
+            display: block;
+            margin-top: 6px;
+            font: 700 8px/1.2 var(--mono);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .bridge-record {
+            width: fit-content;
+            color: var(--ink);
+            text-underline-offset: 3px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px;
+            padding-top: 14px;
+        }
+
+        .control {
+            min-height: 42px;
+            padding: 8px 10px;
+            border: 2px solid var(--ink);
+            color: var(--ink);
+            background: var(--paper);
+            font: 700 10px/1 var(--mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .control.primary {
+            color: var(--paper);
+            background: var(--ink);
+        }
+
+        .control:hover,
+        .control:focus-visible {
+            color: var(--paper);
+            background: var(--signal);
+            border-color: var(--signal);
+            outline: none;
+        }
+
+        .control:disabled {
+            cursor: wait;
+            opacity: 0.45;
+        }
+
+        .footnote {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 20px;
+            align-items: end;
+            margin-top: 24px;
+            padding-top: 9px;
+            border-top: 1px solid var(--ink);
+            font: 700 9px/1.25 var(--mono);
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .footnote p {
+            max-width: 84ch;
+            margin: 0;
+        }
+
+        .footnote a {
+            text-underline-offset: 3px;
+        }
+
+        @keyframes targetPulse {
+            50% { transform: scale(0.78); opacity: 0.68; }
+        }
+
+        @keyframes wingLeft {
+            to { transform: rotate(12deg) scaleX(0.76); }
+        }
+
+        @keyframes wingRight {
+            to { transform: rotate(-12deg) scaleX(0.76); }
+        }
+
+        @keyframes abdomenPulse {
+            to { transform: scaleY(0.96) translateY(-1px); }
+        }
+
+        @media (max-width: 900px) {
+            .masthead,
+            .lab {
+                grid-template-columns: 1fr;
+            }
+
+            .masthead {
+                gap: 12px;
+            }
+
+            .mast-note {
+                max-width: 54ch;
+            }
+
+            .board-stage {
+                width: 100%;
+            }
+
+            .console {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0 22px;
+            }
+
+            .controls,
+            .console-section:first-child {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (max-width: 580px) {
+            .site-nav,
+            .poster {
+                padding-left: 13px;
+                padding-right: 13px;
+            }
+
+            h1 {
+                font-size: clamp(58px, 21vw, 108px);
+                line-height: 0.73;
+            }
+
+            .lab {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .console {
+                grid-template-columns: 1fr;
+            }
+
+            .controls,
+            .console-section:first-child {
+                grid-column: auto;
+            }
+
+            .piece {
+                font-size: clamp(21px, 10vw, 54px);
+            }
+
+            .board-stamp,
+            .board-stage::after {
+                display: none;
+            }
+
+            .footnote {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="site-nav" aria-label="Primary">
+        <a href="index.html">home</a>
+        <a href="about.html">about</a>
+        <a href="projects.html">projects</a>
+        <a href="other.html">library</a>
+        <a href="cinema.html">cinema</a>
+        <a href="swag.html">swag</a>
+    </nav>
+
+    <main class="poster">
+        <header class="masthead">
+            <div class="title-wrap">
+                <span class="kicker">Embodied chess study / experiment 01</span>
+                <h1>Fly’s <span>Gambit</span></h1>
+            </div>
+            <p class="mast-note">
+                A trained neural policy reads the board, chooses a direction,
+                and moves the insect one square at a time. <strong>Click a square.</strong>
+            </p>
+        </header>
+
+        <section class="lab" aria-label="Neural board-navigation experiment">
+            <div class="board-column">
+                <p class="board-caption">
+                    <span>Board-state input / live inference</span>
+                    <span id="moveCounter">step 00</span>
+                </p>
+                <div class="board-stage" id="boardStage">
+                    <canvas class="trail-canvas" id="trailCanvas" aria-hidden="true"></canvas>
+                    <div class="board-grid" id="boardGrid" role="grid" aria-label="Interactive chessboard"></div>
+                    <div class="fly" id="fly" aria-hidden="true">
+                        <svg viewBox="0 0 160 180" role="presentation">
+                            <defs>
+                                <linearGradient id="wing-glass" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0" stop-color="#d8f5ef" stop-opacity="0.9"></stop>
+                                    <stop offset="0.48" stop-color="#00afc4" stop-opacity="0.42"></stop>
+                                    <stop offset="1" stop-color="#0846a8" stop-opacity="0.2"></stop>
+                                </linearGradient>
+                                <linearGradient id="abdomen-shell" x1="0" y1="0" x2="1" y2="0">
+                                    <stop offset="0" stop-color="#17130f"></stop>
+                                    <stop offset="0.46" stop-color="#5b554d"></stop>
+                                    <stop offset="0.62" stop-color="#17130f"></stop>
+                                    <stop offset="1" stop-color="#050505"></stop>
+                                </linearGradient>
+                                <radialGradient id="thorax-shell" cx="38%" cy="28%" r="72%">
+                                    <stop offset="0" stop-color="#69635b"></stop>
+                                    <stop offset="0.4" stop-color="#27221d"></stop>
+                                    <stop offset="1" stop-color="#050505"></stop>
+                                </radialGradient>
+                                <radialGradient id="eye-facet" cx="35%" cy="30%" r="74%">
+                                    <stop offset="0" stop-color="#ff6c59"></stop>
+                                    <stop offset="0.46" stop-color="#ff351f"></stop>
+                                    <stop offset="1" stop-color="#80170d"></stop>
+                                </radialGradient>
+                            </defs>
+
+                            <g class="fly-legs">
+                                <path class="fly-leg" d="M67 70 48 58 28 45 15 29M63 88 41 89 22 99 7 96M67 105 49 118 30 143 18 163"></path>
+                                <path class="fly-leg" d="M93 70 112 58 132 45 145 29M97 88 119 89 138 99 153 96M93 105 111 118 130 143 142 163"></path>
+                                <circle class="fly-leg-joint" cx="48" cy="58" r="2.8"></circle>
+                                <circle class="fly-leg-joint" cx="41" cy="89" r="2.8"></circle>
+                                <circle class="fly-leg-joint" cx="49" cy="118" r="2.8"></circle>
+                                <circle class="fly-leg-joint" cx="112" cy="58" r="2.8"></circle>
+                                <circle class="fly-leg-joint" cx="119" cy="89" r="2.8"></circle>
+                                <circle class="fly-leg-joint" cx="111" cy="118" r="2.8"></circle>
+                            </g>
+
+                            <g class="fly-wing fly-wing-left">
+                                <path class="fly-wing-membrane" d="M68 69C50 48 24 39 11 51C-2 63 7 91 25 106C37 116 50 121 64 122C69 107 71 86 68 69Z"></path>
+                                <path class="fly-wing-vein" d="M66 73C48 72 30 64 14 54M64 79C45 85 30 94 24 105M64 85C48 94 42 108 41 116M46 70 34 91M27 61 23 81"></path>
+                            </g>
+                            <g class="fly-wing fly-wing-right">
+                                <path class="fly-wing-membrane" d="M92 69C110 48 136 39 149 51C162 63 153 91 135 106C123 116 110 121 96 122C91 107 89 86 92 69Z"></path>
+                                <path class="fly-wing-vein" d="M94 73C112 72 130 64 146 54M96 79C115 85 130 94 136 105M96 85C112 94 118 108 119 116M114 70 126 91M133 61 137 81"></path>
+                            </g>
+
+                            <g class="fly-abdomen-group">
+                                <path class="fly-abdomen" d="M80 78C61 79 56 98 60 123C63 143 72 159 80 168C88 159 97 143 100 123C104 98 99 79 80 78Z"></path>
+                                <path class="fly-abdomen-band" d="M62 105C72 109 88 109 98 105M61 121C72 126 88 126 99 121M66 141C74 144 86 144 94 141"></path>
+                                <path class="fly-body-detail" d="M80 86V157"></path>
+                            </g>
+
+                            <path class="fly-thorax" d="M80 55C60 55 52 69 55 89C58 106 67 115 80 116C93 115 102 106 105 89C108 69 100 55 80 55Z"></path>
+                            <path class="fly-body-detail" d="M67 65C73 71 74 91 68 103M93 65C87 71 86 91 92 103"></path>
+                            <path class="fly-bristle" d="M65 69 59 62M63 80 55 77M64 94 55 98M95 69 101 62M97 80 105 77M96 94 105 98"></path>
+
+                            <path class="fly-head" d="M80 27C62 27 54 38 57 53C60 66 68 71 80 70C92 71 100 66 103 53C106 38 98 27 80 27Z"></path>
+                            <path class="fly-eye" d="M61 35C54 40 55 54 62 61C67 65 72 60 72 49C72 38 67 31 61 35Z"></path>
+                            <path class="fly-eye" d="M99 35C106 40 105 54 98 61C93 65 88 60 88 49C88 38 93 31 99 35Z"></path>
+                            <path class="fly-eye-facet" d="M60 43 69 52M58 51 67 59M100 43 91 52M102 51 93 59"></path>
+                            <path class="fly-antenna" d="M73 31 66 20 59 14M87 31 94 20 101 14M77 59 80 67 83 59"></path>
+                            <circle cx="59" cy="14" r="2" fill="#17130f"></circle>
+                            <circle cx="101" cy="14" r="2" fill="#17130f"></circle>
+                        </svg>
+                    </div>
+                    <span class="board-stamp">Policy output becomes desired heading</span>
+                </div>
+            </div>
+
+            <aside class="console" aria-label="Policy console">
+                <section class="console-section">
+                    <div class="section-label">
+                        <span>Inference state</span>
+                        <span class="live-dot" id="modelState">loading</span>
+                    </div>
+                    <p class="status-line" id="statusLine">Reading <em>weights</em></p>
+                </section>
+
+                <section class="console-section">
+                    <div class="section-label"><span>Held-out proof</span><span>v1</span></div>
+                    <div class="metric-grid">
+                        <div class="metric">
+                            <span class="metric-value" id="accuracyMetric">—</span>
+                            <span class="metric-name">Single-step accuracy</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value" id="successMetric">—</span>
+                            <span class="metric-name">Route completion</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value" id="sampleMetric">—</span>
+                            <span class="metric-name">Training states</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">68·48·8</span>
+                            <span class="metric-name">Network shape</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="console-section">
+                    <div class="section-label"><span>Eight motor intentions</span><span id="choiceLabel">—</span></div>
+                    <div class="policy-bars" id="policyBars"></div>
+                </section>
+
+                <section class="console-section">
+                    <div class="section-label"><span>Local sensor crop</span><span>5 × 5</span></div>
+                    <div class="sensor-wrap">
+                        <div class="sensor-grid" id="sensorGrid" aria-label="Local board sensor"></div>
+                        <p class="sensor-copy">Blue is self. Red is occupied. Dark is beyond the board. The saved network sees the complete occupancy field.</p>
+                    </div>
+                </section>
+
+                <section class="console-section">
+                    <div class="section-label">
+                        <span>Physical rollout</span>
+                        <span class="live-dot" id="bridgeState">checking</span>
+                    </div>
+                    <div class="bridge">
+                        <div class="bridge-step verified">Camera-trained CNN → occupied squares</div>
+                        <div class="bridge-step verified">Navigation policy → center-of-mass route</div>
+                        <div class="bridge-step verified">Pretrained FlyBody controller → joints + adhesion</div>
+                        <div class="bridge-step verified">MuJoCo body → measured movement</div>
+                    </div>
+                    <div class="bridge-proof">
+                        <div class="bridge-result">
+                            <strong id="bridgeError">—</strong>
+                            <span>Final target error</span>
+                        </div>
+                        <div class="bridge-result">
+                            <strong id="bridgeTracking">—</strong>
+                            <span>Tracking RMSE</span>
+                        </div>
+                        <div class="bridge-result">
+                            <strong id="bridgeVision">—</strong>
+                            <span>Vision test accuracy</span>
+                        </div>
+                        <div class="bridge-result">
+                            <strong id="bridgeContacts">—</strong>
+                            <span>Obstacle contacts</span>
+                        </div>
+                    </div>
+                    <a class="bridge-record" href="data/fly-gambit-bridge-proof.json">A1 → F7 verification record ↗</a>
+                </section>
+
+                <div class="controls">
+                    <button class="control primary" id="runButton" type="button" disabled>Run policy</button>
+                    <button class="control" id="targetButton" type="button" disabled>New target</button>
+                    <button class="control" id="boardButton" type="button" disabled>New board</button>
+                    <button class="control" id="resetButton" type="button" disabled>Reset trail</button>
+                </div>
+            </aside>
+        </section>
+
+        <footer class="footnote">
+            <p>
+                This is an actually trained high-level navigation network, not a scripted route.
+                A camera-trained CNN now reads a collision-enabled MuJoCo chessboard before its
+                A1 → F7 route drives the published FlyBody walking controller. The next step is
+                closed-loop perception from the fly's own eye cameras—not pretending that either
+                high-level network learned FlyBody's detailed joint control.
+            </p>
+            <a href="https://github.com/TuragaLab/flybody" target="_blank" rel="noopener noreferrer">FlyBody research ↗</a>
+        </footer>
+    </main>
+
+    <script src="scripts/fly-gambit.js"></script>
+</body>
+</html>

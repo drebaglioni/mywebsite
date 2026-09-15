@@ -508,6 +508,26 @@
                 linear-gradient(90deg, transparent 0 50%, rgba(255, 50, 31, 0.34) 50% 51%, transparent 51%);
         }
 
+        .figure-field[data-active="gambit"] {
+            --preview-left: 49vw;
+            --preview-top: 49vh;
+            --sheet-tilt: 1.4deg;
+            --artifact-gray: 0;
+            --artifact-sepia: 0;
+            --artifact-saturation: 1.04;
+            --artifact-hue: 0deg;
+            --artifact-contrast: 1.08;
+            --artifact-opacity: 0.98;
+            --artifact-overlay-opacity: 0.12;
+            --artifact-tint: linear-gradient(135deg, rgba(255, 253, 245, 0.01), rgba(0, 216, 255, 0.1));
+            --artifact-image: url("assets/images/projects/preview-fly-gambit.svg");
+            --artifact-media-size: cover;
+            --artifact-position: center;
+            --artifact-mask:
+                linear-gradient(90deg, transparent 0 42%, rgba(255, 50, 31, 0.3) 42% 43%, transparent 43%),
+                linear-gradient(135deg, rgba(0, 216, 255, 0.12), rgba(255, 253, 245, 0.05));
+        }
+
         .project-node {
             position: absolute;
             z-index: 12;
@@ -552,6 +572,11 @@
             top: 62vh;
             bottom: auto;
             transform: translateX(-50%);
+        }
+
+        .project-node.gambit {
+            left: 5vw;
+            top: 40vh;
         }
 
         .node-label {
@@ -672,6 +697,14 @@
             font-size: clamp(2.85rem, 5vw, 5.6rem);
         }
 
+        .project-node.gambit {
+            --label-tilt: -1.2deg;
+        }
+
+        .project-node.gambit .node-title {
+            font-size: clamp(2.65rem, 4.9vw, 5.35rem);
+        }
+
         @media (max-width: 900px) {
             body.projects-specimen {
                 overflow: auto;
@@ -692,7 +725,7 @@
             }
 
             .figure-field {
-                min-height: calc(118svh - 44px);
+                min-height: calc(136svh - 44px);
             }
 
             .subject {
@@ -800,15 +833,20 @@
             .project-node.swag {
                 left: 10vw;
                 bottom: auto;
-                top: 91vh;
+                top: 111vh;
             }
 
             .project-node.half {
                 left: 68vw;
                 top: auto;
                 bottom: auto;
-                top: 74vh;
+                top: 91vh;
                 transform: translateX(-50%);
+            }
+
+            .project-node.gambit {
+                left: 7vw;
+                top: 75vh;
             }
 
             .node-label {
@@ -827,6 +865,10 @@
 
             .project-node.half .node-title {
                 font-size: clamp(2rem, 9.5vw, 3.35rem);
+            }
+
+            .project-node.gambit .node-title {
+                font-size: clamp(2rem, 9.2vw, 3.3rem);
             }
         }
 
@@ -908,6 +950,11 @@
                 <span class="node-label">course atlas</span><br>
                 <span class="node-title">SF Half</span>
             </a>
+
+            <a class="project-node gambit" data-project="gambit" href="fly-gambit.html">
+                <span class="node-label">neural policy / experiment 01</span><br>
+                <span class="node-title">Fly’s Gambit</span>
+            </a>
         </section>
     </main>
 
@@ -930,7 +977,8 @@
             cinema: { x: 0.8, y: 0.43, phase: Math.PI * 0.9, index: "03", title: "Cinema", meta: "video library / cinema.html" },
             mind: { x: 0.82, y: 0.78, phase: Math.PI * 1.58, index: "04", title: "My Actual Mind", meta: "private search / mind.drebaglioni.com" },
             swag: { x: 0.2, y: 0.78, phase: Math.PI * 1.14, index: "05", title: "Swag", meta: "object study / swag.html" },
-            half: { x: 0.5, y: 0.74, phase: Math.PI * 1.86, index: "06", title: "SF Half", meta: "course atlas / sf-half-course-atlas" }
+            half: { x: 0.5, y: 0.74, phase: Math.PI * 1.86, index: "06", title: "SF Half", meta: "course atlas / sf-half-course-atlas" },
+            gambit: { x: 0.18, y: 0.47, phase: Math.PI * 0.34, index: "07", title: "Fly’s Gambit", meta: "trained board policy / fly-gambit.html" }
         };
 
         const pixelState = {

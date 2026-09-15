@@ -1,0 +1,4 @@
+.context/
+__pycache__/
+*.pyc
+*.core
