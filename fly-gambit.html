@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f2ead5">
-    <title>Fly's Gambit — Neural Board Study</title>
+    <meta name="description" content="A trained neural navigator steers a physically simulated fly across a collision-enabled chessboard.">
+    <title>Fly's Gambit — Neural Navigation in a Simulated Fly</title>
     <style>
         :root {
             --paper: #f2ead5;
@@ -153,12 +154,253 @@
             color: var(--signal);
         }
 
+        .physical-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.65fr);
+            margin-top: 28px;
+            border: 3px solid var(--ink);
+            box-shadow: 16px 16px 0 rgba(8, 47, 131, 0.14);
+        }
+
+        .simulation-frame {
+            min-width: 0;
+            margin: 0;
+            background: #16334d;
+        }
+
+        .simulation-screen {
+            position: relative;
+            min-height: 260px;
+            background: #16334d;
+        }
+
+        .simulation-screen video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            background: #16334d;
+        }
+
+        .simulation-tag {
+            position: absolute;
+            top: 13px;
+            left: 13px;
+            padding: 6px 8px;
+            color: var(--paper);
+            background: var(--ink);
+            font: 700 9px/1 var(--mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+
+        .simulation-frame figcaption {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 10px 12px;
+            color: var(--paper);
+            font: 700 9px/1.3 var(--mono);
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .simulation-frame figcaption span:last-child {
+            flex: 0 0 auto;
+            color: #66e8e8;
+        }
+
+        .result-card {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            padding: clamp(20px, 3vw, 40px);
+            color: var(--paper);
+            background: var(--signal);
+        }
+
+        .result-kicker {
+            font: 700 10px/1 var(--mono);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .result-card h2 {
+            margin: 18px 0 14px;
+            font-size: clamp(38px, 4.4vw, 68px);
+            letter-spacing: -0.07em;
+            line-height: 0.88;
+            text-transform: uppercase;
+        }
+
+        .result-card > p {
+            max-width: 40ch;
+            margin: 0;
+            font: 700 12px/1.42 var(--mono);
+        }
+
+        .physical-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1px;
+            margin: 22px 0;
+            background: rgba(242, 234, 213, 0.65);
+            border: 1px solid rgba(242, 234, 213, 0.65);
+        }
+
+        .physical-metrics div {
+            padding: 10px;
+            color: var(--ink);
+            background: var(--paper);
+        }
+
+        .physical-metrics dt {
+            font: 700 8px/1.1 var(--mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .physical-metrics dd {
+            margin: 7px 0 0;
+            font-size: clamp(20px, 2.2vw, 34px);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 0.9;
+        }
+
+        .jump-link {
+            width: fit-content;
+            margin-top: auto;
+            color: var(--paper);
+            font: 700 10px/1.2 var(--mono);
+            letter-spacing: 0.07em;
+            text-underline-offset: 4px;
+            text-transform: uppercase;
+        }
+
+        .system-story {
+            display: grid;
+            grid-template-columns: minmax(220px, 0.55fr) minmax(0, 1.45fr);
+            gap: clamp(28px, 5vw, 78px);
+            align-items: end;
+            padding: clamp(48px, 7vw, 96px) 0;
+        }
+
+        .system-intro h2,
+        .lab-intro h2 {
+            margin: 8px 0 0;
+            font-size: clamp(38px, 6vw, 88px);
+            letter-spacing: -0.07em;
+            line-height: 0.87;
+            text-transform: uppercase;
+        }
+
+        .system-intro p {
+            max-width: 38ch;
+            margin: 18px 0 0;
+            font: 700 12px/1.45 var(--mono);
+        }
+
+        .layer-flow {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            border-top: 2px solid var(--ink);
+            border-bottom: 2px solid var(--ink);
+        }
+
+        .layer-step {
+            position: relative;
+            display: flex;
+            min-height: 190px;
+            align-items: end;
+            padding: 16px;
+            overflow: hidden;
+        }
+
+        .layer-step + .layer-step {
+            border-left: 1px solid var(--ink);
+        }
+
+        .layer-step::after {
+            content: "→";
+            position: absolute;
+            z-index: 3;
+            top: 13px;
+            right: -11px;
+            color: var(--signal);
+            font: 900 26px/1 var(--sans);
+        }
+
+        .layer-step:last-child::after {
+            display: none;
+        }
+
+        .layer-step img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(0.8) contrast(1.08);
+        }
+
+        .layer-step > div {
+            position: relative;
+            z-index: 2;
+        }
+
+        .layer-see > div {
+            margin: -16px;
+            padding: 12px 16px 16px;
+            color: var(--paper);
+            background: linear-gradient(transparent, rgba(8, 47, 131, 0.94) 30%);
+        }
+
+        .layer-step span {
+            color: var(--signal);
+            font: 700 10px/1 var(--mono);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .layer-see span {
+            color: #66e8e8;
+        }
+
+        .layer-step p {
+            margin: 9px 0 0;
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .lab-intro {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.65fr);
+            gap: clamp(26px, 5vw, 72px);
+            align-items: end;
+            padding-top: 30px;
+            border-top: 4px solid var(--ink);
+            scroll-margin-top: 18px;
+        }
+
+        .lab-intro h2 {
+            max-width: 14ch;
+            font-size: clamp(34px, 5vw, 72px);
+        }
+
+        .lab-intro > p {
+            margin: 0;
+            font: 700 12px/1.45 var(--mono);
+        }
+
         .lab {
             display: grid;
             grid-template-columns: minmax(360px, 1.25fr) minmax(280px, 0.62fr);
             gap: clamp(22px, 4vw, 64px);
             align-items: start;
-            padding-top: 26px;
+            padding-top: 20px;
         }
 
         .board-column {
@@ -651,6 +893,9 @@
 
         @media (max-width: 900px) {
             .masthead,
+            .physical-hero,
+            .system-story,
+            .lab-intro,
             .lab {
                 grid-template-columns: 1fr;
             }
@@ -665,6 +910,10 @@
 
             .board-stage {
                 width: 100%;
+            }
+
+            .result-card {
+                min-height: 430px;
             }
 
             .console {
@@ -686,6 +935,42 @@
 
             .lab {
                 grid-template-columns: minmax(0, 1fr);
+            }
+
+            .simulation-screen {
+                min-height: 0;
+            }
+
+            .simulation-frame figcaption {
+                display: grid;
+            }
+
+            .result-card {
+                min-height: 0;
+            }
+
+            .system-story {
+                padding: 54px 0;
+            }
+
+            .layer-flow {
+                grid-template-columns: 1fr;
+            }
+
+            .layer-step {
+                min-height: 150px;
+            }
+
+            .layer-step + .layer-step {
+                border-top: 1px solid var(--ink);
+                border-left: 0;
+            }
+
+            .layer-step::after {
+                top: auto;
+                right: 14px;
+                bottom: -13px;
+                transform: rotate(90deg);
             }
 
             .piece {
@@ -722,16 +1007,79 @@
     <main class="poster">
         <header class="masthead">
             <div class="title-wrap">
-                <span class="kicker">Neural navigation study / experiment 01</span>
+                <span class="kicker">Embodied intelligence study / experiment 01</span>
                 <h1>Fly’s <span>Gambit</span></h1>
             </div>
             <p class="mast-note">
-                A trained model steers the fly around chess pieces to any square
-                you choose. <strong>Click a square.</strong>
+                Can a neural navigator steer a physically simulated fly across
+                a chessboard? <strong>Watch the verified run.</strong>
             </p>
         </header>
 
-        <section class="lab" aria-label="Neural board-navigation experiment">
+        <section class="physical-hero" aria-labelledby="physical-title">
+            <figure class="simulation-frame">
+                <div class="simulation-screen">
+                    <video controls muted autoplay loop playsinline preload="metadata" poster="assets/images/fly-gambit/flybody-a1-f7-start.png" aria-describedby="simulation-caption">
+                        <source src="assets/video/fly-gambit/flybody-a1-f7.mp4" type="video/mp4">
+                        Your browser does not support the simulation video.
+                    </video>
+                    <span class="simulation-tag">MuJoCo / physical rollout</span>
+                </div>
+                <figcaption id="simulation-caption">
+                    <span>Orange cylinders are obstacles. Cyan marks F7. The glow follows the simulated fly.</span>
+                    <span>64 frames / A1 → F7</span>
+                </figcaption>
+            </figure>
+
+            <aside class="result-card">
+                <span class="result-kicker">The result / verified</span>
+                <h2 id="physical-title">The route became movement.</h2>
+                <p>
+                    A camera model found the pieces. A navigation model chose a route.
+                    The pretrained FlyBody controller made the biomechanical body walk it.
+                </p>
+                <dl class="physical-metrics">
+                    <div><dt>Route</dt><dd>A1 → F7</dd></div>
+                    <div><dt>Board moves</dt><dd>6</dd></div>
+                    <div><dt>Obstacle contacts</dt><dd>0</dd></div>
+                    <div><dt>Final error</dt><dd>0.052 cm</dd></div>
+                </dl>
+                <a class="jump-link" href="#planner">Try the navigation brain ↓</a>
+            </aside>
+        </section>
+
+        <section class="system-story" aria-labelledby="system-title">
+            <header class="system-intro">
+                <span class="kicker">Why this matters</span>
+                <h2 id="system-title">See. Choose. Move.</h2>
+                <p>Embodied intelligence is easier to understand when its jobs are separated and inspectable.</p>
+            </header>
+            <div class="layer-flow">
+                <article class="layer-step layer-see">
+                    <img src="assets/images/fly-gambit/overhead-camera-observation.png" alt="Overhead MuJoCo camera view of the obstacle board">
+                    <div><span>01 / See</span><p>A trained camera model turns rendered pixels into occupied squares.</p></div>
+                </article>
+                <article class="layer-step">
+                    <div><span>02 / Choose</span><p>The trained navigator turns the board, start, and target into one of eight directions.</p></div>
+                </article>
+                <article class="layer-step">
+                    <div><span>03 / Move</span><p>A published FlyBody controller turns that direction into joint and adhesion control.</p></div>
+                </article>
+            </div>
+        </section>
+
+        <header class="lab-intro" id="planner">
+            <div>
+                <span class="kicker">Interrogate layer 02</span>
+                <h2>Change the target. Watch the planner choose.</h2>
+            </div>
+            <p>
+                This board runs the saved navigation network in your browser. The default
+                A1 → F7 route is the command used in the physical simulation above.
+            </p>
+        </header>
+
+        <section class="lab" aria-label="Interactive neural board-navigation experiment">
             <div class="board-column">
                 <p class="board-caption">
                     <span>Choose a destination</span>
@@ -831,22 +1179,21 @@
                 <p class="experiment-note">The chessboard is an obstacle course—not a chess game.</p>
 
                 <details class="technical-details">
-                    <summary>How it works + experiment evidence</summary>
+                    <summary>How the navigator was trained</summary>
                     <div class="technical-body">
                         <ol class="method-list">
-                            <li><strong>Board layout</strong><span>The model receives occupied squares plus the fly and target positions.</span></li>
-                            <li><strong>Next direction</strong><span>A saved neural network chooses one of eight possible moves.</span></li>
-                            <li><strong>Visible route</strong><span>The fly moves one square and repeats until it reaches the target.</span></li>
+                            <li><strong>Generate</strong><span>Create randomized boards, starts, targets, and obstacles.</span></li>
+                            <li><strong>Teach</strong><span>Use a shortest-path solver to label the best next direction.</span></li>
+                            <li><strong>Imitate</strong><span>Train a small network on those examples, then test it on unseen boards.</span></li>
                         </ol>
                         <div class="physical-proof">
                             <strong id="bridgeState">Checking physical simulation</strong>
                             <span id="bridgeSummary">Loading verified rollout evidence…</span>
                         </div>
                         <p class="boundary-note">
-                            This browser demo receives a structured board layout. A separate MuJoCo
-                            experiment used an overhead camera model, this navigation policy, and the
-                            pretrained FlyBody controller. It does not play chess, learn live, or see
-                            through the fly’s own eyes yet.
+                            This browser demo receives a structured board layout; it does not rerun
+                            the physical simulation. The system does not play chess, learn live, or
+                            see through the fly’s own eyes yet.
                         </p>
                         <div class="detail-links">
                             <a href="data/fly-gambit-bridge-proof.json">View experiment evidence ↗</a>

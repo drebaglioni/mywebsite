@@ -44,7 +44,7 @@ class FlyGambitTests(unittest.TestCase):
     def test_page_states_the_flybody_boundary(self):
         self.assertIn("receives a structured board layout", self.page)
         self.assertIn("pretrained FlyBody controller", self.page)
-        self.assertIn("It does not play chess, learn live", self.page)
+        self.assertIn("does not play chess, learn live", self.page)
         self.assertIn("View experiment evidence", self.page)
         self.assertIn('scripts/fly-gambit.js?v=2', self.page)
         self.assertIn("data/fly-gambit-policy.json", self.repository.joinpath(
@@ -58,6 +58,19 @@ class FlyGambitTests(unittest.TestCase):
         self.assertNotIn("Local sensor crop", self.page)
         self.assertNotIn("Eight motor intentions", self.page)
         self.assertNotIn("Reset trail", self.page)
+
+    def test_page_leads_with_the_verified_physical_experiment(self):
+        video = self.repository / "assets" / "video" / "fly-gambit" / "flybody-a1-f7.mp4"
+        poster = self.repository / "assets" / "images" / "fly-gambit" / "flybody-a1-f7-start.png"
+        camera = self.repository / "assets" / "images" / "fly-gambit" / "overhead-camera-observation.png"
+
+        self.assertIn("Can a neural navigator steer a physically simulated fly", self.page)
+        self.assertIn("See. Choose. Move.", self.page)
+        self.assertIn('src="assets/video/fly-gambit/flybody-a1-f7.mp4"', self.page)
+        self.assertIn("The default\n                A1 → F7 route is the command", self.page)
+        self.assertGreater(video.stat().st_size, 100_000)
+        self.assertTrue(poster.is_file())
+        self.assertTrue(camera.is_file())
 
     def test_flybody_bridge_has_reproducible_verified_proof(self):
         proof = self.bridge_proof
