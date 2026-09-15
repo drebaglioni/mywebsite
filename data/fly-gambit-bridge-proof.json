@@ -1,0 +1,63 @@
+{
+  "format": "fly-gambit-flybody-public-proof-v1",
+  "verified": true,
+  "verificationDate": "2026-09-14",
+  "scenario": {
+    "start": "A1",
+    "target": "F7",
+    "route": ["A1", "B2", "C3", "C4", "D5", "E6", "F7"],
+    "squareSizeCm": 0.5,
+    "commandedSpeedCmPerSecond": 2.0
+  },
+  "perceptionPolicy": {
+    "type": "camera-trained-cell-occupancy-cnn",
+    "input": "MuJoCo chessboard_camera RGB cell crops plus cell coordinates",
+    "architecture": ["conv12", "pool2", "conv16", "flatten", "dense32", "sigmoid1"],
+    "trainLayouts": 96,
+    "testLayouts": 24,
+    "trainCellSamples": 6144,
+    "testCellSamples": 1536,
+    "testAccuracy": 1.0,
+    "testPrecision": 1.0,
+    "testRecall": 1.0,
+    "defaultBoardCellAccuracy": 1.0,
+    "exactDefaultBoardMatch": true,
+    "weightsSha256": "117aaf4554ce7507a8bbc14d7f0c6ec6c1ae8dc1d931c3aadbca3a54a7d60f2a"
+  },
+  "navigationPolicy": {
+    "occupancySource": "trained MuJoCo camera perception",
+    "sha256": "5c4b70d4de8314fed4f85c7d6e3d077592eb66e10f1772688cd6021fc2a0cbbc"
+  },
+  "walkingPolicy": {
+    "sha256": "981cec702178aab87ee449bdd4cce8f22fdc3d69bfa66a170565dff5c90195c9",
+    "source": "Figshare file 44815195, trained-fly-policies.zip"
+  },
+  "runtime": {
+    "flybodyCommit": "d015e9bfe441bd90ae431bac24c55cb74bdbce26",
+    "tensorflow": "2.15.1",
+    "tensorflowProbability": "0.23.0",
+    "seed": 20260911
+  },
+  "arena": {
+    "type": "collision-enabled-chessboard",
+    "tileCount": 64,
+    "obstacleCount": 9,
+    "pieceRadiusCm": 0.11,
+    "collisionEnabled": true,
+    "obstacleContactSteps": 0,
+    "minimumObstacleSurfaceClearanceCm": 0.22400856716023199
+  },
+  "result": {
+    "environmentSteps": 1011,
+    "distinctPhysicalPoses": 1011,
+    "terminated": true,
+    "discount": 1.0,
+    "initialTargetDistanceCm": 3.905124837953327,
+    "minimumTargetDistanceCm": 0.0520023721928418,
+    "finalTargetDistanceCm": 0.0520023721928418,
+    "netDisplacementCm": 3.8531528992371267,
+    "trackingRmseCm": 0.023245248077517357,
+    "successThresholdCm": 0.25,
+    "renderedFrames": 64
+  }
+}

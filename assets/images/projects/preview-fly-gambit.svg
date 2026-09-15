@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Fly's Gambit neural chessboard preview">
+  <rect width="1200" height="800" fill="#f2ead5"/>
+  <defs>
+    <pattern id="grid" width="75" height="75" patternUnits="userSpaceOnUse">
+      <rect width="75" height="75" fill="#f2ead5"/>
+      <rect width="75" height="75" fill="none" stroke="#082f83" stroke-width="2"/>
+    </pattern>
+    <pattern id="stripes" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+      <rect width="9" height="24" fill="#8e2de2" opacity=".28"/>
+    </pattern>
+    <linearGradient id="preview-wing" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d8f5ef" stop-opacity=".95"/>
+      <stop offset=".5" stop-color="#00afc4" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#0846a8" stop-opacity=".22"/>
+    </linearGradient>
+    <linearGradient id="preview-abdomen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#17130f"/>
+      <stop offset=".46" stop-color="#69635b"/>
+      <stop offset=".64" stop-color="#17130f"/>
+      <stop offset="1" stop-color="#050505"/>
+    </linearGradient>
+    <radialGradient id="preview-thorax" cx="38%" cy="28%" r="72%">
+      <stop offset="0" stop-color="#69635b"/>
+      <stop offset=".4" stop-color="#27221d"/>
+      <stop offset="1" stop-color="#050505"/>
+    </radialGradient>
+    <radialGradient id="preview-eye" cx="35%" cy="30%" r="74%">
+      <stop offset="0" stop-color="#ff6c59"/>
+      <stop offset=".46" stop-color="#ff351f"/>
+      <stop offset="1" stop-color="#80170d"/>
+    </radialGradient>
+  </defs>
+  <rect x="28" y="28" width="1144" height="744" fill="url(#stripes)"/>
+  <rect x="72" y="64" width="600" height="600" fill="url(#grid)" stroke="#082f83" stroke-width="8"/>
+  <path d="M110 625 185 550 260 475 335 400 410 325 485 250 560 175" fill="none" stroke="#ff351f" stroke-width="13" stroke-linecap="square"/>
+  <circle cx="560" cy="175" r="43" fill="none" stroke="#ff351f" stroke-width="13"/>
+  <g transform="translate(385 285) rotate(30) scale(1.15) translate(-80 -90)">
+    <g fill="none" stroke="#17130f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M67 70 48 58 28 45 15 29M63 88 41 89 22 99 7 96M67 105 49 118 30 143 18 163"/>
+      <path d="M93 70 112 58 132 45 145 29M97 88 119 89 138 99 153 96M93 105 111 118 130 143 142 163"/>
+    </g>
+    <g fill="#f2ead5" stroke="#17130f" stroke-width="2">
+      <circle cx="48" cy="58" r="3"/><circle cx="41" cy="89" r="3"/><circle cx="49" cy="118" r="3"/>
+      <circle cx="112" cy="58" r="3"/><circle cx="119" cy="89" r="3"/><circle cx="111" cy="118" r="3"/>
+    </g>
+    <g stroke="#17130f" stroke-width="2.5" stroke-linejoin="round">
+      <path d="M68 69C50 48 24 39 11 51C-2 63 7 91 25 106C37 116 50 121 64 122C69 107 71 86 68 69Z" fill="url(#preview-wing)"/>
+      <path d="M92 69C110 48 136 39 149 51C162 63 153 91 135 106C123 116 110 121 96 122C91 107 89 86 92 69Z" fill="url(#preview-wing)"/>
+    </g>
+    <g fill="none" stroke="#17130f" stroke-width="1.4" stroke-linecap="round" opacity=".72">
+      <path d="M66 73C48 72 30 64 14 54M64 79C45 85 30 94 24 105M64 85C48 94 42 108 41 116M46 70 34 91M27 61 23 81"/>
+      <path d="M94 73C112 72 130 64 146 54M96 79C115 85 130 94 136 105M96 85C112 94 118 108 119 116M114 70 126 91M133 61 137 81"/>
+    </g>
+    <path d="M80 78C61 79 56 98 60 123C63 143 72 159 80 168C88 159 97 143 100 123C104 98 99 79 80 78Z" fill="url(#preview-abdomen)" stroke="#f2ead5" stroke-width="2.5"/>
+    <path d="M62 105C72 109 88 109 98 105M61 121C72 126 88 126 99 121M66 141C74 144 86 144 94 141M80 86V157" fill="none" stroke="#ff351f" stroke-width="2.7" stroke-linecap="round"/>
+    <path d="M80 55C60 55 52 69 55 89C58 106 67 115 80 116C93 115 102 106 105 89C108 69 100 55 80 55Z" fill="url(#preview-thorax)" stroke="#f2ead5" stroke-width="2.4"/>
+    <path d="M67 65C73 71 74 91 68 103M93 65C87 71 86 91 92 103" fill="none" stroke="#ff351f" stroke-width="2.7" stroke-linecap="round"/>
+    <path d="M80 27C62 27 54 38 57 53C60 66 68 71 80 70C92 71 100 66 103 53C106 38 98 27 80 27Z" fill="url(#preview-thorax)" stroke="#f2ead5" stroke-width="2.4"/>
+    <path d="M61 35C54 40 55 54 62 61C67 65 72 60 72 49C72 38 67 31 61 35ZM99 35C106 40 105 54 98 61C93 65 88 60 88 49C88 38 93 31 99 35Z" fill="url(#preview-eye)" stroke="#17130f" stroke-width="2"/>
+    <path d="M60 43 69 52M58 51 67 59M100 43 91 52M102 51 93 59" fill="none" stroke="#f2ead5" stroke-width="1.2" stroke-linecap="round" opacity=".85"/>
+    <path d="M73 31 66 20 59 14M87 31 94 20 101 14M77 59 80 67 83 59" fill="none" stroke="#17130f" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <rect x="716" y="79" width="410" height="13" fill="#ff351f"/>
+  <text x="716" y="146" fill="#082f83" font-family="Arial,Helvetica,sans-serif" font-size="76" font-weight="900" letter-spacing="-5">FLY'S</text>
+  <text x="716" y="216" fill="#ff351f" font-family="Arial,Helvetica,sans-serif" font-size="76" font-weight="900" letter-spacing="-5">GAMBIT</text>
+  <text x="716" y="265" fill="#082f83" font-family="Courier New,monospace" font-size="19" font-weight="700">BOARD POLICY / LIVE INFERENCE</text>
+  <g transform="translate(716 320)" font-family="Courier New,monospace" font-weight="700">
+    <text y="0" fill="#082f83" font-size="18">ROUTE COMPLETION</text>
+    <text y="77" fill="#ff351f" font-family="Arial,Helvetica,sans-serif" font-size="72" font-weight="900">96.9%</text>
+    <line x1="0" y1="110" x2="405" y2="110" stroke="#082f83" stroke-width="3"/>
+    <text y="154" fill="#082f83" font-size="18">NETWORK SHAPE</text>
+    <text y="230" fill="#ff351f" font-family="Arial,Helvetica,sans-serif" font-size="68" font-weight="900">68·48·8</text>
+    <line x1="0" y1="265" x2="405" y2="265" stroke="#082f83" stroke-width="3"/>
+    <text y="309" fill="#082f83" font-size="18">POLICY → HEADING</text>
+    <rect y="340" width="368" height="13" fill="#082f83"/>
+    <rect y="372" width="326" height="13" fill="#ff351f"/>
+    <rect y="404" width="102" height="13" fill="#082f83"/>
+  </g>
+  <rect x="38" y="700" width="1040" height="56" fill="#082f83"/>
+  <text x="58" y="736" fill="#f2ead5" font-family="Courier New,monospace" font-size="21" font-weight="700">TRAINED NAVIGATION BRAIN → PRETRAINED FLYBODY MOTOR CONTROLLER</text>
+</svg>
