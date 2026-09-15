@@ -42,12 +42,21 @@ class FlyGambitTests(unittest.TestCase):
         self.assertGreaterEqual(metrics["rolloutSuccessRate"], 0.95)
 
     def test_page_states_the_flybody_boundary(self):
-        self.assertIn("actually trained high-level navigation network", self.page)
-        self.assertIn("Pretrained FlyBody controller", self.page)
-        self.assertIn("A1 → F7 verification record", self.page)
+        self.assertIn("receives a structured board layout", self.page)
+        self.assertIn("pretrained FlyBody controller", self.page)
+        self.assertIn("It does not play chess, learn live", self.page)
+        self.assertIn("View experiment evidence", self.page)
         self.assertIn("data/fly-gambit-policy.json", self.repository.joinpath(
             "scripts", "fly-gambit.js"
         ).read_text(encoding="utf-8"))
+
+    def test_page_keeps_the_primary_interface_focused(self):
+        self.assertIn("The chessboard is an obstacle course—not a chess game.", self.page)
+        self.assertIn("route completion on unseen boards", self.page)
+        self.assertEqual(self.page.count('<button class="control'), 2)
+        self.assertNotIn("Local sensor crop", self.page)
+        self.assertNotIn("Eight motor intentions", self.page)
+        self.assertNotIn("Reset trail", self.page)
 
     def test_flybody_bridge_has_reproducible_verified_proof(self):
         proof = self.bridge_proof

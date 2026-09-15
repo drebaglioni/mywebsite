@@ -189,21 +189,6 @@
             box-shadow: 16px 16px 0 rgba(8, 47, 131, 0.15);
         }
 
-        .board-stage::after {
-            content: "68 → 48 → 8";
-            position: absolute;
-            z-index: 8;
-            right: -11px;
-            bottom: 10%;
-            padding: 4px 7px;
-            color: var(--paper);
-            background: var(--signal);
-            font: 700 10px/1 var(--mono);
-            letter-spacing: 0.1em;
-            transform: rotate(90deg) translateX(100%);
-            transform-origin: right bottom;
-        }
-
         .board-grid {
             position: absolute;
             inset: 0;
@@ -412,21 +397,6 @@
             transform-origin: center top;
         }
 
-        .board-stamp {
-            position: absolute;
-            z-index: 7;
-            top: 19%;
-            left: -18px;
-            width: 84px;
-            padding: 7px;
-            color: var(--paper);
-            background: var(--ink);
-            font: 700 9px/1.12 var(--mono);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            transform: rotate(-8deg);
-        }
-
         .console {
             position: relative;
             min-width: 0;
@@ -490,185 +460,40 @@
             font-style: normal;
         }
 
-        .metric-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1px;
-            background: var(--ink);
-            border: 1px solid var(--ink);
-        }
-
-        .metric {
-            min-height: 68px;
-            padding: 8px;
-            background: var(--paper);
-        }
-
-        .metric-value {
-            display: block;
-            color: var(--signal);
-            font-size: clamp(22px, 2.4vw, 38px);
-            font-weight: 900;
-            letter-spacing: -0.055em;
-            line-height: 0.9;
-        }
-
-        .metric-name {
-            display: block;
-            margin-top: 7px;
-            font: 700 8px/1.1 var(--mono);
-            letter-spacing: 0.07em;
+        .journey-line {
+            margin: 11px 0 0;
+            font: 700 10px/1.35 var(--mono);
+            letter-spacing: 0.03em;
             text-transform: uppercase;
         }
 
-        .policy-bars {
+        .route-proof {
             display: grid;
-            gap: 4px;
-        }
-
-        .policy-row {
-            display: grid;
-            grid-template-columns: 24px 1fr 42px;
-            gap: 7px;
+            grid-template-columns: auto 1fr;
+            gap: 12px;
             align-items: center;
-            font: 700 9px/1 var(--mono);
+            padding: 16px 0;
+            border-bottom: 1px solid var(--ink);
         }
 
-        .policy-track {
-            height: 7px;
-            background: rgba(8, 47, 131, 0.12);
-        }
-
-        .policy-fill {
-            width: calc(var(--probability, 0) * 100%);
-            height: 100%;
-            background: var(--ink);
-            transform-origin: left center;
-            transition: width 170ms ease, background 170ms ease;
-        }
-
-        .policy-row.is-choice .policy-fill {
-            background: var(--signal);
-        }
-
-        .sensor-wrap {
-            display: grid;
-            grid-template-columns: 100px 1fr;
-            gap: 14px;
-            align-items: start;
-        }
-
-        .sensor-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            width: 100px;
-            aspect-ratio: 1;
-            border: 1px solid var(--ink);
-        }
-
-        .sensor-cell {
-            background: var(--paper);
-            border: 1px solid rgba(8, 47, 131, 0.19);
-        }
-
-        .sensor-cell.is-edge {
-            background: var(--ink);
-        }
-
-        .sensor-cell.is-piece {
-            background: var(--signal);
-        }
-
-        .sensor-cell.is-self {
-            background: var(--cyan);
-        }
-
-        .sensor-copy {
-            margin: 0;
-            font: 700 10px/1.33 var(--mono);
-            text-transform: uppercase;
-        }
-
-        .bridge {
-            display: grid;
-            gap: 5px;
-        }
-
-        .bridge-step {
-            position: relative;
-            padding: 6px 8px;
-            border: 1px solid var(--ink);
-            background: rgba(242, 234, 213, 0.84);
-            font: 700 9px/1.1 var(--mono);
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-
-        .bridge-step:not(:last-child)::after {
-            content: "↓";
-            position: absolute;
-            z-index: 2;
-            right: 7px;
-            bottom: -12px;
+        .route-proof strong {
             color: var(--signal);
-            font-size: 15px;
+            font: 900 clamp(32px, 4vw, 58px)/0.85 var(--sans);
+            letter-spacing: -0.06em;
         }
 
-        .bridge-step.future {
-            color: rgba(8, 47, 131, 0.68);
-            border-style: dashed;
-        }
-
-        .bridge-step.verified {
-            color: var(--paper);
-            background: var(--ink);
-        }
-
-        .bridge-proof {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1px;
-            margin-top: 9px;
-            background: var(--ink);
-            border: 1px solid var(--ink);
-        }
-
-        .bridge-result {
-            min-width: 0;
-            padding: 8px;
-            background: var(--paper);
-        }
-
-        .bridge-result strong {
-            display: block;
-            overflow: hidden;
-            color: var(--signal);
-            font: 900 clamp(15px, 1.7vw, 25px)/0.95 var(--sans);
-            letter-spacing: -0.04em;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .bridge-result span,
-        .bridge-record {
-            display: block;
-            margin-top: 6px;
-            font: 700 8px/1.2 var(--mono);
-            letter-spacing: 0.06em;
+        .route-proof span {
+            max-width: 21ch;
+            font: 700 10px/1.25 var(--mono);
+            letter-spacing: 0.08em;
             text-transform: uppercase;
-        }
-
-        .bridge-record {
-            width: fit-content;
-            color: var(--ink);
-            text-underline-offset: 3px;
         }
 
         .controls {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 7px;
-            padding-top: 14px;
+            padding-top: 16px;
         }
 
         .control {
@@ -701,25 +526,110 @@
             opacity: 0.45;
         }
 
-        .footnote {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto;
-            gap: 20px;
-            align-items: end;
-            margin-top: 24px;
-            padding-top: 9px;
-            border-top: 1px solid var(--ink);
-            font: 700 9px/1.25 var(--mono);
-            letter-spacing: 0.04em;
+        .experiment-note {
+            margin: 14px 0 0;
+            color: var(--signal);
+            font: 700 10px/1.3 var(--mono);
+            letter-spacing: 0.06em;
             text-transform: uppercase;
         }
 
-        .footnote p {
-            max-width: 84ch;
-            margin: 0;
+        .technical-details {
+            margin-top: 18px;
+            border-top: 1px solid var(--ink);
+            border-bottom: 1px solid var(--ink);
         }
 
-        .footnote a {
+        .technical-details summary {
+            padding: 13px 24px 13px 0;
+            font: 700 10px/1.2 var(--mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .technical-details summary::marker {
+            color: var(--signal);
+        }
+
+        .technical-body {
+            padding: 2px 0 16px;
+        }
+
+        .method-list {
+            display: grid;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            counter-reset: method;
+        }
+
+        .method-list li {
+            display: grid;
+            grid-template-columns: 22px 1fr;
+            column-gap: 7px;
+            counter-increment: method;
+            font: 12px/1.35 var(--sans);
+        }
+
+        .method-list li::before {
+            grid-row: 1 / 3;
+            color: var(--signal);
+            content: counter(method, decimal-leading-zero);
+            font: 700 10px/1.35 var(--mono);
+        }
+
+        .method-list strong,
+        .method-list span {
+            display: block;
+        }
+
+        .method-list strong {
+            font: 700 10px/1.2 var(--mono);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .physical-proof {
+            margin: 15px 0 0;
+            padding: 9px 10px;
+            color: var(--paper);
+            background: var(--ink);
+        }
+
+        .physical-proof strong,
+        .physical-proof span {
+            display: block;
+        }
+
+        .physical-proof strong {
+            font: 700 10px/1.2 var(--mono);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .physical-proof span {
+            margin-top: 4px;
+            font: 11px/1.3 var(--sans);
+        }
+
+        .boundary-note {
+            margin: 12px 0 0;
+            font: 11px/1.4 var(--sans);
+        }
+
+        .detail-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 18px;
+            margin-top: 12px;
+            font: 700 9px/1.2 var(--mono);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .detail-links a {
             text-underline-offset: 3px;
         }
 
@@ -758,14 +668,7 @@
             }
 
             .console {
-                display: grid;
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 0 22px;
-            }
-
-            .controls,
-            .console-section:first-child {
-                grid-column: 1 / -1;
+                width: min(100%, 720px);
             }
         }
 
@@ -785,25 +688,11 @@
                 grid-template-columns: minmax(0, 1fr);
             }
 
-            .console {
-                grid-template-columns: 1fr;
-            }
-
-            .controls,
-            .console-section:first-child {
-                grid-column: auto;
-            }
-
             .piece {
                 font-size: clamp(21px, 10vw, 54px);
             }
 
-            .board-stamp,
-            .board-stage::after {
-                display: none;
-            }
-
-            .footnote {
+            .controls {
                 grid-template-columns: 1fr;
             }
         }
@@ -833,19 +722,19 @@
     <main class="poster">
         <header class="masthead">
             <div class="title-wrap">
-                <span class="kicker">Embodied chess study / experiment 01</span>
+                <span class="kicker">Neural navigation study / experiment 01</span>
                 <h1>Fly’s <span>Gambit</span></h1>
             </div>
             <p class="mast-note">
-                A trained neural policy reads the board, chooses a direction,
-                and moves the insect one square at a time. <strong>Click a square.</strong>
+                A trained model steers the fly around chess pieces to any square
+                you choose. <strong>Click a square.</strong>
             </p>
         </header>
 
         <section class="lab" aria-label="Neural board-navigation experiment">
             <div class="board-column">
                 <p class="board-caption">
-                    <span>Board-state input / live inference</span>
+                    <span>Choose a destination</span>
                     <span id="moveCounter">step 00</span>
                 </p>
                 <div class="board-stage" id="boardStage">
@@ -916,105 +805,57 @@
                             <circle cx="101" cy="14" r="2" fill="#17130f"></circle>
                         </svg>
                     </div>
-                    <span class="board-stamp">Policy output becomes desired heading</span>
                 </div>
             </div>
 
             <aside class="console" aria-label="Policy console">
                 <section class="console-section">
                     <div class="section-label">
-                        <span>Inference state</span>
+                        <span>Live decision</span>
                         <span class="live-dot" id="modelState">loading</span>
                     </div>
                     <p class="status-line" id="statusLine">Reading <em>weights</em></p>
+                    <p class="journey-line" id="journeyLine">Choose any open square to set the destination.</p>
                 </section>
 
-                <section class="console-section">
-                    <div class="section-label"><span>Held-out proof</span><span>v1</span></div>
-                    <div class="metric-grid">
-                        <div class="metric">
-                            <span class="metric-value" id="accuracyMetric">—</span>
-                            <span class="metric-name">Single-step accuracy</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-value" id="successMetric">—</span>
-                            <span class="metric-name">Route completion</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-value" id="sampleMetric">—</span>
-                            <span class="metric-name">Training states</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-value">68·48·8</span>
-                            <span class="metric-name">Network shape</span>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="console-section">
-                    <div class="section-label"><span>Eight motor intentions</span><span id="choiceLabel">—</span></div>
-                    <div class="policy-bars" id="policyBars"></div>
-                </section>
-
-                <section class="console-section">
-                    <div class="section-label"><span>Local sensor crop</span><span>5 × 5</span></div>
-                    <div class="sensor-wrap">
-                        <div class="sensor-grid" id="sensorGrid" aria-label="Local board sensor"></div>
-                        <p class="sensor-copy">Blue is self. Red is occupied. Dark is beyond the board. The saved network sees the complete occupancy field.</p>
-                    </div>
-                </section>
-
-                <section class="console-section">
-                    <div class="section-label">
-                        <span>Physical rollout</span>
-                        <span class="live-dot" id="bridgeState">checking</span>
-                    </div>
-                    <div class="bridge">
-                        <div class="bridge-step verified">Camera-trained CNN → occupied squares</div>
-                        <div class="bridge-step verified">Navigation policy → center-of-mass route</div>
-                        <div class="bridge-step verified">Pretrained FlyBody controller → joints + adhesion</div>
-                        <div class="bridge-step verified">MuJoCo body → measured movement</div>
-                    </div>
-                    <div class="bridge-proof">
-                        <div class="bridge-result">
-                            <strong id="bridgeError">—</strong>
-                            <span>Final target error</span>
-                        </div>
-                        <div class="bridge-result">
-                            <strong id="bridgeTracking">—</strong>
-                            <span>Tracking RMSE</span>
-                        </div>
-                        <div class="bridge-result">
-                            <strong id="bridgeVision">—</strong>
-                            <span>Vision test accuracy</span>
-                        </div>
-                        <div class="bridge-result">
-                            <strong id="bridgeContacts">—</strong>
-                            <span>Obstacle contacts</span>
-                        </div>
-                    </div>
-                    <a class="bridge-record" href="data/fly-gambit-bridge-proof.json">A1 → F7 verification record ↗</a>
+                <section class="route-proof" aria-label="Held-out route completion">
+                    <strong id="successMetric">—</strong>
+                    <span>route completion on unseen boards</span>
                 </section>
 
                 <div class="controls">
                     <button class="control primary" id="runButton" type="button" disabled>Run policy</button>
-                    <button class="control" id="targetButton" type="button" disabled>New target</button>
                     <button class="control" id="boardButton" type="button" disabled>New board</button>
-                    <button class="control" id="resetButton" type="button" disabled>Reset trail</button>
                 </div>
+
+                <p class="experiment-note">The chessboard is an obstacle course—not a chess game.</p>
+
+                <details class="technical-details">
+                    <summary>How it works + experiment evidence</summary>
+                    <div class="technical-body">
+                        <ol class="method-list">
+                            <li><strong>Board layout</strong><span>The model receives occupied squares plus the fly and target positions.</span></li>
+                            <li><strong>Next direction</strong><span>A saved neural network chooses one of eight possible moves.</span></li>
+                            <li><strong>Visible route</strong><span>The fly moves one square and repeats until it reaches the target.</span></li>
+                        </ol>
+                        <div class="physical-proof">
+                            <strong id="bridgeState">Checking physical simulation</strong>
+                            <span id="bridgeSummary">Loading verified rollout evidence…</span>
+                        </div>
+                        <p class="boundary-note">
+                            This browser demo receives a structured board layout. A separate MuJoCo
+                            experiment used an overhead camera model, this navigation policy, and the
+                            pretrained FlyBody controller. It does not play chess, learn live, or see
+                            through the fly’s own eyes yet.
+                        </p>
+                        <div class="detail-links">
+                            <a href="data/fly-gambit-bridge-proof.json">View experiment evidence ↗</a>
+                            <a href="https://github.com/TuragaLab/flybody" target="_blank" rel="noopener noreferrer">FlyBody research ↗</a>
+                        </div>
+                    </div>
+                </details>
             </aside>
         </section>
-
-        <footer class="footnote">
-            <p>
-                This is an actually trained high-level navigation network, not a scripted route.
-                A camera-trained CNN now reads a collision-enabled MuJoCo chessboard before its
-                A1 → F7 route drives the published FlyBody walking controller. The next step is
-                closed-loop perception from the fly's own eye cameras—not pretending that either
-                high-level network learned FlyBody's detailed joint control.
-            </p>
-            <a href="https://github.com/TuragaLab/flybody" target="_blank" rel="noopener noreferrer">FlyBody research ↗</a>
-        </footer>
     </main>
 
     <script src="scripts/fly-gambit.js"></script>

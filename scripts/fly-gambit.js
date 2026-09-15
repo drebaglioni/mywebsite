@@ -12,28 +12,17 @@
     const statusLine = document.getElementById("statusLine");
     const modelState = document.getElementById("modelState");
     const moveCounter = document.getElementById("moveCounter");
-    const policyBars = document.getElementById("policyBars");
-    const choiceLabel = document.getElementById("choiceLabel");
-    const sensorGrid = document.getElementById("sensorGrid");
     const runButton = document.getElementById("runButton");
-    const targetButton = document.getElementById("targetButton");
     const boardButton = document.getElementById("boardButton");
-    const resetButton = document.getElementById("resetButton");
-    const accuracyMetric = document.getElementById("accuracyMetric");
     const successMetric = document.getElementById("successMetric");
-    const sampleMetric = document.getElementById("sampleMetric");
+    const journeyLine = document.getElementById("journeyLine");
     const bridgeState = document.getElementById("bridgeState");
-    const bridgeError = document.getElementById("bridgeError");
-    const bridgeTracking = document.getElementById("bridgeTracking");
-    const bridgeVision = document.getElementById("bridgeVision");
-    const bridgeContacts = document.getElementById("bridgeContacts");
+    const bridgeSummary = document.getElementById("bridgeSummary");
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const state = {
         policy: null,
         squares: [],
-        policyRows: [],
-        sensorCells: [],
         occupancy: new Uint8Array(64),
         pieces: new Map(),
         agent: { x: 0, y: 7 },
@@ -84,27 +73,6 @@
             }
         }
 
-        for (let index = 0; index < 25; index += 1) {
-            const cell = document.createElement("span");
-            cell.className = "sensor-cell";
-            sensorGrid.appendChild(cell);
-            state.sensorCells.push(cell);
-        }
-    }
-
-    function initializePolicyRows() {
-        const names = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
-        names.forEach((name) => {
-            const row = document.createElement("div");
-            row.className = "policy-row";
-            row.innerHTML = `
-                <span>${name}</span>
-                <span class="policy-track"><span class="policy-fill"></span></span>
-                <span class="policy-value">0.0%</span>
-            `;
-            policyBars.appendChild(row);
-            state.policyRows.push(row);
-        });
     }
 
     function setScenarioPieces(entries) {
@@ -182,7 +150,12 @@
         state.pieces = pieces;
         state.steps = 0;
         state.trail = [{ ...state.agent }];
-        statusLine.innerHTML = `New <em>terrain</em>`;
+        if (state.agent.x === state.target.x && state.agent.y === state.target.y) {
+            chooseRandomTarget();
+            return;
+        }
+        statusLine.innerHTML = `New <em>board</em>`;
+        journeyLine.textContent = "Choose any open square to set the destination.";
         render();
     }
 
@@ -243,16 +216,6 @@
         });
     }
 
-    function showProbabilities(probabilities, choiceIndex) {
-        state.policyRows.forEach((row, index) => {
-            const probability = probabilities[index] || 0;
-            row.style.setProperty("--probability", probability.toFixed(5));
-            row.classList.toggle("is-choice", index === choiceIndex);
-            row.querySelector(".policy-value").textContent = `${(probability * 100).toFixed(1)}%`;
-        });
-        choiceLabel.textContent = choiceIndex == null ? "—" : state.policy.directions[choiceIndex].name;
-    }
-
     function takePolicyStep() {
         if (!state.policy || !state.running) return;
         if (state.agent.x === state.target.x && state.agent.y === state.target.y) {
@@ -265,6 +228,7 @@
         if (!choice) {
             stopPolicy();
             statusLine.innerHTML = `Policy <em>trapped</em>`;
+            journeyLine.textContent = "No legal move is available from this square.";
             return;
         }
 
@@ -273,8 +237,8 @@
         state.agent.y += direction.dy;
         state.steps += 1;
         state.trail.push({ ...state.agent });
-        showProbabilities(probabilities, choice.index);
         statusLine.innerHTML = `${direction.name} <em>${(choice.probability * 100).toFixed(0)}%</em>`;
+        journeyLine.textContent = `Heading to ${squareName(state.target.x, state.target.y)} · step ${state.steps}`;
         render();
 
         if (state.agent.x === state.target.x && state.agent.y === state.target.y) {
@@ -284,6 +248,7 @@
         if (state.steps >= 32) {
             stopPolicy();
             statusLine.innerHTML = `Route <em>failed</em>`;
+            journeyLine.textContent = "The policy did not reach the destination within 32 moves.";
             return;
         }
         state.timer = window.setTimeout(takePolicyStep, reducedMotion.matches ? 80 : 390);
@@ -296,7 +261,10 @@
             state.occupancy[targetIndex] = 0;
         }
         stopPolicy();
-        statusLine.innerHTML = `Arrived <em>${squareName(state.agent.x, state.agent.y)}</em>`;
+        runButton.textContent = "Run again";
+        const moveLabel = state.steps === 1 ? "move" : "moves";
+        statusLine.innerHTML = `Reached <em>${squareName(state.agent.x, state.agent.y)}</em>`;
+        journeyLine.textContent = `${state.steps} ${moveLabel} from ${squareName(state.origin.x, state.origin.y)}.`;
         render();
     }
 
@@ -305,15 +273,19 @@
         if (state.running) {
             stopPolicy();
             statusLine.innerHTML = `Policy <em>paused</em>`;
+            journeyLine.textContent = `Paused on the way to ${squareName(state.target.x, state.target.y)}.`;
             return;
         }
         if (state.agent.x === state.target.x && state.agent.y === state.target.y) {
-            chooseRandomTarget();
+            state.agent = { ...state.origin };
+            state.steps = 0;
+            state.trail = [{ ...state.agent }];
         }
         state.running = true;
         boardStage.classList.add("is-running");
         runButton.textContent = "Pause policy";
         statusLine.innerHTML = `Policy <em>running</em>`;
+        journeyLine.textContent = `Destination ${squareName(state.target.x, state.target.y)}.`;
         takePolicyStep();
     }
 
@@ -338,8 +310,12 @@
         }
         state.target = { x, y };
         state.occupancy[squareIndex(x, y)] = 0;
+        state.origin = { ...state.agent };
         state.steps = 0;
+        state.trail = [{ ...state.agent }];
         statusLine.innerHTML = `Target <em>${squareName(x, y)}</em>`;
+        journeyLine.textContent = "Destination selected. Starting the trained policy.";
+        runButton.textContent = "Run policy";
         render();
         if (autoRun) runPolicy();
     }
@@ -356,16 +332,6 @@
             !hasRoute(state.agent, { x, y }, state.occupancy)
         );
         setTarget(x, y, false);
-    }
-
-    function resetTrail() {
-        stopPolicy();
-        state.agent = { ...state.origin };
-        state.steps = 0;
-        state.trail = [{ ...state.agent }];
-        statusLine.innerHTML = `Reset <em>${squareName(state.agent.x, state.agent.y)}</em>`;
-        showProbabilities(Array(8).fill(0), null);
-        render();
     }
 
     function renderSquares() {
@@ -394,22 +360,6 @@
             fly.style.setProperty("--angle", `${angle}deg`);
         }
         moveCounter.textContent = `step ${String(state.steps).padStart(2, "0")}`;
-    }
-
-    function renderSensor() {
-        let sensorIndex = 0;
-        for (let offsetY = -2; offsetY <= 2; offsetY += 1) {
-            for (let offsetX = -2; offsetX <= 2; offsetX += 1) {
-                const cell = state.sensorCells[sensorIndex];
-                const x = state.agent.x + offsetX;
-                const y = state.agent.y + offsetY;
-                cell.className = "sensor-cell";
-                if (!insideBoard(x, y)) cell.classList.add("is-edge");
-                else if (offsetX === 0 && offsetY === 0) cell.classList.add("is-self");
-                else if (state.occupancy[squareIndex(x, y)]) cell.classList.add("is-piece");
-                sensorIndex += 1;
-            }
-        }
     }
 
     function resizeTrailCanvas() {
@@ -445,12 +395,11 @@
     function render() {
         renderSquares();
         renderFly();
-        renderSensor();
         drawTrail();
     }
 
     function enableControls() {
-        [runButton, targetButton, boardButton, resetButton].forEach((button) => {
+        [runButton, boardButton].forEach((button) => {
             button.disabled = false;
         });
     }
@@ -461,17 +410,16 @@
             if (!response.ok) throw new Error(`Policy request failed: ${response.status}`);
             state.policy = await response.json();
             if (state.policy.format !== "fly-gambit-policy-v1") throw new Error("Unsupported policy format");
-            accuracyMetric.textContent = `${(state.policy.metrics.testAccuracy * 100).toFixed(1)}%`;
             successMetric.textContent = `${(state.policy.metrics.rolloutSuccessRate * 100).toFixed(1)}%`;
-            sampleMetric.textContent = `${Math.round(state.policy.training.trainSamples / 1000)}K`;
-            modelState.textContent = "weights live";
-            statusLine.innerHTML = `Target <em>${squareName(state.target.x, state.target.y)}</em>`;
+            modelState.textContent = "model ready";
+            statusLine.innerHTML = `Ready <em>${squareName(state.target.x, state.target.y)}</em>`;
+            journeyLine.textContent = "Choose any open square, or run the example route.";
             enableControls();
             render();
-            window.setTimeout(runPolicy, 420);
         } catch (error) {
             modelState.textContent = "load failed";
             statusLine.innerHTML = `Policy <em>unavailable</em>`;
+            journeyLine.textContent = "The saved model could not be loaded.";
             console.error(error);
         }
     }
@@ -485,28 +433,20 @@
                 throw new Error("Unsupported bridge proof format");
             }
             if (!proof.verified) throw new Error("Physical rollout is not verified");
-            bridgeError.textContent = `${proof.result.finalTargetDistanceCm.toFixed(3)} cm`;
-            bridgeTracking.textContent = `${proof.result.trackingRmseCm.toFixed(3)} cm`;
-            bridgeVision.textContent = `${(proof.perceptionPolicy.testAccuracy * 100).toFixed(1)}%`;
-            bridgeContacts.textContent = String(proof.arena.obstacleContactSteps);
-            bridgeState.textContent = "verified";
+            bridgeState.textContent = "Physical simulation verified";
+            bridgeSummary.textContent = `${proof.arena.obstacleContactSteps} collisions · ${proof.result.finalTargetDistanceCm.toFixed(3)} cm final error`;
         } catch (error) {
-            bridgeState.textContent = "unavailable";
+            bridgeState.textContent = "Physical simulation unavailable";
+            bridgeSummary.textContent = "The verification record could not be loaded.";
             console.error(error);
         }
     }
 
     runButton.addEventListener("click", runPolicy);
-    targetButton.addEventListener("click", () => {
-        chooseRandomTarget();
-        runPolicy();
-    });
     boardButton.addEventListener("click", newBoard);
-    resetButton.addEventListener("click", resetTrail);
     window.addEventListener("resize", resizeTrailCanvas, { passive: true });
 
     initializeBoardNodes();
-    initializePolicyRows();
     defaultScenario();
     render();
     resizeTrailCanvas();
