@@ -34,6 +34,19 @@ class ProjectsPageTests(unittest.TestCase):
             (self.repository / "assets/images/projects/preview-cinema.jpg").is_file()
         )
 
+    def test_fly_gambit_links_to_page_and_uses_real_screenshot(self):
+        self.assertRegex(
+            self.html,
+            r'class="project-node gambit"[^>]+href="fly-gambit\.html"',
+        )
+        self.assertIn(
+            'url("assets/images/projects/preview-fly-gambit.png")',
+            self.html,
+        )
+        self.assertTrue(
+            (self.repository / "assets/images/projects/preview-fly-gambit.png").is_file()
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

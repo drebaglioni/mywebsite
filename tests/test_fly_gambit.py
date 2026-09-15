@@ -1,4 +1,5 @@
 import json
+import struct
 import unittest
 from pathlib import Path
 
@@ -10,8 +11,8 @@ class FlyGambitTests(unittest.TestCase):
         cls.page = (cls.repository / "fly-gambit.html").read_text(encoding="utf-8")
         cls.projects = (cls.repository / "projects.html").read_text(encoding="utf-8")
         cls.preview = cls.repository.joinpath(
-            "assets", "images", "projects", "preview-fly-gambit.svg"
-        ).read_text(encoding="utf-8")
+            "assets", "images", "projects", "preview-fly-gambit.png"
+        ).read_bytes()
         cls.policy = json.loads(
             (cls.repository / "data" / "fly-gambit-policy.json").read_text(
                 encoding="utf-8"
@@ -81,12 +82,16 @@ class FlyGambitTests(unittest.TestCase):
 
     def test_project_index_links_to_local_experiment(self):
         self.assertIn('data-project="gambit" href="fly-gambit.html"', self.projects)
-        self.assertIn('url("assets/images/projects/preview-fly-gambit.svg")', self.projects)
+        self.assertIn('url("assets/images/projects/preview-fly-gambit.png")', self.projects)
         self.assertTrue(
             self.repository.joinpath(
-                "assets", "images", "projects", "preview-fly-gambit.svg"
+                "assets", "images", "projects", "preview-fly-gambit.png"
             ).is_file()
         )
+
+    def test_project_preview_is_a_full_size_png_screenshot(self):
+        self.assertEqual(self.preview[:8], b"\x89PNG\r\n\x1a\n")
+        self.assertEqual(struct.unpack(">II", self.preview[16:24]), (1200, 800))
 
     def test_fly_uses_anatomical_specimen_details(self):
         self.assertIn('class="fly-legs"', self.page)
@@ -95,8 +100,6 @@ class FlyGambitTests(unittest.TestCase):
         self.assertIn('class="fly-bristle"', self.page)
         self.assertEqual(self.page.count('class="fly-leg-joint"'), 6)
         self.assertNotIn('<circle class="fly-eye"', self.page)
-        self.assertIn('id="preview-wing"', self.preview)
-        self.assertIn("M67 70 48 58 28 45", self.preview)
 
 
 if __name__ == "__main__":
