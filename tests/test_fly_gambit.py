@@ -47,6 +47,7 @@ class FlyGambitTests(unittest.TestCase):
         self.assertIn("pretrained FlyBody controller", self.page)
         self.assertIn("It does not play chess, learn live", self.page)
         self.assertIn("View experiment evidence", self.page)
+        self.assertIn('scripts/fly-gambit.js?v=2', self.page)
         self.assertIn("data/fly-gambit-policy.json", self.repository.joinpath(
             "scripts", "fly-gambit.js"
         ).read_text(encoding="utf-8"))
