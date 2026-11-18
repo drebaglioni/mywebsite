@@ -1,0 +1,80 @@
+:root { color-scheme: light; --paper: #dfff00; --ink: #340080; --accent: #fb51ff; --pattern: repeating-linear-gradient(125deg, var(--ink) 0 12px, var(--paper) 12px 24px); }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); -webkit-font-smoothing: antialiased; transition: color 450ms ease, background-color 450ms ease; }
+body[data-place="merthyr"] { --paper: #d5ff5e; --ink: #360023; --accent: #ed4b2e; --pattern: repeating-conic-gradient(var(--ink) 0 25%, var(--paper) 0 50%) 0 0 / 28px 28px; }
+body[data-place="princeton"] { --paper: #ff9de2; --ink: #420c24; --accent: #fa245f; --pattern: radial-gradient(circle, var(--ink) 0 8px, transparent 8.5px) 0 0 / 24px 24px var(--paper); }
+body[data-place="sf"] { --paper: #64ffe4; --ink: #451608; --accent: #ff531a; --pattern: repeating-linear-gradient(90deg, var(--ink) 0 5px, var(--paper) 5px 10px, var(--ink) 10px 24px, var(--paper) 24px 29px); }
+
+body { font-family: 'Space Grotesk', Arial, sans-serif; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+::selection { background: var(--ink); color: var(--paper); }
+.skip-link { position: fixed; top: -100px; left: 20px; background: var(--paper); padding: 12px; z-index: 10; }
+.skip-link:focus { top: 12px; }
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 20px 3vw; }
+.site-header h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -.06em; }
+.site-header nav { display: flex; gap: 24px; font-size: 12px; font-weight: 700; }
+.site-header nav a[aria-current], a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.landscape { isolation: isolate; }
+.color-filters { position: absolute; width: 0; height: 0; overflow: hidden; }
+.place-title { height: clamp(150px, 18vw, 260px); display: flex; align-items: center; justify-content: center; overflow: hidden; margin: 0; padding: 0 3vw 12px; font: 700 clamp(110px, 18vw, 235px)/1 'UnifrakturCook', Georgia, serif; letter-spacing: -.025em; white-space: nowrap; }
+body[data-place="merthyr"] .place-title { font-family: Anton, Impact, sans-serif; font-weight: 400; font-size: clamp(65px, 11.5vw, 164px); text-transform: uppercase; letter-spacing: -.035em; }
+body[data-place="princeton"] .place-title { font-family: Graduate, Georgia, serif; font-weight: 400; font-size: clamp(70px, 12vw, 174px); text-transform: uppercase; letter-spacing: -.055em; }
+body[data-place="sf"] .place-title { font-family: Shrikhand, Georgia, serif; font-weight: 400; font-size: clamp(60px, 10.5vw, 150px); letter-spacing: -.045em; }
+.landscape-art { position: relative; height: clamp(360px, 52vw, 700px); display: flex; align-items: center; justify-content: center; overflow: hidden; border-block: 3px solid var(--ink); border-inline: 16px solid var(--accent); background: var(--ink); }
+.landscape-art img { position: relative; display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; flex: 0 1 auto; filter: grayscale(1) contrast(1.9) url(#ink-artegna); }
+body[data-place="merthyr"] .landscape-art img { filter: grayscale(1) contrast(1.9) url(#ink-merthyr); }
+body[data-place="princeton"] .landscape-art img { filter: grayscale(1) contrast(1.9) url(#ink-princeton); }
+body[data-place="sf"] .landscape-art img { filter: grayscale(1) contrast(1.9) url(#ink-sf); }
+.place-selector { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); border-bottom: 2px solid var(--ink); }
+.place-selector button { height: 56px; border: 0; border-right: 1px solid var(--ink); background: var(--paper); cursor: pointer; font-size: 13px; font-weight: 700; }
+.place-selector button:last-child { border-right: 0; }
+.place-selector button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.place-selector button:not([aria-pressed="true"]):hover { background: var(--accent); }
+.place-selector button:focus-visible { outline-offset: -5px; }
+.details { display: flex; align-items: center; justify-content: space-between; min-height: 64px; padding: 16px 3vw; font-size: 11px; font-weight: 700; }
+.social-links { display: flex; gap: 24px; }
+.photo-credit { position: relative; }
+.photo-credit summary { cursor: pointer; list-style: none; }
+.photo-credit summary::-webkit-details-marker { display: none; }
+.photo-credit p { position: absolute; z-index: 5; bottom: 24px; right: 0; width: min(300px, 88vw); margin: 0; padding: 16px; background: var(--paper); border: 2px solid var(--ink); font-size: 12px; line-height: 1.5; }
+.photo-credit a { text-decoration: underline; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 600px) {
+    .site-header { align-items: flex-start; flex-direction: column; gap: 16px; padding: 18px 5vw; }
+    .site-header h1 { font-size: 20px; }
+    .site-header nav { width: 100%; justify-content: space-between; gap: 10px; font-size: 11px; }
+    .place-title { height: 112px; padding: 0 3vw 8px; font-size: 24vw; }
+    body[data-place="princeton"] .place-title { font-size: 15.8vw; }
+    body[data-place="merthyr"] .place-title { font-size: 14.8vw; }
+    body[data-place="sf"] .place-title { font-size: 10.7vw; }
+    .landscape-art { height: 75vw; border-inline-width: 8px; }
+    .place-selector { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .place-selector button { height: 48px; font-size: 12px; }
+    .place-selector button:nth-child(-n+2) { border-bottom: 1px solid var(--ink); }
+    .place-selector button:nth-child(2) { border-right: 0; }
+    .details { padding-inline: 5vw; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+/* A coarse ink screen, with a different oversized border pattern for each place. */
+.landscape-art::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(circle, var(--ink) 0 1.15px, transparent 1.5px) 0 0 / 5px 5px;
+    mix-blend-mode: multiply; opacity: .34;
+}
+body[data-place="merthyr"] .landscape-art::after {
+    background: repeating-linear-gradient(-35deg, var(--ink) 0 1px, transparent 1px 5px); opacity: .28;
+}
+body[data-place="princeton"] .landscape-art::after { background-size: 6px 6px; opacity: .38; }
+body[data-place="sf"] .landscape-art::after {
+    background: repeating-linear-gradient(0deg, var(--ink) 0 1px, transparent 1px 4px); opacity: .3;
+}
+
+.personal { display: grid; grid-template-columns: 1.6fr 1.1fr .7fr; gap: 24px; padding: 28px 3vw; border-bottom: 1px solid var(--ink); }
+.personal h2 { margin: 0 0 8px; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; }
+.personal p { margin: 0; font-size: clamp(15px, 1.5vw, 22px); font-weight: 700; line-height: 1.4; }
+@media (max-width: 600px) {
+    .personal { grid-template-columns: 1fr 1fr; padding: 22px 5vw; gap: 20px; }
+    .personal > div:first-child { grid-column: 1 / -1; }
+}
