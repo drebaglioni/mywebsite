@@ -8,7 +8,7 @@ body[data-place="sf"] { --paper: #64ffe4; --ink: #451608; --accent: #ff531a; --p
 body { font-family: 'Space Grotesk', Arial, sans-serif; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; }
-a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+a:focus-visible, button:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 ::selection { background: var(--ink); color: var(--paper); }
 .skip-link { position: fixed; top: -100px; left: 20px; background: var(--paper); padding: 12px; z-index: 10; }
 .skip-link:focus { top: 12px; }
@@ -35,11 +35,6 @@ body[data-place="sf"] .landscape-art img { filter: grayscale(1) contrast(1.9) ur
 .place-selector button:focus-visible { outline-offset: -5px; }
 .details { display: flex; align-items: center; justify-content: space-between; min-height: 64px; padding: 16px 3vw; font-size: 11px; font-weight: 700; }
 .social-links { display: flex; gap: 24px; }
-.photo-credit { position: relative; }
-.photo-credit summary { cursor: pointer; list-style: none; }
-.photo-credit summary::-webkit-details-marker { display: none; }
-.photo-credit p { position: absolute; z-index: 5; bottom: 24px; right: 0; width: min(300px, 88vw); margin: 0; padding: 16px; background: var(--paper); border: 2px solid var(--ink); font-size: 12px; line-height: 1.5; }
-.photo-credit a { text-decoration: underline; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 @media (max-width: 600px) {
     .site-header { align-items: flex-start; flex-direction: column; gap: 16px; padding: 18px 5vw; }
