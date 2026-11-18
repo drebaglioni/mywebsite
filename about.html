@@ -2,56 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Andrea Baglioni. Artegna, Merthyr Tydfil, Princeton, San Francisco.">
-    <title>About — Andrea Baglioni</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea Baglioni</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Graduate&family=Shrikhand&family=Space+Grotesk:wght@500;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
-    <link rel="preload" as="image" href="assets/images/about/photos/artegna.webp">
-    <link rel="stylesheet" href="assets/about-landscape.css?v=print-8">
-    <script src="scripts/about-landscape.js?v=4" defer></script>
+    <style>
+        html, body { height: 100%; }
+        body { margin: 0; background: #c0c0c0; color: #000; font-family: "Times New Roman", Times, serif; font-size: 16px; -webkit-font-smoothing: none; font-smooth: never; }
+        a { color: #0000ee; text-decoration: underline; }
+        a:visited { color: #551a8b; }
+
+        header { display: flex; justify-content: space-between; padding: 8px 12px; font-size: 14px; }
+        header nav a { margin-left: 10px; }
+        header nav a[aria-current] { color: #000; text-decoration: none; pointer-events: none; }
+
+        main { padding: 60px 24px; }
+        .page { width: 100%; max-width: 560px; margin: 0 auto; }
+        hr { border: 0; border-top: 1px solid #808080; border-bottom: 1px solid #fff; margin: 0 0 24px; }
+        p.t { margin: 0; line-height: 1.3; min-height: 1.3em; white-space: pre-wrap; }
+        p.t::after { content: ""; display: inline-block; width: 0.55em; height: 1em; background: #000; vertical-align: -0.15em; animation: blink 1s steps(2) infinite; }
+        p.t.done::after { display: none; }
+        @keyframes blink { 50% { opacity: 0 } }
+
+        .sig { margin-top: 36px; display: none; align-items: center; gap: 12px; }
+        .sig.on { display: flex; }
+        .sig img { width: 44px; height: 60px; object-fit: cover; object-position: 50% 20%; display: block; image-rendering: pixelated; filter: grayscale(1) contrast(1.2); border: 1px solid #000; }
+        .sig span { font-size: 14px; }
+        .sig span a + a { margin-left: 10px; }
+
+        @media (prefers-reduced-motion: reduce) { p.t::after { animation: none; } }
+    </style>
 </head>
-<body data-place="artegna">
-    <svg class="color-filters" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
-        <filter id="ink-artegna" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-            <feColorMatrix type="saturate" values="0" result="tone"/>
-            <feTurbulence type="fractalNoise" baseFrequency=".29" numOctaves="1" seed="17" stitchTiles="stitch"/>
-            <feColorMatrix type="saturate" values="0"/>
-            <feComponentTransfer result="grain"><feFuncA type="linear" slope="0" intercept="1"/></feComponentTransfer>
-            <feComposite in="tone" in2="grain" operator="arithmetic" k1="0" k2="1" k3="1.65" k4="-.825"/>
-            <feComponentTransfer><feFuncR type="table" tableValues="0.2039 0.6039 0.8745"/><feFuncG type="table" tableValues="0.0000 0.1059 1.0000"/><feFuncB type="table" tableValues="0.5020 1.0000 0.0000"/></feComponentTransfer>
-        </filter>
-        <filter id="ink-merthyr" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-            <feColorMatrix type="saturate" values="0" result="tone"/>
-            <feTurbulence type="fractalNoise" baseFrequency=".29" numOctaves="1" seed="17" stitchTiles="stitch"/>
-            <feColorMatrix type="saturate" values="0"/>
-            <feComponentTransfer result="grain"><feFuncA type="linear" slope="0" intercept="1"/></feComponentTransfer>
-            <feComposite in="tone" in2="grain" operator="arithmetic" k1="0" k2="1" k3="1.65" k4="-.825"/>
-            <feComponentTransfer><feFuncR type="table" tableValues="0.2118 0.9294 0.8353"/><feFuncG type="table" tableValues="0.0000 0.2941 1.0000"/><feFuncB type="table" tableValues="0.1373 0.1804 0.3686"/></feComponentTransfer>
-        </filter>
-        <filter id="ink-princeton" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-            <feColorMatrix type="saturate" values="0" result="tone"/>
-            <feTurbulence type="fractalNoise" baseFrequency=".29" numOctaves="1" seed="17" stitchTiles="stitch"/>
-            <feColorMatrix type="saturate" values="0"/>
-            <feComponentTransfer result="grain"><feFuncA type="linear" slope="0" intercept="1"/></feComponentTransfer>
-            <feComposite in="tone" in2="grain" operator="arithmetic" k1="0" k2="1" k3="1.65" k4="-.825"/>
-            <feComponentTransfer><feFuncR type="table" tableValues="0.2588 0.9804 1.0000"/><feFuncG type="table" tableValues="0.0471 0.1412 0.6157"/><feFuncB type="table" tableValues="0.1412 0.3725 0.8863"/></feComponentTransfer>
-        </filter>
-        <filter id="ink-sf" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
-            <feColorMatrix type="saturate" values="0" result="tone"/>
-            <feTurbulence type="fractalNoise" baseFrequency=".29" numOctaves="1" seed="17" stitchTiles="stitch"/>
-            <feColorMatrix type="saturate" values="0"/>
-            <feComponentTransfer result="grain"><feFuncA type="linear" slope="0" intercept="1"/></feComponentTransfer>
-            <feComposite in="tone" in2="grain" operator="arithmetic" k1="0" k2="1" k3="1.65" k4="-.825"/>
-            <feComponentTransfer><feFuncR type="table" tableValues="0.2706 0.8471 0.3922"/><feFuncG type="table" tableValues="0.0863 0.2392 1.0000"/><feFuncB type="table" tableValues="0.0314 0.0000 0.8941"/></feComponentTransfer>
-        </filter>
-    </defs></svg>
-    <a class="skip-link" href="#about">Skip to content</a>
-    <header class="site-header">
-        <h1><a href="index.html">Andrea Baglioni</a></h1>
-        <nav aria-label="Primary">
+<body>
+    <header>
+        <a href="index.html">Andrea Baglioni</a>
+        <nav>
             <a href="about.html" aria-current="page">About</a>
             <a href="projects.html">Projects</a>
             <a href="other.html">Library</a>
@@ -59,31 +43,73 @@
             <a href="swag.html">Swag</a>
         </nav>
     </header>
-    <!-- Artegna photograph: iw3rua, CC BY-SA 3.0. Recolored and grained.
-         Source: https://commons.wikimedia.org/wiki/File:33011_Artegna_UD,_Italy_-_panoramio.jpg
-         License: https://creativecommons.org/licenses/by-sa/3.0/ -->
-    <main id="about">
-        <section class="landscape" aria-label="Places">
-            <h2 class="place-title" id="place-title" aria-live="polite">Artegna</h2>
-            <div class="landscape-art" id="landscape-art">
-                <img id="scene-image" src="assets/images/about/photos/artegna.webp" alt="Castello Savorgnan and the bell tower of Santa Maria Nascente in Artegna, photographed by iw3rua." fetchpriority="high">
+
+    <main>
+        <div class="page">
+            <hr>
+            <p class="t" id="t"></p>
+            <div class="sig" id="sig">
+                <img src="assets/images/about/portrait.png" alt="">
+                <span><a href="https://x.com/drebaglioni" target="_blank" rel="noopener noreferrer">X</a><a href="https://www.linkedin.com/in/andrea-baglioni-3b5a2735/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="https://mind.drebaglioni.com" target="_blank" rel="noopener noreferrer">Mind</a></span>
             </div>
-            <div class="place-selector" role="group" aria-label="Select a place">
-                <button type="button" data-place="artegna" aria-pressed="true" aria-controls="landscape-art place-title">Artegna</button>
-                <button type="button" data-place="merthyr" aria-pressed="false" aria-controls="landscape-art place-title">Merthyr Tydfil</button>
-                <button type="button" data-place="princeton" aria-pressed="false" aria-controls="landscape-art place-title">Princeton</button>
-                <button type="button" data-place="sf" aria-pressed="false" aria-controls="landscape-art place-title">San Francisco</button>
-            </div>
-            <p id="scene-status" class="sr-only" role="status"></p>
-        </section>
-        <section class="personal" aria-label="About Andrea">
-            <div><h2>Work</h2><p>Square · Algolia · Solana · Footwork</p></div>
-            <div><h2>Learning</h2><p>Korean · Chess · Design</p></div>
-            <div><h2>Team</h2><p>Inter Milan</p></div>
-        </section>
-        <footer class="details">
-            <div class="social-links"><a href="https://x.com/drebaglioni" target="_blank" rel="noopener noreferrer">X ↗</a><a href="https://www.linkedin.com/in/andrea-baglioni-3b5a2735/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div>
-        </footer>
+        </div>
     </main>
+
+    <script>
+        (() => {
+            const el = document.getElementById('t'), sig = document.getElementById('sig');
+            const pick = (a) => a[Math.floor(Math.random() * a.length)];
+            // segments: string, or {t: text, x: text-to-type-then-delete}, or {p: pause ms}
+            const script = [
+                "I'm Andrea. ",
+                { p: 500 },
+                pick(["I grew up in Artegna, ", "I'm from Artegna, "]),
+                { x: "a village" }, "a small town in Friuli, in the northeast of Italy. ",
+                { p: 700 },
+                "I went to school in Wales, in Merthyr Tydfil, ",
+                { x: "and then" }, "then to Princeton, where I studied politics",
+                pick([" and wrote a thesis on Italy and the euro. ", ". "]),
+                { p: 800 },
+                "I worked at Square, then Algolia, ",
+                { x: "then spent" }, "then five years at the Solana Foundation running its capital team. ",
+                { p: 600 },
+                "Now I lead AI at Footwork, a venture firm. I live in Berkeley. ",
+                { p: 900 },
+                pick(["I'm learning Korean. ", "I'm slowly learning Korean. "]),
+                "I play chess. I support Inter. ",
+                { p: 400 },
+                "In July I ran the San Francisco half marathon in 1:27:49. ",
+                { p: 700 },
+                "I'm also ", { x: "building" }, "teaching a simulated fruit fly to walk a chessboard.",
+                { p: 300 }
+            ];
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const wait = (ms) => new Promise(r => setTimeout(r, reduced ? 0 : ms));
+            const keyDelay = (ch) => {
+                let d = 70 + Math.random() * 90;
+                if (ch === ' ') d += 30;
+                if (ch === ',' ) d += 140;
+                if (ch === '.') d += 320;
+                if (Math.random() < .04) d += 250;
+                return d;
+            };
+            async function type(str) { for (const ch of str) { el.textContent += ch; await wait(keyDelay(ch)); } }
+            async function erase(n) { await wait(380); for (let i = 0; i < n; i++) { el.textContent = el.textContent.slice(0, -1); await wait(38 + Math.random() * 30); } await wait(220); }
+            async function run() {
+                for (const seg of script) {
+                    if (typeof seg === 'string') await type(seg);
+                    else if (seg.p) await wait(seg.p);
+                    else if (seg.x) { await type(seg.x); await erase(seg.x.length); }
+                }
+                el.classList.add('done');
+                await wait(600);
+                sig.classList.add('on');
+            }
+            if (reduced) { el.textContent = script.filter(s => typeof s === 'string').join(''); el.classList.add('done'); sig.classList.add('on'); }
+            else run();
+            const fly = document.createElement('a'); fly.href = 'fly-gambit.html';
+            el.addEventListener('click', () => { if (el.classList.contains('done') && window.getSelection().toString() === '') location.href = 'fly-gambit.html'; });
+        })();
+    </script>
 </body>
 </html>
